@@ -1,0 +1,461 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+/* Self-hosted Fonts */
+/* Bebas Neue - Display font */
+@font-face {
+  font-family: 'Bebas Neue';
+  src:
+    url('/fonts/bebas-neue-regular.woff2') format('woff2'),
+    url('/fonts/bebas-neue-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Source Sans 3 - Body font */
+/* Latin Extended character set (German umlauts, etc.) */
+@font-face {
+  font-family: 'Source Sans 3';
+  src:
+    url('/fonts/source-sans-3-latin-ext.woff2') format('woff2'),
+    url('/fonts/source-sans-3-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Latin character set */
+@font-face {
+  font-family: 'Source Sans 3';
+  src:
+    url('/fonts/source-sans-3-latin.woff2') format('woff2'),
+    url('/fonts/source-sans-3-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src:
+    url('/fonts/source-sans-3-latin-ext.woff2') format('woff2'),
+    url('/fonts/source-sans-3-semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src:
+    url('/fonts/source-sans-3-latin.woff2') format('woff2'),
+    url('/fonts/source-sans-3-semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src:
+    url('/fonts/source-sans-3-latin-ext.woff2') format('woff2'),
+    url('/fonts/source-sans-3-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src:
+    url('/fonts/source-sans-3-latin.woff2') format('woff2'),
+    url('/fonts/source-sans-3-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src:
+    url('/fonts/source-sans-3-latin-ext.woff2') format('woff2'),
+    url('/fonts/source-sans-3-black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src:
+    url('/fonts/source-sans-3-latin.woff2') format('woff2'),
+    url('/fonts/source-sans-3-black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* VSG Kugelberg Theme Configuration */
+@theme {
+  /* VSG Blue - Weißenfels city colors based on azure blue (#0057B7) */
+  --color-vsg-blue-50: #e6f0fa;
+  --color-vsg-blue-100: #cce0f7;
+  --color-vsg-blue-200: #99c2f0;
+  --color-vsg-blue-300: #66a3e8;
+  --color-vsg-blue-400: #3385e0;
+  --color-vsg-blue-500: #0066d6;
+  --color-vsg-blue-600: #0057b7;
+  --color-vsg-blue-700: #004a94;
+  --color-vsg-blue-800: #003d7a;
+  --color-vsg-blue-900: #002d5c;
+  --color-vsg-blue-950: #001a3a;
+
+  /* VSG Gold - Accent color */
+  --color-vsg-gold-50: #fefce8;
+  --color-vsg-gold-100: #fef9c3;
+  --color-vsg-gold-200: #fef08a;
+  --color-vsg-gold-300: #fde047;
+  --color-vsg-gold-400: #fcd34d;
+  --color-vsg-gold-500: #fbbf24;
+  --color-vsg-gold-600: #d4a91a;
+  --color-vsg-gold-700: #b89614;
+  --color-vsg-gold-800: #8a700f;
+  --color-vsg-gold-900: #5c4a0a;
+
+  /* Typography */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Source Sans 3', sans-serif;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-vsg-blue-900);
+}
+
+/* Glow effects */
+.gold-glow {
+  box-shadow:
+    0 0 60px rgba(252, 211, 77, 0.3),
+    0 0 120px rgba(252, 211, 77, 0.1);
+}
+
+.blue-glow {
+  box-shadow:
+    0 0 60px rgba(0, 87, 183, 0.4),
+    0 0 120px rgba(0, 87, 183, 0.2);
+}
+
+/* Text shadow for headers */
+.text-glow {
+  text-shadow: 0 0 40px rgba(252, 211, 77, 0.5);
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-gold {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(252, 211, 77, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(252, 211, 77, 0.8);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-slide-right {
+  animation: slideRight 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2s ease-in-out infinite;
+}
+
+/* Animation delays */
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+.delay-600 {
+  animation-delay: 600ms;
+}
+.delay-700 {
+  animation-delay: 700ms;
+}
+.delay-800 {
+  animation-delay: 800ms;
+}
+
+/* Card hover effects */
+.card-hover {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(252, 211, 77, 0.15);
+}
+
+/* Button hover */
+.btn-primary {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(252, 211, 77, 0.5);
+}
+
+/* Form input styling */
+.form-input-custom {
+  transition: all 0.3s ease;
+}
+
+.form-input-custom:focus {
+  box-shadow: 0 0 0 3px rgba(252, 211, 77, 0.3);
+}
+
+/* Sidebar link active state */
+.sidebar-link.active {
+  background: rgba(252, 211, 77, 0.1);
+  border-left-color: #fcd34d;
+}
+
+.sidebar-link.active span {
+  color: #fcd34d;
+}
+
+.sidebar-link.active svg {
+  color: #fcd34d;
+}
+
+/* Table row hover */
+.table-row-hover:hover {
+  background: rgba(0, 87, 183, 0.05);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-vsg-blue-900);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-vsg-blue-600);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-vsg-gold-400);
+}
+
+/* EasyMDE Markdown Editor Theme Overrides */
+.EasyMDEContainer {
+  font-family: var(--font-body);
+}
+
+.EasyMDEContainer .CodeMirror {
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  background: #fff;
+  color: var(--color-vsg-blue-900);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  padding: 0.5rem;
+}
+
+.EasyMDEContainer .CodeMirror-focused {
+  border-color: var(--color-vsg-blue-600);
+  box-shadow: 0 0 0 3px rgba(252, 211, 77, 0.3);
+}
+
+.EasyMDEContainer .CodeMirror-placeholder {
+  color: #9ca3af; /* gray-400 */
+}
+
+.EasyMDEContainer .editor-toolbar {
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-bottom: none;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  background: #f9fafb; /* gray-50 */
+  padding: 0.5rem;
+}
+
+.EasyMDEContainer .editor-toolbar button {
+  color: var(--color-vsg-blue-700);
+  border: none;
+  border-radius: 0.25rem;
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.EasyMDEContainer .editor-toolbar button:hover {
+  background: var(--color-vsg-blue-100);
+  color: var(--color-vsg-blue-900);
+}
+
+.EasyMDEContainer .editor-toolbar button.active {
+  background: var(--color-vsg-blue-600);
+  color: #fff;
+}
+
+.EasyMDEContainer .editor-toolbar i.separator {
+  border-left-color: #d1d5db;
+  margin: 0 0.5rem;
+}
+
+.EasyMDEContainer .editor-preview {
+  background: #fff;
+  font-family: var(--font-body);
+  padding: 1rem;
+}
+
+.EasyMDEContainer .editor-preview h1,
+.EasyMDEContainer .editor-preview h2,
+.EasyMDEContainer .editor-preview h3,
+.EasyMDEContainer .editor-preview h4,
+.EasyMDEContainer .editor-preview h5,
+.EasyMDEContainer .editor-preview h6 {
+  color: var(--color-vsg-blue-900);
+  font-family: var(--font-display);
+  margin-bottom: 0.5rem;
+}
+
+.EasyMDEContainer .editor-preview a {
+  color: var(--color-vsg-blue-600);
+}
+
+.EasyMDEContainer .editor-preview a:hover {
+  color: var(--color-vsg-gold-500);
+}
+
+.EasyMDEContainer .editor-preview code {
+  background: #f3f4f6; /* gray-100 */
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+.EasyMDEContainer .editor-preview pre {
+  background: #f3f4f6; /* gray-100 */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+/* Disabled state */
+.EasyMDEContainer .CodeMirror-wrap.CodeMirror-readonly {
+  background: #f9fafb; /* gray-50 */
+  cursor: not-allowed;
+}

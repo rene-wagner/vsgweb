@@ -1,0 +1,26 @@
+# IDEs
+.idea/
+
+# Node
+node_modules/
+
+# Rust
+target/
+
+# Build outputs
+dist/
+*.config.d.ts
+
+# Turborepo
+.turbo/
+
+# Environment variables
+.env*
+!.env.example
+
+# AI Files - ignore all except workflows
+.github/*
+!.github/workflows/
+
+.opencode/
+openspec/
