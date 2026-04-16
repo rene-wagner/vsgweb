@@ -59,45 +59,36 @@ For multi-step tasks, state a brief plan:
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
+## Source Of Truth
+- There is no repo `README`, CI workflow, Cursor/Copilot instruction file, or `opencode.json` here. Trust `package.json`, `turbo.json`, TS config, and Vite config over assumptions.
+
 ## Workspace
-- Package manager is `npm` via workspaces (`packageManager: npm@11.12.1`). Use `npm`, not `pnpm` or `yarn`.
-- Root scripts are Turbo entrypoints:
-  - `npm run build` -> `turbo run build`
-  - `npm run lint` -> `turbo run lint`
-  - `npm run format` -> `turbo run format`
-  - `npm run format:check` -> `turbo run format:check`
-- Workspaces are only `app/*` and `packages/*`.
+- Package manager is `npm@11.12.1` with workspaces only under `app/*` and `packages/*`.
+- Root scripts are Turbo entrypoints: `npm run dev`, `build`, `lint`, `format`, `format:check`.
+- Prefer package-local commands while editing a single workspace instead of running Turbo across the repo.
 
-## Packages
-- `app/web` is the only real application package right now.
-- `packages/vsg-sdk` currently has no source tree; its `build` is a no-op, and its lint/format scripts are intentionally tolerant of missing `src/` files via `--no-error-on-unmatched-pattern`.
+## Main Packages
+- `app/web` is the only application. `src/main.ts` mounts Vue, Pinia, the router, and injects a CSP meta tag at runtime.
+- `app/web/src/App.vue` is the app shell. Navbar, footer, toast container, and cookie banner live there, not in routed layouts.
+- `app/web/src/router/index.ts` is the route map and uses lazy-loaded views.
+- `packages/vsg-sdk` is a real TypeScript library with source in `packages/vsg-sdk/src/index.ts`; do not assume it is empty or generated.
+- `app/web` does not currently import `@vsg/vsg-sdk`.
 
-## Web App
-- Main entrypoint is `app/web/src/main.ts`.
-- App shell lives in `app/web/src/App.vue`; navbar/footer/toasts/cookie banner are not routed layouts anymore.
-- Router lives in `app/web/src/router/index.ts`.
-- Path alias is only `@/*` -> `./src/*`, defined in `app/web/tsconfig.app.json` and mirrored in `app/web/vite.config.ts`.
-- `tsconfig.app.json` must not reintroduce `baseUrl`; the alias works through `paths` with `"./src/*"`.
+## Web Commands
+- Use `npm run dev --workspace web` for the Vite dev server.
+- Use `npm run build --workspace web` for the real production build: `vue-tsc -b && vite build`.
+- Use `npm run lint --workspace web` for focused verification. It already runs `npm run type-check` first, then `oxlint --vue-plugin --deny-warnings src vite.config.ts`.
+- Use `npm run format:check --workspace web` before `npm run format --workspace web`; formatting is `oxfmt` and will rewrite files.
+- There is no test runner configured in this repo right now. For most changes, verification is `lint` and/or `build`.
 
-## Web Verification
-- Prefer package-local verification while editing `app/web`:
-  - `npm run type-check --workspace web`
-  - `npm run lint --workspace web`
-  - `npm run format:check --workspace web`
-- `web` lint already includes type-checking: `npm run lint --workspace web` runs `type-check` first and then `oxlint --vue-plugin --deny-warnings`.
-- `web` formatting uses `oxfmt` on `src` and `vite.config.ts`. Running `npm run format --workspace web` will rewrite many files, so prefer `format:check` unless you intend that.
+## Web Config Quirks
+- The only path alias is `@/* -> ./src/*`, defined in `app/web/tsconfig.app.json` and mirrored in `app/web/vite.config.ts`.
+- `app/web/tsconfig.app.json` intentionally does not use `baseUrl`; do not reintroduce it when fixing imports.
+- `VITE_API_BASE_URL` is required across the web app and is also used to build the CSP in `src/main.ts`, so treat env changes as runtime behavior changes, not just API wiring.
 
-## Web Structure
-- `app/web/src/components` is grouped by purpose, not by framework defaults:
-  - `app/` for shell components
-  - `ui/` for shared UI primitives
-  - `forms/` for form-related components
-  - `content/` for page content sections
-  - `department/` for department-specific components
-- Views remain under `app/web/src/views`, with club pages in `views/verein/`.
+## Structure
+- `app/web/src/components` is organized by purpose, not by framework defaults: `app/`, `ui/`, `forms/`, `content/`, `department/`.
+- Club pages live under `app/web/src/views/verein/`.
 
-## Formatting / Style
-- Oxfmt is active in both packages and currently formats files with double-quoted imports/strings; do not assume the previous quote style will be preserved.
-
-## Missing Sources Of Truth
-- There is currently no repo `README`, CI workflow, Copilot/Cursor/OpenCode repo config, or existing `AGENTS.md`. Trust the package scripts and config files over assumptions.
+## Formatting
+- Oxfmt is the formatter in both workspaces and currently normalizes imports/strings to double quotes.
