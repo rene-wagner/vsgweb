@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Button from '@shared/components/Button.vue';
+import Button from '@/components/ui/Button.vue';
 
 interface Props {
   headline?: string;

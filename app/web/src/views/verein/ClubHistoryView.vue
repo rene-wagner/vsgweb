@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue';
-import Accordion from '@/shared/components/Accordion.vue';
-import ApiState from '@/shared/components/ApiState.vue';
-import Chart from '@/shared/components/Chart.vue';
-import FactCard from '@/shared/components/FactCard.vue';
-import MarkdownRenderer from '@/shared/components/MarkdownRenderer.vue';
-import SuccessList from '@/shared/components/SuccessList.vue';
-import Timeline from '@/shared/components/Timeline.vue';
-import CtaSection from '../../components/CtaSection.vue';
+import Accordion from '@/components/ui/Accordion.vue';
+import ApiState from '@/components/ui/ApiState.vue';
+import Chart from '@/components/ui/Chart.vue';
+import FactCard from '@/components/ui/FactCard.vue';
+import MarkdownRenderer from '@/components/ui/MarkdownRenderer.vue';
+import SuccessList from '@/components/ui/SuccessList.vue';
+import Timeline from '@/components/ui/Timeline.vue';
+import CtaSection from '../../components/content/CtaSection.vue';
 import { useHistoryStore } from '../../stores/historyStore';
-import HeroSection from '../../components/HeroSection.vue';
+import HeroSection from '../../components/content/HeroSection.vue';
 
 const historyStore = useHistoryStore();
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
-import type { Trainer, TrainerLicense } from '../types/department-detail.types';
+import type { Trainer, TrainerLicense } from '../../types/department-detail.types';
 
 interface Props {
   trainer: Trainer;

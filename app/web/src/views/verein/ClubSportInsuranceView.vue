@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useSportInsuranceStore } from '../../stores/sportInsuranceStore';
-import MarkdownRenderer from '@/shared/components/MarkdownRenderer.vue';
-import ApiState from '@/shared/components/ApiState.vue';
-import HeroSection from '../../components/HeroSection.vue';
-import ContentSection from '../../components/ContentSection.vue';
-import Alert from '@/shared/components/Alert.vue';
+import MarkdownRenderer from '@/components/ui/MarkdownRenderer.vue';
+import ApiState from '@/components/ui/ApiState.vue';
+import HeroSection from '../../components/content/HeroSection.vue';
+import ContentSection from '../../components/content/ContentSection.vue';
+import Alert from '@/components/ui/Alert.vue';
 
 const sportInsuranceStore = useSportInsuranceStore();
 

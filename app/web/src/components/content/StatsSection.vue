@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
-import type { HomepageStat } from '@/shared/types/homepage-content.types';
+import type { HomepageStat } from '@/types/homepage-content.types';
 
 interface Props {
   stats?: HomepageStat[];

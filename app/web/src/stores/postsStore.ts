@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { api, ApiError } from '@/shared/utils/api';
+import { api, ApiError } from '@/utils/api';
 
 export interface Author {
   id: number;

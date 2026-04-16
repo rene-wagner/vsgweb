@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DepartmentLocation } from '../types/department-detail.types';
+import type { DepartmentLocation } from '../../types/department-detail.types';
 import LocationCard from './LocationCard.vue';
 
 interface Props {

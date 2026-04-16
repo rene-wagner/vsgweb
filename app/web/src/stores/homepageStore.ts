@@ -1,10 +1,10 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import type { HomepageContent } from '@shared/types/homepage-content.types';
+import type { HomepageContent } from '@/types/homepage-content.types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useHomepageContentStore = defineStore('homepageContentPublic', () => {
+export const useHomepageStore = defineStore('homepage', () => {
   const homepageContent = ref<HomepageContent | null>(null);
   const isLoading = ref(false);
   const error = ref<string | null>(null);

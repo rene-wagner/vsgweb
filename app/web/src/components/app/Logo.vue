@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { onMounted, useAttrs } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useHomepageContentStore } from '@/stores/homepageContentStore';
+import { useHomepageStore } from '@/stores/homepageStore';
 import logoFallback from '@/assets/logo.svg';
 
 defineOptions({ inheritAttrs: false });
 
 const attrs = useAttrs();
 
-const homepageContentStore = useHomepageContentStore();
-const { homepageContent } = storeToRefs(homepageContentStore);
+const homepageStore = useHomepageStore();
+const { homepageContent } = storeToRefs(homepageStore);
 
 onMounted(() => {
   if (!homepageContent.value) {
-    homepageContentStore.fetchHomepageContent();
+    homepageStore.fetchHomepageContent();
   }
 });
 </script>

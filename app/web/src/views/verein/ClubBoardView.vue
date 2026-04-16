@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { useBoardContentStore } from '../../stores/boardContentStore';
-import ApiState from '@/shared/components/ApiState.vue';
-import HeroSection from '../../components/HeroSection.vue';
-import ContentSection from '../../components/ContentSection.vue';
-import Alert from '@/shared/components/Alert.vue';
+import { useBoardStore } from '../../stores/boardStore';
+import ApiState from '@/components/ui/ApiState.vue';
+import HeroSection from '../../components/content/HeroSection.vue';
+import ContentSection from '../../components/content/ContentSection.vue';
+import Alert from '@/components/ui/Alert.vue';
 
-const boardContentStore = useBoardContentStore();
+const boardStore = useBoardStore();
 
 onMounted(async () => {
-  await boardContentStore.fetchBoardContent();
+  await boardStore.fetchBoardContent();
 });
 
 const sortedBoardMembers = computed(() => {
-  if (!boardContentStore.boardContent) return [];
-  return [...boardContentStore.boardContent.boardMembers].sort((a, b) => a.sort - b.sort);
+  if (!boardStore.boardContent) return [];
+  return [...boardStore.boardContent.boardMembers].sort((a, b) => a.sort - b.sort);
 });
 
 function getProfileImageUrl(filename: string): string {
@@ -31,31 +31,31 @@ function getBadgeColor(index: number): string {
 <template>
   <div class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900">
     <HeroSection
-      :headline="boardContentStore.boardContent?.headline || 'VORSTAND'"
-      :description="boardContentStore.boardContent?.description || 'Die Führung des VSG Kugelberg'"
+      :headline="boardStore.boardContent?.headline || 'VORSTAND'"
+      :description="boardStore.boardContent?.description || 'Die Führung des VSG Kugelberg'"
       min-height="70vh"
     />
 
     <ContentSection>
       <ApiState
-        :is-loading="boardContentStore.isLoading"
-        :error="boardContentStore.error"
-        :empty="!boardContentStore.boardContent"
+        :is-loading="boardStore.isLoading"
+        :error="boardStore.error"
+        :empty="!boardStore.boardContent"
         empty-message="Die Vorstandsinformationen werden derzeit aktualisiert."
       >
         <div class="space-y-12">
           <Alert
-            :message="boardContentStore.boardContent!.note"
+            :message="boardStore.boardContent!.note"
             variant="info"
           />
 
           <!-- Introduction -->
           <div>
             <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900 md:text-3xl">
-              {{ boardContentStore.boardContent!.sectionHeadline }}
+              {{ boardStore.boardContent!.sectionHeadline }}
             </h2>
             <p class="mt-4 font-body text-lg leading-relaxed text-vsg-blue-700">
-              {{ boardContentStore.boardContent!.sectionDescription }}
+              {{ boardStore.boardContent!.sectionDescription }}
             </p>
           </div>
 

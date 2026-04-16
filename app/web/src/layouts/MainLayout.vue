@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Navbar from '@shared/components/Navbar.vue';
-import Footer from '@shared/components/Footer.vue';
-import ToastContainer from '@shared/components/ToastContainer.vue';
-import CookieConsentBanner from '@shared/components/CookieConsentBanner.vue';
+import Navbar from '@/components/app/Navbar.vue';
+import Footer from '@/components/app/Footer.vue';
+import ToastContainer from '@/components/app/ToastContainer.vue';
+import CookieConsentBanner from '@/components/app/CookieConsentBanner.vue';
 </script>
 
 <template>

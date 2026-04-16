@@ -2,7 +2,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import Button from './Button.vue';
+import Button from '../ui/Button.vue';
 import Logo from './Logo.vue';
 import { useDepartmentsStore } from '@/stores/departmentsStore';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

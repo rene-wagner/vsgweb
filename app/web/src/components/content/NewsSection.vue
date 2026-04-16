@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
-import SectionHeader from '@shared/components/SectionHeader.vue';
+import SectionHeader from '@/components/ui/SectionHeader.vue';
 import NewsCardFeatured from './NewsCardFeatured.vue';
 import NewsCardListItem from './NewsCardListItem.vue';
-import { usePostsStore } from '../stores/postsStore';
+import { usePostsStore } from '../../stores/postsStore';
 
 interface Props {
   headline?: string;

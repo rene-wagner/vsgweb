@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import ApiState from '@/shared/components/ApiState.vue';
-import MarkdownRenderer from '@/shared/components/MarkdownRenderer.vue';
-import CtaSection from '../../components/CtaSection.vue';
+import ApiState from '@/components/ui/ApiState.vue';
+import MarkdownRenderer from '@/components/ui/MarkdownRenderer.vue';
+import CtaSection from '../../components/content/CtaSection.vue';
 import { useMembershipStore } from '../../stores/membershipStore';
-import HeroSection from '../../components/HeroSection.vue';
+import HeroSection from '../../components/content/HeroSection.vue';
 
 const membershipStore = useMembershipStore();
 

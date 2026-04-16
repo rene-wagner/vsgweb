@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Trainer } from '../types/department-detail.types';
+import type { Trainer } from '../../types/department-detail.types';
 import TrainerCard from './TrainerCard.vue';
 
 interface Props {

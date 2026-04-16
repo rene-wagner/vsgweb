@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import type { DepartmentLocation } from '../types/department-detail.types';
+import type { DepartmentLocation } from '../../types/department-detail.types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

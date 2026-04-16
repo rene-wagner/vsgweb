@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
-import HeroSection from '../components/HeroSection.vue';
-import WelcomeSection from '../components/WelcomeSection.vue';
-import StatsSection from '../components/StatsSection.vue';
-import DepartmentsSection from '../components/DepartmentsSection.vue';
-import NewsSection from '../components/NewsSection.vue';
-import CtaSection from '../components/CtaSection.vue';
-import { useHomepageContentStore } from '../stores/homepageContentStore';
+import HeroSection from '../components/content/HeroSection.vue';
+import WelcomeSection from '../components/content/WelcomeSection.vue';
+import StatsSection from '../components/content/StatsSection.vue';
+import DepartmentsSection from '../components/department/DepartmentsSection.vue';
+import NewsSection from '../components/content/NewsSection.vue';
+import CtaSection from '../components/content/CtaSection.vue';
+import { useHomepageStore } from '../stores/homepageStore';
 
-const homepageContentStore = useHomepageContentStore();
-const { homepageContent } = storeToRefs(homepageContentStore);
+const homepageStore = useHomepageStore();
+const { homepageContent } = storeToRefs(homepageStore);
 
 onMounted(() => {
-  homepageContentStore.fetchHomepageContent();
+  homepageStore.fetchHomepageContent();
 });
 </script>
 

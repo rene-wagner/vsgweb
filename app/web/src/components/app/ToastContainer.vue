@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { useToast } from '@shared/composables/useToast';
+import { useToast } from '@/composables/useToast';
 
 const { toasts, remove } = useToast();
 

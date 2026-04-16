@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import type { TrainingGroup } from '../types/department-detail.types';
+import type { TrainingGroup } from '../../types/department-detail.types';
 import TrainingTable from './TrainingTable.vue';
 
 interface Props {

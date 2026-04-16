@@ -4,7 +4,7 @@ import type { BoardContent } from '../types/board-content.types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useBoardContentStore = defineStore('boardContent', () => {
+export const useBoardStore = defineStore('board', () => {
   const boardContent = ref<BoardContent | null>(null);
   const isLoading = ref(false);
   const error = ref<string | null>(null);

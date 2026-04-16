@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
-import SectionHeader from '@shared/components/SectionHeader.vue';
+import SectionHeader from '@/components/ui/SectionHeader.vue';
 import DepartmentCard from './DepartmentCard.vue';
-import { useDepartmentsStore, getMediaUrl } from '../stores/departmentsStore';
+import { useDepartmentsStore, getMediaUrl } from '../../stores/departmentsStore';
 
 interface Props {
   headline?: string;
