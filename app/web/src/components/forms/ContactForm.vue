@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { ref, computed, onMounted } from 'vue';
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { ref, computed, onMounted } from "vue";
 
 const props = defineProps<{
   contactPersonId: number;
@@ -10,14 +10,14 @@ const props = defineProps<{
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Form state
-const senderName = ref('');
-const senderEmail = ref('');
-const subject = ref('');
-const message = ref('');
+const senderName = ref("");
+const senderEmail = ref("");
+const subject = ref("");
+const message = ref("");
 
 // Honeypot fields
-const website = ref('');
-const timestamp = ref('');
+const website = ref("");
+const timestamp = ref("");
 
 // UI state
 const isSubmitting = ref(false);
@@ -37,7 +37,7 @@ const fetchToken = async () => {
     }
   } catch (_e) {
     // Silently fail - form will still work but honeypot validation may fail
-    console.warn('Failed to fetch contact form token');
+    console.warn("Failed to fetch contact form token");
   }
 };
 
@@ -49,26 +49,26 @@ onMounted(() => {
 // Validation
 const validateField = (field: string, value: string): string | null => {
   switch (field) {
-    case 'senderName':
-      if (!value.trim()) return 'Name ist erforderlich';
-      if (value.trim().length < 2) return 'Name muss mindestens 2 Zeichen haben';
-      if (value.trim().length > 100) return 'Name darf maximal 100 Zeichen haben';
+    case "senderName":
+      if (!value.trim()) return "Name ist erforderlich";
+      if (value.trim().length < 2) return "Name muss mindestens 2 Zeichen haben";
+      if (value.trim().length > 100) return "Name darf maximal 100 Zeichen haben";
       return null;
-    case 'senderEmail': {
-      if (!value.trim()) return 'E-Mail ist erforderlich';
+    case "senderEmail": {
+      if (!value.trim()) return "E-Mail ist erforderlich";
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(value.trim())) return 'Bitte geben Sie eine gueltige E-Mail-Adresse ein';
+      if (!emailRegex.test(value.trim())) return "Bitte geben Sie eine gueltige E-Mail-Adresse ein";
       return null;
     }
-    case 'subject':
-      if (!value.trim()) return 'Betreff ist erforderlich';
-      if (value.trim().length < 5) return 'Betreff muss mindestens 5 Zeichen haben';
-      if (value.trim().length > 200) return 'Betreff darf maximal 200 Zeichen haben';
+    case "subject":
+      if (!value.trim()) return "Betreff ist erforderlich";
+      if (value.trim().length < 5) return "Betreff muss mindestens 5 Zeichen haben";
+      if (value.trim().length > 200) return "Betreff darf maximal 200 Zeichen haben";
       return null;
-    case 'message':
-      if (!value.trim()) return 'Nachricht ist erforderlich';
-      if (value.trim().length < 10) return 'Nachricht muss mindestens 10 Zeichen haben';
-      if (value.trim().length > 5000) return 'Nachricht darf maximal 5000 Zeichen haben';
+    case "message":
+      if (!value.trim()) return "Nachricht ist erforderlich";
+      if (value.trim().length < 10) return "Nachricht muss mindestens 10 Zeichen haben";
+      if (value.trim().length > 5000) return "Nachricht darf maximal 5000 Zeichen haben";
       return null;
     default:
       return null;
@@ -78,16 +78,16 @@ const validateField = (field: string, value: string): string | null => {
 const validateForm = (): boolean => {
   errors.value = {};
 
-  const nameError = validateField('senderName', senderName.value);
+  const nameError = validateField("senderName", senderName.value);
   if (nameError) errors.value.senderName = nameError;
 
-  const emailError = validateField('senderEmail', senderEmail.value);
+  const emailError = validateField("senderEmail", senderEmail.value);
   if (emailError) errors.value.senderEmail = emailError;
 
-  const subjectError = validateField('subject', subject.value);
+  const subjectError = validateField("subject", subject.value);
   if (subjectError) errors.value.subject = subjectError;
 
-  const messageError = validateField('message', message.value);
+  const messageError = validateField("message", message.value);
   if (messageError) errors.value.message = messageError;
 
   return Object.keys(errors.value).length === 0;
@@ -112,9 +112,9 @@ const submitForm = async () => {
 
   try {
     const response = await fetch(`${API_BASE_URL}/api/contact`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         contactPersonId: props.contactPersonId,
@@ -128,13 +128,14 @@ const submitForm = async () => {
     });
 
     if (response.status === 429) {
-      submitError.value = 'Zu viele Anfragen. Bitte versuchen Sie es spaeter erneut.';
+      submitError.value = "Zu viele Anfragen. Bitte versuchen Sie es spaeter erneut.";
       return;
     }
 
     if (!response.ok) {
       const data = await response.json();
-      submitError.value = data.message || 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
+      submitError.value =
+        data.message || "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.";
       return;
     }
 
@@ -142,15 +143,16 @@ const submitForm = async () => {
     submitSuccess.value = true;
 
     // Reset form
-    senderName.value = '';
-    senderEmail.value = '';
-    subject.value = '';
-    message.value = '';
+    senderName.value = "";
+    senderEmail.value = "";
+    subject.value = "";
+    message.value = "";
 
     // Fetch new token for potential next submission
     await fetchToken();
   } catch (_e) {
-    submitError.value = 'Ein Netzwerkfehler ist aufgetreten. Bitte ueberpruefen Sie Ihre Internetverbindung.';
+    submitError.value =
+      "Ein Netzwerkfehler ist aufgetreten. Bitte ueberpruefen Sie Ihre Internetverbindung.";
   } finally {
     isSubmitting.value = false;
   }
@@ -164,7 +166,9 @@ const clearSuccess = () => {
 
 <template>
   <div class="mt-8 bg-white border border-vsg-blue-100 rounded-2xl p-8">
-    <h3 class="font-display text-xl tracking-wider text-vsg-blue-900 mb-6">Nachricht an {{ contactPersonName }}</h3>
+    <h3 class="font-display text-xl tracking-wider text-vsg-blue-900 mb-6">
+      Nachricht an {{ contactPersonName }}
+    </h3>
 
     <!-- Success Message -->
     <Transition
@@ -182,12 +186,11 @@ const clearSuccess = () => {
         aria-live="polite"
       >
         <div class="flex items-start gap-3">
-          <FontAwesomeIcon
-            icon="check"
-            class="text-green-600 mt-0.5 shrink-0"
-          />
+          <FontAwesomeIcon icon="check" class="text-green-600 mt-0.5 shrink-0" />
           <div class="flex-1">
-            <p class="font-body text-green-800">Ihre Nachricht wurde erfolgreich gesendet. Vielen Dank fuer Ihre Anfrage!</p>
+            <p class="font-body text-green-800">
+              Ihre Nachricht wurde erfolgreich gesendet. Vielen Dank fuer Ihre Anfrage!
+            </p>
             <button
               class="mt-2 text-sm text-green-700 hover:text-green-900 underline font-body"
               @click="clearSuccess"
@@ -215,26 +218,15 @@ const clearSuccess = () => {
         aria-live="polite"
       >
         <div class="flex items-start gap-3">
-          <FontAwesomeIcon
-            icon="exclamation-triangle"
-            class="text-red-600 mt-0.5 shrink-0"
-          />
+          <FontAwesomeIcon icon="exclamation-triangle" class="text-red-600 mt-0.5 shrink-0" />
           <p class="font-body text-red-800">{{ submitError }}</p>
         </div>
       </div>
     </Transition>
 
     <!-- Form -->
-    <form
-      v-if="!submitSuccess"
-      class="space-y-5"
-      @submit.prevent="submitForm"
-    >
-      <div
-        class="absolute"
-        style="left: -9999px; position: absolute"
-        aria-hidden="true"
-      >
+    <form v-if="!submitSuccess" class="space-y-5" @submit.prevent="submitForm">
+      <div class="absolute" style="left: -9999px; position: absolute" aria-hidden="true">
         <label for="website">Website (Leave this field blank)</label>
         <input
           id="website"
@@ -245,11 +237,7 @@ const clearSuccess = () => {
           autocomplete="off"
         />
       </div>
-      <input
-        type="hidden"
-        name="timestamp"
-        :value="timestamp"
-      />
+      <input type="hidden" name="timestamp" :value="timestamp" />
 
       <!-- Name Field -->
       <div>
@@ -274,10 +262,7 @@ const clearSuccess = () => {
           ]"
           placeholder="Max Mustermann"
         />
-        <p
-          v-if="errors.senderName"
-          class="mt-1 text-sm text-red-600 font-body"
-        >
+        <p v-if="errors.senderName" class="mt-1 text-sm text-red-600 font-body">
           {{ errors.senderName }}
         </p>
       </div>
@@ -304,10 +289,7 @@ const clearSuccess = () => {
           ]"
           placeholder="max@beispiel.de"
         />
-        <p
-          v-if="errors.senderEmail"
-          class="mt-1 text-sm text-red-600 font-body"
-        >
+        <p v-if="errors.senderEmail" class="mt-1 text-sm text-red-600 font-body">
           {{ errors.senderEmail }}
         </p>
       </div>
@@ -335,10 +317,7 @@ const clearSuccess = () => {
           ]"
           placeholder="Ihre Anfrage"
         />
-        <p
-          v-if="errors.subject"
-          class="mt-1 text-sm text-red-600 font-body"
-        >
+        <p v-if="errors.subject" class="mt-1 text-sm text-red-600 font-body">
           {{ errors.subject }}
         </p>
       </div>
@@ -366,10 +345,7 @@ const clearSuccess = () => {
           ]"
           placeholder="Ihre Nachricht..."
         ></textarea>
-        <p
-          v-if="errors.message"
-          class="mt-1 text-sm text-red-600 font-body"
-        >
+        <p v-if="errors.message" class="mt-1 text-sm text-red-600 font-body">
           {{ errors.message }}
         </p>
         <p class="mt-1 text-xs text-vsg-blue-400 font-body">{{ message.length }} / 5000 Zeichen</p>
@@ -387,14 +363,8 @@ const clearSuccess = () => {
               : 'bg-gray-200 text-gray-500 cursor-not-allowed',
           ]"
         >
-          <span
-            v-if="isSubmitting"
-            class="flex items-center justify-center gap-2"
-          >
-            <FontAwesomeIcon
-              icon="spinner"
-              spin
-            />
+          <span v-if="isSubmitting" class="flex items-center justify-center gap-2">
+            <FontAwesomeIcon icon="spinner" spin />
             Wird gesendet...
           </span>
           <span v-else>Nachricht senden</span>

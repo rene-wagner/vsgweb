@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useSportInsuranceStore } from '../../stores/sportInsuranceStore';
-import MarkdownRenderer from '@/components/ui/MarkdownRenderer.vue';
-import ApiState from '@/components/ui/ApiState.vue';
-import HeroSection from '../../components/content/HeroSection.vue';
-import ContentSection from '../../components/content/ContentSection.vue';
-import Alert from '@/components/ui/Alert.vue';
+import { onMounted } from "vue";
+import { useSportInsuranceStore } from "../../stores/sportInsuranceStore";
+import MarkdownRenderer from "@/components/ui/MarkdownRenderer.vue";
+import ApiState from "@/components/ui/ApiState.vue";
+import HeroSection from "../../components/content/HeroSection.vue";
+import ContentSection from "../../components/content/ContentSection.vue";
+import Alert from "@/components/ui/Alert.vue";
 
 const sportInsuranceStore = useSportInsuranceStore();
 
@@ -15,7 +15,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900">
+  <div
+    class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
+  >
     <HeroSection
       headline="SPORTVERSICHERUNG"
       description="Informationen zur Sportversicherung des VSG Kugelberg e.V."
@@ -27,10 +29,7 @@ onMounted(async () => {
         <p class="font-body text-lg text-vsg-blue-700">
           <strong class="text-vsg-blue-900">Fragen zur Sportversicherung?</strong>
           Wenden Sie sich gerne an unseren Vorstand über die
-          <RouterLink
-            to="/kontakt"
-            class="text-vsg-gold-600 underline hover:text-vsg-gold-700"
-          >
+          <RouterLink to="/kontakt" class="text-vsg-gold-600 underline hover:text-vsg-gold-700">
             Kontaktseite </RouterLink
           >.
         </p>

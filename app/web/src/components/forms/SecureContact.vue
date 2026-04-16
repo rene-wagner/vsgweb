@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 interface Props {
   encrypted: string;
-  type?: 'email' | 'phone';
+  type?: "email" | "phone";
   placeholder?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  type: 'email',
-  placeholder: 'Kontakt laden...',
+  type: "email",
+  placeholder: "Kontakt laden...",
 });
 
 const isDecoded = ref(false);
-const decodedValue = ref('');
+const decodedValue = ref("");
 
-const protocol = computed(() => (props.type === 'phone' ? 'tel:' : 'mailto:'));
+const protocol = computed(() => (props.type === "phone" ? "tel:" : "mailto:"));
 
 const currentHref = computed(() => {
-  if (!isDecoded.value) return '#';
+  if (!isDecoded.value) return "#";
   return `${protocol.value}${decodedValue.value}`;
 });
 
@@ -29,8 +29,8 @@ function decode() {
     decodedValue.value = atob(props.encrypted);
     isDecoded.value = true;
   } catch (error) {
-    console.error('Failed to decode secure contact info:', error);
-    decodedValue.value = 'Fehler beim Laden';
+    console.error("Failed to decode secure contact info:", error);
+    decodedValue.value = "Fehler beim Laden";
     isDecoded.value = true;
   }
 }
@@ -43,7 +43,7 @@ function handleClick(event: MouseEvent) {
     // Small timeout to allow href to update before navigation trigger
     setTimeout(() => {
       const target = event.target as HTMLAnchorElement;
-      if (target && target.href && target.href !== '#' && !target.href.endsWith('#')) {
+      if (target && target.href && target.href !== "#" && !target.href.endsWith("#")) {
         window.location.href = target.href;
       }
     }, 50);
@@ -59,16 +59,10 @@ function handleClick(event: MouseEvent) {
     @focus="decode"
     @click="handleClick"
   >
-    <slot
-      v-if="isDecoded"
-      :value="decodedValue"
-    >
+    <slot v-if="isDecoded" :value="decodedValue">
       {{ decodedValue }}
     </slot>
-    <slot
-      v-else
-      name="placeholder"
-    >
+    <slot v-else name="placeholder">
       {{ placeholder }}
     </slot>
   </a>

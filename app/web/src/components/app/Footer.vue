@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
-import { RouterLink } from 'vue-router';
-import { useHistoryStore } from '@/stores/historyStore';
-import Logo from './Logo.vue';
+import { computed, onMounted } from "vue";
+import { RouterLink } from "vue-router";
+import { useHistoryStore } from "@/stores/historyStore";
+import Logo from "./Logo.vue";
 
 const historyStore = useHistoryStore();
 
 const vereinLinks = [
-  { label: 'Geschichte', href: '/verein/geschichte', isRouter: true },
-  { label: 'Vorstand', href: '/verein/vorstand', isRouter: true },
-  { label: 'Satzung', href: '/verein/satzung', isRouter: true },
-  { label: 'Beitragsordnung', href: '/verein/beitragsordnung', isRouter: true },
-  { label: 'Sportversicherung', href: '/verein/sportversicherung', isRouter: true },
-  { label: 'Mitgliedschaft', href: '/verein/mitgliedschaft', isRouter: true },
+  { label: "Geschichte", href: "/verein/geschichte", isRouter: true },
+  { label: "Vorstand", href: "/verein/vorstand", isRouter: true },
+  { label: "Satzung", href: "/verein/satzung", isRouter: true },
+  { label: "Beitragsordnung", href: "/verein/beitragsordnung", isRouter: true },
+  { label: "Sportversicherung", href: "/verein/sportversicherung", isRouter: true },
+  { label: "Mitgliedschaft", href: "/verein/mitgliedschaft", isRouter: true },
 ];
 
 const age = computed(() => {
@@ -49,7 +49,8 @@ onMounted(() => {
             <Logo class="h-14" />
           </div>
           <p class="max-w-md font-body font-normal leading-relaxed text-vsg-blue-300">
-            Seit über {{ age }} Jahren der Sportverein für Weißenfels und Umgebung. Tradition, Gemeinschaft und sportliche Exzellenz.
+            Seit über {{ age }} Jahren der Sportverein für Weißenfels und Umgebung. Tradition,
+            Gemeinschaft und sportliche Exzellenz.
           </p>
         </div>
 
@@ -57,10 +58,7 @@ onMounted(() => {
         <div class="md:col-start-4 md:text-right">
           <h5 class="mb-6 font-display text-xl tracking-wider text-vsg-gold-400">Verein</h5>
           <ul class="space-y-3">
-            <li
-              v-for="link in vereinLinks"
-              :key="link.label"
-            >
+            <li v-for="link in vereinLinks" :key="link.label">
               <RouterLink
                 v-if="link.isRouter"
                 :to="link.href"
@@ -80,8 +78,12 @@ onMounted(() => {
         </div>
       </div>
 
-      <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-vsg-gold-400/10 pt-8 md:flex-row">
-        <span class="font-body text-sm font-normal text-vsg-blue-400"> &copy; 2024 VSG Kugelberg e.V. Alle Rechte vorbehalten. </span>
+      <div
+        class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-vsg-gold-400/10 pt-8 md:flex-row"
+      >
+        <span class="font-body text-sm font-normal text-vsg-blue-400">
+          &copy; 2024 VSG Kugelberg e.V. Alle Rechte vorbehalten.
+        </span>
         <div class="flex gap-6">
           <RouterLink
             to="/impressum"

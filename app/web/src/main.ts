@@ -1,11 +1,11 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import App from './App.vue';
-import router from './router';
-import './style.css';
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import App from "./App.vue";
+import router from "./router";
+import "./style.css";
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faAddressBook,
   faArrowDown,
@@ -58,7 +58,7 @@ import {
   faWrench,
   faXmark,
   faFilePdf,
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
 library.add(
   faArrowDown,
@@ -124,13 +124,13 @@ const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
-app.component('FontAwesomeIcon', FontAwesomeIcon);
+app.component("FontAwesomeIcon", FontAwesomeIcon);
 
-app.mount('#app');
+app.mount("#app");
 
-document.addEventListener('DOMContentLoaded', () => {
-  const meta = document.createElement('meta');
-  meta.httpEquiv = 'Content-Security-Policy';
+document.addEventListener("DOMContentLoaded", () => {
+  const meta = document.createElement("meta");
+  meta.httpEquiv = "Content-Security-Policy";
   meta.content = [
     "default-src 'self';",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
@@ -139,6 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
     "font-src 'self' data: https://maxcdn.bootstrapcdn.com;",
     `connect-src 'self' ${import.meta.env.VITE_API_BASE_URL};`,
     `object-src 'self' ${import.meta.env.VITE_API_BASE_URL};`,
-  ].join('; ');
+  ].join("; ");
   document.head.appendChild(meta);
 });

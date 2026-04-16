@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
-import type { Trainer, TrainerLicense } from '../../types/department-detail.types';
+import { RouterLink } from "vue-router";
+import type { Trainer, TrainerLicense } from "../../types/department-detail.types";
 
 interface Props {
   trainer: Trainer;
@@ -9,12 +9,14 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  avatarGradient: 'from-vsg-blue-400 to-vsg-blue-600',
-  contactPagePath: '/kontakt',
+  avatarGradient: "from-vsg-blue-400 to-vsg-blue-600",
+  contactPagePath: "/kontakt",
 });
 
-function getLicenseBadgeClasses(variant: TrainerLicense['variant']): string {
-  return variant === 'gold' ? 'bg-vsg-gold-100 text-vsg-gold-800' : 'bg-vsg-blue-100 text-vsg-blue-800';
+function getLicenseBadgeClasses(variant: TrainerLicense["variant"]): string {
+  return variant === "gold"
+    ? "bg-vsg-gold-100 text-vsg-gold-800"
+    : "bg-vsg-blue-100 text-vsg-blue-800";
 }
 
 function getContactLink(): string {
@@ -36,18 +38,14 @@ function getContactLink(): string {
         :alt="trainer.name"
         class="h-full w-full object-cover"
       />
-      <div
-        v-else
-        class="absolute inset-0 flex items-center justify-center"
-      >
-        <FontAwesomeIcon
-          icon="user"
-          class="text-white/30"
-        />
+      <div v-else class="absolute inset-0 flex items-center justify-center">
+        <FontAwesomeIcon icon="user" class="text-white/30" />
       </div>
 
       <!-- Contact Overlay on Hover -->
-      <div class="absolute inset-0 flex items-center justify-center bg-vsg-blue-900/60 opacity-0 transition-opacity group-hover:opacity-100">
+      <div
+        class="absolute inset-0 flex items-center justify-center bg-vsg-blue-900/60 opacity-0 transition-opacity group-hover:opacity-100"
+      >
         <RouterLink
           :to="getContactLink()"
           class="translate-y-4 transform bg-vsg-gold-400 px-6 py-2 font-display text-lg tracking-wider text-vsg-blue-900 transition-transform group-hover:translate-y-0"
@@ -72,7 +70,10 @@ function getContactLink(): string {
           <span
             v-for="license in trainer.licenses"
             :key="license.name"
-            :class="[getLicenseBadgeClasses(license.variant), 'inline-block rounded px-2 py-1 font-body text-xs font-semibold']"
+            :class="[
+              getLicenseBadgeClasses(license.variant),
+              'inline-block rounded px-2 py-1 font-body text-xs font-semibold',
+            ]"
           >
             {{ license.name }}
           </span>

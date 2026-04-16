@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-import { RouterLink } from 'vue-router';
-import { storeToRefs } from 'pinia';
-import Button from '../ui/Button.vue';
-import Logo from './Logo.vue';
-import { useDepartmentsStore } from '@/stores/departmentsStore';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { ref, computed, onMounted } from "vue";
+import { RouterLink } from "vue-router";
+import { storeToRefs } from "pinia";
+import Button from "../ui/Button.vue";
+import Logo from "./Logo.vue";
+import { useDepartmentsStore } from "@/stores/departmentsStore";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 interface MenuItem {
   label: string;
@@ -20,12 +20,12 @@ const departmentsStore = useDepartmentsStore();
 const { departments, isLoading: departmentsLoading } = storeToRefs(departmentsStore);
 
 const vereinItems: MenuItem[] = [
-  { label: 'Geschichte', to: '/verein/geschichte' },
-  { label: 'Vorstand', to: '/verein/vorstand' },
-  { label: 'Satzung', to: '/verein/satzung' },
-  { label: 'Beitragsordnung', to: '/verein/beitragsordnung' },
-  { label: 'Sportversicherung', to: '/verein/sportversicherung' },
-  { label: 'Mitgliedschaft', to: '/verein/mitgliedschaft' },
+  { label: "Geschichte", to: "/verein/geschichte" },
+  { label: "Vorstand", to: "/verein/vorstand" },
+  { label: "Satzung", to: "/verein/satzung" },
+  { label: "Beitragsordnung", to: "/verein/beitragsordnung" },
+  { label: "Sportversicherung", to: "/verein/sportversicherung" },
+  { label: "Mitgliedschaft", to: "/verein/mitgliedschaft" },
 ];
 
 const abteilungenItems = computed<MenuItem[]>(() => {
@@ -62,14 +62,13 @@ function toggleAbteilungen() {
 </script>
 
 <template>
-  <nav class="fixed left-0 right-0 top-0 z-50 border-b border-vsg-gold-400/20 bg-vsg-blue-900/90 backdrop-blur-md">
+  <nav
+    class="fixed left-0 right-0 top-0 z-50 border-b border-vsg-gold-400/20 bg-vsg-blue-900/90 backdrop-blur-md"
+  >
     <div class="mx-auto max-w-7xl px-6 py-4">
       <div class="flex items-center justify-between">
         <!-- Logo -->
-        <RouterLink
-          to="/"
-          class="flex items-center"
-        >
+        <RouterLink to="/" class="flex items-center">
           <Logo class="h-12" />
         </RouterLink>
 
@@ -118,10 +117,7 @@ function toggleAbteilungen() {
             >
               <div class="py-2">
                 <!-- Loading state -->
-                <div
-                  v-if="departmentsLoading"
-                  class="px-4 py-2 text-sm text-vsg-gold-300/60"
-                >
+                <div v-if="departmentsLoading" class="px-4 py-2 text-sm text-vsg-gold-300/60">
                   Laden...
                 </div>
                 <!-- Empty state -->
@@ -150,11 +146,7 @@ function toggleAbteilungen() {
             class="font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
             >Kontakt</RouterLink
           >
-          <Button
-            variant="primary"
-            size="md"
-            >Mitglied werden</Button
-          >
+          <Button variant="primary" size="md">Mitglied werden</Button>
         </div>
 
         <!-- Mobile Burger Button -->
@@ -237,17 +229,9 @@ function toggleAbteilungen() {
           :style="{ maxHeight: isAbteilungenOpen ? '300px' : '0' }"
         >
           <!-- Loading state -->
-          <span
-            v-if="departmentsLoading"
-            class="text-lg text-vsg-gold-300/60"
-          >
-            Laden...
-          </span>
+          <span v-if="departmentsLoading" class="text-lg text-vsg-gold-300/60"> Laden... </span>
           <!-- Empty state -->
-          <span
-            v-else-if="abteilungenItems.length === 0"
-            class="text-lg text-vsg-gold-300/60"
-          >
+          <span v-else-if="abteilungenItems.length === 0" class="text-lg text-vsg-gold-300/60">
             Keine Abteilungen
           </span>
           <!-- Department links -->

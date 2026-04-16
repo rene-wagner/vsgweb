@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import {
   Chart,
   LineController,
@@ -13,12 +13,22 @@ import {
   Legend,
   type ChartConfiguration,
   type ChartData,
-} from 'chart.js';
+} from "chart.js";
 
-Chart.register(LineController, LineElement, PointElement, LinearScale, CategoryScale, Title, Filler, Tooltip, Legend);
+Chart.register(
+  LineController,
+  LineElement,
+  PointElement,
+  LinearScale,
+  CategoryScale,
+  Title,
+  Filler,
+  Tooltip,
+  Legend,
+);
 
 const props = defineProps<{
-  data: ChartData<'line'>;
+  data: ChartData<"line">;
   options?: any;
 }>();
 
@@ -32,8 +42,8 @@ const renderChart = () => {
     chartInstance.destroy();
   }
 
-  const config: ChartConfiguration<'line'> = {
-    type: 'line',
+  const config: ChartConfiguration<"line"> = {
+    type: "line",
     data: props.data,
     options: {
       responsive: true,
@@ -44,12 +54,12 @@ const renderChart = () => {
       scales: {
         y: {
           beginAtZero: false,
-          grid: { color: 'rgba(0, 0, 0, 0.05)' },
-          ticks: { color: '#002d5c', font: { family: 'Source Sans 3' } },
+          grid: { color: "rgba(0, 0, 0, 0.05)" },
+          ticks: { color: "#002d5c", font: { family: "Source Sans 3" } },
         },
         x: {
           grid: { display: false },
-          ticks: { color: '#002d5c', font: { family: 'Source Sans 3' } },
+          ticks: { color: "#002d5c", font: { family: "Source Sans 3" } },
         },
       },
       ...props.options,

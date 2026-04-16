@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { computed } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 interface Props {
   // Content
@@ -14,7 +14,7 @@ interface Props {
   iconUrl?: string;
 
   // Layout
-  minHeight?: 'screen' | '70vh' | '80vh';
+  minHeight?: "screen" | "70vh" | "80vh";
 
   // CTA buttons
   primaryCtaLabel?: string;
@@ -27,13 +27,13 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  headline: '',
+  headline: "",
   description: undefined,
   subtitle: undefined,
   tag: undefined,
   logo: null,
   iconUrl: undefined,
-  minHeight: 'screen',
+  minHeight: "screen",
   primaryCtaLabel: undefined,
   primaryCtaAnchor: undefined,
   secondaryCtaLabel: undefined,
@@ -48,26 +48,29 @@ const logoUrl = computed(() => {
 
 const minHeightClass = computed(() => {
   switch (props.minHeight) {
-    case '70vh':
-      return 'min-h-[70vh]';
-    case '80vh':
-      return 'min-h-[80vh]';
+    case "70vh":
+      return "min-h-[70vh]";
+    case "80vh":
+      return "min-h-[80vh]";
     default:
-      return 'min-h-screen';
+      return "min-h-screen";
   }
 });
 
 const hasCtaButtons = computed(() => {
-  return (props.primaryCtaLabel && props.primaryCtaAnchor) || (props.secondaryCtaLabel && props.secondaryCtaAnchor);
+  return (
+    (props.primaryCtaLabel && props.primaryCtaAnchor) ||
+    (props.secondaryCtaLabel && props.secondaryCtaAnchor)
+  );
 });
 
 function handleAnchorClick(e: MouseEvent, anchor: string) {
-  if (anchor.startsWith('#')) {
+  if (anchor.startsWith("#")) {
     const target = document.querySelector(anchor);
     if (target) {
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth' });
-      history.pushState(null, '', anchor);
+      target.scrollIntoView({ behavior: "smooth" });
+      history.pushState(null, "", anchor);
     }
   }
 }
@@ -79,30 +82,22 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
     :class="minHeightClass"
   >
     <!-- Background gradient overlay -->
-    <div class="absolute inset-0 bg-linear-to-br from-vsg-blue-900 via-vsg-blue-800/50 to-transparent" />
+    <div
+      class="absolute inset-0 bg-linear-to-br from-vsg-blue-900 via-vsg-blue-800/50 to-transparent"
+    />
 
     <!-- Decorative elements -->
     <div class="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-vsg-gold-400/10 blur-3xl" />
     <div class="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-vsg-blue-500/20 blur-3xl" />
 
     <!-- Optional background icon -->
-    <div
-      v-if="iconUrl"
-      class="absolute right-10 top-1/2 -translate-y-1/2 opacity-7"
-    >
-      <img
-        :src="iconUrl"
-        alt=""
-        class="h-125 w-125 object-contain"
-      />
+    <div v-if="iconUrl" class="absolute right-10 top-1/2 -translate-y-1/2 opacity-7">
+      <img :src="iconUrl" alt="" class="h-125 w-125 object-contain" />
     </div>
 
     <div class="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center">
       <!-- Logo -->
-      <div
-        v-if="logoUrl"
-        class="animate-slide-up my-8 delay-100"
-      >
+      <div v-if="logoUrl" class="animate-slide-up my-8 delay-100">
         <img
           :src="logoUrl"
           :alt="logo?.originalName || 'Logo'"
@@ -111,11 +106,10 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
       </div>
 
       <!-- Tag badge -->
-      <div
-        v-if="tag"
-        class="animate-slide-up my-8 delay-200"
-      >
-        <span class="inline-block border border-vsg-gold-400/30 px-6 py-2 font-body font-normal uppercase tracking-widest text-vsg-gold-400">
+      <div v-if="tag" class="animate-slide-up my-8 delay-200">
+        <span
+          class="inline-block border border-vsg-gold-400/30 px-6 py-2 font-body font-normal uppercase tracking-widest text-vsg-gold-400"
+        >
           {{ tag }}
         </span>
       </div>
@@ -123,7 +117,9 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
       <!-- Headline -->
       <h1
         class="animate-slide-up text-glow font-display text-7xl text-white delay-300 md:text-8xl lg:text-9xl"
-        :class="{ 'text-[5rem] leading-[0.85] tracking-tight md:text-[8rem] lg:text-[10rem]': iconUrl }"
+        :class="{
+          'text-[5rem] leading-[0.85] tracking-tight md:text-[8rem] lg:text-[10rem]': iconUrl,
+        }"
       >
         {{ headline }}
       </h1>
@@ -135,10 +131,7 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
         :class="{ 'leading-relaxed text-vsg-blue-200': subtitle }"
       >
         {{ description }}
-        <span
-          v-if="subtitle"
-          class="mt-2 block text-vsg-gold-400"
-        >
+        <span v-if="subtitle" class="mt-2 block text-vsg-gold-400">
           {{ subtitle }}
         </span>
       </p>
@@ -171,10 +164,7 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
         v-if="showScrollIndicator"
         class="absolute bottom-1 left-1/2 -translate-x-1/2 animate-bounce"
       >
-        <FontAwesomeIcon
-          icon="arrow-down"
-          class="text-vsg-gold-400"
-        />
+        <FontAwesomeIcon icon="arrow-down" class="text-vsg-gold-400" />
       </div>
     </div>
   </section>

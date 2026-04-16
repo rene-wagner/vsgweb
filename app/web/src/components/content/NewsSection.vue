@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
-import { storeToRefs } from 'pinia';
-import SectionHeader from '@/components/ui/SectionHeader.vue';
-import NewsCardFeatured from './NewsCardFeatured.vue';
-import NewsCardListItem from './NewsCardListItem.vue';
-import { usePostsStore } from '../../stores/postsStore';
+import { computed, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import SectionHeader from "@/components/ui/SectionHeader.vue";
+import NewsCardFeatured from "./NewsCardFeatured.vue";
+import NewsCardListItem from "./NewsCardListItem.vue";
+import { usePostsStore } from "../../stores/postsStore";
 
 interface Props {
   headline?: string;
@@ -19,11 +19,14 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const postsStore = usePostsStore();
-const { posts, isLoading, error, departmentPosts, isDepartmentPostsLoading, departmentPostsError } = storeToRefs(postsStore);
+const { posts, isLoading, error, departmentPosts, isDepartmentPostsLoading, departmentPostsError } =
+  storeToRefs(postsStore);
 
 // Use separate state when filtering by category
 const activePosts = computed(() => (props.categorySlug ? departmentPosts.value : posts.value));
-const activeLoading = computed(() => (props.categorySlug ? isDepartmentPostsLoading.value : isLoading.value));
+const activeLoading = computed(() =>
+  props.categorySlug ? isDepartmentPostsLoading.value : isLoading.value,
+);
 const activeError = computed(() => (props.categorySlug ? departmentPostsError.value : error.value));
 
 onMounted(() => {
@@ -45,23 +48,23 @@ function retry() {
 // Format date to German locale
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
-  return date.toLocaleDateString('de-DE', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
+  return date.toLocaleDateString("de-DE", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
   });
 }
 
 // Get excerpt from content (first 150 chars)
 function getExcerpt(content: string | null): string {
-  if (!content) return '';
-  const plainText = content.replace(/<[^>]*>/g, '');
-  return plainText.length > 150 ? plainText.substring(0, 150) + '...' : plainText;
+  if (!content) return "";
+  const plainText = content.replace(/<[^>]*>/g, "");
+  return plainText.length > 150 ? plainText.substring(0, 150) + "..." : plainText;
 }
 
 // Get category name from first category or default
 function getCategoryName(categories: { name: string }[]): string {
-  return categories.length > 0 ? categories[0].name.toUpperCase() : 'ALLGEMEIN';
+  return categories.length > 0 ? categories[0].name.toUpperCase() : "ALLGEMEIN";
 }
 
 // Featured post is the first one
@@ -74,11 +77,7 @@ const listPosts = computed(() => activePosts.value.slice(1));
 <template>
   <section class="relative bg-gray-50 py-32">
     <div class="mx-auto max-w-7xl px-6">
-      <SectionHeader
-        :subtitle="props.subtitle || ''"
-        :title="props.headline || ''"
-        class="mb-6"
-      />
+      <SectionHeader :subtitle="props.subtitle || ''" :title="props.headline || ''" class="mb-6" />
       <p
         v-if="props.description"
         class="mx-auto mt-6 mb-16 max-w-3xl text-center font-body text-lg text-gray-600"
@@ -87,18 +86,14 @@ const listPosts = computed(() => activePosts.value.slice(1));
       </p>
 
       <!-- Loading State -->
-      <div
-        v-if="activeLoading"
-        class="flex justify-center py-12"
-      >
-        <div class="h-12 w-12 animate-spin rounded-full border-4 border-vsg-blue-200 border-t-vsg-blue-600"></div>
+      <div v-if="activeLoading" class="flex justify-center py-12">
+        <div
+          class="h-12 w-12 animate-spin rounded-full border-4 border-vsg-blue-200 border-t-vsg-blue-600"
+        ></div>
       </div>
 
       <!-- Error State -->
-      <div
-        v-else-if="activeError"
-        class="mx-auto max-w-2xl rounded-lg bg-red-50 p-6 text-center"
-      >
+      <div v-else-if="activeError" class="mx-auto max-w-2xl rounded-lg bg-red-50 p-6 text-center">
         <p class="text-red-600">{{ activeError }}</p>
         <button
           class="mt-4 rounded bg-vsg-blue-600 px-4 py-2 text-white hover:bg-vsg-blue-700"
@@ -117,10 +112,7 @@ const listPosts = computed(() => activePosts.value.slice(1));
       </div>
 
       <!-- News Content -->
-      <div
-        v-else
-        class="grid gap-8 md:grid-cols-2"
-      >
+      <div v-else class="grid gap-8 md:grid-cols-2">
         <!-- Featured News -->
         <NewsCardFeatured
           v-if="featuredPost"
@@ -132,10 +124,7 @@ const listPosts = computed(() => activePosts.value.slice(1));
         />
 
         <!-- News List -->
-        <div
-          v-if="listPosts.length > 0"
-          class="space-y-6"
-        >
+        <div v-if="listPosts.length > 0" class="space-y-6">
           <NewsCardListItem
             v-for="post in listPosts"
             :key="post.id"

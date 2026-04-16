@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { RouterLink } from 'vue-router';
+import { computed } from "vue";
+import { RouterLink } from "vue-router";
 
 interface Props {
   title: string;
@@ -15,14 +15,18 @@ const props = defineProps<Props>();
 
 // Check if secondary CTA is an external link (mailto, http, etc.)
 const isSecondaryExternal = computed(() => {
-  return props.secondaryCtaRoute.startsWith('mailto:') || props.secondaryCtaRoute.startsWith('http');
+  return (
+    props.secondaryCtaRoute.startsWith("mailto:") || props.secondaryCtaRoute.startsWith("http")
+  );
 });
 </script>
 
 <template>
   <section class="relative overflow-hidden py-32">
     <!-- Gold gradient background -->
-    <div class="absolute inset-0 bg-linear-to-r from-vsg-gold-600 via-vsg-gold-400 to-vsg-gold-300" />
+    <div
+      class="absolute inset-0 bg-linear-to-r from-vsg-gold-600 via-vsg-gold-400 to-vsg-gold-300"
+    />
 
     <div class="relative z-10 mx-auto max-w-4xl px-6 text-center">
       <!-- Title with line breaks preserved -->

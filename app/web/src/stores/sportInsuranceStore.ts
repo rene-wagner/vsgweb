@@ -1,10 +1,10 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
-import type { SportInsuranceContent } from '../types/sport-insurance.types';
+import { ref } from "vue";
+import { defineStore } from "pinia";
+import type { SportInsuranceContent } from "../types/sport-insurance.types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useSportInsuranceStore = defineStore('sportInsurance', () => {
+export const useSportInsuranceStore = defineStore("sportInsurance", () => {
   const sportInsurance = ref<SportInsuranceContent | null>(null);
   const isLoading = ref(false);
   const error = ref<string | null>(null);
@@ -15,18 +15,18 @@ export const useSportInsuranceStore = defineStore('sportInsurance', () => {
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/sport-insurance`, {
-        method: 'GET',
+        method: "GET",
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch sport insurance content');
+        throw new Error("Failed to fetch sport insurance content");
       }
 
       const data = (await response.json()) as SportInsuranceContent;
       sportInsurance.value = data;
       return data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : 'An error occurred';
+      error.value = e instanceof Error ? e.message : "An error occurred";
       return null;
     } finally {
       isLoading.value = false;

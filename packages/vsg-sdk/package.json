@@ -4,6 +4,12 @@
   "version": "0.0.0",
   "scripts": {
     "build": "node -e \"process.exit(0)\"",
-    "lint": "node -e \"process.exit(0)\""
+    "lint": "oxlint --deny-warnings --no-error-on-unmatched-pattern \"src/**/*.{ts,tsx,js,jsx,mjs,cjs}\"",
+    "format": "oxfmt --write --no-error-on-unmatched-pattern \"src/**/*.{ts,tsx,js,jsx,mjs,cjs}\"",
+    "format:check": "oxfmt --check --no-error-on-unmatched-pattern \"src/**/*.{ts,tsx,js,jsx,mjs,cjs}\""
+  },
+  "devDependencies": {
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0"
   }
 }

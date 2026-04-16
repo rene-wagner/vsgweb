@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
-import type { HomepageStat } from '@/types/homepage-content.types';
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import type { HomepageStat } from "@/types/homepage-content.types";
 
 interface Props {
   stats?: HomepageStat[];
@@ -63,12 +63,12 @@ interface StatEntry {
  * "n/a"   → { numericTarget: null, suffix: "" }
  */
 function parseStatValue(value: string): { numericTarget: number | null; suffix: string } {
-  const parsed = parseFloat(value.replace(',', '.'));
+  const parsed = parseFloat(value.replace(",", "."));
   if (isNaN(parsed)) {
-    return { numericTarget: null, suffix: '' };
+    return { numericTarget: null, suffix: "" };
   }
   const match = value.match(/^[\d.,]+/);
-  const suffix = match ? value.slice(match[0].length) : '';
+  const suffix = match ? value.slice(match[0].length) : "";
   return { numericTarget: parsed, suffix };
 }
 
@@ -83,7 +83,7 @@ function easeOut(t: number) {
 
 function animateStat(index: number, target: number, duration = 1500) {
   // Respect prefers-reduced-motion
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     statEntries.value[index].displayValue = target;
     return;
   }
@@ -151,10 +151,7 @@ watch(isVisible, (visible) => {
 </script>
 
 <template>
-  <section
-    ref="sectionRef"
-    class="relative bg-gray-50 py-20"
-  >
+  <section ref="sectionRef" class="relative bg-gray-50 py-20">
     <div class="mx-auto max-w-7xl px-6">
       <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
         <div
@@ -164,12 +161,16 @@ watch(isVisible, (visible) => {
           :class="`delay-${(index + 1) * 100}`"
         >
           <span class="font-display text-6xl text-vsg-blue-600 md:text-8xl">
-            <template v-if="entry.numericTarget !== null"> {{ entry.displayValue }}{{ entry.suffix }} </template>
+            <template v-if="entry.numericTarget !== null">
+              {{ entry.displayValue }}{{ entry.suffix }}
+            </template>
             <template v-else>
               {{ entry.rawValue }}
             </template>
           </span>
-          <span class="mt-2 block font-body text-sm font-normal uppercase tracking-widest text-vsg-blue-800">
+          <span
+            class="mt-2 block font-body text-sm font-normal uppercase tracking-widest text-vsg-blue-800"
+          >
             {{ entry.label }}
           </span>
         </div>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { storeToRefs } from 'pinia';
-import HeroSection from '../components/content/HeroSection.vue';
-import WelcomeSection from '../components/content/WelcomeSection.vue';
-import StatsSection from '../components/content/StatsSection.vue';
-import DepartmentsSection from '../components/department/DepartmentsSection.vue';
-import NewsSection from '../components/content/NewsSection.vue';
-import CtaSection from '../components/content/CtaSection.vue';
-import { useHomepageStore } from '../stores/homepageStore';
+import { onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import HeroSection from "../components/content/HeroSection.vue";
+import WelcomeSection from "../components/content/WelcomeSection.vue";
+import StatsSection from "../components/content/StatsSection.vue";
+import DepartmentsSection from "../components/department/DepartmentsSection.vue";
+import NewsSection from "../components/content/NewsSection.vue";
+import CtaSection from "../components/content/CtaSection.vue";
+import { useHomepageStore } from "../stores/homepageStore";
 
 const homepageStore = useHomepageStore();
 const { homepageContent } = storeToRefs(homepageStore);
@@ -18,7 +18,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900">
+  <div
+    class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
+  >
     <HeroSection
       :tag="homepageContent?.heroTag"
       :logo="homepageContent?.heroLogo ?? null"

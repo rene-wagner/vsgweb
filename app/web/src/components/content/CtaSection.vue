@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Button from '@/components/ui/Button.vue';
+import Button from "@/components/ui/Button.vue";
 
 interface Props {
   headline?: string;
@@ -8,15 +8,15 @@ interface Props {
   primaryButtonLink?: string;
   secondaryButtonText?: string;
   secondaryButtonLink?: string;
-  theme?: 'gold' | 'white';
+  theme?: "gold" | "white";
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  primaryButtonText: 'Mitglied werden',
-  primaryButtonLink: '/verein/mitgliedschaft',
-  secondaryButtonText: 'Kontakt',
-  secondaryButtonLink: '/kontakt',
-  theme: 'gold',
+  primaryButtonText: "Mitglied werden",
+  primaryButtonLink: "/verein/mitgliedschaft",
+  secondaryButtonText: "Kontakt",
+  secondaryButtonLink: "/kontakt",
+  theme: "gold",
 });
 </script>
 
@@ -34,7 +34,9 @@ const props = withDefaults(defineProps<Props>(), {
       <!-- eslint-disable vue/no-v-html -->
       <h3
         class="font-display leading-tight tracking-wider text-vsg-blue-900 uppercase mb-8"
-        :class="props.theme === 'white' ? 'text-4xl md:text-6xl' : 'text-5xl md:text-7xl lg:text-8xl'"
+        :class="
+          props.theme === 'white' ? 'text-4xl md:text-6xl' : 'text-5xl md:text-7xl lg:text-8xl'
+        "
         v-html="props.headline"
       ></h3>
       <!-- eslint-enable vue/no-v-html -->
@@ -45,13 +47,7 @@ const props = withDefaults(defineProps<Props>(), {
         {{ props.description }}
       </p>
       <div class="mt-10 flex flex-col items-center justify-center gap-6 sm:flex-row">
-        <Button
-          variant="secondary"
-          size="lg"
-          :glow="true"
-          is-router
-          :to="props.primaryButtonLink"
-        >
+        <Button variant="secondary" size="lg" :glow="true" is-router :to="props.primaryButtonLink">
           {{ props.primaryButtonText }}
         </Button>
         <Button

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import type { TrainingGroup } from '../../types/department-detail.types';
-import TrainingTable from './TrainingTable.vue';
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import type { TrainingGroup } from "../../types/department-detail.types";
+import TrainingTable from "./TrainingTable.vue";
 
 interface Props {
   title: string;
@@ -12,24 +12,26 @@ interface Props {
 
 defineProps<Props>();
 
-function getHeaderClasses(variant: TrainingGroup['variant']): string {
-  return variant === 'primary' ? 'bg-vsg-blue-600' : 'bg-vsg-blue-900';
+function getHeaderClasses(variant: TrainingGroup["variant"]): string {
+  return variant === "primary" ? "bg-vsg-blue-600" : "bg-vsg-blue-900";
 }
 
-function getIconBgClasses(variant: TrainingGroup['variant']): string {
-  return variant === 'primary' ? 'bg-white/20' : 'bg-vsg-gold-400/20';
+function getIconBgClasses(variant: TrainingGroup["variant"]): string {
+  return variant === "primary" ? "bg-white/20" : "bg-vsg-gold-400/20";
 }
 
-function getIconClasses(variant: TrainingGroup['variant']): string {
-  return variant === 'primary' ? 'text-white' : 'text-vsg-gold-400';
+function getIconClasses(variant: TrainingGroup["variant"]): string {
+  return variant === "primary" ? "text-white" : "text-vsg-gold-400";
 }
 
-function getAgeRangeClasses(variant: TrainingGroup['variant']): string {
-  return variant === 'primary' ? 'text-vsg-blue-100' : 'text-vsg-blue-300';
+function getAgeRangeClasses(variant: TrainingGroup["variant"]): string {
+  return variant === "primary" ? "text-vsg-blue-100" : "text-vsg-blue-300";
 }
 
-function getNoteClasses(variant: TrainingGroup['variant']): string {
-  return variant === 'primary' ? 'bg-vsg-gold-50 border-vsg-gold-200 text-vsg-gold-800' : 'bg-vsg-blue-50 border-vsg-blue-200 text-vsg-blue-800';
+function getNoteClasses(variant: TrainingGroup["variant"]): string {
+  return variant === "primary"
+    ? "bg-vsg-gold-50 border-vsg-gold-200 text-vsg-gold-800"
+    : "bg-vsg-blue-50 border-vsg-blue-200 text-vsg-blue-800";
 }
 </script>
 
@@ -57,12 +59,20 @@ function getNoteClasses(variant: TrainingGroup['variant']): string {
         <div
           v-for="group in groups"
           :key="group.name"
-          :class="['card-hover overflow-hidden rounded-xl border border-gray-200 bg-gray-50', { 'w-full max-w-2xl': groups.length === 1 }]"
+          :class="[
+            'card-hover overflow-hidden rounded-xl border border-gray-200 bg-gray-50',
+            { 'w-full max-w-2xl': groups.length === 1 },
+          ]"
         >
           <!-- Card Header -->
           <div :class="[getHeaderClasses(group.variant), 'px-8 py-6']">
             <div class="flex items-center gap-4">
-              <div :class="[getIconBgClasses(group.variant), 'flex h-14 w-14 items-center justify-center rounded-lg']">
+              <div
+                :class="[
+                  getIconBgClasses(group.variant),
+                  'flex h-14 w-14 items-center justify-center rounded-lg',
+                ]"
+              >
                 <!-- Youth Icon -->
                 <FontAwesomeIcon
                   v-if="group.icon === 'youth'"
@@ -97,10 +107,7 @@ function getNoteClasses(variant: TrainingGroup['variant']): string {
               :class="[getNoteClasses(group.variant), 'mt-6 rounded-lg border p-4']"
             >
               <!-- eslint-disable-next-line vue/no-v-html -->
-              <p
-                class="font-body text-sm"
-                v-html="group.note"
-              />
+              <p class="font-body text-sm" v-html="group.note" />
             </div>
           </div>
         </div>

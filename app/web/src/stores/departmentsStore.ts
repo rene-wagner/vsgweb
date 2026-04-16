@@ -1,5 +1,5 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
+import { ref } from "vue";
+import { defineStore } from "pinia";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -116,7 +116,7 @@ interface PaginatedResponse {
   };
 }
 
-export const useDepartmentsStore = defineStore('departments', () => {
+export const useDepartmentsStore = defineStore("departments", () => {
   // List state
   const departments = ref<Department[]>([]);
   const isLoading = ref(false);
@@ -134,17 +134,17 @@ export const useDepartmentsStore = defineStore('departments', () => {
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/departments?limit=100`, {
-        method: 'GET',
+        method: "GET",
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch departments');
+        throw new Error("Failed to fetch departments");
       }
 
       const result = (await response.json()) as PaginatedResponse;
       departments.value = result.data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : 'An error occurred';
+      error.value = e instanceof Error ? e.message : "An error occurred";
     } finally {
       isLoading.value = false;
     }
@@ -158,7 +158,7 @@ export const useDepartmentsStore = defineStore('departments', () => {
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/departments/${slug}`, {
-        method: 'GET',
+        method: "GET",
       });
 
       if (response.status === 404) {
@@ -167,12 +167,12 @@ export const useDepartmentsStore = defineStore('departments', () => {
       }
 
       if (!response.ok) {
-        throw new Error('Failed to fetch department');
+        throw new Error("Failed to fetch department");
       }
 
       currentDepartment.value = (await response.json()) as Department;
     } catch (e) {
-      currentDepartmentError.value = e instanceof Error ? e.message : 'An error occurred';
+      currentDepartmentError.value = e instanceof Error ? e.message : "An error occurred";
     } finally {
       currentDepartmentLoading.value = false;
     }

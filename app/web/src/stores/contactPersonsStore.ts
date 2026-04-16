@@ -1,5 +1,5 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
+import { ref } from "vue";
+import { defineStore } from "pinia";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -47,7 +47,7 @@ interface PaginatedResponse {
   };
 }
 
-export const useContactPersonsStore = defineStore('contact-persons', () => {
+export const useContactPersonsStore = defineStore("contact-persons", () => {
   const contactPersons = ref<ContactPerson[]>([]);
   const isLoading = ref(false);
   const error = ref<string | null>(null);
@@ -58,17 +58,17 @@ export const useContactPersonsStore = defineStore('contact-persons', () => {
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/contact-persons?limit=50`, {
-        method: 'GET',
+        method: "GET",
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch contact persons');
+        throw new Error("Failed to fetch contact persons");
       }
 
       const result = (await response.json()) as PaginatedResponse;
       contactPersons.value = result.data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : 'An error occurred';
+      error.value = e instanceof Error ? e.message : "An error occurred";
     } finally {
       isLoading.value = false;
     }

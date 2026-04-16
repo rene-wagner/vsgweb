@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { useBoardStore } from '../../stores/boardStore';
-import ApiState from '@/components/ui/ApiState.vue';
-import HeroSection from '../../components/content/HeroSection.vue';
-import ContentSection from '../../components/content/ContentSection.vue';
-import Alert from '@/components/ui/Alert.vue';
+import { onMounted, computed } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { useBoardStore } from "../../stores/boardStore";
+import ApiState from "@/components/ui/ApiState.vue";
+import HeroSection from "../../components/content/HeroSection.vue";
+import ContentSection from "../../components/content/ContentSection.vue";
+import Alert from "@/components/ui/Alert.vue";
 
 const boardStore = useBoardStore();
 
@@ -24,12 +24,14 @@ function getProfileImageUrl(filename: string): string {
 
 // Get badge color based on position
 function getBadgeColor(index: number): string {
-  return index === 0 ? 'bg-vsg-gold-400' : 'bg-vsg-blue-200';
+  return index === 0 ? "bg-vsg-gold-400" : "bg-vsg-blue-200";
 }
 </script>
 
 <template>
-  <div class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900">
+  <div
+    class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
+  >
     <HeroSection
       :headline="boardStore.boardContent?.headline || 'VORSTAND'"
       :description="boardStore.boardContent?.description || 'Die Führung des VSG Kugelberg'"
@@ -44,10 +46,7 @@ function getBadgeColor(index: number): string {
         empty-message="Die Vorstandsinformationen werden derzeit aktualisiert."
       >
         <div class="space-y-12">
-          <Alert
-            :message="boardStore.boardContent!.note"
-            variant="info"
-          />
+          <Alert :message="boardStore.boardContent!.note" variant="info" />
 
           <!-- Introduction -->
           <div>
@@ -60,10 +59,7 @@ function getBadgeColor(index: number): string {
           </div>
 
           <!-- Board Members -->
-          <div
-            v-if="sortedBoardMembers.length > 0"
-            class="border-t border-vsg-blue-100 pt-12"
-          >
+          <div v-if="sortedBoardMembers.length > 0" class="border-t border-vsg-blue-100 pt-12">
             <div class="mt-8 grid gap-6 md:grid-cols-2">
               <div
                 v-for="(member, index) in sortedBoardMembers"
@@ -88,10 +84,7 @@ function getBadgeColor(index: number): string {
                       class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full"
                       :class="getBadgeColor(index)"
                     >
-                      <FontAwesomeIcon
-                        icon="user"
-                        class="text-vsg-blue-900"
-                      />
+                      <FontAwesomeIcon icon="user" class="text-vsg-blue-900" />
                     </div>
                   </div>
 
@@ -103,7 +96,9 @@ function getBadgeColor(index: number): string {
                     >
                       {{ member.type }}
                     </span>
-                    <p class="mt-2 font-body text-lg font-semibold text-vsg-blue-900">{{ member.firstName }} {{ member.lastName }}</p>
+                    <p class="mt-2 font-body text-lg font-semibold text-vsg-blue-900">
+                      {{ member.firstName }} {{ member.lastName }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -111,12 +106,11 @@ function getBadgeColor(index: number): string {
           </div>
 
           <!-- No Members Message -->
-          <div
-            v-else
-            class="border-t border-vsg-blue-100 pt-12"
-          >
+          <div v-else class="border-t border-vsg-blue-100 pt-12">
             <div class="rounded-xl bg-gray-50 border border-gray-200 p-8 text-center">
-              <p class="font-body text-gray-600">Derzeit sind keine Vorstandsmitglieder hinterlegt.</p>
+              <p class="font-body text-gray-600">
+                Derzeit sind keine Vorstandsmitglieder hinterlegt.
+              </p>
             </div>
           </div>
         </div>

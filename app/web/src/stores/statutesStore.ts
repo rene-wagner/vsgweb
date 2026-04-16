@@ -1,10 +1,10 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
-import type { StatutesContent } from '../types/statutes.types';
+import { ref } from "vue";
+import { defineStore } from "pinia";
+import type { StatutesContent } from "../types/statutes.types";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useStatutesStore = defineStore('statutes', () => {
+export const useStatutesStore = defineStore("statutes", () => {
   const statutes = ref<StatutesContent | null>(null);
   const isLoading = ref(false);
   const error = ref<string | null>(null);
@@ -15,18 +15,18 @@ export const useStatutesStore = defineStore('statutes', () => {
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/statutes`, {
-        method: 'GET',
+        method: "GET",
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch statutes content');
+        throw new Error("Failed to fetch statutes content");
       }
 
       const data = (await response.json()) as StatutesContent;
       statutes.value = data;
       return data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : 'An error occurred';
+      error.value = e instanceof Error ? e.message : "An error occurred";
       return null;
     } finally {
       isLoading.value = false;

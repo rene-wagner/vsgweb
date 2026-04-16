@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { DepartmentLocation } from '../../types/department-detail.types';
-import LocationCard from './LocationCard.vue';
+import type { DepartmentLocation } from "../../types/department-detail.types";
+import LocationCard from "./LocationCard.vue";
 
 interface Props {
   title: string;
@@ -32,7 +32,9 @@ defineProps<Props>();
       </div>
 
       <!-- Locations Grid -->
-      <div :class="['gap-8', locations.length === 1 ? 'flex justify-center' : 'grid md:grid-cols-2']">
+      <div
+        :class="['gap-8', locations.length === 1 ? 'flex justify-center' : 'grid md:grid-cols-2']"
+      >
         <LocationCard
           v-for="location in locations"
           :key="location.name"

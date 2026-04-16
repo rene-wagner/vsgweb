@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
-const STORAGE_KEY = 'cookie_consent';
+const STORAGE_KEY = "cookie_consent";
 
 function readStoredConsent(): boolean {
   try {
@@ -15,7 +15,7 @@ function readStoredConsent(): boolean {
 
 const isVisible = ref<boolean>(readStoredConsent());
 
-function setConsent(value: 'accepted' | 'declined'): void {
+function setConsent(value: "accepted" | "declined"): void {
   try {
     localStorage.setItem(STORAGE_KEY, value);
   } catch {
@@ -25,11 +25,11 @@ function setConsent(value: 'accepted' | 'declined'): void {
 }
 
 function acceptConsent(): void {
-  setConsent('accepted');
+  setConsent("accepted");
 }
 
 function declineConsent(): void {
-  setConsent('declined');
+  setConsent("declined");
 }
 </script>
 
@@ -40,11 +40,15 @@ function declineConsent(): void {
     role="region"
     aria-label="Cookie-Einwilligung"
   >
-    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+    <div
+      class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4"
+    >
       <p class="flex-1 font-body font-normal text-sm text-vsg-blue-100 leading-relaxed">
-        Diese Website kann Cookies verwenden, um Ihr Nutzungserlebnis zu verbessern. Mit einem Klick auf
-        <strong class="text-white">„Akzeptieren"</strong> stimmen Sie der Verwendung zu. Mit <strong class="text-white">„Ablehnen"</strong> werden nur
-        technisch notwendige Cookies gesetzt. Weitere Informationen finden Sie in unserer
+        Diese Website kann Cookies verwenden, um Ihr Nutzungserlebnis zu verbessern. Mit einem Klick
+        auf
+        <strong class="text-white">„Akzeptieren"</strong> stimmen Sie der Verwendung zu. Mit
+        <strong class="text-white">„Ablehnen"</strong> werden nur technisch notwendige Cookies
+        gesetzt. Weitere Informationen finden Sie in unserer
         <a
           href="/datenschutz"
           class="underline text-vsg-gold-300 hover:text-vsg-gold-200 transition-colors"

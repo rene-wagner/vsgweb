@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Trainer } from '../../types/department-detail.types';
-import TrainerCard from './TrainerCard.vue';
+import type { Trainer } from "../../types/department-detail.types";
+import TrainerCard from "./TrainerCard.vue";
 
 interface Props {
   title: string;
@@ -11,13 +11,17 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  description: '',
-  contactPagePath: '/kontakt',
+  description: "",
+  contactPagePath: "/kontakt",
 });
 
 // Vary the gradient slightly for visual interest
 function getAvatarGradient(index: number): string {
-  const gradients = ['from-vsg-blue-400 to-vsg-blue-600', 'from-vsg-blue-500 to-vsg-blue-700', 'from-vsg-blue-600 to-vsg-blue-800'];
+  const gradients = [
+    "from-vsg-blue-400 to-vsg-blue-600",
+    "from-vsg-blue-500 to-vsg-blue-700",
+    "from-vsg-blue-600 to-vsg-blue-800",
+  ];
   return gradients[index % gradients.length];
 }
 </script>
@@ -42,7 +46,9 @@ function getAvatarGradient(index: number): string {
       </div>
 
       <!-- Trainers Grid -->
-      <div :class="['gap-8', trainers.length === 1 ? 'flex justify-center' : 'grid md:grid-cols-3']">
+      <div
+        :class="['gap-8', trainers.length === 1 ? 'flex justify-center' : 'grid md:grid-cols-3']"
+      >
         <TrainerCard
           v-for="(trainer, index) in trainers"
           :key="trainer.name"

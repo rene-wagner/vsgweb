@@ -1,6 +1,6 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
-import { api, ApiError } from '@/utils/api';
+import { ref } from "vue";
+import { defineStore } from "pinia";
+import { api, ApiError } from "@/utils/api";
 
 export interface Author {
   id: number;
@@ -52,7 +52,7 @@ interface PaginatedResponse {
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const usePostsStore = defineStore('posts', () => {
+export const usePostsStore = defineStore("posts", () => {
   // List state
   const posts = ref<Post[]>([]);
   const isLoading = ref(false);
@@ -75,17 +75,17 @@ export const usePostsStore = defineStore('posts', () => {
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/posts?published=true&limit=${limit}`, {
-        method: 'GET',
+        method: "GET",
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch posts');
+        throw new Error("Failed to fetch posts");
       }
 
       const result = (await response.json()) as PaginatedResponse;
       posts.value = result.data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : 'An error occurred';
+      error.value = e instanceof Error ? e.message : "An error occurred";
     } finally {
       isLoading.value = false;
     }
@@ -96,18 +96,21 @@ export const usePostsStore = defineStore('posts', () => {
     departmentPostsError.value = null;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/posts?published=true&category=${encodeURIComponent(categorySlug)}&limit=${limit}`, {
-        method: 'GET',
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/api/posts?published=true&category=${encodeURIComponent(categorySlug)}&limit=${limit}`,
+        {
+          method: "GET",
+        },
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to fetch posts');
+        throw new Error("Failed to fetch posts");
       }
 
       const result = (await response.json()) as PaginatedResponse;
       departmentPosts.value = result.data;
     } catch (e) {
-      departmentPostsError.value = e instanceof Error ? e.message : 'An error occurred';
+      departmentPostsError.value = e instanceof Error ? e.message : "An error occurred";
     } finally {
       isDepartmentPostsLoading.value = false;
     }
@@ -131,7 +134,7 @@ export const usePostsStore = defineStore('posts', () => {
       if (e instanceof ApiError && e.statusCode === 404) {
         currentPostNotFound.value = true;
       } else {
-        currentPostError.value = e instanceof Error ? e.message : 'Ein Fehler ist aufgetreten';
+        currentPostError.value = e instanceof Error ? e.message : "Ein Fehler ist aufgetreten";
       }
     } finally {
       currentPostLoading.value = false;

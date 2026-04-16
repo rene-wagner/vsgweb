@@ -1,23 +1,34 @@
 <script setup lang="ts">
-import { watch, onMounted, onUnmounted, watchEffect, computed } from 'vue';
-import { useRoute } from 'vue-router';
-import { storeToRefs } from 'pinia';
-import { useDepartmentsStore, getMediaUrl } from '../stores/departmentsStore';
-import { usePostsStore } from '../stores/postsStore';
-import ApiState from '@/components/ui/ApiState.vue';
-import HeroSection from '../components/content/HeroSection.vue';
-import StatsSection from '../components/content/StatsSection.vue';
-import TrainingScheduleSection from '../components/department/TrainingScheduleSection.vue';
-import LocationSection from '../components/department/LocationSection.vue';
-import NewsSection from '../components/content/NewsSection.vue';
-import TrainersSection from '../components/department/TrainersSection.vue';
-import DepartmentCtaSection from '../components/department/DepartmentCtaSection.vue';
-import WelcomeSection from '../components/content/WelcomeSection.vue';
-import type { Stat, TrainingGroup, DepartmentLocation, Trainer, DepartmentCta } from '../types/department-detail.types';
+import { watch, onMounted, onUnmounted, watchEffect, computed } from "vue";
+import { useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useDepartmentsStore, getMediaUrl } from "../stores/departmentsStore";
+import { usePostsStore } from "../stores/postsStore";
+import ApiState from "@/components/ui/ApiState.vue";
+import HeroSection from "../components/content/HeroSection.vue";
+import StatsSection from "../components/content/StatsSection.vue";
+import TrainingScheduleSection from "../components/department/TrainingScheduleSection.vue";
+import LocationSection from "../components/department/LocationSection.vue";
+import NewsSection from "../components/content/NewsSection.vue";
+import TrainersSection from "../components/department/TrainersSection.vue";
+import DepartmentCtaSection from "../components/department/DepartmentCtaSection.vue";
+import WelcomeSection from "../components/content/WelcomeSection.vue";
+import type {
+  Stat,
+  TrainingGroup,
+  DepartmentLocation,
+  Trainer,
+  DepartmentCta,
+} from "../types/department-detail.types";
 
 const route = useRoute();
 const departmentsStore = useDepartmentsStore();
-const { currentDepartment, currentDepartmentLoading, currentDepartmentError, currentDepartmentNotFound } = storeToRefs(departmentsStore);
+const {
+  currentDepartment,
+  currentDepartmentLoading,
+  currentDepartmentError,
+  currentDepartmentNotFound,
+} = storeToRefs(departmentsStore);
 
 const postsStore = usePostsStore();
 
@@ -46,9 +57,9 @@ watchEffect(() => {
   if (currentDepartment.value) {
     document.title = `${currentDepartment.value.name} | VSG Kugelberg`;
   } else if (currentDepartmentNotFound.value) {
-    document.title = 'Abteilung nicht gefunden | VSG Kugelberg';
+    document.title = "Abteilung nicht gefunden | VSG Kugelberg";
   } else {
-    document.title = 'Abteilung | VSG Kugelberg';
+    document.title = "Abteilung | VSG Kugelberg";
   }
 });
 
@@ -72,14 +83,14 @@ const departmentTrainingGroups = computed<TrainingGroup[]>(() => {
   if (!currentDepartment.value?.trainingGroups) return [];
   return currentDepartment.value.trainingGroups.map((group) => ({
     name: group.name,
-    ageRange: group.ageRange || '',
-    icon: group.icon as 'youth' | 'adults',
-    variant: group.variant as 'primary' | 'secondary',
+    ageRange: group.ageRange || "",
+    icon: group.icon as "youth" | "adults",
+    variant: group.variant as "primary" | "secondary",
     sessions: group.sessions.map((session) => ({
       day: session.day,
       time: session.time,
-      group: 'Allgemein',
-      level: 'all' as const,
+      group: "Allgemein",
+      level: "all" as const,
       locationName: session.location?.name,
     })),
   }));
@@ -92,11 +103,11 @@ const departmentLocations = computed<DepartmentLocation[]>(() => {
     id: location.id,
     name: location.name,
     badge: location.badge,
-    badgeVariant: location.badgeVariant as 'primary' | 'secondary',
+    badgeVariant: location.badgeVariant as "primary" | "secondary",
     street: location.street,
     city: location.city,
     amenities: Array.isArray(location.amenities) ? location.amenities : [],
-    mapsUrl: location.mapsUrl || '',
+    mapsUrl: location.mapsUrl || "",
     image: location.image
       ? {
           filename: location.image.filename,
@@ -110,14 +121,16 @@ const departmentLocations = computed<DepartmentLocation[]>(() => {
 const departmentTrainers = computed<Trainer[]>(() => {
   if (!currentDepartment.value?.trainers) return [];
   return currentDepartment.value.trainers.map((trainer) => {
-    const licenses = Array.isArray(trainer.licenses) ? trainer.licenses : JSON.parse(trainer.licenses || '[]');
+    const licenses = Array.isArray(trainer.licenses)
+      ? trainer.licenses
+      : JSON.parse(trainer.licenses || "[]");
 
     return {
       name: `${trainer.contactPerson.firstName} ${trainer.contactPerson.lastName}`,
       role: trainer.role,
       licenses: licenses.map((lic: any) => ({
         name: lic.name,
-        variant: lic.variant as 'gold' | 'blue',
+        variant: lic.variant as "gold" | "blue",
       })),
       contactPersonId: trainer.contactPersonId,
       avatarUrl: trainer.contactPerson.profileImage
@@ -129,20 +142,23 @@ const departmentTrainers = computed<Trainer[]>(() => {
 
 // Generate CTA based on department name
 const departmentCta = computed<DepartmentCta>(() => {
-  const departmentName = currentDepartment.value?.name || '';
+  const departmentName = currentDepartment.value?.name || "";
   return {
     title: `LUST AUF<br/>${departmentName.toUpperCase()}?`,
-    description: 'Komm einfach zum Probetraining vorbei! Wir freuen uns auf dich - egal ob Anfänger oder erfahrener Sportfreund.',
-    primaryCtaLabel: 'PROBETRAINING ANFRAGEN',
-    primaryCtaRoute: '/kontakt',
-    secondaryCtaLabel: 'E-MAIL SCHREIBEN',
-    secondaryCtaRoute: `mailto:${departmentName.toLowerCase().replace(/\s+/g, '-')}@vsg-kugelberg.de`,
+    description:
+      "Komm einfach zum Probetraining vorbei! Wir freuen uns auf dich - egal ob Anfänger oder erfahrener Sportfreund.",
+    primaryCtaLabel: "PROBETRAINING ANFRAGEN",
+    primaryCtaRoute: "/kontakt",
+    secondaryCtaLabel: "E-MAIL SCHREIBEN",
+    secondaryCtaRoute: `mailto:${departmentName.toLowerCase().replace(/\s+/g, "-")}@vsg-kugelberg.de`,
   };
 });
 </script>
 
 <template>
-  <div class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900">
+  <div
+    class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
+  >
     <ApiState
       :is-loading="currentDepartmentLoading"
       :error="currentDepartmentError"
@@ -168,10 +184,7 @@ const departmentCta = computed<DepartmentCta>(() => {
       />
 
       <!-- Stats Section -->
-      <StatsSection
-        v-if="departmentStats.length > 0"
-        :stats="departmentStats"
-      />
+      <StatsSection v-if="departmentStats.length > 0" :stats="departmentStats" />
 
       <!-- Training Schedule Section -->
       <TrainingScheduleSection

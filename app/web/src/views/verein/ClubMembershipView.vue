@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import ApiState from '@/components/ui/ApiState.vue';
-import MarkdownRenderer from '@/components/ui/MarkdownRenderer.vue';
-import CtaSection from '../../components/content/CtaSection.vue';
-import { useMembershipStore } from '../../stores/membershipStore';
-import HeroSection from '../../components/content/HeroSection.vue';
+import { onMounted } from "vue";
+import ApiState from "@/components/ui/ApiState.vue";
+import MarkdownRenderer from "@/components/ui/MarkdownRenderer.vue";
+import CtaSection from "../../components/content/CtaSection.vue";
+import { useMembershipStore } from "../../stores/membershipStore";
+import HeroSection from "../../components/content/HeroSection.vue";
 
 const membershipStore = useMembershipStore();
 
@@ -14,7 +14,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900">
+  <div
+    class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
+  >
     <ApiState
       :is-loading="membershipStore.isLoading"
       :error="membershipStore.error"
@@ -30,15 +32,14 @@ onMounted(async () => {
       />
 
       <!-- Section: Department Stats (White Background) -->
-      <section
-        v-if="membershipStore.membership!.departmentStats.length > 0"
-        class="py-24 bg-white"
-      >
+      <section v-if="membershipStore.membership!.departmentStats.length > 0" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6">
           <div class="text-center mb-16">
             <div class="flex items-center justify-center gap-4 mb-4">
               <div class="h-px w-12 bg-vsg-gold-600"></div>
-              <span class="font-display text-vsg-gold-600 text-2xl tracking-widest uppercase">Unsere Abteilungen</span>
+              <span class="font-display text-vsg-gold-600 text-2xl tracking-widest uppercase"
+                >Unsere Abteilungen</span
+              >
               <div class="h-px w-12 bg-vsg-gold-600"></div>
             </div>
             <div
@@ -60,16 +61,22 @@ onMounted(async () => {
               </h3>
               <div class="space-y-3">
                 <div class="flex justify-between items-center">
-                  <span class="font-body text-sm text-vsg-blue-600 uppercase tracking-wider">Gesamt</span>
+                  <span class="font-body text-sm text-vsg-blue-600 uppercase tracking-wider"
+                    >Gesamt</span
+                  >
                   <span class="font-display text-2xl text-vsg-blue-900">{{ stat.totalCount }}</span>
                 </div>
                 <div class="h-px bg-gray-200"></div>
                 <div class="flex justify-between items-center">
-                  <span class="font-body text-sm text-vsg-blue-600 uppercase tracking-wider">Männer</span>
+                  <span class="font-body text-sm text-vsg-blue-600 uppercase tracking-wider"
+                    >Männer</span
+                  >
                   <span class="font-display text-lg text-vsg-blue-700">{{ stat.maleCount }}</span>
                 </div>
                 <div class="flex justify-between items-center">
-                  <span class="font-body text-sm text-vsg-blue-600 uppercase tracking-wider">Frauen</span>
+                  <span class="font-body text-sm text-vsg-blue-600 uppercase tracking-wider"
+                    >Frauen</span
+                  >
                   <span class="font-display text-lg text-vsg-blue-700">{{ stat.femaleCount }}</span>
                 </div>
               </div>
@@ -84,7 +91,9 @@ onMounted(async () => {
           <div class="max-w-4xl mx-auto">
             <div class="flex items-center gap-4 mb-6">
               <div class="h-px w-12 bg-vsg-gold-600"></div>
-              <span class="font-display text-vsg-gold-600 text-2xl tracking-widest uppercase">Probetraining</span>
+              <span class="font-display text-vsg-gold-600 text-2xl tracking-widest uppercase"
+                >Probetraining</span
+              >
             </div>
             <h2 class="font-display text-5xl md:text-6xl text-vsg-blue-900 uppercase mb-8">
               {{ membershipStore.membership!.trialPeriodHeadline }}
@@ -97,15 +106,14 @@ onMounted(async () => {
       </section>
 
       <!-- Section: Sign-Up Process (White Background) -->
-      <section
-        v-if="membershipStore.membership!.processSteps.length > 0"
-        class="py-24 bg-white"
-      >
+      <section v-if="membershipStore.membership!.processSteps.length > 0" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6">
           <div class="text-center mb-16">
             <div class="flex items-center justify-center gap-4 mb-4">
               <div class="h-px w-12 bg-vsg-gold-600"></div>
-              <span class="font-display text-vsg-gold-600 text-2xl tracking-widest uppercase">Aufnahme</span>
+              <span class="font-display text-vsg-gold-600 text-2xl tracking-widest uppercase"
+                >Aufnahme</span
+              >
               <div class="h-px w-12 bg-vsg-gold-600"></div>
             </div>
             <h2 class="font-display text-5xl md:text-6xl text-vsg-blue-900 uppercase mb-4">
@@ -131,8 +139,12 @@ onMounted(async () => {
                 {{ index + 1 }}
               </div>
               <div>
-                <h3 class="font-display text-xl tracking-wider text-vsg-blue-900 uppercase">{{ step.title }}</h3>
-                <p class="mt-2 font-body text-vsg-blue-700 leading-relaxed">{{ step.description }}</p>
+                <h3 class="font-display text-xl tracking-wider text-vsg-blue-900 uppercase">
+                  {{ step.title }}
+                </h3>
+                <p class="mt-2 font-body text-vsg-blue-700 leading-relaxed">
+                  {{ step.description }}
+                </p>
               </div>
             </div>
           </div>
@@ -140,15 +152,14 @@ onMounted(async () => {
       </section>
 
       <!-- Section: Documents (Light Gray Background) -->
-      <section
-        v-if="membershipStore.membership!.documents.length > 0"
-        class="py-24 bg-gray-50"
-      >
+      <section v-if="membershipStore.membership!.documents.length > 0" class="py-24 bg-gray-50">
         <div class="max-w-7xl mx-auto px-6">
           <div class="text-center mb-16">
             <div class="flex items-center justify-center gap-4 mb-4">
               <div class="h-px w-12 bg-vsg-gold-600"></div>
-              <span class="font-display text-vsg-gold-600 text-2xl tracking-widest uppercase">Unterlagen</span>
+              <span class="font-display text-vsg-gold-600 text-2xl tracking-widest uppercase"
+                >Unterlagen</span
+              >
               <div class="h-px w-12 bg-vsg-gold-600"></div>
             </div>
             <h2 class="font-display text-5xl md:text-6xl text-vsg-blue-900 uppercase">
@@ -182,7 +193,9 @@ onMounted(async () => {
                   />
                 </svg>
               </div>
-              <span class="font-display text-sm tracking-wider text-vsg-blue-900 uppercase">{{ doc.title }}</span>
+              <span class="font-display text-sm tracking-wider text-vsg-blue-900 uppercase">{{
+                doc.title
+              }}</span>
             </a>
           </div>
         </div>

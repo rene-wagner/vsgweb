@@ -3,22 +3,22 @@ export interface TrainingSession {
   day: string; // e.g., "Montag"
   time: string; // e.g., "16:00 - 17:30"
   group: string; // e.g., "Anfanger"
-  level: 'beginner' | 'intermediate' | 'advanced' | 'all' | 'competition';
+  level: "beginner" | "intermediate" | "advanced" | "all" | "competition";
   locationName?: string;
 }
 
 export interface TrainingGroup {
   name: string; // e.g., "Kinder & Jugend"
   ageRange: string; // e.g., "6 - 17 Jahre"
-  icon: 'youth' | 'adults'; // Icon type for the header
+  icon: "youth" | "adults"; // Icon type for the header
   sessions: TrainingSession[];
   note?: string; // Optional info box content
-  variant: 'primary' | 'secondary';
+  variant: "primary" | "secondary";
 }
 
 // Location Types
 export interface LocationAmenity {
-  icon: 'tables' | 'changing-rooms' | 'parking' | 'info' | 'check';
+  icon: "tables" | "changing-rooms" | "parking" | "info" | "check";
   text: string;
 }
 
@@ -26,7 +26,7 @@ export interface DepartmentLocation {
   id: number;
   name: string; // e.g., "Sporthalle Kugelberg"
   badge: string; // e.g., "Haupthalle"
-  badgeVariant: 'primary' | 'secondary';
+  badgeVariant: "primary" | "secondary";
   street: string;
   city: string;
   amenities: LocationAmenity[];
@@ -40,7 +40,7 @@ export interface DepartmentLocation {
 // Trainer Types
 export interface TrainerLicense {
   name: string; // e.g., "DTTB C-Lizenz"
-  variant: 'gold' | 'blue';
+  variant: "gold" | "blue";
 }
 
 export interface Trainer {

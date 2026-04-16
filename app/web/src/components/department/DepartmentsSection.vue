@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { storeToRefs } from 'pinia';
-import SectionHeader from '@/components/ui/SectionHeader.vue';
-import DepartmentCard from './DepartmentCard.vue';
-import { useDepartmentsStore, getMediaUrl } from '../../stores/departmentsStore';
+import { onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import SectionHeader from "@/components/ui/SectionHeader.vue";
+import DepartmentCard from "./DepartmentCard.vue";
+import { useDepartmentsStore, getMediaUrl } from "../../stores/departmentsStore";
 
 interface Props {
   headline?: string;
@@ -24,11 +24,7 @@ onMounted(() => {
 <template>
   <section class="relative bg-white py-32">
     <div class="mx-auto max-w-7xl px-6">
-      <SectionHeader
-        :subtitle="props.subtitle || ''"
-        :title="props.headline || ''"
-        class="mb-6"
-      />
+      <SectionHeader :subtitle="props.subtitle || ''" :title="props.headline || ''" class="mb-6" />
       <p
         v-if="props.description"
         class="mx-auto mt-6 mb-16 max-w-3xl text-center font-body text-lg text-gray-600"
@@ -37,18 +33,14 @@ onMounted(() => {
       </p>
 
       <!-- Loading State -->
-      <div
-        v-if="isLoading"
-        class="flex justify-center py-12"
-      >
-        <div class="h-12 w-12 animate-spin rounded-full border-4 border-vsg-blue-200 border-t-vsg-blue-600"></div>
+      <div v-if="isLoading" class="flex justify-center py-12">
+        <div
+          class="h-12 w-12 animate-spin rounded-full border-4 border-vsg-blue-200 border-t-vsg-blue-600"
+        ></div>
       </div>
 
       <!-- Error State -->
-      <div
-        v-else-if="error"
-        class="mx-auto max-w-2xl rounded-lg bg-red-50 p-6 text-center"
-      >
+      <div v-else-if="error" class="mx-auto max-w-2xl rounded-lg bg-red-50 p-6 text-center">
         <p class="text-red-600">{{ error }}</p>
         <button
           class="mt-4 rounded bg-vsg-blue-600 px-4 py-2 text-white hover:bg-vsg-blue-700"
@@ -67,10 +59,7 @@ onMounted(() => {
       </div>
 
       <!-- Departments Grid -->
-      <div
-        v-else
-        class="mx-auto grid max-w-4xl gap-8 md:grid-cols-2"
-      >
+      <div v-else class="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
         <DepartmentCard
           v-for="department in departments"
           :key="department.id"
@@ -84,13 +73,12 @@ onMounted(() => {
               :src="getMediaUrl(department.icon)"
               :alt="department.name"
               class="h-8 w-8 object-contain"
-              style="filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(200deg) brightness(89%) contrast(91%)"
+              style="
+                filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(200deg) brightness(89%)
+                  contrast(91%);
+              "
             />
-            <FontAwesomeIcon
-              v-else
-              icon="circle"
-              class="text-vsg-blue-600"
-            />
+            <FontAwesomeIcon v-else icon="circle" class="text-vsg-blue-600" />
           </template>
         </DepartmentCard>
       </div>

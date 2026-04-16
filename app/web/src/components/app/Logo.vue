@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onMounted, useAttrs } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useHomepageStore } from '@/stores/homepageStore';
-import logoFallback from '@/assets/logo.svg';
+import { onMounted, useAttrs } from "vue";
+import { storeToRefs } from "pinia";
+import { useHomepageStore } from "@/stores/homepageStore";
+import logoFallback from "@/assets/logo.svg";
 
 defineOptions({ inheritAttrs: false });
 

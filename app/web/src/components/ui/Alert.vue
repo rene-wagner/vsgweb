@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, onMounted, onUnmounted, watch } from 'vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { computed, ref, onMounted, onUnmounted, watch } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 interface AlertProps {
   /**
@@ -10,7 +10,7 @@ interface AlertProps {
    * - warning: Yellow background for warning messages
    * - info: Blue background for informational messages
    */
-  variant?: 'success' | 'error' | 'warning' | 'info';
+  variant?: "success" | "error" | "warning" | "info";
   /**
    * Alert message text. Can also use default slot for custom content.
    */
@@ -31,7 +31,7 @@ interface AlertProps {
 }
 
 const props = withDefaults(defineProps<AlertProps>(), {
-  variant: 'info',
+  variant: "info",
   dismissible: false,
   autoDismiss: false,
   showIcon: false,
@@ -54,7 +54,7 @@ const clearTimer = () => {
 const handleDismiss = () => {
   clearTimer();
   isVisible.value = false;
-  emit('dismiss');
+  emit("dismiss");
 };
 
 const startAutoDismiss = () => {
@@ -90,15 +90,15 @@ watch(
  */
 const alertIcon = computed(() => {
   switch (props.variant) {
-    case 'success':
-      return 'check-circle';
-    case 'error':
-      return 'exclamation-circle';
-    case 'warning':
-      return 'exclamation-triangle';
-    case 'info':
+    case "success":
+      return "check-circle";
+    case "error":
+      return "exclamation-circle";
+    case "warning":
+      return "exclamation-triangle";
+    case "info":
     default:
-      return 'info-circle';
+      return "info-circle";
   }
 });
 
@@ -106,125 +106,114 @@ const alertIcon = computed(() => {
  * Compute container classes based on variant
  */
 const containerClasses = computed(() => {
-  const classes = ['rounded-xl', 'p-4', 'flex', 'items-start', 'gap-3'];
+  const classes = ["rounded-xl", "p-4", "flex", "items-start", "gap-3"];
 
   // Add justify-between only when dismissible for proper button alignment
   if (props.dismissible) {
-    classes.push('justify-between');
+    classes.push("justify-between");
   }
 
   // Variant-specific colors
   switch (props.variant) {
-    case 'success':
-      classes.push('bg-green-50', 'border', 'border-green-200');
+    case "success":
+      classes.push("bg-green-50", "border", "border-green-200");
       break;
-    case 'error':
-      classes.push('bg-red-50', 'border', 'border-red-200');
+    case "error":
+      classes.push("bg-red-50", "border", "border-red-200");
       break;
-    case 'warning':
-      classes.push('bg-yellow-50', 'border', 'border-yellow-200');
+    case "warning":
+      classes.push("bg-yellow-50", "border", "border-yellow-200");
       break;
-    case 'info':
+    case "info":
     default:
-      classes.push('bg-blue-50', 'border', 'border-blue-200');
+      classes.push("bg-blue-50", "border", "border-blue-200");
       break;
   }
 
-  return classes.join(' ');
+  return classes.join(" ");
 });
 
 /**
  * Compute text classes based on variant
  */
 const textClasses = computed(() => {
-  const classes = ['font-body'];
+  const classes = ["font-body"];
 
   switch (props.variant) {
-    case 'success':
-      classes.push('text-green-600');
+    case "success":
+      classes.push("text-green-600");
       break;
-    case 'error':
-      classes.push('text-red-600');
+    case "error":
+      classes.push("text-red-600");
       break;
-    case 'warning':
-      classes.push('text-yellow-600');
+    case "warning":
+      classes.push("text-yellow-600");
       break;
-    case 'info':
+    case "info":
     default:
-      classes.push('text-blue-600');
+      classes.push("text-blue-600");
       break;
   }
 
-  return classes.join(' ');
+  return classes.join(" ");
 });
 
 /**
  * Compute icon classes based on variant
  */
 const iconClasses = computed(() => {
-  const classes = ['flex-shrink-0'];
+  const classes = ["flex-shrink-0"];
 
   switch (props.variant) {
-    case 'success':
-      classes.push('text-green-500');
+    case "success":
+      classes.push("text-green-500");
       break;
-    case 'error':
-      classes.push('text-red-500');
+    case "error":
+      classes.push("text-red-500");
       break;
-    case 'warning':
-      classes.push('text-yellow-500');
+    case "warning":
+      classes.push("text-yellow-500");
       break;
-    case 'info':
+    case "info":
     default:
-      classes.push('text-blue-500');
+      classes.push("text-blue-500");
       break;
   }
 
-  return classes.join(' ');
+  return classes.join(" ");
 });
 
 /**
  * Compute dismiss button classes based on variant
  */
 const dismissButtonClasses = computed(() => {
-  const classes = ['flex-shrink-0', 'transition-colors'];
+  const classes = ["flex-shrink-0", "transition-colors"];
 
   switch (props.variant) {
-    case 'success':
-      classes.push('text-green-600', 'hover:text-green-800');
+    case "success":
+      classes.push("text-green-600", "hover:text-green-800");
       break;
-    case 'error':
-      classes.push('text-red-600', 'hover:text-red-800');
+    case "error":
+      classes.push("text-red-600", "hover:text-red-800");
       break;
-    case 'warning':
-      classes.push('text-yellow-600', 'hover:text-yellow-800');
+    case "warning":
+      classes.push("text-yellow-600", "hover:text-yellow-800");
       break;
-    case 'info':
+    case "info":
     default:
-      classes.push('text-blue-600', 'hover:text-blue-800');
+      classes.push("text-blue-600", "hover:text-blue-800");
       break;
   }
 
-  return classes.join(' ');
+  return classes.join(" ");
 });
 </script>
 
 <template>
-  <div
-    v-if="isVisible"
-    :class="containerClasses"
-    role="alert"
-  >
+  <div v-if="isVisible" :class="containerClasses" role="alert">
     <div class="flex items-center gap-3 flex-1">
-      <FontAwesomeIcon
-        v-if="showIcon"
-        :icon="alertIcon"
-        :class="iconClasses"
-      />
-      <p
-        v-if="message"
-        :class="textClasses"
-      >
+      <FontAwesomeIcon v-if="showIcon" :icon="alertIcon" :class="iconClasses" />
+      <p v-if="message" :class="textClasses">
         {{ message }}
       </p>
       <slot />

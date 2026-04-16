@@ -1,28 +1,27 @@
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { useToast } from '@/composables/useToast';
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { useToast } from "@/composables/useToast";
 
 const { toasts, remove } = useToast();
 
 const typeClasses = {
-  success: 'bg-green-500 border-green-600',
-  error: 'bg-red-500 border-red-600',
-  warning: 'bg-yellow-500 border-yellow-600',
-  info: 'bg-blue-500 border-blue-600',
+  success: "bg-green-500 border-green-600",
+  error: "bg-red-500 border-red-600",
+  warning: "bg-yellow-500 border-yellow-600",
+  info: "bg-blue-500 border-blue-600",
 };
 </script>
 
 <template>
   <Teleport to="body">
-    <TransitionGroup
-      name="toast"
-      tag="div"
-      class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"
-    >
+    <TransitionGroup name="toast" tag="div" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2">
       <div
         v-for="toast in toasts"
         :key="toast.id"
-        :class="['px-4 py-3 rounded-lg shadow-lg text-white font-display tracking-wider transition-all duration-300', typeClasses[toast.type]]"
+        :class="[
+          'px-4 py-3 rounded-lg shadow-lg text-white font-display tracking-wider transition-all duration-300',
+          typeClasses[toast.type],
+        ]"
         role="alert"
         aria-live="polite"
       >

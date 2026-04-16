@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { marked } from 'marked';
+import { computed } from "vue";
+import { marked } from "marked";
 
 interface Props {
   content: string | null | undefined;
@@ -10,7 +10,7 @@ const props = defineProps<Props>();
 
 const renderedHtml = computed(() => {
   if (!props.content) {
-    return '';
+    return "";
   }
 
   return marked.parse(props.content, {
@@ -22,11 +22,7 @@ const renderedHtml = computed(() => {
 
 <template>
   <!-- eslint-disable-next-line vue/no-v-html -->
-  <div
-    v-if="renderedHtml"
-    class="markdown-content"
-    v-html="renderedHtml"
-  ></div>
+  <div v-if="renderedHtml" class="markdown-content" v-html="renderedHtml"></div>
 </template>
 
 <style scoped>

@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
-import Accordion from '@/components/ui/Accordion.vue';
-import ApiState from '@/components/ui/ApiState.vue';
-import Chart from '@/components/ui/Chart.vue';
-import FactCard from '@/components/ui/FactCard.vue';
-import MarkdownRenderer from '@/components/ui/MarkdownRenderer.vue';
-import SuccessList from '@/components/ui/SuccessList.vue';
-import Timeline from '@/components/ui/Timeline.vue';
-import CtaSection from '../../components/content/CtaSection.vue';
-import { useHistoryStore } from '../../stores/historyStore';
-import HeroSection from '../../components/content/HeroSection.vue';
+import { onMounted, computed } from "vue";
+import Accordion from "@/components/ui/Accordion.vue";
+import ApiState from "@/components/ui/ApiState.vue";
+import Chart from "@/components/ui/Chart.vue";
+import FactCard from "@/components/ui/FactCard.vue";
+import MarkdownRenderer from "@/components/ui/MarkdownRenderer.vue";
+import SuccessList from "@/components/ui/SuccessList.vue";
+import Timeline from "@/components/ui/Timeline.vue";
+import CtaSection from "../../components/content/CtaSection.vue";
+import { useHistoryStore } from "../../stores/historyStore";
+import HeroSection from "../../components/content/HeroSection.vue";
 
 const historyStore = useHistoryStore();
 
@@ -22,12 +22,12 @@ const membershipChartData = computed(() => {
     datasets: raw.datasets.map((ds) => ({
       label: ds.label,
       data: ds.data,
-      borderColor: '#d4a91a',
-      backgroundColor: 'rgba(212, 169, 26, 0.1)',
+      borderColor: "#d4a91a",
+      backgroundColor: "rgba(212, 169, 26, 0.1)",
       fill: true,
       tension: 0.4,
-      pointBackgroundColor: '#d4a91a',
-      pointBorderColor: '#ffffff',
+      pointBackgroundColor: "#d4a91a",
+      pointBorderColor: "#ffffff",
       pointRadius: 6,
       pointHoverRadius: 8,
     })),
@@ -47,10 +47,10 @@ const chronicleGroups = computed(() => {
 });
 
 const achievementCategories = [
-  { id: 'Alle', label: 'ALLE' },
-  { id: 'badminton', label: 'BADMINTON' },
-  { id: 'table-tennis', label: 'TISCHTENNIS' },
-  { id: 'volleyball', label: 'VOLLEYBALL' },
+  { id: "Alle", label: "ALLE" },
+  { id: "badminton", label: "BADMINTON" },
+  { id: "table-tennis", label: "TISCHTENNIS" },
+  { id: "volleyball", label: "VOLLEYBALL" },
 ];
 
 const achievementItems = computed(() => {
@@ -60,10 +60,15 @@ const achievementItems = computed(() => {
     return {
       year: a.year,
       category: a.category,
-      categoryLabel: cat ? cat.label.charAt(0) + cat.label.slice(1).toLowerCase() : 'Allgemein',
+      categoryLabel: cat ? cat.label.charAt(0) + cat.label.slice(1).toLowerCase() : "Allgemein",
       title: a.headline,
       description: a.description,
-      colorClass: a.category === 'badminton' ? 'border-vsg-gold-500' : a.category === 'table-tennis' ? 'border-vsg-blue-400' : 'border-vsg-blue-600',
+      colorClass:
+        a.category === "badminton"
+          ? "border-vsg-gold-500"
+          : a.category === "table-tennis"
+            ? "border-vsg-blue-400"
+            : "border-vsg-blue-600",
     };
   });
 });
@@ -74,7 +79,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900">
+  <div
+    class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
+  >
     <ApiState
       :is-loading="historyStore.isLoading"
       :error="historyStore.error"
@@ -90,17 +97,16 @@ onMounted(async () => {
       />
 
       <!-- Section: Founding (White Background) -->
-      <section
-        id="founding"
-        class="py-24 bg-white"
-      >
+      <section id="founding" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6">
           <div class="grid lg:grid-cols-2 gap-16 items-start">
             <!-- Narrative Text -->
             <div class="space-y-8 animate-fadeIn">
               <div class="flex items-center gap-4">
                 <div class="h-px w-12 bg-vsg-gold-600"></div>
-                <span class="font-display text-vsg-gold-600 text-2xl tracking-widest uppercase">Der Ursprung</span>
+                <span class="font-display text-vsg-gold-600 text-2xl tracking-widest uppercase"
+                  >Der Ursprung</span
+                >
               </div>
               <h2 class="font-display text-5xl md:text-6xl text-vsg-blue-900 uppercase">
                 {{ historyStore.history!.foundingHeadline }}
@@ -136,10 +142,7 @@ onMounted(async () => {
       </section>
 
       <!-- Section: Development (Chart & Chronicle) (Light Gray Background) -->
-      <section
-        id="development"
-        class="py-24 bg-gray-50"
-      >
+      <section id="development" class="py-24 bg-gray-50">
         <div class="max-w-7xl mx-auto px-6">
           <div class="text-center mb-16">
             <h2 class="font-display text-5xl md:text-6xl text-vsg-blue-900 mb-4 uppercase">
@@ -156,8 +159,12 @@ onMounted(async () => {
             class="bg-white p-8 rounded-xl border border-gray-200 mb-20 shadow-sm"
           >
             <div class="flex justify-between items-center mb-8">
-              <h3 class="font-display text-2xl text-vsg-gold-600 uppercase tracking-widest">Mitgliederstatistik</h3>
-              <div class="flex items-center gap-4 text-xs uppercase tracking-tighter text-vsg-blue-600">
+              <h3 class="font-display text-2xl text-vsg-gold-600 uppercase tracking-widest">
+                Mitgliederstatistik
+              </h3>
+              <div
+                class="flex items-center gap-4 text-xs uppercase tracking-tighter text-vsg-blue-600"
+              >
                 <span class="flex items-center gap-1"
                   ><div class="w-3 h-3 bg-vsg-gold-500 rounded-full"></div>
                   Mitgliederzahl</span
@@ -170,24 +177,24 @@ onMounted(async () => {
           </div>
 
           <!-- Chronicle Accordion -->
-          <div
-            v-if="chronicleGroups.length > 0"
-            class="max-w-4xl mx-auto space-y-4"
-          >
-            <h3 class="font-display text-3xl text-vsg-blue-900 mb-8 text-center uppercase tracking-widest">Chronik der Ereignisse</h3>
+          <div v-if="chronicleGroups.length > 0" class="max-w-4xl mx-auto space-y-4">
+            <h3
+              class="font-display text-3xl text-vsg-blue-900 mb-8 text-center uppercase tracking-widest"
+            >
+              Chronik der Ereignisse
+            </h3>
             <Accordion :items="chronicleGroups" />
           </div>
         </div>
       </section>
 
       <!-- Section: Festivals (White Background) -->
-      <section
-        id="festivals"
-        class="py-24 bg-white"
-      >
+      <section id="festivals" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6">
           <div class="text-center mb-16">
-            <span class="font-display text-vsg-gold-600 text-2xl tracking-[0.2em] uppercase">Vereinsleben</span>
+            <span class="font-display text-vsg-gold-600 text-2xl tracking-[0.2em] uppercase"
+              >Vereinsleben</span
+            >
             <h2 class="font-display text-5xl md:text-6xl text-vsg-blue-900 mt-2 uppercase">
               {{ historyStore.history!.festivalsHeadline }}
             </h2>
@@ -214,22 +221,18 @@ onMounted(async () => {
       </section>
 
       <!-- Section: Achievements (Hall of Fame) (Light Gray Background) -->
-      <section
-        id="achievements"
-        class="py-24 bg-gray-50"
-      >
+      <section id="achievements" class="py-24 bg-gray-50">
         <div class="max-w-7xl mx-auto px-6">
           <div class="text-center mb-16">
-            <span class="font-display text-vsg-gold-600 text-2xl tracking-[0.2em] uppercase">Unser Stolz</span>
+            <span class="font-display text-vsg-gold-600 text-2xl tracking-[0.2em] uppercase"
+              >Unser Stolz</span
+            >
             <h2 class="font-display text-5xl md:text-7xl text-vsg-blue-900 mt-2 uppercase">
               {{ historyStore.history!.achievementsHeadline }}
             </h2>
           </div>
 
-          <SuccessList
-            :items="achievementItems"
-            :categories="achievementCategories"
-          />
+          <SuccessList :items="achievementItems" :categories="achievementCategories" />
         </div>
       </section>
 

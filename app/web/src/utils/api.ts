@@ -7,7 +7,7 @@ export class ApiError extends Error {
     public response?: Response,
   ) {
     super(message);
-    this.name = 'ApiError';
+    this.name = "ApiError";
   }
 }
 
@@ -16,15 +16,15 @@ export async function fetchApi<T>(endpoint: string, options: RequestInit = {}): 
 
   const response = await fetch(url, {
     ...options,
-    credentials: 'include',
+    credentials: "include",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...options.headers,
     },
   });
 
   if (!response.ok) {
-    let errorMessage = 'An error occurred';
+    let errorMessage = "An error occurred";
     try {
       const errorData = (await response.json()) as { message?: string };
       errorMessage = errorData.message || errorMessage;
@@ -39,16 +39,16 @@ export async function fetchApi<T>(endpoint: string, options: RequestInit = {}): 
 }
 
 export const api = {
-  get: <T>(endpoint: string) => fetchApi<T>(endpoint, { method: 'GET' }),
+  get: <T>(endpoint: string) => fetchApi<T>(endpoint, { method: "GET" }),
   post: <T>(endpoint: string, data: unknown) =>
     fetchApi<T>(endpoint, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(data),
     }),
   patch: <T>(endpoint: string, data: unknown) =>
     fetchApi<T>(endpoint, {
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify(data),
     }),
-  delete: (endpoint: string) => fetchApi<void>(endpoint, { method: 'DELETE' }),
+  delete: (endpoint: string) => fetchApi<void>(endpoint, { method: "DELETE" }),
 };

@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { watch, onMounted, onUnmounted, watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
-import { storeToRefs } from 'pinia';
-import { usePostsStore } from '../stores/postsStore';
-import ApiState from '@/components/ui/ApiState.vue';
-import HeroSection from '../components/content/HeroSection.vue';
-import ContentSection from '../components/content/ContentSection.vue';
+import { watch, onMounted, onUnmounted, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
+import { usePostsStore } from "../stores/postsStore";
+import ApiState from "@/components/ui/ApiState.vue";
+import HeroSection from "../components/content/HeroSection.vue";
+import ContentSection from "../components/content/ContentSection.vue";
 
 const route = useRoute();
 const postsStore = usePostsStore();
-const { currentPost, currentPostLoading, currentPostError, currentPostNotFound } = storeToRefs(postsStore);
+const { currentPost, currentPostLoading, currentPostError, currentPostNotFound } =
+  storeToRefs(postsStore);
 
 function fetchPost() {
   const slug = route.params.slug as string;
@@ -36,9 +37,9 @@ watchEffect(() => {
   if (currentPost.value) {
     document.title = `${currentPost.value.title} | VSG Kugelberg`;
   } else if (currentPostNotFound.value) {
-    document.title = 'Beitrag nicht gefunden | VSG Kugelberg';
+    document.title = "Beitrag nicht gefunden | VSG Kugelberg";
   } else {
-    document.title = 'Beitrag | VSG Kugelberg';
+    document.title = "Beitrag | VSG Kugelberg";
   }
 });
 
@@ -49,7 +50,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900">
+  <div
+    class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
+  >
     <ApiState
       :is-loading="currentPostLoading"
       :error="currentPostError"
@@ -57,10 +60,7 @@ onUnmounted(() => {
       empty-message="Beitrag nicht gefunden"
     >
       <!-- Hero Section -->
-      <HeroSection
-        :headline="currentPost!.title.toUpperCase()"
-        min-height="70vh"
-      />
+      <HeroSection :headline="currentPost!.title.toUpperCase()" min-height="70vh" />
 
       <!-- Content Section -->
       <ContentSection v-if="currentPost!.content">

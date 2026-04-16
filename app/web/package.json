@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "type-check": "vue-tsc -b",
-    "lint": "vue-tsc --noEmit"
+    "lint": "npm run type-check && oxlint --vue-plugin --deny-warnings src vite.config.ts",
+    "format": "oxfmt --write src vite.config.ts",
+    "format:check": "oxfmt --check src vite.config.ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
@@ -25,6 +27,8 @@
   "devDependencies": {
     "@types/node": "^24.0.0",
     "@vitejs/plugin-vue": "^5.2.4",
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
     "typescript": "^5.9.3",
     "vite": "^6.3.5",
     "vue-tsc": "^2.2.10"
