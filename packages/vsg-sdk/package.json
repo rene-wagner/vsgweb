@@ -2,14 +2,27 @@
   "name": "@vsg/vsg-sdk",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "node -e \"process.exit(0)\"",
+    "build": "tsc -p tsconfig.json",
     "lint": "oxlint --deny-warnings --no-error-on-unmatched-pattern \"src/**/*.{ts,tsx,js,jsx,mjs,cjs}\"",
     "format": "oxfmt --write --no-error-on-unmatched-pattern \"src/**/*.{ts,tsx,js,jsx,mjs,cjs}\"",
     "format:check": "oxfmt --check --no-error-on-unmatched-pattern \"src/**/*.{ts,tsx,js,jsx,mjs,cjs}\""
   },
   "devDependencies": {
     "oxfmt": "^0.45.0",
-    "oxlint": "^1.60.0"
+    "oxlint": "^1.60.0",
+    "typescript": "^6.0.2"
   }
 }
