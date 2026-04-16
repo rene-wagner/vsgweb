@@ -12,25 +12,25 @@
     "format:check": "oxfmt --check src vite.config.ts"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.1.0",
-    "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@fortawesome/vue-fontawesome": "^3.1.3",
+    "@fortawesome/fontawesome-svg-core": "^7.2.0",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@fortawesome/vue-fontawesome": "^3.2.0",
     "@tailwindcss/typography": "^0.5.19",
-    "@tailwindcss/vite": "^4.1.18",
+    "@tailwindcss/vite": "^4.2.2",
     "chart.js": "^4.5.1",
-    "marked": "^17.0.1",
-    "pinia": "^2.3.1",
-    "tailwindcss": "^4.1.18",
-    "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "marked": "^18.0.0",
+    "pinia": "^3.0.4",
+    "tailwindcss": "^4.2.2",
+    "vue": "^3.5.32",
+    "vue-router": "^5.0.4"
   },
   "devDependencies": {
-    "@types/node": "^24.0.0",
-    "@vitejs/plugin-vue": "^5.2.4",
+    "@types/node": "^25.6.0",
+    "@vitejs/plugin-vue": "^6.0.6",
     "oxfmt": "^0.45.0",
     "oxlint": "^1.60.0",
-    "typescript": "^5.9.3",
-    "vite": "^6.3.5",
-    "vue-tsc": "^2.2.10"
+    "typescript": "^6.0.2",
+    "vite": "^8.0.8",
+    "vue-tsc": "^3.2.6"
   }
 }
