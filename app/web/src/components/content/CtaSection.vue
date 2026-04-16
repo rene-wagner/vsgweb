@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Button from "@/components/ui/Button.vue";
+import { RouterLink } from "vue-router";
 
 interface Props {
   headline?: string;
@@ -47,19 +47,19 @@ const props = withDefaults(defineProps<Props>(), {
         {{ props.description }}
       </p>
       <div class="mt-10 flex flex-col items-center justify-center gap-6 sm:flex-row">
-        <Button variant="secondary" size="lg" :glow="true" is-router :to="props.primaryButtonLink">
+        <RouterLink
+          :to="props.primaryButtonLink"
+          class="gold-glow bg-vsg-blue-900 px-10 py-4 font-display text-2xl tracking-wider text-vsg-gold-400 transition-colors hover:bg-vsg-blue-800"
+        >
           {{ props.primaryButtonText }}
-        </Button>
-        <Button
+        </RouterLink>
+        <RouterLink
           v-if="props.secondaryButtonText && props.secondaryButtonLink"
-          variant="outline"
-          size="lg"
-          is-router
           :to="props.secondaryButtonLink"
-          class="border-vsg-blue-900! text-vsg-blue-900! hover:bg-vsg-blue-900/10!"
+          class="border-2 border-vsg-blue-900/50 px-10 py-4 font-display text-2xl tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-blue-900/10"
         >
           {{ props.secondaryButtonText }}
-        </Button>
+        </RouterLink>
       </div>
     </div>
   </section>

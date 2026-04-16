@@ -13,7 +13,7 @@ const homepageStore = useHomepageStore();
 const { homepageContent } = storeToRefs(homepageStore);
 
 onMounted(() => {
-  homepageStore.fetchHomepageContent();
+  homepageStore.ensureLoaded();
 });
 </script>
 

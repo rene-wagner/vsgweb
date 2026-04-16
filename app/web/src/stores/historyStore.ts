@@ -1,8 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { HistoryContent } from "../types/history.types";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export const useHistoryStore = defineStore("history", () => {
   const history = ref<HistoryContent | null>(null);
@@ -14,23 +13,23 @@ export const useHistoryStore = defineStore("history", () => {
     error.value = null;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/history`, {
-        method: "GET",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch history content");
-      }
-
-      const data = (await response.json()) as HistoryContent;
+      const data = await vsg.get<HistoryContent>("/api/history");
       history.value = data;
       return data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : "An error occurred";
+      error.value = getApiErrorMessage(e);
       return null;
     } finally {
       isLoading.value = false;
     }
+  }
+
+  async function ensureLoaded(): Promise<HistoryContent | null> {
+    if (history.value) {
+      return history.value;
+    }
+
+    return fetchHistory();
   }
 
   return {
@@ -38,5 +37,6 @@ export const useHistoryStore = defineStore("history", () => {
     isLoading,
     error,
     fetchHistory,
+    ensureLoaded,
   };
 });

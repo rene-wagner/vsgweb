@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { getUploadUrl } from "@/utils/media";
 import type { DepartmentLocation } from "../../types/department-detail.types";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface Props {
   location: DepartmentLocation;
@@ -15,7 +14,7 @@ function getBadgeClasses(variant: DepartmentLocation["badgeVariant"]): string {
 }
 
 function getMediaUrl(filename: string): string {
-  return `${API_BASE_URL}/uploads/${filename}`;
+  return getUploadUrl(filename) ?? "";
 }
 </script>
 

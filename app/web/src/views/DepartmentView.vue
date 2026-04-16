@@ -13,10 +13,12 @@ import NewsSection from "../components/content/NewsSection.vue";
 import TrainersSection from "../components/department/TrainersSection.vue";
 import DepartmentCtaSection from "../components/department/DepartmentCtaSection.vue";
 import WelcomeSection from "../components/content/WelcomeSection.vue";
+import { getUploadUrl } from "@/utils/media";
 import type {
   Stat,
   TrainingGroup,
   DepartmentLocation,
+  LocationAmenity,
   Trainer,
   DepartmentCta,
 } from "../types/department-detail.types";
@@ -31,6 +33,40 @@ const {
 } = storeToRefs(departmentsStore);
 
 const postsStore = usePostsStore();
+
+function parseTrainerLicenses(
+  licenses: Array<{ name: string; variant: string }> | string | null,
+): Array<{ name: string; variant: "gold" | "blue" }> {
+  const parsedLicenses = Array.isArray(licenses)
+    ? licenses
+    : typeof licenses === "string"
+      ? (JSON.parse(licenses) as Array<{ name: string; variant: string }>)
+      : [];
+
+  return parsedLicenses.map((license) => ({
+    name: license.name,
+    variant: license.variant === "gold" ? "gold" : "blue",
+  }));
+}
+
+function normalizeAmenities(
+  amenities: Array<{ icon?: string; text: string }> | null | undefined,
+): LocationAmenity[] {
+  if (!Array.isArray(amenities)) {
+    return [];
+  }
+
+  return amenities.map((amenity) => ({
+    text: amenity.text,
+    icon:
+      amenity.icon === "tables" ||
+      amenity.icon === "changing-rooms" ||
+      amenity.icon === "parking" ||
+      amenity.icon === "check"
+        ? amenity.icon
+        : "info",
+  }));
+}
 
 function fetchDepartment() {
   const slug = route.params.slug as string;
@@ -106,7 +142,7 @@ const departmentLocations = computed<DepartmentLocation[]>(() => {
     badgeVariant: location.badgeVariant as "primary" | "secondary",
     street: location.street,
     city: location.city,
-    amenities: Array.isArray(location.amenities) ? location.amenities : [],
+    amenities: normalizeAmenities(location.amenities),
     mapsUrl: location.mapsUrl || "",
     image: location.image
       ? {
@@ -121,21 +157,12 @@ const departmentLocations = computed<DepartmentLocation[]>(() => {
 const departmentTrainers = computed<Trainer[]>(() => {
   if (!currentDepartment.value?.trainers) return [];
   return currentDepartment.value.trainers.map((trainer) => {
-    const licenses = Array.isArray(trainer.licenses)
-      ? trainer.licenses
-      : JSON.parse(trainer.licenses || "[]");
-
     return {
       name: `${trainer.contactPerson.firstName} ${trainer.contactPerson.lastName}`,
       role: trainer.role,
-      licenses: licenses.map((lic: any) => ({
-        name: lic.name,
-        variant: lic.variant as "gold" | "blue",
-      })),
+      licenses: parseTrainerLicenses(trainer.licenses),
       contactPersonId: trainer.contactPersonId,
-      avatarUrl: trainer.contactPerson.profileImage
-        ? `${import.meta.env.VITE_API_BASE_URL}/uploads/${trainer.contactPerson.profileImage.filename}`
-        : undefined,
+      avatarUrl: getUploadUrl(trainer.contactPerson.profileImage?.filename) ?? undefined,
     };
   });
 });

@@ -1,7 +1,8 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { VsgApiError } from "@vsg/vsg-sdk";
+import { getApiErrorMessage, vsg } from "@/lib/sdk";
+import { getUploadUrl } from "@/utils/media";
 
 export interface MediaItem {
   id: number;
@@ -55,7 +56,7 @@ export interface DepartmentLocation {
   street: string;
   city: string;
   mapsUrl: string | null;
-  amenities: any;
+  amenities: Array<{ icon?: string; text: string }>;
   imageId: number | null;
   image: MediaItem | null;
   sort: number;
@@ -72,7 +73,7 @@ export interface DepartmentTrainer {
   id: number;
   contactPersonId: number;
   role: string;
-  licenses: any;
+  licenses: Array<{ name: string; variant: string }> | string | null;
   sort: number;
   createdAt: string;
   updatedAt: string;
@@ -103,7 +104,7 @@ export interface Department {
 }
 
 export function getMediaUrl(item: MediaItem): string {
-  return `${API_BASE_URL}/uploads/${item.filename}`;
+  return getUploadUrl(item.filename) ?? "";
 }
 
 interface PaginatedResponse {
@@ -133,18 +134,10 @@ export const useDepartmentsStore = defineStore("departments", () => {
     error.value = null;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/departments?limit=100`, {
-        method: "GET",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch departments");
-      }
-
-      const result = (await response.json()) as PaginatedResponse;
+      const result = await vsg.get<PaginatedResponse>("/api/departments?limit=100");
       departments.value = result.data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : "An error occurred";
+      error.value = getApiErrorMessage(e);
     } finally {
       isLoading.value = false;
     }
@@ -157,25 +150,26 @@ export const useDepartmentsStore = defineStore("departments", () => {
     currentDepartment.value = null;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/departments/${slug}`, {
-        method: "GET",
-      });
-
-      if (response.status === 404) {
-        currentDepartmentNotFound.value = true;
-        return;
-      }
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch department");
-      }
-
-      currentDepartment.value = (await response.json()) as Department;
+      currentDepartment.value = await vsg.get<Department>(
+        `/api/departments/${encodeURIComponent(slug)}`,
+      );
     } catch (e) {
-      currentDepartmentError.value = e instanceof Error ? e.message : "An error occurred";
+      if (e instanceof VsgApiError && e.status === 404) {
+        currentDepartmentNotFound.value = true;
+      } else {
+        currentDepartmentError.value = getApiErrorMessage(e);
+      }
     } finally {
       currentDepartmentLoading.value = false;
     }
+  }
+
+  async function ensureLoaded(): Promise<void> {
+    if (departments.value.length > 0) {
+      return;
+    }
+
+    await fetchDepartments();
   }
 
   function clearCurrentDepartment(): void {
@@ -197,5 +191,6 @@ export const useDepartmentsStore = defineStore("departments", () => {
     currentDepartmentNotFound,
     fetchDepartmentBySlug,
     clearCurrentDepartment,
+    ensureLoaded,
   };
 });

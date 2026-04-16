@@ -1,8 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { MembershipContent } from "../types/membership.types";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export const useMembershipStore = defineStore("membership", () => {
   const membership = ref<MembershipContent | null>(null);
@@ -14,19 +13,11 @@ export const useMembershipStore = defineStore("membership", () => {
     error.value = null;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/membership`, {
-        method: "GET",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch membership content");
-      }
-
-      const data = (await response.json()) as MembershipContent;
+      const data = await vsg.get<MembershipContent>("/api/membership");
       membership.value = data;
       return data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : "An error occurred";
+      error.value = getApiErrorMessage(e);
       return null;
     } finally {
       isLoading.value = false;

@@ -7,12 +7,12 @@ import Logo from "./Logo.vue";
 const historyStore = useHistoryStore();
 
 const vereinLinks = [
-  { label: "Geschichte", href: "/verein/geschichte", isRouter: true },
-  { label: "Vorstand", href: "/verein/vorstand", isRouter: true },
-  { label: "Satzung", href: "/verein/satzung", isRouter: true },
-  { label: "Beitragsordnung", href: "/verein/beitragsordnung", isRouter: true },
-  { label: "Sportversicherung", href: "/verein/sportversicherung", isRouter: true },
-  { label: "Mitgliedschaft", href: "/verein/mitgliedschaft", isRouter: true },
+  { label: "Geschichte", to: "/verein/geschichte" },
+  { label: "Vorstand", to: "/verein/vorstand" },
+  { label: "Satzung", to: "/verein/satzung" },
+  { label: "Beitragsordnung", to: "/verein/beitragsordnung" },
+  { label: "Sportversicherung", to: "/verein/sportversicherung" },
+  { label: "Mitgliedschaft", to: "/verein/mitgliedschaft" },
 ];
 
 const age = computed(() => {
@@ -33,9 +33,7 @@ const age = computed(() => {
 });
 
 onMounted(() => {
-  if (!historyStore.history) {
-    historyStore.fetchHistory();
-  }
+  historyStore.ensureLoaded();
 });
 </script>
 
@@ -60,19 +58,11 @@ onMounted(() => {
           <ul class="space-y-3">
             <li v-for="link in vereinLinks" :key="link.label">
               <RouterLink
-                v-if="link.isRouter"
-                :to="link.href"
+                :to="link.to"
                 class="font-body font-normal text-vsg-blue-300 transition-colors hover:text-vsg-gold-400"
               >
                 {{ link.label }}
               </RouterLink>
-              <a
-                v-else
-                :href="link.href"
-                class="font-body font-normal text-vsg-blue-300 transition-colors hover:text-vsg-gold-400"
-              >
-                {{ link.label }}
-              </a>
             </li>
           </ul>
         </div>

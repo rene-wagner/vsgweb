@@ -1,7 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export interface ThumbnailsMap {
   thumb?: string;
@@ -57,21 +56,21 @@ export const useContactPersonsStore = defineStore("contact-persons", () => {
     error.value = null;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/contact-persons?limit=50`, {
-        method: "GET",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch contact persons");
-      }
-
-      const result = (await response.json()) as PaginatedResponse;
+      const result = await vsg.get<PaginatedResponse>("/api/contact-persons?limit=50");
       contactPersons.value = result.data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : "An error occurred";
+      error.value = getApiErrorMessage(e);
     } finally {
       isLoading.value = false;
     }
+  }
+
+  async function ensureLoaded(): Promise<void> {
+    if (contactPersons.value.length > 0) {
+      return;
+    }
+
+    await fetchContactPersons();
   }
 
   return {
@@ -79,5 +78,6 @@ export const useContactPersonsStore = defineStore("contact-persons", () => {
     isLoading,
     error,
     fetchContactPersons,
+    ensureLoaded,
   };
 });

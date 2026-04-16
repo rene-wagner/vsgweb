@@ -1,8 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { BoardContent } from "../types/board-content.types";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export const useBoardStore = defineStore("board", () => {
   const boardContent = ref<BoardContent | null>(null);
@@ -14,19 +13,11 @@ export const useBoardStore = defineStore("board", () => {
     error.value = null;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/board-content`, {
-        method: "GET",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch board content");
-      }
-
-      const data = (await response.json()) as BoardContent;
+      const data = await vsg.get<BoardContent>("/api/board-content");
       boardContent.value = data;
       return data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : "An error occurred";
+      error.value = getApiErrorMessage(e);
       return null;
     } finally {
       isLoading.value = false;

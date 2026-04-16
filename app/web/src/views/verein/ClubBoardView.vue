@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, computed } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { getUploadUrl } from "@/utils/media";
 import { useBoardStore } from "../../stores/boardStore";
 import ApiState from "@/components/ui/ApiState.vue";
 import HeroSection from "../../components/content/HeroSection.vue";
@@ -19,7 +20,7 @@ const sortedBoardMembers = computed(() => {
 });
 
 function getProfileImageUrl(filename: string): string {
-  return `${import.meta.env.VITE_API_BASE_URL}/uploads/${filename}`;
+  return getUploadUrl(filename) ?? "";
 }
 
 // Get badge color based on position

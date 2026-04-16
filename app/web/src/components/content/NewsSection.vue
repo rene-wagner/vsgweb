@@ -2,6 +2,7 @@
 import { computed, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import SectionHeader from "@/components/ui/SectionHeader.vue";
+import ApiState from "@/components/ui/ApiState.vue";
 import NewsCardFeatured from "./NewsCardFeatured.vue";
 import NewsCardListItem from "./NewsCardListItem.vue";
 import { usePostsStore } from "../../stores/postsStore";
@@ -36,14 +37,6 @@ onMounted(() => {
     postsStore.fetchPublishedPosts(props.postsCount);
   }
 });
-
-function retry() {
-  if (props.categorySlug) {
-    postsStore.fetchPublishedPostsByCategory(props.categorySlug, props.postsCount);
-  } else {
-    postsStore.fetchPublishedPosts(props.postsCount);
-  }
-}
 
 // Format date to German locale
 function formatDate(dateString: string): string {
@@ -85,55 +78,33 @@ const listPosts = computed(() => activePosts.value.slice(1));
         {{ props.description }}
       </p>
 
-      <!-- Loading State -->
-      <div v-if="activeLoading" class="flex justify-center py-12">
-        <div
-          class="h-12 w-12 animate-spin rounded-full border-4 border-vsg-blue-200 border-t-vsg-blue-600"
-        ></div>
-      </div>
-
-      <!-- Error State -->
-      <div v-else-if="activeError" class="mx-auto max-w-2xl rounded-lg bg-red-50 p-6 text-center">
-        <p class="text-red-600">{{ activeError }}</p>
-        <button
-          class="mt-4 rounded bg-vsg-blue-600 px-4 py-2 text-white hover:bg-vsg-blue-700"
-          @click="retry"
-        >
-          Erneut versuchen
-        </button>
-      </div>
-
-      <!-- Empty State -->
-      <div
-        v-else-if="activePosts.length === 0"
-        class="mx-auto max-w-2xl rounded-lg bg-white p-12 text-center shadow-sm"
+      <ApiState
+        :is-loading="activeLoading"
+        :error="activeError"
+        :empty="activePosts.length === 0"
+        empty-message="Derzeit sind keine Neuigkeiten verfugbar."
       >
-        <p class="text-lg text-gray-600">Derzeit sind keine Neuigkeiten verfugbar.</p>
-      </div>
-
-      <!-- News Content -->
-      <div v-else class="grid gap-8 md:grid-cols-2">
-        <!-- Featured News -->
-        <NewsCardFeatured
-          v-if="featuredPost"
-          :category="getCategoryName(featuredPost.categories)"
-          :date="formatDate(featuredPost.createdAt)"
-          :title="featuredPost.title.toUpperCase()"
-          :excerpt="getExcerpt(featuredPost.content)"
-          :href="`/beitrag/${featuredPost.slug}`"
-        />
-
-        <!-- News List -->
-        <div v-if="listPosts.length > 0" class="space-y-6">
-          <NewsCardListItem
-            v-for="post in listPosts"
-            :key="post.id"
-            :date="formatDate(post.createdAt)"
-            :title="post.title"
-            :href="`/beitrag/${post.slug}`"
+        <div class="grid gap-8 md:grid-cols-2">
+          <NewsCardFeatured
+            v-if="featuredPost"
+            :category="getCategoryName(featuredPost.categories)"
+            :date="formatDate(featuredPost.createdAt)"
+            :title="featuredPost.title.toUpperCase()"
+            :excerpt="getExcerpt(featuredPost.content)"
+            :href="`/beitrag/${featuredPost.slug}`"
           />
+
+          <div v-if="listPosts.length > 0" class="space-y-6">
+            <NewsCardListItem
+              v-for="post in listPosts"
+              :key="post.id"
+              :date="formatDate(post.createdAt)"
+              :title="post.title"
+              :href="`/beitrag/${post.slug}`"
+            />
+          </div>
         </div>
-      </div>
+      </ApiState>
     </div>
   </section>
 </template>

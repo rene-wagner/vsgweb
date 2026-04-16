@@ -1,8 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { SportInsuranceContent } from "../types/sport-insurance.types";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export const useSportInsuranceStore = defineStore("sportInsurance", () => {
   const sportInsurance = ref<SportInsuranceContent | null>(null);
@@ -14,19 +13,11 @@ export const useSportInsuranceStore = defineStore("sportInsurance", () => {
     error.value = null;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/sport-insurance`, {
-        method: "GET",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch sport insurance content");
-      }
-
-      const data = (await response.json()) as SportInsuranceContent;
+      const data = await vsg.get<SportInsuranceContent>("/api/sport-insurance");
       sportInsurance.value = data;
       return data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : "An error occurred";
+      error.value = getApiErrorMessage(e);
       return null;
     } finally {
       isLoading.value = false;

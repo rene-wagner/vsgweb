@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import ApiState from "@/components/ui/ApiState.vue";
 import HeroSection from "../components/content/HeroSection.vue";
 import ContentSection from "../components/content/ContentSection.vue";
+import { getUploadUrl } from "@/utils/media";
 
 const route = useRoute();
 const contactPersonsStore = useContactPersonsStore();
@@ -23,7 +24,7 @@ const selectedContactPerson = computed<ContactPerson | null>(() => {
 });
 
 onMounted(async () => {
-  await contactPersonsStore.fetchContactPersons();
+  await contactPersonsStore.ensureLoaded();
 
   // Check for person query parameter to pre-select contact person
   const personIdParam = route.query.person;
@@ -51,15 +52,14 @@ function getInitials(cp: ContactPerson): string {
 
 function getProfileImageUrl(cp: ContactPerson): string | null {
   if (!cp.profileImage) return null;
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
 
   // Use 'small' thumbnail (300x300) for profile images if available
   // Falls back to original if no thumbnails exist
   if (cp.profileImage.thumbnails?.small) {
-    return `${apiBaseUrl}/uploads/${cp.profileImage.thumbnails.small}`;
+    return getUploadUrl(cp.profileImage.thumbnails.small);
   }
 
-  return `${apiBaseUrl}/uploads/${cp.profileImage.filename}`;
+  return getUploadUrl(cp.profileImage.filename);
 }
 
 function encodeBase64(value: string): string {

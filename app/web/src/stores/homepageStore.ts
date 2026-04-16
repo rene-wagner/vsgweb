@@ -1,8 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { HomepageContent } from "@/types/homepage-content.types";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export const useHomepageStore = defineStore("homepage", () => {
   const homepageContent = ref<HomepageContent | null>(null);
@@ -14,23 +13,23 @@ export const useHomepageStore = defineStore("homepage", () => {
     error.value = null;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/homepage-content`, {
-        method: "GET",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch homepage content");
-      }
-
-      const data = (await response.json()) as HomepageContent;
+      const data = await vsg.get<HomepageContent>("/api/homepage-content");
       homepageContent.value = data;
       return data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : "An error occurred";
+      error.value = getApiErrorMessage(e);
       return null;
     } finally {
       isLoading.value = false;
     }
+  }
+
+  async function ensureLoaded(): Promise<HomepageContent | null> {
+    if (homepageContent.value) {
+      return homepageContent.value;
+    }
+
+    return fetchHomepageContent();
   }
 
   return {
@@ -38,5 +37,6 @@ export const useHomepageStore = defineStore("homepage", () => {
     isLoading,
     error,
     fetchHomepageContent,
+    ensureLoaded,
   };
 });

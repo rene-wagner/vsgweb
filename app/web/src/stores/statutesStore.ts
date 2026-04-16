@@ -1,8 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { StatutesContent } from "../types/statutes.types";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export const useStatutesStore = defineStore("statutes", () => {
   const statutes = ref<StatutesContent | null>(null);
@@ -14,19 +13,11 @@ export const useStatutesStore = defineStore("statutes", () => {
     error.value = null;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/statutes`, {
-        method: "GET",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch statutes content");
-      }
-
-      const data = (await response.json()) as StatutesContent;
+      const data = await vsg.get<StatutesContent>("/api/statutes");
       statutes.value = data;
       return data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : "An error occurred";
+      error.value = getApiErrorMessage(e);
       return null;
     } finally {
       isLoading.value = false;

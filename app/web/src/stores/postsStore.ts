@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { api, ApiError } from "@/utils/api";
+import { VsgApiError } from "@vsg/vsg-sdk";
+import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export interface Author {
   id: number;
@@ -50,8 +51,6 @@ interface PaginatedResponse {
   };
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
 export const usePostsStore = defineStore("posts", () => {
   // List state
   const posts = ref<Post[]>([]);
@@ -74,18 +73,10 @@ export const usePostsStore = defineStore("posts", () => {
     error.value = null;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/posts?published=true&limit=${limit}`, {
-        method: "GET",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch posts");
-      }
-
-      const result = (await response.json()) as PaginatedResponse;
+      const result = await vsg.get<PaginatedResponse>(`/api/posts?published=true&limit=${limit}`);
       posts.value = result.data;
     } catch (e) {
-      error.value = e instanceof Error ? e.message : "An error occurred";
+      error.value = getApiErrorMessage(e);
     } finally {
       isLoading.value = false;
     }
@@ -96,21 +87,12 @@ export const usePostsStore = defineStore("posts", () => {
     departmentPostsError.value = null;
 
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/posts?published=true&category=${encodeURIComponent(categorySlug)}&limit=${limit}`,
-        {
-          method: "GET",
-        },
+      const result = await vsg.get<PaginatedResponse>(
+        `/api/posts?published=true&category=${encodeURIComponent(categorySlug)}&limit=${limit}`,
       );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch posts");
-      }
-
-      const result = (await response.json()) as PaginatedResponse;
       departmentPosts.value = result.data;
     } catch (e) {
-      departmentPostsError.value = e instanceof Error ? e.message : "An error occurred";
+      departmentPostsError.value = getApiErrorMessage(e);
     } finally {
       isDepartmentPostsLoading.value = false;
     }
@@ -129,12 +111,12 @@ export const usePostsStore = defineStore("posts", () => {
     currentPost.value = null;
 
     try {
-      currentPost.value = await api.get<Post>(`/api/posts/${slug}`);
+      currentPost.value = await vsg.get<Post>(`/api/posts/${encodeURIComponent(slug)}`);
     } catch (e) {
-      if (e instanceof ApiError && e.statusCode === 404) {
+      if (e instanceof VsgApiError && e.status === 404) {
         currentPostNotFound.value = true;
       } else {
-        currentPostError.value = e instanceof Error ? e.message : "Ein Fehler ist aufgetreten";
+        currentPostError.value = getApiErrorMessage(e);
       }
     } finally {
       currentPostLoading.value = false;

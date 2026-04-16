@@ -2,7 +2,6 @@
 import { ref, computed, onMounted } from "vue";
 import { RouterLink } from "vue-router";
 import { storeToRefs } from "pinia";
-import Button from "../ui/Button.vue";
 import Logo from "./Logo.vue";
 import { useDepartmentsStore } from "@/stores/departmentsStore";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -36,10 +35,7 @@ const abteilungenItems = computed<MenuItem[]>(() => {
 });
 
 onMounted(() => {
-  // Only fetch if we don't have departments cached
-  if (departments.value.length === 0) {
-    departmentsStore.fetchDepartments();
-  }
+  departmentsStore.ensureLoaded();
 });
 
 function toggleMenu() {
@@ -77,7 +73,9 @@ function toggleAbteilungen() {
           <!-- Verein Dropdown -->
           <div class="group relative">
             <button
+              type="button"
               class="flex items-center gap-1 font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
+              aria-haspopup="true"
             >
               Verein
               <FontAwesomeIcon
@@ -86,7 +84,7 @@ function toggleAbteilungen() {
               />
             </button>
             <div
-              class="invisible absolute left-0 top-full mt-2 w-48 translate-y-2 transform rounded-lg border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+              class="invisible absolute left-0 top-full mt-2 w-48 translate-y-2 transform rounded-lg border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
             >
               <div class="py-2">
                 <RouterLink
@@ -104,7 +102,9 @@ function toggleAbteilungen() {
           <!-- Abteilungen Dropdown -->
           <div class="group relative">
             <button
+              type="button"
               class="flex items-center gap-1 font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
+              aria-haspopup="true"
             >
               Abteilungen
               <FontAwesomeIcon
@@ -113,7 +113,7 @@ function toggleAbteilungen() {
               />
             </button>
             <div
-              class="invisible absolute left-0 top-full mt-2 w-48 translate-y-2 transform rounded-lg border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+              class="invisible absolute left-0 top-full mt-2 w-48 translate-y-2 transform rounded-lg border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
             >
               <div class="py-2">
                 <!-- Loading state -->
@@ -146,13 +146,21 @@ function toggleAbteilungen() {
             class="font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
             >Kontakt</RouterLink
           >
-          <Button variant="primary" size="md">Mitglied werden</Button>
+          <RouterLink
+            to="/verein/mitgliedschaft"
+            class="bg-vsg-gold-400 px-6 py-2 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-gold-300"
+          >
+            Mitglied werden
+          </RouterLink>
         </div>
 
         <!-- Mobile Burger Button -->
         <button
+          id="mobile-menu-toggle"
           class="group flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
           :aria-label="isMenuOpen ? 'Menü schließen' : 'Menü öffnen'"
+          :aria-expanded="isMenuOpen"
+          aria-controls="mobile-menu"
           @click="toggleMenu"
         >
           <span
@@ -178,6 +186,7 @@ function toggleAbteilungen() {
 
   <!-- Mobile Menu Overlay -->
   <div
+    id="mobile-menu"
     class="fixed inset-0 z-40 overflow-y-scroll bg-vsg-blue-900 transition-transform duration-300 ease-in-out md:hidden"
     :class="isMenuOpen ? 'translate-x-0' : 'translate-x-full'"
   >
@@ -256,12 +265,13 @@ function toggleAbteilungen() {
           >Kontakt</RouterLink
         >
       </div>
-      <button
+      <RouterLink
+        to="/verein/mitgliedschaft"
         class="mt-8 bg-vsg-gold-400 px-8 py-4 font-display text-2xl tracking-wider text-vsg-blue-900"
         @click="closeMenu"
       >
         Mitglied werden
-      </button>
+      </RouterLink>
     </div>
   </div>
 </template>

@@ -74,7 +74,7 @@ const achievementItems = computed(() => {
 });
 
 onMounted(async () => {
-  await historyStore.fetchHistory();
+  await historyStore.ensureLoaded();
 });
 </script>
 
