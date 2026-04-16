@@ -1,0 +1,126 @@
+<script setup lang="ts">
+import { onMounted, computed } from 'vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { useBoardContentStore } from '../../stores/boardContentStore';
+import ApiState from '@/shared/components/ApiState.vue';
+import HeroSection from '../../components/HeroSection.vue';
+import ContentSection from '../../components/ContentSection.vue';
+import Alert from '@/shared/components/Alert.vue';
+
+const boardContentStore = useBoardContentStore();
+
+onMounted(async () => {
+  await boardContentStore.fetchBoardContent();
+});
+
+const sortedBoardMembers = computed(() => {
+  if (!boardContentStore.boardContent) return [];
+  return [...boardContentStore.boardContent.boardMembers].sort((a, b) => a.sort - b.sort);
+});
+
+function getProfileImageUrl(filename: string): string {
+  return `${import.meta.env.VITE_API_BASE_URL}/uploads/${filename}`;
+}
+
+// Get badge color based on position
+function getBadgeColor(index: number): string {
+  return index === 0 ? 'bg-vsg-gold-400' : 'bg-vsg-blue-200';
+}
+</script>
+
+<template>
+  <div class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900">
+    <HeroSection
+      :headline="boardContentStore.boardContent?.headline || 'VORSTAND'"
+      :description="boardContentStore.boardContent?.description || 'Die Führung des VSG Kugelberg'"
+      min-height="70vh"
+    />
+
+    <ContentSection>
+      <ApiState
+        :is-loading="boardContentStore.isLoading"
+        :error="boardContentStore.error"
+        :empty="!boardContentStore.boardContent"
+        empty-message="Die Vorstandsinformationen werden derzeit aktualisiert."
+      >
+        <div class="space-y-12">
+          <Alert
+            :message="boardContentStore.boardContent!.note"
+            variant="info"
+          />
+
+          <!-- Introduction -->
+          <div>
+            <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900 md:text-3xl">
+              {{ boardContentStore.boardContent!.sectionHeadline }}
+            </h2>
+            <p class="mt-4 font-body text-lg leading-relaxed text-vsg-blue-700">
+              {{ boardContentStore.boardContent!.sectionDescription }}
+            </p>
+          </div>
+
+          <!-- Board Members -->
+          <div
+            v-if="sortedBoardMembers.length > 0"
+            class="border-t border-vsg-blue-100 pt-12"
+          >
+            <div class="mt-8 grid gap-6 md:grid-cols-2">
+              <div
+                v-for="(member, index) in sortedBoardMembers"
+                :key="member.id"
+                class="rounded-xl border border-vsg-blue-100 bg-vsg-blue-50 p-6"
+              >
+                <div class="flex items-start gap-4">
+                  <!-- Profile Image -->
+                  <div class="shrink-0">
+                    <div
+                      v-if="member.profileImage"
+                      class="h-16 w-16 shrink-0 overflow-hidden rounded-full bg-gray-200"
+                    >
+                      <img
+                        :src="getProfileImageUrl(member.profileImage.filename)"
+                        :alt="`${member.firstName} ${member.lastName}`"
+                        class="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div
+                      v-else
+                      class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full"
+                      :class="getBadgeColor(index)"
+                    >
+                      <FontAwesomeIcon
+                        icon="user"
+                        class="text-vsg-blue-900"
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Member Info -->
+                  <div>
+                    <span
+                      class="inline-block rounded-full px-3 py-1 text-sm font-body text-vsg-blue-900"
+                      :class="getBadgeColor(index)"
+                    >
+                      {{ member.type }}
+                    </span>
+                    <p class="mt-2 font-body text-lg font-semibold text-vsg-blue-900">{{ member.firstName }} {{ member.lastName }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- No Members Message -->
+          <div
+            v-else
+            class="border-t border-vsg-blue-100 pt-12"
+          >
+            <div class="rounded-xl bg-gray-50 border border-gray-200 p-8 text-center">
+              <p class="font-body text-gray-600">Derzeit sind keine Vorstandsmitglieder hinterlegt.</p>
+            </div>
+          </div>
+        </div>
+      </ApiState>
+    </ContentSection>
+  </div>
+</template>

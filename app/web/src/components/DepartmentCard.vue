@@ -1,0 +1,38 @@
+<script setup lang="ts">
+import LinkArrow from '@shared/components/LinkArrow.vue';
+
+interface Props {
+  title: string;
+  description: string;
+  href?: string;
+}
+
+withDefaults(defineProps<Props>(), {
+  href: '#',
+});
+</script>
+
+<template>
+  <div class="card-hover group border border-gray-200 bg-gray-50 p-8">
+    <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-vsg-blue-600/10 transition-colors group-hover:bg-vsg-blue-600/20">
+      <slot name="icon">
+        <FontAwesomeIcon
+          icon="circle"
+          class="text-vsg-blue-600"
+        />
+      </slot>
+    </div>
+    <h4 class="mb-3 font-display text-3xl tracking-wider text-vsg-blue-900">
+      {{ title }}
+    </h4>
+    <p class="font-body font-normal leading-relaxed text-gray-600">
+      {{ description }}
+    </p>
+
+    <LinkArrow
+      :href="href"
+      class="mt-6"
+      >Mehr erfahren</LinkArrow
+    >
+  </div>
+</template>
