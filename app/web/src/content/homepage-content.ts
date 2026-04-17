@@ -1,13 +1,9 @@
+import type { Statistic } from "@vsg/types";
 import { marked } from "marked";
-
-export interface HomepageStat {
-  label: string;
-  value: string;
-}
 
 export interface HomepageContent {
   welcomeText: string;
-  stats: HomepageStat[];
+  stats: Statistic[];
   departmentsHeadline: string;
   departmentsDescription: string;
   departmentsSubtitle: string;

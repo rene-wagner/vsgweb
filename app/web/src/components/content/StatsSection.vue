@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
-import type { HomepageStat } from "@/content/homepage-content";
+import type { Statistic } from "@vsg/types";
 
 interface Props {
-  stats?: HomepageStat[];
+  stats?: Statistic[];
 }
 
 const props = defineProps<Props>();

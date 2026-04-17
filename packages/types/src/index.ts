@@ -10,6 +10,7 @@ export type { JsonLdContext, JsonLdResource } from "./api/json-ld.types.js";
 export type { Location, LocationSummary } from "./api/location.types.js";
 export type { ApiPost, PostAPI } from "./api/post.types.js";
 export type { UserSummary } from "./api/user.types.js";
+export type { Cta } from "./cta.types.js";
 export type { Department } from "./departments/department.types.js";
 export type { DepartmentLocation } from "./departments/department-location.types.js";
 export type { DepartmentStat } from "./departments/department-stat.types.js";
@@ -22,3 +23,4 @@ export type { DepartmentTrainingGroup } from "./departments/department-training-
 export type { DepartmentTrainingSession } from "./departments/department-training-session.types.js";
 export type { MediaItem } from "./media-items/media-item.types.js";
 export type { Post, PostAuthor, PostCategory, PostTag, PostThumbnail } from "./posts/post.types.js";
+export type { Statistic } from "./statistic.types.js";

@@ -13,12 +13,7 @@ import LocationSection from "../components/department/LocationSection.vue";
 import NewsSection from "../components/content/NewsSection.vue";
 import DepartmentCtaSection from "../components/department/DepartmentCtaSection.vue";
 import WelcomeSection from "../components/content/WelcomeSection.vue";
-import type {
-  Stat,
-  TrainingGroup,
-  DepartmentLocation,
-  DepartmentCta,
-} from "../types/department-detail.types";
+import { Cta, DepartmentLocation, DepartmentTrainingGroup, Statistic } from "@vsg/types";
 
 const route = useRoute();
 const departmentsStore = useDepartmentsStore();
@@ -69,7 +64,7 @@ onUnmounted(() => {
 });
 
 // Transform API stats to component format
-const departmentStats = computed<Stat[]>(() => {
+const departmentStats = computed<Statistic[]>(() => {
   if (!currentDepartment.value?.stats) return [];
   return currentDepartment.value.stats.map((stat) => ({
     value: stat.value,
@@ -78,7 +73,7 @@ const departmentStats = computed<Stat[]>(() => {
 });
 
 // Transform API training groups to component format
-const departmentTrainingGroups = computed<TrainingGroup[]>(() => {
+const departmentTrainingGroups = computed<DepartmentTrainingGroup[]>(() => {
   if (!currentDepartment.value?.trainingGroups) return [];
   return currentDepartment.value.trainingGroups.map((group) => ({
     name: group.name,
@@ -109,7 +104,7 @@ const departmentLocations = computed<DepartmentLocation[]>(() => {
 });
 
 // Generate CTA based on department name
-const departmentCta = computed<DepartmentCta>(() => {
+const departmentCta = computed<Cta>(() => {
   const departmentName = currentDepartment.value?.name || "";
   return {
     title: `LUST AUF<br/>${departmentName.toUpperCase()}?`,
