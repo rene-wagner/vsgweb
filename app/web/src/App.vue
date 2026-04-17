@@ -5,14 +5,17 @@ import Navbar from "@/components/app/Navbar.vue";
 import Footer from "@/components/app/Footer.vue";
 import CookieConsentBanner from "@/components/app/CookieConsentBanner.vue";
 import { useCategoriesStore } from "@/stores/categoriesStore";
+import { useContactPeopleStore } from "@/stores/contactPeopleStore";
 import { useDepartmentsStore } from "@/stores/departmentsStore";
 import { usePostsStore } from "@/stores/postsStore";
 import { getApiErrorMessage } from "@/lib/sdk";
 
 const categoriesStore = useCategoriesStore();
+const contactPeopleStore = useContactPeopleStore();
 const departmentsStore = useDepartmentsStore();
 const postsStore = usePostsStore();
 const { error: categoriesError } = storeToRefs(categoriesStore);
+const { error: contactPeopleError } = storeToRefs(contactPeopleStore);
 const { error: departmentsError } = storeToRefs(departmentsStore);
 const { error: postsError } = storeToRefs(postsStore);
 
@@ -28,6 +31,7 @@ async function initializeApp(): Promise<void> {
   try {
     await Promise.all([
       categoriesStore.fetchCategories(),
+      contactPeopleStore.fetchContactPeople(),
       departmentsStore.fetchDepartments(),
       postsStore.fetchPublishedPosts(),
     ]);
@@ -35,6 +39,7 @@ async function initializeApp(): Promise<void> {
     console.error("[VSG] App initialization error", error);
     initializationError.value =
       categoriesError.value ??
+      contactPeopleError.value ??
       departmentsError.value ??
       postsError.value ??
       "Die App konnte nicht gestartet werden.";

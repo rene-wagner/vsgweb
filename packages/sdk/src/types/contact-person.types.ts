@@ -1,4 +1,5 @@
 import type { JsonLdResource } from "./json-ld.types.js";
+import type { MediaItem } from "./media.types.js";
 
 export interface ContactPerson extends JsonLdResource {
   id: number;
@@ -9,5 +10,5 @@ export interface ContactPerson extends JsonLdResource {
   email?: string | null;
   phone?: string | null;
   address?: string | null;
-  picture?: string | null;
+  picture?: MediaItem | null;
 }

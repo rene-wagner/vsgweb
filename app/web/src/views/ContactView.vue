@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { useContactPersonsStore, type ContactPerson } from "../stores/contactPersonsStore";
+import { useContactPeopleStore, type ContactPerson } from "@/stores/contactPeopleStore";
 import ContactForm from "../components/forms/ContactForm.vue";
 import SecureContact from "../components/forms/SecureContact.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -11,7 +11,7 @@ import ContentSection from "../components/content/ContentSection.vue";
 import { getUploadUrl } from "@/services/media-items/media-item.service";
 
 const route = useRoute();
-const contactPersonsStore = useContactPersonsStore();
+const contactPeopleStore = useContactPeopleStore();
 const selectedContactPersonId = ref<number | null>(null);
 
 const selectedContactPerson = computed<ContactPerson | null>(() => {
@@ -19,12 +19,12 @@ const selectedContactPerson = computed<ContactPerson | null>(() => {
     return null;
   }
   return (
-    contactPersonsStore.contactPersons.find((cp) => cp.id === selectedContactPersonId.value) || null
+    contactPeopleStore.contactPeople.find((cp) => cp.id === selectedContactPersonId.value) || null
   );
 });
 
 onMounted(async () => {
-  await contactPersonsStore.ensureLoaded();
+  await contactPeopleStore.ensureLoaded();
 
   // Check for person query parameter to pre-select contact person
   const personIdParam = route.query.person;
@@ -32,7 +32,7 @@ onMounted(async () => {
     const personId = Number(personIdParam);
     if (!isNaN(personId) && personId > 0) {
       // Verify contact person exists
-      const exists = contactPersonsStore.contactPersons.some((cp) => cp.id === personId);
+      const exists = contactPeopleStore.contactPeople.some((cp) => cp.id === personId);
       if (exists) {
         selectedContactPersonId.value = personId;
       }
@@ -53,13 +53,7 @@ function getInitials(cp: ContactPerson): string {
 function getProfileImageUrl(cp: ContactPerson): string | null {
   if (!cp.profileImage) return null;
 
-  // Use 'small' thumbnail (300x300) for profile images if available
-  // Falls back to original if no thumbnails exist
-  if (cp.profileImage.thumbnails?.small) {
-    return getUploadUrl(cp.profileImage.thumbnails.small);
-  }
-
-  return getUploadUrl(cp.profileImage.filename);
+  return getUploadUrl(cp.profileImage.url ?? cp.profileImage.display_url ?? cp.profileImage.name);
 }
 
 function encodeBase64(value: string): string {
@@ -83,12 +77,12 @@ function encodeBase64(value: string): string {
     />
 
     <ContentSection max-width="2xl">
-      <ApiState
-        :is-loading="contactPersonsStore.isLoading"
-        :error="contactPersonsStore.error"
-        :empty="contactPersonsStore.contactPersons.length === 0"
-        empty-message="Derzeit sind keine Ansprechpartner verfügbar."
-      >
+        <ApiState
+          :is-loading="contactPeopleStore.isLoading"
+          :error="contactPeopleStore.error"
+          :empty="contactPeopleStore.contactPeople.length === 0"
+          empty-message="Derzeit sind keine Ansprechpartner verfügbar."
+        >
         <div>
           <div class="mb-8">
             <label
@@ -109,9 +103,9 @@ function encodeBase64(value: string): string {
               "
             >
               <option :value="null">Bitte wählen...</option>
-              <option v-for="cp in contactPersonsStore.contactPersons" :key="cp.id" :value="cp.id">
-                {{ formatOptionLabel(cp) }}
-              </option>
+               <option v-for="cp in contactPeopleStore.contactPeople" :key="cp.id" :value="cp.id">
+                 {{ formatOptionLabel(cp) }}
+               </option>
             </select>
           </div>
 

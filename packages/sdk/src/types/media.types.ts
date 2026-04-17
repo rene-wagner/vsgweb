@@ -23,4 +23,13 @@ export interface MediaItem extends JsonLdResource {
   crop_height?: number | null;
   created_at: string;
   updated_at: string;
+  original_url?: string | null;
+  thumbnail_url?: string | null;
+  cropped_url?: string | null;
+  cropped_thumbnail_url?: string | null;
+  display_url?: string | null;
+  url?: string | null;
+  size_human?: string | null;
+  folder_id?: number | null;
+  category_id?: number | null;
 }
