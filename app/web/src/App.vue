@@ -4,12 +4,15 @@ import { storeToRefs } from "pinia";
 import Navbar from "@/components/app/Navbar.vue";
 import Footer from "@/components/app/Footer.vue";
 import CookieConsentBanner from "@/components/app/CookieConsentBanner.vue";
+import { useCategoriesStore } from "@/stores/categoriesStore";
 import { useDepartmentsStore } from "@/stores/departmentsStore";
 import { usePostsStore } from "@/stores/postsStore";
 import { getApiErrorMessage } from "@/lib/sdk";
 
+const categoriesStore = useCategoriesStore();
 const departmentsStore = useDepartmentsStore();
 const postsStore = usePostsStore();
+const { error: categoriesError } = storeToRefs(categoriesStore);
 const { error: departmentsError } = storeToRefs(departmentsStore);
 const { error: postsError } = storeToRefs(postsStore);
 
@@ -23,11 +26,18 @@ async function initializeApp(): Promise<void> {
   runtimeError.value = null;
 
   try {
-    await Promise.all([departmentsStore.fetchDepartments(), postsStore.fetchPublishedPosts()]);
+    await Promise.all([
+      categoriesStore.fetchCategories(),
+      departmentsStore.fetchDepartments(),
+      postsStore.fetchPublishedPosts(),
+    ]);
   } catch (error) {
     console.error("[VSG] App initialization error", error);
     initializationError.value =
-      departmentsError.value ?? postsError.value ?? "Die App konnte nicht gestartet werden.";
+      categoriesError.value ??
+      departmentsError.value ??
+      postsError.value ??
+      "Die App konnte nicht gestartet werden.";
   } finally {
     isInitializing.value = false;
   }
