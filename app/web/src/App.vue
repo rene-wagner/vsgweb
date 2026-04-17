@@ -21,7 +21,7 @@ async function initializeApp(): Promise<void> {
   runtimeError.value = null;
 
   try {
-    await departmentsStore.ensureLoaded();
+    await departmentsStore.fetchDepartments();
   } catch (error) {
     console.error("[VSG] App initialization error", error);
     initializationError.value = departmentsError.value ?? "Die App konnte nicht gestartet werden.";

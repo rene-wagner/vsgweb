@@ -196,7 +196,6 @@ export const useDepartmentsStore = defineStore("departments", () => {
   const departments = ref<Department[]>([]);
   const isLoading = ref(false);
   const error = ref<string | null>(null);
-  let departmentsRequest: Promise<void> | null = null;
 
   // Single department state
   const currentDepartment = ref<Department | null>(null);
@@ -239,20 +238,6 @@ export const useDepartmentsStore = defineStore("departments", () => {
     }
   }
 
-  async function ensureLoaded(): Promise<void> {
-    if (departments.value.length > 0) {
-      return;
-    }
-
-    if (!departmentsRequest) {
-      departmentsRequest = fetchDepartments().finally(() => {
-        departmentsRequest = null;
-      });
-    }
-
-    await departmentsRequest;
-  }
-
   function clearCurrentDepartment(): void {
     currentDepartment.value = null;
     currentDepartmentError.value = null;
@@ -272,6 +257,5 @@ export const useDepartmentsStore = defineStore("departments", () => {
     currentDepartmentNotFound,
     fetchDepartmentBySlug,
     clearCurrentDepartment,
-    ensureLoaded,
   };
 });
