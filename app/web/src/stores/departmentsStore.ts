@@ -9,105 +9,10 @@ import {
 } from "@vsg/vsg-sdk";
 import { getApiErrorMessage, vsg } from "@/lib/sdk";
 import { getUploadUrl } from "@/utils/media";
-
-export interface MediaItem {
-  id: number;
-  filename: string;
-  originalName: string;
-  path: string;
-  mimetype: string;
-  size: number;
-  type: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface DepartmentStat {
-  id: number;
-  label: string;
-  value: string;
-  sort: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface DepartmentTrainingSession {
-  id: number;
-  day: string;
-  time: string;
-  locationId: number | null;
-  location: DepartmentLocation | null;
-  sort: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface DepartmentTrainingGroup {
-  id: number;
-  name: string;
-  ageRange: string | null;
-  icon: string;
-  variant: string;
-  sort: number;
-  sessions: DepartmentTrainingSession[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface DepartmentLocation {
-  id: number;
-  name: string;
-  badge: string;
-  badgeVariant: string;
-  street: string;
-  city: string;
-  mapsUrl: string | null;
-  amenities: Array<{ icon?: string; text: string }>;
-  imageId: number | null;
-  image: MediaItem | null;
-  sort: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface TrainerLicense {
-  name: string;
-  variant: string;
-}
-
-export interface DepartmentTrainer {
-  id: number;
-  contactPersonId: number;
-  role: string;
-  licenses: Array<{ name: string; variant: string }> | string | null;
-  sort: number;
-  createdAt: string;
-  updatedAt: string;
-  contactPerson: {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    profileImage: MediaItem | null;
-  };
-}
-
-export interface Department {
-  id: number;
-  name: string;
-  slug: string;
-  shortDescription: string;
-  welcomeText: string | null;
-  iconId: number | null;
-  icon: MediaItem | null;
-  stats: DepartmentStat[];
-  trainingGroups: DepartmentTrainingGroup[];
-  locations: DepartmentLocation[];
-  trainers: DepartmentTrainer[];
-  createdAt: string;
-  updatedAt: string;
-}
+import type { Department } from "@/types/departments/department.types";
+import type { DepartmentLocation } from "@/types/departments/department-location.types";
+import type { DepartmentTrainingSession } from "@/types/departments/department-training-session.types";
+import type { MediaItem } from "@/types/media-items/media-item.types";
 
 export function getMediaUrl(item: MediaItem): string {
   return getUploadUrl(item.filename) ?? "";
