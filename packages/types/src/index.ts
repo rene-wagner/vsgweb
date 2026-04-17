@@ -11,10 +11,7 @@ export type { Location, LocationSummary } from "./api/location.types.js";
 export type { ApiPost, PostAPI } from "./api/post.types.js";
 export type { UserSummary } from "./api/user.types.js";
 export type { Department } from "./departments/department.types.js";
-export type {
-  DepartmentLocation,
-  DepartmentLocationAmenity,
-} from "./departments/department-location.types.js";
+export type { DepartmentLocation } from "./departments/department-location.types.js";
 export type { DepartmentStat } from "./departments/department-stat.types.js";
 export type {
   DepartmentTrainer,

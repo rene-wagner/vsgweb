@@ -11,17 +11,10 @@ function normalizeLocation(location: LocationSummary): DepartmentLocation {
   return {
     id: location.id,
     name: location.name,
-    badge: "",
-    badgeVariant: "primary",
     street: location.street ?? "",
     city: location.city ?? "",
     mapsUrl: location.mapsUrl ?? null,
-    amenities: [],
-    imageId: null,
-    image: null,
-    sort: 0,
-    createdAt: "",
-    updatedAt: "",
+    picture: location.picture ?? null,
   };
 }
 

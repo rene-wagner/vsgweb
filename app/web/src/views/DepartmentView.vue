@@ -2,7 +2,7 @@
 import { watch, onMounted, onUnmounted, watchEffect, computed } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
-import { getMediaUrl, getUploadUrl } from "@/services/media-items/media-item.service";
+import { getMediaUrl } from "@/services/media-items/media-item.service";
 import { useDepartmentsStore } from "../stores/departmentsStore";
 import { usePostsStore } from "../stores/postsStore";
 import ApiState from "@/components/ui/ApiState.vue";
@@ -11,15 +11,12 @@ import StatsSection from "../components/content/StatsSection.vue";
 import TrainingScheduleSection from "../components/department/TrainingScheduleSection.vue";
 import LocationSection from "../components/department/LocationSection.vue";
 import NewsSection from "../components/content/NewsSection.vue";
-import TrainersSection from "../components/department/TrainersSection.vue";
 import DepartmentCtaSection from "../components/department/DepartmentCtaSection.vue";
 import WelcomeSection from "../components/content/WelcomeSection.vue";
 import type {
   Stat,
   TrainingGroup,
   DepartmentLocation,
-  LocationAmenity,
-  Trainer,
   DepartmentCta,
 } from "../types/department-detail.types";
 
@@ -33,40 +30,6 @@ const {
 } = storeToRefs(departmentsStore);
 
 const postsStore = usePostsStore();
-
-function parseTrainerLicenses(
-  licenses: Array<{ name: string; variant: string }> | string | null,
-): Array<{ name: string; variant: "gold" | "blue" }> {
-  const parsedLicenses = Array.isArray(licenses)
-    ? licenses
-    : typeof licenses === "string"
-      ? (JSON.parse(licenses) as Array<{ name: string; variant: string }>)
-      : [];
-
-  return parsedLicenses.map((license) => ({
-    name: license.name,
-    variant: license.variant === "gold" ? "gold" : "blue",
-  }));
-}
-
-function normalizeAmenities(
-  amenities: Array<{ icon?: string; text: string }> | null | undefined,
-): LocationAmenity[] {
-  if (!Array.isArray(amenities)) {
-    return [];
-  }
-
-  return amenities.map((amenity) => ({
-    text: amenity.text,
-    icon:
-      amenity.icon === "tables" ||
-      amenity.icon === "changing-rooms" ||
-      amenity.icon === "parking" ||
-      amenity.icon === "check"
-        ? amenity.icon
-        : "info",
-  }));
-}
 
 function fetchDepartment() {
   const slug = route.params.slug as string;
@@ -138,33 +101,11 @@ const departmentLocations = computed<DepartmentLocation[]>(() => {
   return currentDepartment.value.locations.map((location) => ({
     id: location.id,
     name: location.name,
-    badge: location.badge,
-    badgeVariant: location.badgeVariant as "primary" | "secondary",
     street: location.street,
     city: location.city,
-    amenities: normalizeAmenities(location.amenities),
     mapsUrl: location.mapsUrl || "",
-    image: location.image
-      ? {
-          url: location.image.url,
-          original_filename: location.image.original_filename,
-        }
-      : null,
+    picture: location.picture ?? null,
   }));
-});
-
-// Transform API trainers to component format
-const departmentTrainers = computed<Trainer[]>(() => {
-  if (!currentDepartment.value?.trainers) return [];
-  return currentDepartment.value.trainers.map((trainer) => {
-    return {
-      name: `${trainer.contactPerson.firstName} ${trainer.contactPerson.lastName}`,
-      role: trainer.role,
-      licenses: parseTrainerLicenses(trainer.licenses),
-      contactPersonId: trainer.contactPersonId,
-      avatarUrl: getUploadUrl(trainer.contactPerson.profileImage?.url) ?? undefined,
-    };
-  });
 });
 
 // Generate CTA based on department name
@@ -174,9 +115,9 @@ const departmentCta = computed<DepartmentCta>(() => {
     title: `LUST AUF<br/>${departmentName.toUpperCase()}?`,
     description:
       "Komm einfach zum Probetraining vorbei! Wir freuen uns auf dich - egal ob Anfänger oder erfahrener Sportfreund.",
-    primaryCtaLabel: "PROBETRAINING ANFRAGEN",
+    primaryCtaLabel: "Probetraining anfragen",
     primaryCtaRoute: "/kontakt",
-    secondaryCtaLabel: "E-MAIL SCHREIBEN",
+    secondaryCtaLabel: "E-Mail schreiben",
     secondaryCtaRoute: `mailto:${departmentName.toLowerCase().replace(/\s+/g, "-")}@vsg-kugelberg.de`,
   };
 });
@@ -197,9 +138,9 @@ const departmentCta = computed<DepartmentCta>(() => {
         :headline="currentDepartment!.name.toUpperCase()"
         :description="currentDepartment!.shortDescription"
         :icon-url="currentDepartment!.icon ? getMediaUrl(currentDepartment!.icon) : undefined"
-        :primary-cta-label="departmentTrainingGroups.length > 0 ? 'TRAININGSZEITEN' : undefined"
+        :primary-cta-label="departmentTrainingGroups.length > 0 ? 'Trainingszeiten' : undefined"
         :primary-cta-anchor="departmentTrainingGroups.length > 0 ? '#trainingszeiten' : undefined"
-        :secondary-cta-label="departmentLocations.length > 0 ? 'UNSERE STANDORTE' : undefined"
+        :secondary-cta-label="departmentLocations.length > 0 ? 'Unsere Standorte' : undefined"
         :secondary-cta-anchor="departmentLocations.length > 0 ? '#standorte' : undefined"
         min-height="70vh"
       />
@@ -238,16 +179,6 @@ const departmentCta = computed<DepartmentCta>(() => {
         headline="AKTUELLE NEUIGKEITEN"
         subtitle="Was bei uns los ist"
         :category-slug="currentDepartment!.slug"
-      />
-
-      <!-- Trainers Section -->
-      <TrainersSection
-        v-if="departmentTrainers.length > 0"
-        id="trainer"
-        title="UNSERE TRAINER"
-        subtitle="Wer euch trainiert"
-        description="Erfahrene und lizenzierte Trainer, die mit Leidenschaft ihr Wissen weitergeben."
-        :trainers="departmentTrainers"
       />
 
       <!-- CTA Section -->

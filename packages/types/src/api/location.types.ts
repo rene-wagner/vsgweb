@@ -1,4 +1,5 @@
 import type { JsonLdResource } from "./json-ld.types.js";
+import type { MediaItem } from "../media-items/media-item.types.js";
 
 export interface LocationSummary extends JsonLdResource {
   id: number;
@@ -6,8 +7,7 @@ export interface LocationSummary extends JsonLdResource {
   street?: string | null;
   city?: string | null;
   mapsUrl?: string | null;
+  picture?: MediaItem | null;
 }
 
-export interface Location extends LocationSummary {
-  picture?: string | null;
-}
+export interface Location extends LocationSummary {}
