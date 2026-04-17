@@ -37,7 +37,10 @@ export const usePostsStore = defineStore("posts", () => {
     }
   }
 
-  async function fetchPublishedPostsByCategory(categorySlug: string, itemsPerPage = 5): Promise<void> {
+  async function fetchPublishedPostsByCategory(
+    categorySlug: string,
+    itemsPerPage = 5,
+  ): Promise<void> {
     isDepartmentPostsLoading.value = true;
     departmentPostsError.value = null;
 
