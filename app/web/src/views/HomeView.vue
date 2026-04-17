@@ -1,20 +1,11 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { storeToRefs } from "pinia";
 import HeroSection from "@/components/content/HeroSection.vue";
 import WelcomeSection from "@/components/content/WelcomeSection.vue";
 import StatsSection from "@/components/content/StatsSection.vue";
 import DepartmentsSection from "@/components/department/DepartmentsSection.vue";
 import NewsSection from "@/components/content/NewsSection.vue";
 import CtaSection from "@/components/content/CtaSection.vue";
-import { useHomepageStore } from "@/stores/homepageStore";
-
-const homepageStore = useHomepageStore();
-const { homepageContent } = storeToRefs(homepageStore);
-
-onMounted(() => {
-  homepageStore.ensureLoaded();
-});
+import { homepageContent } from "@/content/homepage-content";
 </script>
 
 <template>
@@ -28,29 +19,23 @@ onMounted(() => {
       :show-scroll-indicator="true"
     />
 
-    <WelcomeSection
-      v-if="homepageContent?.welcomeText"
-      :welcome-text="homepageContent.welcomeText"
-    />
+    <WelcomeSection v-if="homepageContent.welcomeText" :welcome-text="homepageContent.welcomeText" />
 
-    <StatsSection :stats="homepageContent?.stats" />
+    <StatsSection :stats="homepageContent.stats" />
 
     <DepartmentsSection
-      :headline="homepageContent?.departmentsHeadline"
-      :description="homepageContent?.departmentsDescription"
-      :subtitle="homepageContent?.departmentsSubtitle"
+      :headline="homepageContent.departmentsHeadline"
+      :description="homepageContent.departmentsDescription"
+      :subtitle="homepageContent.departmentsSubtitle"
     />
 
     <NewsSection
-      :headline="homepageContent?.postsHeadline"
-      :description="homepageContent?.postsDescription"
-      :subtitle="homepageContent?.postsSubtitle"
-      :posts-count="homepageContent?.postsCount ?? 5"
+      :headline="homepageContent.postsHeadline"
+      :description="homepageContent.postsDescription"
+      :subtitle="homepageContent.postsSubtitle"
+      :posts-count="homepageContent.postsCount"
     />
 
-    <CtaSection
-      :headline="homepageContent?.ctaHeadline"
-      :description="homepageContent?.ctaDescription"
-    />
+    <CtaSection :headline="homepageContent.ctaHeadline" :description="homepageContent.ctaDescription" />
   </div>
 </template>
