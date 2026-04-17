@@ -57,6 +57,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/views/DepartmentView.vue"),
   },
   {
+    path: "/beitraege",
+    name: "post-list",
+    component: () => import("@/views/PostListView.vue"),
+  },
+  {
     path: "/beitrag/:slug",
     name: "post-detail",
     component: () => import("@/views/PostView.vue"),

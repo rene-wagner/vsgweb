@@ -1,18 +1,20 @@
 <script setup lang="ts">
+import { RouterLink } from "vue-router";
+
 interface Props {
   category: string;
   date: string;
   title: string;
-  href?: string;
+  to?: string;
 }
 
 withDefaults(defineProps<Props>(), {
-  href: "#",
+  to: "/",
 });
 </script>
 
 <template>
-  <a :href="href" class="card-hover group overflow-hidden bg-vsg-blue-600">
+  <RouterLink :to="to" class="card-hover group overflow-hidden bg-vsg-blue-600">
     <div class="relative aspect-video overflow-hidden bg-vsg-blue-700">
       <div class="absolute inset-0 bg-linear-to-t from-vsg-blue-600 to-transparent" />
       <div class="absolute bottom-4 left-4">
@@ -33,5 +35,5 @@ withDefaults(defineProps<Props>(), {
         {{ title }}
       </h4>
     </div>
-  </a>
+  </RouterLink>
 </template>

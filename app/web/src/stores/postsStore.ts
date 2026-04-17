@@ -5,11 +5,21 @@ import type { Post } from "@vsg/types";
 import { getApiErrorMessage, vsg } from "@/lib/sdk";
 import { normalizePost } from "@/services/posts/post-normalizer.service";
 
+const DEFAULT_POSTS_OVERVIEW_PAGE_SIZE = 10;
+
 export const usePostsStore = defineStore("posts", () => {
   // List state
   const posts = ref<Post[]>([]);
   const isLoading = ref(false);
   const error = ref<string | null>(null);
+
+  // Paginated list state for post overview page
+  const paginatedPosts = ref<Post[]>([]);
+  const paginatedPostsPage = ref(1);
+  const paginatedPostsItemsPerPage = ref(DEFAULT_POSTS_OVERVIEW_PAGE_SIZE);
+  const paginatedPostsTotalItems = ref(0);
+  const paginatedPostsLoading = ref(false);
+  const paginatedPostsError = ref<string | null>(null);
 
   // Department posts state (filtered by category)
   const departmentPosts = ref<Post[]>([]);
@@ -37,6 +47,27 @@ export const usePostsStore = defineStore("posts", () => {
     }
   }
 
+  async function fetchPublishedPostsPage(page = 1, itemsPerPage = DEFAULT_POSTS_OVERVIEW_PAGE_SIZE) {
+    paginatedPostsLoading.value = true;
+    paginatedPostsError.value = null;
+
+    try {
+      const result = await vsg.posts.list({
+        query: { published: true, page, itemsPerPage },
+      });
+
+      paginatedPosts.value = (result.member ?? []).map(normalizePost);
+      paginatedPostsPage.value = page;
+      paginatedPostsItemsPerPage.value = itemsPerPage;
+      paginatedPostsTotalItems.value = result.totalItems ?? paginatedPosts.value.length;
+    } catch (e) {
+      paginatedPostsError.value = getApiErrorMessage(e);
+      throw e;
+    } finally {
+      paginatedPostsLoading.value = false;
+    }
+  }
+
   async function fetchPublishedPostsByCategory(
     categoryIri: string,
     itemsPerPage = 5,
@@ -61,6 +92,15 @@ export const usePostsStore = defineStore("posts", () => {
     departmentPosts.value = [];
     isDepartmentPostsLoading.value = false;
     departmentPostsError.value = null;
+  }
+
+  function clearPaginatedPosts(): void {
+    paginatedPosts.value = [];
+    paginatedPostsPage.value = 1;
+    paginatedPostsItemsPerPage.value = DEFAULT_POSTS_OVERVIEW_PAGE_SIZE;
+    paginatedPostsTotalItems.value = 0;
+    paginatedPostsLoading.value = false;
+    paginatedPostsError.value = null;
   }
 
   async function fetchPostBySlug(slug: string): Promise<void> {
@@ -94,6 +134,14 @@ export const usePostsStore = defineStore("posts", () => {
     isLoading,
     error,
     fetchPublishedPosts,
+    paginatedPosts,
+    paginatedPostsPage,
+    paginatedPostsItemsPerPage,
+    paginatedPostsTotalItems,
+    paginatedPostsLoading,
+    paginatedPostsError,
+    fetchPublishedPostsPage,
+    clearPaginatedPosts,
     departmentPosts,
     isDepartmentPostsLoading,
     departmentPostsError,

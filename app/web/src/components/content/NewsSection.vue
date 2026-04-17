@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, watch } from "vue";
 import { storeToRefs } from "pinia";
+import { RouterLink } from "vue-router";
 import SectionHeader from "@/components/ui/SectionHeader.vue";
 import ApiState from "@/components/ui/ApiState.vue";
 import NewsCardFeatured from "./NewsCardFeatured.vue";
@@ -97,7 +98,7 @@ const listPosts = computed(() => activePosts.value.slice(1));
             :category="getCategoryName(featuredPost.categories)"
             :date="formatDate(featuredPost.createdAt)"
             :title="featuredPost.title.toUpperCase()"
-            :href="`/beitrag/${featuredPost.slug}`"
+            :to="`/beitrag/${featuredPost.slug}`"
           />
 
           <div v-if="listPosts.length > 0" class="space-y-6">
@@ -107,9 +108,19 @@ const listPosts = computed(() => activePosts.value.slice(1));
               :category="getCategoryName(post.categories)"
               :date="formatDate(post.createdAt)"
               :title="post.title"
-              :href="`/beitrag/${post.slug}`"
+              :to="`/beitrag/${post.slug}`"
             />
           </div>
+        </div>
+
+        <div class="mt-10 flex justify-center">
+          <RouterLink
+            to="/beitraege"
+            class="inline-flex items-center gap-2 font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-600 transition-colors hover:text-vsg-blue-800"
+          >
+            Weitere Beiträge ansehen
+            <FontAwesomeIcon icon="arrow-right" />
+          </RouterLink>
         </div>
       </ApiState>
     </div>

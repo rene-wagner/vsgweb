@@ -1,18 +1,20 @@
 <script setup lang="ts">
+import { RouterLink } from "vue-router";
+
 interface Props {
   category: string;
   date: string;
   title: string;
-  href?: string;
+  to?: string;
 }
 
 withDefaults(defineProps<Props>(), {
-  href: "#",
+  to: "/",
 });
 </script>
 
 <template>
-  <a :href="href" class="card-hover group block border-l-4 border-vsg-blue-600 bg-gray-50 p-6">
+  <RouterLink :to="to" class="card-hover group block border-l-4 border-vsg-blue-600 bg-gray-50 p-6">
     <div class="mb-3 flex flex-wrap items-center gap-3">
       <span
         class="inline-block bg-vsg-blue-500 px-3 py-1 font-display text-sm tracking-wider text-white"
@@ -28,5 +30,5 @@ withDefaults(defineProps<Props>(), {
     >
       {{ title }}
     </h5>
-  </a>
+  </RouterLink>
 </template>

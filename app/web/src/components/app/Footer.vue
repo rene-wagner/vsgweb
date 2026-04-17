@@ -1,9 +1,18 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { storeToRefs } from "pinia";
 import { RouterLink } from "vue-router";
 import Logo from "./Logo.vue";
+import { useDepartmentsStore } from "@/stores/departmentsStore";
 
 const foundingDate = new Date("1985-05-10");
+const departmentsStore = useDepartmentsStore();
+const { departments, isLoading: departmentsLoading } = storeToRefs(departmentsStore);
+
+const generalLinks = [
+  { label: "Beiträge", to: "/beitraege" },
+  { label: "Kontakt", to: "/kontakt" },
+];
 
 const vereinLinks = [
   { label: "Geschichte", to: "/verein/geschichte" },
@@ -25,12 +34,21 @@ const age = computed(() => {
 
   return years;
 });
+
+const departmentLinks = computed(() => {
+  const items = Array.isArray(departments.value) ? departments.value : [];
+
+  return items.map((department) => ({
+    label: department.name,
+    to: `/abteilung/${department.slug}`,
+  }));
+});
 </script>
 
 <template>
   <footer class="border-t border-vsg-gold-400/20 bg-vsg-blue-900 py-16">
     <div class="mx-auto max-w-7xl px-6">
-      <div class="grid gap-12 md:grid-cols-4">
+      <div class="grid gap-12 md:grid-cols-5">
         <!-- Brand -->
         <div class="md:col-span-2">
           <div class="mb-6">
@@ -43,7 +61,41 @@ const age = computed(() => {
         </div>
 
         <!-- Links -->
+        <div class="md:col-start-3 md:text-right">
+          <h5 class="mb-6 font-display text-xl tracking-wider text-vsg-gold-400">Allgemeines</h5>
+          <ul class="space-y-3">
+            <li v-for="link in generalLinks" :key="link.label">
+              <RouterLink
+                :to="link.to"
+                class="font-body font-normal text-vsg-blue-300 transition-colors hover:text-vsg-gold-400"
+              >
+                {{ link.label }}
+              </RouterLink>
+            </li>
+          </ul>
+        </div>
+
         <div class="md:col-start-4 md:text-right">
+          <h5 class="mb-6 font-display text-xl tracking-wider text-vsg-gold-400">Abteilungen</h5>
+          <ul class="space-y-3">
+            <li v-if="departmentsLoading" class="font-body font-normal text-vsg-blue-300/60">
+              Laden...
+            </li>
+            <li v-else-if="departmentLinks.length === 0" class="font-body font-normal text-vsg-blue-300/60">
+              Keine Abteilungen
+            </li>
+            <li v-for="link in departmentLinks" v-else :key="link.to">
+              <RouterLink
+                :to="link.to"
+                class="font-body font-normal text-vsg-blue-300 transition-colors hover:text-vsg-gold-400"
+              >
+                {{ link.label }}
+              </RouterLink>
+            </li>
+          </ul>
+        </div>
+
+        <div class="md:col-start-5 md:text-right">
           <h5 class="mb-6 font-display text-xl tracking-wider text-vsg-gold-400">Verein</h5>
           <ul class="space-y-3">
             <li v-for="link in vereinLinks" :key="link.label">
