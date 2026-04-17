@@ -10,7 +10,7 @@ interface Props {
   tag?: string;
 
   // Visual elements
-  logo?: { path: string; originalName: string } | null;
+  logo?: string | null;
   iconUrl?: string;
 
   // Layout
@@ -39,11 +39,6 @@ const props = withDefaults(defineProps<Props>(), {
   secondaryCtaLabel: undefined,
   secondaryCtaAnchor: undefined,
   showScrollIndicator: false,
-});
-
-const logoUrl = computed(() => {
-  if (!props.logo) return null;
-  return props.logo.path;
 });
 
 const minHeightClass = computed(() => {
@@ -97,10 +92,10 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
 
     <div class="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center">
       <!-- Logo -->
-      <div v-if="logoUrl" class="animate-slide-up my-8 delay-100">
+      <div v-if="logo" class="animate-slide-up my-8 delay-100">
         <img
-          :src="logoUrl"
-          :alt="logo?.originalName || 'Logo'"
+          :src="logo"
+          alt="VSG Kugelberg Logo"
           class="mx-auto h-36 w-auto md:h-40 lg:h-42"
         />
       </div>
