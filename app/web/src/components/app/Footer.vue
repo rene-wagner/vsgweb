@@ -44,7 +44,7 @@ onMounted(() => {
         <!-- Brand -->
         <div class="md:col-span-2">
           <div class="mb-6">
-            <Logo class="h-14" />
+            <Logo class="h-20 md:h-32" />
           </div>
           <p class="max-w-md font-body font-normal leading-relaxed text-vsg-blue-300">
             Seit über {{ age }} Jahren der Sportverein für Weißenfels und Umgebung. Tradition,

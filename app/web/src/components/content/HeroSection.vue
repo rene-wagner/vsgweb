@@ -93,7 +93,7 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
     <div class="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center">
       <!-- Logo -->
       <div v-if="logo" class="animate-slide-up my-8 delay-100">
-        <img :src="logo" alt="VSG Kugelberg Logo" class="mx-auto h-36 w-auto md:h-40 lg:h-42" />
+        <img :src="logo" alt="VSG Kugelberg Logo" class="mx-auto h-24 w-auto md:h-32 lg:h-42" />
       </div>
 
       <!-- Tag badge -->
