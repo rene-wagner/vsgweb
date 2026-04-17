@@ -4,6 +4,7 @@ import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { usePostsStore } from "../stores/postsStore";
 import ApiState from "@/components/ui/ApiState.vue";
+import MarkdownRenderer from "@/components/ui/MarkdownRenderer.vue";
 import HeroSection from "../components/content/HeroSection.vue";
 import ContentSection from "../components/content/ContentSection.vue";
 
@@ -64,10 +65,9 @@ onUnmounted(() => {
 
       <!-- Content Section -->
       <ContentSection v-if="currentPost!.content">
-        <div
-          class="prose prose-lg max-w-none font-body text-vsg-blue-700"
-          v-html="currentPost!.content"
-        />
+        <div class="prose prose-lg max-w-none font-body text-vsg-blue-700">
+          <MarkdownRenderer :content="currentPost!.content" />
+        </div>
       </ContentSection>
     </ApiState>
   </div>
