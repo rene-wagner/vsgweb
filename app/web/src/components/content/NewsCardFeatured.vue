@@ -3,7 +3,6 @@ interface Props {
   category: string;
   date: string;
   title: string;
-  excerpt: string;
   href?: string;
 }
 
@@ -33,9 +32,6 @@ withDefaults(defineProps<Props>(), {
       >
         {{ title }}
       </h4>
-      <p class="font-body font-normal leading-relaxed text-vsg-blue-100">
-        {{ excerpt }}
-      </p>
     </div>
   </a>
 </template>

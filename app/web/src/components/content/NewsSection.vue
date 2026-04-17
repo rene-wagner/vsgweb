@@ -62,13 +62,6 @@ function formatDate(dateString: string): string {
   });
 }
 
-// Get excerpt from content (first 150 chars)
-function getExcerpt(content: string | null): string {
-  if (!content) return "";
-  const plainText = content.replace(/<[^>]*>/g, "");
-  return plainText.length > 150 ? plainText.substring(0, 150) + "..." : plainText;
-}
-
 // Get category name from first category or default
 function getCategoryName(categories: { name: string }[]): string {
   return categories.length > 0 ? categories[0].name.toUpperCase() : "ALLGEMEIN";
@@ -104,7 +97,6 @@ const listPosts = computed(() => activePosts.value.slice(1));
             :category="getCategoryName(featuredPost.categories)"
             :date="formatDate(featuredPost.createdAt)"
             :title="featuredPost.title.toUpperCase()"
-            :excerpt="getExcerpt(featuredPost.content)"
             :href="`/beitrag/${featuredPost.slug}`"
           />
 
@@ -112,6 +104,7 @@ const listPosts = computed(() => activePosts.value.slice(1));
             <NewsCardListItem
               v-for="post in listPosts"
               :key="post.id"
+              :category="getCategoryName(post.categories)"
               :date="formatDate(post.createdAt)"
               :title="post.title"
               :href="`/beitrag/${post.slug}`"
