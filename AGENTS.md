@@ -72,7 +72,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 - `app/web/src/App.vue` is the app shell. Navbar, footer, toast container, and cookie banner live there, not in routed layouts.
 - `app/web/src/router/index.ts` is the route map and uses lazy-loaded views.
 - `packages/vsg-sdk` is a real TypeScript library with source in `packages/vsg-sdk/src/index.ts`; do not assume it is empty or generated.
-- `app/web` does not currently import `@vsg/vsg-sdk`.
+- `app/web` imports `@vsg/sdk` via `src/lib/sdk.ts` and related stores.
 
 ## Web Commands
 - Use `npm run dev --workspace web` for the Vite dev server.

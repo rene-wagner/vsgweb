@@ -1,4 +1,4 @@
-import { VsgApiError, createVsgClient } from "@vsg/vsg-sdk";
+import { VsgApiError, createVsgClient } from "@vsg/sdk";
 
 export const vsg = createVsgClient({
   baseUrl: import.meta.env.VITE_API_BASE_URL,

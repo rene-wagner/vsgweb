@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { VsgApiError, type ApiCollection, type Post as ApiPost } from "@vsg/vsg-sdk";
+import { VsgApiError, type ApiCollection, type Post as ApiPost } from "@vsg/sdk";
 import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export interface Author {

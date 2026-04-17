@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { type ApiCollection, type ContactPerson as ApiContactPerson } from "@vsg/vsg-sdk";
+import { type ApiCollection, type ContactPerson as ApiContactPerson } from "@vsg/sdk";
 import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export interface ThumbnailsMap {

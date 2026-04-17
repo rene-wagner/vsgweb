@@ -18,7 +18,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.2",
     "@vsg/types": "^0.0.0",
-    "@vsg/vsg-sdk": "^0.0.0",
+    "@vsg/sdk": "^0.0.0",
     "chart.js": "^4.5.1",
     "marked": "^18.0.0",
     "pinia": "^3.0.4",

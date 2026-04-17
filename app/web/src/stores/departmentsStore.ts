@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { VsgApiError, type ApiCollection, type Department as ApiDepartment } from "@vsg/vsg-sdk";
+import { VsgApiError, type ApiCollection, type Department as ApiDepartment } from "@vsg/sdk";
 import type { Department } from "@vsg/types";
 import { getApiErrorMessage, vsg } from "@/lib/sdk";
 import { normalizeDepartment } from "@/services/departments/department-normalizer.service";
