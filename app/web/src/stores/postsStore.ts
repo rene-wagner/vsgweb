@@ -1,70 +1,9 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { VsgApiError, type ApiCollection, type Post as ApiPost } from "@vsg/sdk";
+import { VsgApiError, type ApiCollection } from "@vsg/sdk";
+import type { ApiPost, Post } from "@vsg/types";
 import { getApiErrorMessage, vsg } from "@/lib/sdk";
-
-export interface Author {
-  id: number;
-  username: string;
-  email: string;
-}
-
-export interface Category {
-  id: number;
-  name: string;
-  slug: string;
-}
-
-export interface Tag {
-  id: number;
-  name: string;
-  slug: string;
-}
-
-export interface Thumbnail {
-  filename: string;
-  originalName: string;
-}
-
-export interface Post {
-  id: number;
-  title: string;
-  slug: string;
-  content: string | null;
-  published: boolean;
-  authorId: number;
-  author: Author;
-  categories: Category[];
-  tags: Tag[];
-  thumbnail: Thumbnail | null;
-  createdAt: string;
-  updatedAt: string;
-}
-
-function normalizePost(post: ApiPost): Post {
-  return {
-    id: post.id,
-    title: post.title,
-    slug: post.slug,
-    content: post.content ?? null,
-    published: post.published ?? false,
-    authorId: post.author?.id ?? 0,
-    author: {
-      id: post.author?.id ?? 0,
-      username: [post.author?.firstName, post.author?.lastName].filter(Boolean).join(" "),
-      email: post.author?.email ?? "",
-    },
-    categories: (post.categories ?? []).map((category, index) => ({
-      id: index,
-      name: category.name,
-      slug: category.slug,
-    })),
-    tags: [],
-    thumbnail: null,
-    createdAt: post.createdAt ?? "",
-    updatedAt: post.updatedAt ?? "",
-  };
-}
+import { normalizePost } from "@/services/posts/post-normalizer.service";
 
 export const usePostsStore = defineStore("posts", () => {
   // List state
@@ -91,8 +30,8 @@ export const usePostsStore = defineStore("posts", () => {
       const result = await vsg.get<ApiCollection<ApiPost>>(`/api/posts?published=true&limit=${limit}`);
       posts.value = (result.member ?? []).map(normalizePost);
     } catch (e) {
-      posts.value = [];
       error.value = getApiErrorMessage(e);
+      throw e;
     } finally {
       isLoading.value = false;
     }
@@ -108,8 +47,8 @@ export const usePostsStore = defineStore("posts", () => {
       );
       departmentPosts.value = (result.member ?? []).map(normalizePost);
     } catch (e) {
-      departmentPosts.value = [];
       departmentPostsError.value = getApiErrorMessage(e);
+      throw e;
     } finally {
       isDepartmentPostsLoading.value = false;
     }
@@ -143,7 +82,6 @@ export const usePostsStore = defineStore("posts", () => {
 
   function clearCurrentPost(): void {
     currentPost.value = null;
-    currentPostLoading.value = false;
     currentPostError.value = null;
     currentPostNotFound.value = false;
   }

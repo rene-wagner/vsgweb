@@ -6,9 +6,8 @@ import type { ContactPerson } from "./types/contact-person.types.js";
 import type { Event } from "./types/event.types.js";
 import type { Location } from "./types/location.types.js";
 import type { MediaFolder, MediaItem } from "./types/media.types.js";
-import type { Post } from "./types/post.types.js";
 import type { User } from "./types/user.types.js";
-import type { ApiDepartment } from "@vsg/types";
+import type { ApiDepartment, ApiPost } from "@vsg/types";
 
 export type * from "./types/index.js";
 
@@ -156,9 +155,9 @@ export class VsgClient {
     };
 
     this.posts = {
-      list: (options?: RequestOptions) => this.getCollection<Post>("/api/posts", options),
+      list: (options?: RequestOptions) => this.getCollection<ApiPost>("/api/posts", options),
       get: (slug: string, options?: RequestOptions) =>
-        this.get<Post>(`/api/posts/${encodeURIComponent(slug)}`, options),
+        this.get<ApiPost>(`/api/posts/${encodeURIComponent(slug)}`, options),
     };
 
     this.users = {

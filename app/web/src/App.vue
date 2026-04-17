@@ -6,10 +6,13 @@ import Footer from "@/components/app/Footer.vue";
 import ToastContainer from "@/components/app/ToastContainer.vue";
 import CookieConsentBanner from "@/components/app/CookieConsentBanner.vue";
 import { useDepartmentsStore } from "@/stores/departmentsStore";
+import { usePostsStore } from "@/stores/postsStore";
 import { getApiErrorMessage } from "@/lib/sdk";
 
 const departmentsStore = useDepartmentsStore();
+const postsStore = usePostsStore();
 const { error: departmentsError } = storeToRefs(departmentsStore);
+const { error: postsError } = storeToRefs(postsStore);
 
 const isInitializing = ref(true);
 const initializationError = ref<string | null>(null);
@@ -21,10 +24,11 @@ async function initializeApp(): Promise<void> {
   runtimeError.value = null;
 
   try {
-    await departmentsStore.fetchDepartments();
+    await Promise.all([departmentsStore.fetchDepartments(), postsStore.fetchPublishedPosts()]);
   } catch (error) {
     console.error("[VSG] App initialization error", error);
-    initializationError.value = departmentsError.value ?? "Die App konnte nicht gestartet werden.";
+    initializationError.value =
+      departmentsError.value ?? postsError.value ?? "Die App konnte nicht gestartet werden.";
   } finally {
     isInitializing.value = false;
   }

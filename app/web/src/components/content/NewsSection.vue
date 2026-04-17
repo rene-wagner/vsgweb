@@ -32,10 +32,15 @@ const activeError = computed(() => (props.categorySlug ? departmentPostsError.va
 
 onMounted(() => {
   if (props.categorySlug) {
-    postsStore.fetchPublishedPostsByCategory(props.categorySlug, props.postsCount);
-  } else {
-    postsStore.fetchPublishedPosts(props.postsCount);
+    void postsStore.fetchPublishedPostsByCategory(props.categorySlug, props.postsCount).catch(() => undefined);
+    return;
   }
+
+  if (posts.value.length >= props.postsCount && !error.value) {
+    return;
+  }
+
+  void postsStore.fetchPublishedPosts(props.postsCount).catch(() => undefined);
 });
 
 // Format date to German locale

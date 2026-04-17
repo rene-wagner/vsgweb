@@ -1,8 +1,8 @@
 import type { JsonLdResource } from "./json-ld.types.js";
-import type { CategorySummary } from "./category.types.js";
 import type { UserSummary } from "./user.types.js";
+import type { CategorySummary } from "./category.types.js";
 
-export interface Post extends JsonLdResource {
+export interface ApiPost extends JsonLdResource {
   id: number;
   title: string;
   slug: string;
@@ -16,3 +16,5 @@ export interface Post extends JsonLdResource {
   categories?: CategorySummary[];
   picture?: string | null;
 }
+
+export type PostAPI = ApiPost;
