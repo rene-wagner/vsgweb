@@ -32,7 +32,9 @@ const activeError = computed(() => (props.categorySlug ? departmentPostsError.va
 
 onMounted(() => {
   if (props.categorySlug) {
-    void postsStore.fetchPublishedPostsByCategory(props.categorySlug, props.postsCount).catch(() => undefined);
+    void postsStore
+      .fetchPublishedPostsByCategory(props.categorySlug, props.postsCount)
+      .catch(() => undefined);
     return;
   }
 

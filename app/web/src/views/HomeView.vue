@@ -19,7 +19,10 @@ import { homepageContent } from "@/content/homepage-content";
       :show-scroll-indicator="true"
     />
 
-    <WelcomeSection v-if="homepageContent.welcomeText" :welcome-text="homepageContent.welcomeText" />
+    <WelcomeSection
+      v-if="homepageContent.welcomeText"
+      :welcome-text="homepageContent.welcomeText"
+    />
 
     <StatsSection :stats="homepageContent.stats" />
 
@@ -36,6 +39,9 @@ import { homepageContent } from "@/content/homepage-content";
       :posts-count="homepageContent.postsCount"
     />
 
-    <CtaSection :headline="homepageContent.ctaHeadline" :description="homepageContent.ctaDescription" />
+    <CtaSection
+      :headline="homepageContent.ctaHeadline"
+      :description="homepageContent.ctaDescription"
+    />
   </div>
 </template>

@@ -27,7 +27,9 @@ export const usePostsStore = defineStore("posts", () => {
     error.value = null;
 
     try {
-      const result = await vsg.get<ApiCollection<ApiPost>>(`/api/posts?published=true&limit=${limit}`);
+      const result = await vsg.get<ApiCollection<ApiPost>>(
+        `/api/posts?published=true&limit=${limit}`,
+      );
       posts.value = (result.member ?? []).map(normalizePost);
     } catch (e) {
       error.value = getApiErrorMessage(e);

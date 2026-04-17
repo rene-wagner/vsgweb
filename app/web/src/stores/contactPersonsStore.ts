@@ -64,7 +64,9 @@ export const useContactPersonsStore = defineStore("contact-persons", () => {
     error.value = null;
 
     try {
-      const result = await vsg.get<ApiCollection<ApiContactPerson>>("/api/contact-persons?limit=50");
+      const result = await vsg.get<ApiCollection<ApiContactPerson>>(
+        "/api/contact-persons?limit=50",
+      );
       contactPersons.value = (result.member ?? []).map(normalizeContactPerson);
     } catch (e) {
       contactPersons.value = [];

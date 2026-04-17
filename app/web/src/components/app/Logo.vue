@@ -7,10 +7,5 @@ const attrs = useAttrs();
 </script>
 
 <template>
-  <img
-    src="/logo.png"
-    alt="VSG Kugelberg Logo"
-    title="VSG Kugelberg Logo"
-    v-bind="attrs"
-  />
+  <img src="/logo.png" alt="VSG Kugelberg Logo" title="VSG Kugelberg Logo" v-bind="attrs" />
 </template>

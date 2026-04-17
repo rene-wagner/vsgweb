@@ -1,5 +1,10 @@
 import type { ApiErrorBody } from "./types/api-error.types.js";
-import type { QueryParams, QueryValue, RequestOptions, VsgClientOptions } from "./types/client.types.js";
+import type {
+  QueryParams,
+  QueryValue,
+  RequestOptions,
+  VsgClientOptions,
+} from "./types/client.types.js";
 import type { ApiCollection } from "./types/api-collection.types.js";
 import type { Category } from "./types/category.types.js";
 import type { ContactPerson } from "./types/contact-person.types.js";
@@ -124,7 +129,8 @@ export class VsgClient {
     };
 
     this.departments = {
-      list: (options?: RequestOptions) => this.getCollection<ApiDepartment>("/api/departments", options),
+      list: (options?: RequestOptions) =>
+        this.getCollection<ApiDepartment>("/api/departments", options),
       get: (slug: string, options?: RequestOptions) =>
         this.get<ApiDepartment>(`/api/departments/${encodeURIComponent(slug)}`, options),
     };
@@ -149,7 +155,8 @@ export class VsgClient {
     };
 
     this.mediaItems = {
-      list: (options?: RequestOptions) => this.getCollection<MediaItem>("/api/media_items", options),
+      list: (options?: RequestOptions) =>
+        this.getCollection<MediaItem>("/api/media_items", options),
       get: (id: number | string, options?: RequestOptions) =>
         this.get<MediaItem>(`/api/media_items/${encodeURIComponent(String(id))}`, options),
     };
@@ -171,7 +178,10 @@ export class VsgClient {
     return this.request<TResponse>(path, options);
   }
 
-  async getCollection<TItem>(path: string, options: RequestOptions = {}): Promise<ApiCollection<TItem>> {
+  async getCollection<TItem>(
+    path: string,
+    options: RequestOptions = {},
+  ): Promise<ApiCollection<TItem>> {
     return this.request<ApiCollection<TItem>>(path, options);
   }
 

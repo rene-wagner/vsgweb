@@ -22,4 +22,10 @@ export type {
 export type { Event, EventRecurrence } from "./event.types.js";
 export type { MediaFolder, MediaItem } from "./media.types.js";
 export type { ApiConstraintViolation, ApiErrorBody } from "./api-error.types.js";
-export type { QueryParams, QueryPrimitive, QueryValue, RequestOptions, VsgClientOptions } from "./client.types.js";
+export type {
+  QueryParams,
+  QueryPrimitive,
+  QueryValue,
+  RequestOptions,
+  VsgClientOptions,
+} from "./client.types.js";

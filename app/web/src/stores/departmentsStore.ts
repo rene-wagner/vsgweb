@@ -39,7 +39,9 @@ export const useDepartmentsStore = defineStore("departments", () => {
     currentDepartment.value = null;
 
     try {
-      const department = await vsg.get<ApiDepartment>(`/api/departments/${encodeURIComponent(slug)}`);
+      const department = await vsg.get<ApiDepartment>(
+        `/api/departments/${encodeURIComponent(slug)}`,
+      );
       currentDepartment.value = normalizeDepartment(department);
     } catch (e) {
       if (e instanceof VsgApiError && e.status === 404) {
