@@ -38,7 +38,7 @@ export const usePostsStore = defineStore("posts", () => {
   }
 
   async function fetchPublishedPostsByCategory(
-    categorySlug: string,
+    categoryIri: string,
     itemsPerPage = 5,
   ): Promise<void> {
     isDepartmentPostsLoading.value = true;
@@ -46,7 +46,7 @@ export const usePostsStore = defineStore("posts", () => {
 
     try {
       const result = await vsg.posts.list({
-        query: { published: true, category: categorySlug, itemsPerPage },
+        query: { published: true, "categories[]": categoryIri, itemsPerPage },
       });
       departmentPosts.value = (result.member ?? []).map(normalizePost);
     } catch (e) {

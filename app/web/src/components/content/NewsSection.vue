@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed, watch } from "vue";
 import { storeToRefs } from "pinia";
 import SectionHeader from "@/components/ui/SectionHeader.vue";
 import ApiState from "@/components/ui/ApiState.vue";
@@ -12,7 +12,7 @@ interface Props {
   description?: string;
   subtitle?: string;
   postsCount?: number;
-  categorySlug?: string;
+  categoryIri?: string | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -24,26 +24,33 @@ const { posts, isLoading, error, departmentPosts, isDepartmentPostsLoading, depa
   storeToRefs(postsStore);
 
 // Use separate state when filtering by category
-const activePosts = computed(() => (props.categorySlug ? departmentPosts.value : posts.value));
+const activePosts = computed(() => (props.categoryIri ? departmentPosts.value : posts.value));
 const activeLoading = computed(() =>
-  props.categorySlug ? isDepartmentPostsLoading.value : isLoading.value,
+  props.categoryIri ? isDepartmentPostsLoading.value : isLoading.value,
 );
-const activeError = computed(() => (props.categorySlug ? departmentPostsError.value : error.value));
+const activeError = computed(() => (props.categoryIri ? departmentPostsError.value : error.value));
 
-onMounted(() => {
-  if (props.categorySlug) {
-    void postsStore
-      .fetchPublishedPostsByCategory(props.categorySlug, props.postsCount)
-      .catch(() => undefined);
-    return;
-  }
+watch(
+  [() => props.categoryIri, () => props.postsCount],
+  ([categoryIri, postsCount]) => {
+    if (categoryIri) {
+      void postsStore.fetchPublishedPostsByCategory(categoryIri, postsCount).catch(() => undefined);
+      return;
+    }
 
-  if (posts.value.length >= props.postsCount && !error.value) {
-    return;
-  }
+    if (props.categoryIri === null) {
+      postsStore.clearDepartmentPosts();
+      return;
+    }
 
-  void postsStore.fetchPublishedPosts(props.postsCount).catch(() => undefined);
-});
+    if (posts.value.length >= postsCount && !error.value) {
+      return;
+    }
+
+    void postsStore.fetchPublishedPosts(postsCount).catch(() => undefined);
+  },
+  { immediate: true },
+);
 
 // Format date to German locale
 function formatDate(dateString: string): string {

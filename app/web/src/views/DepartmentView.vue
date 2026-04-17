@@ -3,6 +3,7 @@ import { watch, onMounted, onUnmounted, watchEffect, computed } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
+import { useCategoriesStore } from "@/stores/categoriesStore";
 import { useDepartmentsStore } from "../stores/departmentsStore";
 import { usePostsStore } from "../stores/postsStore";
 import ApiState from "@/components/ui/ApiState.vue";
@@ -16,7 +17,9 @@ import WelcomeSection from "../components/content/WelcomeSection.vue";
 import { Cta, DepartmentLocation, Statistic, TrainingGroup } from "@vsg/types";
 
 const route = useRoute();
+const categoriesStore = useCategoriesStore();
 const departmentsStore = useDepartmentsStore();
+const { categories } = storeToRefs(categoriesStore);
 const {
   currentDepartment,
   currentDepartmentLoading,
@@ -25,6 +28,16 @@ const {
 } = storeToRefs(departmentsStore);
 
 const postsStore = usePostsStore();
+
+const departmentCategoryIri = computed(() => {
+  const slug = currentDepartment.value?.slug;
+
+  if (!slug) {
+    return undefined;
+  }
+
+  return categories.value.find((category) => category.slug === slug)?.["@id"] ?? null;
+});
 
 function fetchDepartment() {
   const slug = route.params.slug as string;
@@ -173,7 +186,7 @@ const departmentCta = computed<Cta>(() => {
       <NewsSection
         headline="AKTUELLE NEUIGKEITEN"
         subtitle="Was bei uns los ist"
-        :category-slug="currentDepartment!.slug"
+        :category-iri="departmentCategoryIri"
       />
 
       <!-- CTA Section -->
