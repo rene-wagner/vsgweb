@@ -13,7 +13,7 @@ import LocationSection from "../components/department/LocationSection.vue";
 import NewsSection from "../components/content/NewsSection.vue";
 import DepartmentCtaSection from "../components/department/DepartmentCtaSection.vue";
 import WelcomeSection from "../components/content/WelcomeSection.vue";
-import { Cta, DepartmentLocation, DepartmentTrainingGroup, Statistic } from "@vsg/types";
+import { Cta, DepartmentLocation, Statistic, TrainingGroup } from "@vsg/types";
 
 const route = useRoute();
 const departmentsStore = useDepartmentsStore();
@@ -73,7 +73,7 @@ const departmentStats = computed<Statistic[]>(() => {
 });
 
 // Transform API training groups to component format
-const departmentTrainingGroups = computed<DepartmentTrainingGroup[]>(() => {
+const departmentTrainingGroups = computed<TrainingGroup[]>(() => {
   if (!currentDepartment.value?.trainingGroups) return [];
   return currentDepartment.value.trainingGroups.map((group) => ({
     name: group.name,

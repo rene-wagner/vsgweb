@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import type { TrainingSession } from "../../types/department-detail.types";
+import type { TrainingSession } from "@vsg/types";
 
 interface Props {
   sessions: TrainingSession[];

@@ -24,3 +24,4 @@ export type { DepartmentTrainingSession } from "./departments/department-trainin
 export type { MediaItem } from "./media-items/media-item.types.js";
 export type { Post, PostAuthor, PostCategory, PostTag, PostThumbnail } from "./posts/post.types.js";
 export type { Statistic } from "./statistic.types.js";
+export type { TrainingGroup, TrainingSession } from "./training.types.js";
