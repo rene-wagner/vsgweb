@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { RouterLink } from "vue-router";
 import { storeToRefs } from "pinia";
 import Logo from "./Logo.vue";
@@ -28,14 +28,12 @@ const vereinItems: MenuItem[] = [
 ];
 
 const abteilungenItems = computed<MenuItem[]>(() => {
-  return departments.value.map((dept) => ({
+  const items = Array.isArray(departments.value) ? departments.value : [];
+
+  return items.map((dept) => ({
     label: dept.name,
     to: `/abteilung/${dept.slug}`,
   }));
-});
-
-onMounted(() => {
-  departmentsStore.ensureLoaded();
 });
 
 function toggleMenu() {
@@ -128,15 +126,16 @@ function toggleAbteilungen() {
                   Keine Abteilungen
                 </div>
                 <!-- Department links -->
-                <RouterLink
-                  v-for="item in abteilungenItems"
-                  v-else
-                  :key="item.to"
-                  :to="item.to"
-                  class="block px-4 py-2 font-body text-sm font-normal text-vsg-gold-300 transition-colors hover:bg-vsg-blue-800/50 hover:text-vsg-gold-400"
-                >
-                  {{ item.label }}
-                </RouterLink>
+                <template v-else>
+                  <RouterLink
+                    v-for="item in abteilungenItems"
+                    :key="item.to"
+                    :to="item.to"
+                    class="block px-4 py-2 font-body text-sm font-normal text-vsg-gold-300 transition-colors hover:bg-vsg-blue-800/50 hover:text-vsg-gold-400"
+                  >
+                    {{ item.label }}
+                  </RouterLink>
+                </template>
               </div>
             </div>
           </div>
@@ -244,16 +243,17 @@ function toggleAbteilungen() {
             Keine Abteilungen
           </span>
           <!-- Department links -->
-          <RouterLink
-            v-for="item in abteilungenItems"
-            v-else
-            :key="item.to"
-            :to="item.to"
-            class="font-body text-lg font-normal text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
-            @click="closeMenu"
-          >
-            {{ item.label }}
-          </RouterLink>
+          <template v-else>
+            <RouterLink
+              v-for="item in abteilungenItems"
+              :key="item.to"
+              :to="item.to"
+              class="font-body text-lg font-normal text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
+              @click="closeMenu"
+            >
+              {{ item.label }}
+            </RouterLink>
+          </template>
         </div>
       </div>
 

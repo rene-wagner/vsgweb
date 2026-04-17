@@ -1,4 +1,4 @@
-import { createApp } from "vue";
+import { createApp, type ComponentPublicInstance } from "vue";
 import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
@@ -59,6 +59,14 @@ import {
   faXmark,
   faFilePdf,
 } from "@fortawesome/free-solid-svg-icons";
+
+function logClientError(prefix: string, error: unknown, context?: unknown): void {
+  console.error(prefix, error);
+
+  if (context !== undefined) {
+    console.error("[VSG] Error context", context);
+  }
+}
 
 library.add(
   faArrowDown,
@@ -121,6 +129,21 @@ library.add(
 );
 
 const app = createApp(App);
+
+app.config.errorHandler = (error, instance, info) => {
+  logClientError("[VSG] Vue runtime error", error, {
+    info,
+    component: (instance as ComponentPublicInstance | null)?.$options.name,
+  });
+};
+
+window.addEventListener("error", (event) => {
+  logClientError("[VSG] Window error", event.error ?? event.message);
+});
+
+window.addEventListener("unhandledrejection", (event) => {
+  logClientError("[VSG] Unhandled promise rejection", event.reason);
+});
 
 app.use(createPinia());
 app.use(router);

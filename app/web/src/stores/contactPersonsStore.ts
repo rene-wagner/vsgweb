@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
+import { type ApiCollection, type ContactPerson as ApiContactPerson } from "@vsg/vsg-sdk";
 import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export interface ThumbnailsMap {
@@ -36,13 +37,19 @@ export interface ContactPerson {
   updatedAt: string;
 }
 
-interface PaginatedResponse {
-  data: ContactPerson[];
-  meta: {
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
+function normalizeContactPerson(contactPerson: ApiContactPerson): ContactPerson {
+  return {
+    id: contactPerson.id,
+    firstName: contactPerson.firstName,
+    lastName: contactPerson.lastName,
+    type: contactPerson.position,
+    email: contactPerson.email ?? "",
+    address: contactPerson.address ?? null,
+    phone: contactPerson.phone ?? "",
+    profileImageId: null,
+    profileImage: null,
+    createdAt: "",
+    updatedAt: "",
   };
 }
 
@@ -50,15 +57,17 @@ export const useContactPersonsStore = defineStore("contact-persons", () => {
   const contactPersons = ref<ContactPerson[]>([]);
   const isLoading = ref(false);
   const error = ref<string | null>(null);
+  let contactPersonsRequest: Promise<void> | null = null;
 
   async function fetchContactPersons(): Promise<void> {
     isLoading.value = true;
     error.value = null;
 
     try {
-      const result = await vsg.get<PaginatedResponse>("/api/contact-persons?limit=50");
-      contactPersons.value = result.data;
+      const result = await vsg.get<ApiCollection<ApiContactPerson>>("/api/contact-persons?limit=50");
+      contactPersons.value = (result.member ?? []).map(normalizeContactPerson);
     } catch (e) {
+      contactPersons.value = [];
       error.value = getApiErrorMessage(e);
     } finally {
       isLoading.value = false;
@@ -70,7 +79,13 @@ export const useContactPersonsStore = defineStore("contact-persons", () => {
       return;
     }
 
-    await fetchContactPersons();
+    if (!contactPersonsRequest) {
+      contactPersonsRequest = fetchContactPersons().finally(() => {
+        contactPersonsRequest = null;
+      });
+    }
+
+    await contactPersonsRequest;
   }
 
   return {

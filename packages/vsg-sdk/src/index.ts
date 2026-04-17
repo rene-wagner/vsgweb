@@ -192,9 +192,7 @@ export interface RequestOptions extends Omit<RequestInit, "body" | "method"> {
 
 export interface VsgClientOptions {
   baseUrl: string;
-  fetch?: typeof fetch;
   headers?: HeadersInit;
-  credentials?: RequestCredentials;
 }
 
 export class VsgApiError<TBody = unknown> extends Error {
@@ -290,15 +288,11 @@ export class VsgClient {
   readonly users;
 
   private readonly baseUrl: string;
-  private readonly fetchImpl: typeof fetch;
   private readonly defaultHeaders: HeadersInit;
-  private readonly credentials: RequestCredentials;
 
   constructor(options: VsgClientOptions) {
     this.baseUrl = options.baseUrl.endsWith("/") ? options.baseUrl : `${options.baseUrl}/`;
-    this.fetchImpl = options.fetch ?? fetch;
     this.defaultHeaders = options.headers ?? {};
-    this.credentials = options.credentials ?? "include";
 
     this.categories = {
       list: (options?: RequestOptions) => this.getCollection<Category>("/api/categories", options),
@@ -374,10 +368,9 @@ export class VsgClient {
     const { query, headers, ...requestInit } = options;
     const url = new URL(withQuery(path, query), this.baseUrl);
 
-    const response = await this.fetchImpl(url, {
+    const response = await fetch(url, {
       ...requestInit,
       method: "GET",
-      credentials: this.credentials,
       headers: {
         Accept: "application/ld+json, application/json",
         ...this.defaultHeaders,

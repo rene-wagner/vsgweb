@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { VsgApiError } from "@vsg/vsg-sdk";
+import { VsgApiError, type ApiCollection, type Post as ApiPost } from "@vsg/vsg-sdk";
 import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export interface Author {
@@ -41,13 +41,28 @@ export interface Post {
   updatedAt: string;
 }
 
-interface PaginatedResponse {
-  data: Post[];
-  meta: {
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
+function normalizePost(post: ApiPost): Post {
+  return {
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    content: post.content ?? null,
+    published: post.published ?? false,
+    authorId: post.author?.id ?? 0,
+    author: {
+      id: post.author?.id ?? 0,
+      username: [post.author?.firstName, post.author?.lastName].filter(Boolean).join(" "),
+      email: post.author?.email ?? "",
+    },
+    categories: (post.categories ?? []).map((category, index) => ({
+      id: index,
+      name: category.name,
+      slug: category.slug,
+    })),
+    tags: [],
+    thumbnail: null,
+    createdAt: post.createdAt ?? "",
+    updatedAt: post.updatedAt ?? "",
   };
 }
 
@@ -73,9 +88,10 @@ export const usePostsStore = defineStore("posts", () => {
     error.value = null;
 
     try {
-      const result = await vsg.get<PaginatedResponse>(`/api/posts?published=true&limit=${limit}`);
-      posts.value = result.data;
+      const result = await vsg.get<ApiCollection<ApiPost>>(`/api/posts?published=true&limit=${limit}`);
+      posts.value = (result.member ?? []).map(normalizePost);
     } catch (e) {
+      posts.value = [];
       error.value = getApiErrorMessage(e);
     } finally {
       isLoading.value = false;
@@ -87,11 +103,12 @@ export const usePostsStore = defineStore("posts", () => {
     departmentPostsError.value = null;
 
     try {
-      const result = await vsg.get<PaginatedResponse>(
+      const result = await vsg.get<ApiCollection<ApiPost>>(
         `/api/posts?published=true&category=${encodeURIComponent(categorySlug)}&limit=${limit}`,
       );
-      departmentPosts.value = result.data;
+      departmentPosts.value = (result.member ?? []).map(normalizePost);
     } catch (e) {
+      departmentPosts.value = [];
       departmentPostsError.value = getApiErrorMessage(e);
     } finally {
       isDepartmentPostsLoading.value = false;
@@ -111,7 +128,8 @@ export const usePostsStore = defineStore("posts", () => {
     currentPost.value = null;
 
     try {
-      currentPost.value = await vsg.get<Post>(`/api/posts/${encodeURIComponent(slug)}`);
+      const post = await vsg.get<ApiPost>(`/api/posts/${encodeURIComponent(slug)}`);
+      currentPost.value = normalizePost(post);
     } catch (e) {
       if (e instanceof VsgApiError && e.status === 404) {
         currentPostNotFound.value = true;

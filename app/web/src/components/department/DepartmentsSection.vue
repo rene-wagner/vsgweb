@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import SectionHeader from "@/components/ui/SectionHeader.vue";
 import ApiState from "@/components/ui/ApiState.vue";
@@ -16,10 +15,6 @@ const props = defineProps<Props>();
 
 const departmentsStore = useDepartmentsStore();
 const { departments, isLoading, error } = storeToRefs(departmentsStore);
-
-onMounted(() => {
-  departmentsStore.ensureLoaded();
-});
 </script>
 
 <template>
