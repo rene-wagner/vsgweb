@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { RouterLink } from "vue-router";
-import { useHistoryStore } from "@/stores/historyStore";
 import Logo from "./Logo.vue";
 
-const historyStore = useHistoryStore();
+const foundingDate = new Date("1985-05-10");
 
 const vereinLinks = [
   { label: "Geschichte", to: "/verein/geschichte" },
@@ -16,11 +15,6 @@ const vereinLinks = [
 ];
 
 const age = computed(() => {
-  if (!historyStore.history?.foundingDate) {
-    return 100; // Fallback
-  }
-
-  const foundingDate = new Date(historyStore.history.foundingDate);
   const today = new Date();
   let years = today.getFullYear() - foundingDate.getFullYear();
   const monthDiff = today.getMonth() - foundingDate.getMonth();
@@ -30,10 +24,6 @@ const age = computed(() => {
   }
 
   return years;
-});
-
-onMounted(() => {
-  historyStore.ensureLoaded();
 });
 </script>
 

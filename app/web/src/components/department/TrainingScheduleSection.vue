@@ -1,37 +1,31 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import type { TrainingGroup } from "@vsg/types";
+import type { DepartmentTrainingGroup } from "@vsg/types";
 import TrainingTable from "./TrainingTable.vue";
 
 interface Props {
   title: string;
   subtitle: string;
   description?: string;
-  groups: TrainingGroup[];
+  groups: DepartmentTrainingGroup[];
 }
 
 defineProps<Props>();
 
-function getHeaderClasses(variant: TrainingGroup["variant"]): string {
+function getHeaderClasses(variant: DepartmentTrainingGroup["variant"]): string {
   return variant === "primary" ? "bg-vsg-blue-600" : "bg-vsg-blue-900";
 }
 
-function getIconBgClasses(variant: TrainingGroup["variant"]): string {
+function getIconBgClasses(variant: DepartmentTrainingGroup["variant"]): string {
   return variant === "primary" ? "bg-white/20" : "bg-vsg-gold-400/20";
 }
 
-function getIconClasses(variant: TrainingGroup["variant"]): string {
+function getIconClasses(variant: DepartmentTrainingGroup["variant"]): string {
   return variant === "primary" ? "text-white" : "text-vsg-gold-400";
 }
 
-function getAgeRangeClasses(variant: TrainingGroup["variant"]): string {
+function getAgeRangeClasses(variant: DepartmentTrainingGroup["variant"]): string {
   return variant === "primary" ? "text-vsg-blue-100" : "text-vsg-blue-300";
-}
-
-function getNoteClasses(variant: TrainingGroup["variant"]): string {
-  return variant === "primary"
-    ? "bg-vsg-gold-50 border-vsg-gold-200 text-vsg-gold-800"
-    : "bg-vsg-blue-50 border-vsg-blue-200 text-vsg-blue-800";
 }
 </script>
 
@@ -100,15 +94,6 @@ function getNoteClasses(variant: TrainingGroup["variant"]): string {
           <!-- Schedule Table -->
           <div class="p-8">
             <TrainingTable :sessions="group.sessions" />
-
-            <!-- Optional Note -->
-            <div
-              v-if="group.note"
-              :class="[getNoteClasses(group.variant), 'mt-6 rounded-lg border p-4']"
-            >
-              <!-- eslint-disable-next-line vue/no-v-html -->
-              <p class="font-body text-sm" v-html="group.note" />
-            </div>
           </div>
         </div>
       </div>

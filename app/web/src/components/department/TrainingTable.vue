@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import type { TrainingSession } from "@vsg/types";
+import type { DepartmentTrainingSession } from "@vsg/types";
 
 interface Props {
-  sessions: TrainingSession[];
+  sessions: DepartmentTrainingSession[];
 }
 
 defineProps<Props>();
@@ -41,7 +41,7 @@ defineProps<Props>();
           <div class="flex items-center gap-1.5">
             <FontAwesomeIcon icon="location-dot" class="text-vsg-blue-400 md:hidden! shrink-0" />
             <span class="text-sm md:text-base">
-              {{ session.locationName || "-" }}
+              {{ session.location?.name || "-" }}
             </span>
           </div>
         </td>
