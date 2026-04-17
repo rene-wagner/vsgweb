@@ -3,7 +3,6 @@ import { onErrorCaptured, onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import Navbar from "@/components/app/Navbar.vue";
 import Footer from "@/components/app/Footer.vue";
-import ToastContainer from "@/components/app/ToastContainer.vue";
 import CookieConsentBanner from "@/components/app/CookieConsentBanner.vue";
 import { useDepartmentsStore } from "@/stores/departmentsStore";
 import { usePostsStore } from "@/stores/postsStore";
@@ -109,7 +108,6 @@ function reloadApp(): void {
         <router-view />
       </main>
       <Footer />
-      <ToastContainer />
       <CookieConsentBanner />
     </template>
   </div>
