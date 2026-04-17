@@ -23,8 +23,8 @@ function getMediaUrl(filename: string): string {
     <!-- Location Image -->
     <div v-if="location.image" class="aspect-video relative">
       <img
-        :src="getMediaUrl(location.image.filename)"
-        :alt="location.image.originalName"
+        :src="getMediaUrl(location.image.url)"
+        :alt="location.image.original_filename"
         class="w-full h-full object-cover"
       />
       <!-- Badge -->

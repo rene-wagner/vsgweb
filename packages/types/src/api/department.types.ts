@@ -1,5 +1,6 @@
 import type { JsonLdResource } from "./json-ld.types.js";
 import type { LocationSummary } from "./location.types.js";
+import type { MediaItem } from "../media-items/media-item.types.js";
 
 export interface ApiDepartmentStatistic extends JsonLdResource {
   id: number;
@@ -26,7 +27,7 @@ export interface ApiDepartment extends JsonLdResource {
   name: string;
   slug: string;
   description?: string | null;
-  icon?: string | null;
+  icon?: string | MediaItem | null;
   departmentStats: ApiDepartmentStatistic[];
   trainingGroups: ApiDepartmentTrainingGroup[];
 }

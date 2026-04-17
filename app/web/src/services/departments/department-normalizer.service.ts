@@ -42,6 +42,7 @@ function normalizeDepartmentSession(
 
 export function normalizeDepartment(department: ApiDepartment): Department {
   const locations = new Map<number, DepartmentLocation>();
+  const icon = typeof department.icon === "object" ? department.icon : null;
 
   for (const group of department.trainingGroups ?? []) {
     for (const session of group.departmentTrainingSessions ?? []) {
@@ -57,8 +58,8 @@ export function normalizeDepartment(department: ApiDepartment): Department {
     slug: department.slug,
     shortDescription: department.description ?? "",
     welcomeText: null,
-    iconId: null,
-    icon: null,
+    iconId: icon?.id ?? null,
+    icon,
     stats: (department.departmentStats ?? []).map((stat, index) => ({
       id: stat.id,
       label: stat.label,

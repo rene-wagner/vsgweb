@@ -146,8 +146,8 @@ const departmentLocations = computed<DepartmentLocation[]>(() => {
     mapsUrl: location.mapsUrl || "",
     image: location.image
       ? {
-          filename: location.image.filename,
-          originalName: location.image.originalName,
+          url: location.image.url,
+          original_filename: location.image.original_filename,
         }
       : null,
   }));
@@ -162,7 +162,7 @@ const departmentTrainers = computed<Trainer[]>(() => {
       role: trainer.role,
       licenses: parseTrainerLicenses(trainer.licenses),
       contactPersonId: trainer.contactPersonId,
-      avatarUrl: getUploadUrl(trainer.contactPerson.profileImage?.filename) ?? undefined,
+      avatarUrl: getUploadUrl(trainer.contactPerson.profileImage?.url) ?? undefined,
     };
   });
 });

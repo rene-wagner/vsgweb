@@ -12,9 +12,9 @@ export function getUploadUrl(pathOrFilename: string | null | undefined): string 
   }
 
   const normalizedPath = pathOrFilename.replace(/^\/?uploads\//, "");
-  return `${API_BASE_URL}/uploads/${normalizedPath}`;
+  return `${API_BASE_URL}${normalizedPath}`;
 }
 
 export function getMediaUrl(item: MediaItem): string {
-  return getUploadUrl(item.filename) ?? "";
+  return getUploadUrl(item.url) ?? "";
 }
