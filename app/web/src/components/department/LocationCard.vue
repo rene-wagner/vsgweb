@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { getUploadUrl } from "@/utils/media";
+import { getUploadUrl } from "@/services/media-items/media-item.service";
 import type { DepartmentLocation } from "../../types/department-detail.types";
 
 interface Props {

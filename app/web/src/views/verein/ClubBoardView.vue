@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, computed } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { getUploadUrl } from "@/utils/media";
+import { getUploadUrl } from "@/services/media-items/media-item.service";
 import { useBoardStore } from "../../stores/boardStore";
 import ApiState from "@/components/ui/ApiState.vue";
 import HeroSection from "../../components/content/HeroSection.vue";

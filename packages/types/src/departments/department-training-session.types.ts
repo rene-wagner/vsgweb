@@ -1,4 +1,4 @@
-import type { DepartmentLocation } from "@/types/departments/department-location.types";
+import type { DepartmentLocation } from "./department-location.types.js";
 
 export interface DepartmentTrainingSession {
   id: number;

@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import ApiState from "@/components/ui/ApiState.vue";
 import HeroSection from "../components/content/HeroSection.vue";
 import ContentSection from "../components/content/ContentSection.vue";
-import { getUploadUrl } from "@/utils/media";
+import { getUploadUrl } from "@/services/media-items/media-item.service";
 
 const route = useRoute();
 const contactPersonsStore = useContactPersonsStore();

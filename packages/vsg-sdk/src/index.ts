@@ -1,199 +1,16 @@
-export type JsonLdContext = string | Record<string, unknown>;
+import type { ApiErrorBody } from "./types/api-error.types.js";
+import type { QueryParams, QueryValue, RequestOptions, VsgClientOptions } from "./types/client.types.js";
+import type { ApiCollection } from "./types/api-collection.types.js";
+import type { Category } from "./types/category.types.js";
+import type { ContactPerson } from "./types/contact-person.types.js";
+import type { Event } from "./types/event.types.js";
+import type { Location } from "./types/location.types.js";
+import type { MediaFolder, MediaItem } from "./types/media.types.js";
+import type { Post } from "./types/post.types.js";
+import type { User } from "./types/user.types.js";
+import type { ApiDepartment } from "@vsg/types";
 
-export interface JsonLdResource {
-  "@context"?: JsonLdContext;
-  "@id"?: string;
-  "@type"?: string;
-}
-
-export interface ApiCollectionView {
-  "@id"?: string;
-  "@type"?: string;
-  first?: string;
-  last?: string;
-  previous?: string;
-  next?: string;
-}
-
-export interface ApiCollectionSearchMapping {
-  "@type"?: string;
-  variable: string;
-  property?: string | null;
-  required?: boolean;
-}
-
-export interface ApiCollectionSearch {
-  "@type"?: string;
-  template?: string;
-  variableRepresentation?: string;
-  mapping?: ApiCollectionSearchMapping[];
-}
-
-export interface ApiCollection<TItem> extends JsonLdResource {
-  member: TItem[];
-  totalItems?: number;
-  view?: ApiCollectionView;
-  search?: ApiCollectionSearch;
-}
-
-export interface UserSummary extends JsonLdResource {
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-}
-
-export interface User extends UserSummary {
-  roles: string[];
-}
-
-export interface CategorySummary extends JsonLdResource {
-  name: string;
-  slug: string;
-}
-
-export interface Category extends CategorySummary {
-  id: number;
-  posts?: Post[];
-}
-
-export interface ContactPerson extends JsonLdResource {
-  id: number;
-  slug: string;
-  firstName: string;
-  lastName: string;
-  position: string;
-  email?: string | null;
-  phone?: string | null;
-  address?: string | null;
-  picture?: string | null;
-}
-
-export interface LocationSummary extends JsonLdResource {
-  id: number;
-  name: string;
-  street?: string | null;
-  city?: string | null;
-  mapsUrl?: string | null;
-}
-
-export interface Location extends LocationSummary {
-  picture?: string | null;
-}
-
-export interface DepartmentStatistic extends JsonLdResource {
-  id: number;
-  label: string;
-  value: string;
-}
-
-export interface DepartmentTrainingSession extends JsonLdResource {
-  id: number;
-  day: string;
-  time: string;
-  location?: LocationSummary | null;
-}
-
-export interface DepartmentTrainingGroup extends JsonLdResource {
-  id: number;
-  name: string;
-  ageRange?: string | null;
-  departmentTrainingSessions: DepartmentTrainingSession[];
-}
-
-export interface Department extends JsonLdResource {
-  id: number;
-  name: string;
-  slug: string;
-  description?: string | null;
-  icon?: string | null;
-  departmentStats: DepartmentStatistic[];
-  trainingGroups: DepartmentTrainingGroup[];
-}
-
-export type EventRecurrence = "DAILY" | "WEEKLY" | "MONTHLY" | "YEARLY" | null;
-
-export interface Event extends JsonLdResource {
-  id: number;
-  title: string;
-  description?: string | null;
-  startsAt: string;
-  endsAt?: string | null;
-  location?: string | null;
-  recurrence?: EventRecurrence;
-  recurrenceUntil?: string | null;
-  picture?: string | null;
-}
-
-export interface MediaFolder extends JsonLdResource {
-  id: number;
-  parent?: string | null;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface MediaItem extends JsonLdResource {
-  id: number;
-  name: string;
-  original_filename: string;
-  mime_type: string;
-  extension: string;
-  type: string;
-  size_bytes: number;
-  description?: string | null;
-  crop_x?: number | null;
-  crop_y?: number | null;
-  crop_width?: number | null;
-  crop_height?: number | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface Post extends JsonLdResource {
-  id: number;
-  title: string;
-  slug: string;
-  content: string;
-  published?: boolean;
-  hits?: number;
-  oldPost?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-  author?: UserSummary;
-  categories?: CategorySummary[];
-  picture?: string | null;
-}
-
-export interface ApiConstraintViolation {
-  propertyPath?: string;
-  message?: string;
-  code?: string;
-}
-
-export interface ApiErrorBody {
-  "@context"?: JsonLdContext;
-  "@type"?: string;
-  title?: string;
-  detail?: string;
-  message?: string;
-  description?: string;
-  status?: number;
-  violations?: ApiConstraintViolation[];
-}
-
-export type QueryPrimitive = string | number | boolean | Date | null | undefined;
-export type QueryValue = QueryPrimitive | QueryPrimitive[];
-export type QueryParams = Record<string, QueryValue>;
-
-export interface RequestOptions extends Omit<RequestInit, "body" | "method"> {
-  query?: QueryParams;
-}
-
-export interface VsgClientOptions {
-  baseUrl: string;
-  headers?: HeadersInit;
-}
+export type * from "./types/index.js";
 
 export class VsgApiError<TBody = unknown> extends Error {
   readonly status: number;
@@ -308,10 +125,9 @@ export class VsgClient {
     };
 
     this.departments = {
-      list: (options?: RequestOptions) =>
-        this.getCollection<Department>("/api/departments", options),
+      list: (options?: RequestOptions) => this.getCollection<ApiDepartment>("/api/departments", options),
       get: (slug: string, options?: RequestOptions) =>
-        this.get<Department>(`/api/departments/${encodeURIComponent(slug)}`, options),
+        this.get<ApiDepartment>(`/api/departments/${encodeURIComponent(slug)}`, options),
     };
 
     this.events = {
@@ -334,8 +150,7 @@ export class VsgClient {
     };
 
     this.mediaItems = {
-      list: (options?: RequestOptions) =>
-        this.getCollection<MediaItem>("/api/media_items", options),
+      list: (options?: RequestOptions) => this.getCollection<MediaItem>("/api/media_items", options),
       get: (id: number | string, options?: RequestOptions) =>
         this.get<MediaItem>(`/api/media_items/${encodeURIComponent(String(id))}`, options),
     };
@@ -357,10 +172,7 @@ export class VsgClient {
     return this.request<TResponse>(path, options);
   }
 
-  async getCollection<TItem>(
-    path: string,
-    options: RequestOptions = {},
-  ): Promise<ApiCollection<TItem>> {
+  async getCollection<TItem>(path: string, options: RequestOptions = {}): Promise<ApiCollection<TItem>> {
     return this.request<ApiCollection<TItem>>(path, options);
   }
 

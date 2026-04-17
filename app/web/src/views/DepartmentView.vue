@@ -2,7 +2,8 @@
 import { watch, onMounted, onUnmounted, watchEffect, computed } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
-import { useDepartmentsStore, getMediaUrl } from "../stores/departmentsStore";
+import { getMediaUrl, getUploadUrl } from "@/services/media-items/media-item.service";
+import { useDepartmentsStore } from "../stores/departmentsStore";
 import { usePostsStore } from "../stores/postsStore";
 import ApiState from "@/components/ui/ApiState.vue";
 import HeroSection from "../components/content/HeroSection.vue";
@@ -13,7 +14,6 @@ import NewsSection from "../components/content/NewsSection.vue";
 import TrainersSection from "../components/department/TrainersSection.vue";
 import DepartmentCtaSection from "../components/department/DepartmentCtaSection.vue";
 import WelcomeSection from "../components/content/WelcomeSection.vue";
-import { getUploadUrl } from "@/utils/media";
 import type {
   Stat,
   TrainingGroup,

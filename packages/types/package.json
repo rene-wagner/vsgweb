@@ -1,5 +1,5 @@
 {
-  "name": "@vsg/vsg-sdk",
+  "name": "@vsg/types",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -20,9 +20,6 @@
     "lint": "oxlint --deny-warnings --no-error-on-unmatched-pattern \"src/**/*.{ts,tsx,js,jsx,mjs,cjs}\"",
     "format": "oxfmt --write --no-error-on-unmatched-pattern \"src/**/*.{ts,tsx,js,jsx,mjs,cjs}\"",
     "format:check": "oxfmt --check --no-error-on-unmatched-pattern \"src/**/*.{ts,tsx,js,jsx,mjs,cjs}\""
-  },
-  "dependencies": {
-    "@vsg/types": "^0.0.0"
   },
   "devDependencies": {
     "oxfmt": "^0.45.0",

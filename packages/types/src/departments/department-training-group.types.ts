@@ -1,4 +1,4 @@
-import type { DepartmentTrainingSession } from "@/types/departments/department-training-session.types";
+import type { DepartmentTrainingSession } from "./department-training-session.types.js";
 
 export interface DepartmentTrainingGroup {
   id: number;

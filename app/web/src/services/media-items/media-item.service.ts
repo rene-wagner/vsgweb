@@ -1,3 +1,5 @@
+import type { MediaItem } from "@vsg/types";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export function getUploadUrl(pathOrFilename: string | null | undefined): string | null {
@@ -11,4 +13,8 @@ export function getUploadUrl(pathOrFilename: string | null | undefined): string 
 
   const normalizedPath = pathOrFilename.replace(/^\/?uploads\//, "");
   return `${API_BASE_URL}/uploads/${normalizedPath}`;
+}
+
+export function getMediaUrl(item: MediaItem): string {
+  return getUploadUrl(item.filename) ?? "";
 }

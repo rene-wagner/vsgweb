@@ -2,8 +2,9 @@
 import { storeToRefs } from "pinia";
 import SectionHeader from "@/components/ui/SectionHeader.vue";
 import ApiState from "@/components/ui/ApiState.vue";
+import { getMediaUrl } from "@/services/media-items/media-item.service";
 import DepartmentCard from "./DepartmentCard.vue";
-import { useDepartmentsStore, getMediaUrl } from "../../stores/departmentsStore";
+import { useDepartmentsStore } from "../../stores/departmentsStore";
 
 interface Props {
   headline?: string;

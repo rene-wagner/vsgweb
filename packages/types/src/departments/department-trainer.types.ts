@@ -1,4 +1,4 @@
-import type { MediaItem } from "@/types/media-items/media-item.types";
+import type { MediaItem } from "../media-items/media-item.types.js";
 
 export interface TrainerLicense {
   name: string;
