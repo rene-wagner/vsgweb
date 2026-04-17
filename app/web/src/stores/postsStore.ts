@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { VsgApiError, type ApiCollection } from "@vsg/sdk";
-import type { ApiPost, Post } from "@vsg/types";
+import { VsgApiError } from "@vsg/sdk";
+import type { Post } from "@vsg/types";
 import { getApiErrorMessage, vsg } from "@/lib/sdk";
 import { normalizePost } from "@/services/posts/post-normalizer.service";
 
@@ -22,14 +22,12 @@ export const usePostsStore = defineStore("posts", () => {
   const currentPostError = ref<string | null>(null);
   const currentPostNotFound = ref(false);
 
-  async function fetchPublishedPosts(limit = 5): Promise<void> {
+  async function fetchPublishedPosts(itemsPerPage = 5): Promise<void> {
     isLoading.value = true;
     error.value = null;
 
     try {
-      const result = await vsg.get<ApiCollection<ApiPost>>(
-        `/api/posts?published=true&limit=${limit}`,
-      );
+      const result = await vsg.posts.list({ query: { published: true, itemsPerPage } });
       posts.value = (result.member ?? []).map(normalizePost);
     } catch (e) {
       error.value = getApiErrorMessage(e);
@@ -39,14 +37,14 @@ export const usePostsStore = defineStore("posts", () => {
     }
   }
 
-  async function fetchPublishedPostsByCategory(categorySlug: string, limit = 5): Promise<void> {
+  async function fetchPublishedPostsByCategory(categorySlug: string, itemsPerPage = 5): Promise<void> {
     isDepartmentPostsLoading.value = true;
     departmentPostsError.value = null;
 
     try {
-      const result = await vsg.get<ApiCollection<ApiPost>>(
-        `/api/posts?published=true&category=${encodeURIComponent(categorySlug)}&limit=${limit}`,
-      );
+      const result = await vsg.posts.list({
+        query: { published: true, category: categorySlug, itemsPerPage },
+      });
       departmentPosts.value = (result.member ?? []).map(normalizePost);
     } catch (e) {
       departmentPostsError.value = getApiErrorMessage(e);
@@ -69,7 +67,7 @@ export const usePostsStore = defineStore("posts", () => {
     currentPost.value = null;
 
     try {
-      const post = await vsg.get<ApiPost>(`/api/posts/${encodeURIComponent(slug)}`);
+      const post = await vsg.posts.get(slug);
       currentPost.value = normalizePost(post);
     } catch (e) {
       if (e instanceof VsgApiError && e.status === 404) {
