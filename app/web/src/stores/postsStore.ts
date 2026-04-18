@@ -47,13 +47,22 @@ export const usePostsStore = defineStore("posts", () => {
     }
   }
 
-  async function fetchPublishedPostsPage(page = 1, itemsPerPage = DEFAULT_POSTS_OVERVIEW_PAGE_SIZE) {
+  async function fetchPublishedPostsPage(
+    page = 1,
+    itemsPerPage = DEFAULT_POSTS_OVERVIEW_PAGE_SIZE,
+    categoryIri?: string | null,
+  ) {
     paginatedPostsLoading.value = true;
     paginatedPostsError.value = null;
 
     try {
       const result = await vsg.posts.list({
-        query: { published: true, page, itemsPerPage },
+        query: {
+          published: true,
+          page,
+          itemsPerPage,
+          ...(categoryIri ? { "categories[]": categoryIri } : {}),
+        },
       });
 
       paginatedPosts.value = (result.member ?? []).map(normalizePost);

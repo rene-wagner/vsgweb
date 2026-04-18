@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, watch, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
+import { useCategoriesStore } from "@/stores/categoriesStore";
 import HeroSection from "@/components/content/HeroSection.vue";
 import ContentSection from "@/components/content/ContentSection.vue";
 import NewsCardListItem from "@/components/content/NewsCardListItem.vue";
@@ -12,7 +13,9 @@ const POSTS_PER_PAGE = 10;
 
 const route = useRoute();
 const router = useRouter();
+const categoriesStore = useCategoriesStore();
 const postsStore = usePostsStore();
+const { categories } = storeToRefs(categoriesStore);
 const {
   paginatedPosts,
   paginatedPostsPage,
@@ -25,6 +28,44 @@ const {
 const currentPage = computed(() => {
   const page = Number.parseInt(String(route.query.page ?? "1"), 10);
   return Number.isNaN(page) || page < 1 ? 1 : page;
+});
+
+const selectedCategorySlug = computed(() => {
+  const category = route.query.category;
+
+  return typeof category === "string" && category.length > 0 ? category : null;
+});
+
+const categoryOptions = computed(() => {
+  return categories.value
+    .filter(
+      (category) =>
+        typeof category.slug === "string" &&
+        category.slug.length > 0 &&
+        typeof category.name === "string" &&
+        category.name.length > 0 &&
+        typeof category["@id"] === "string" &&
+        category["@id"]?.length > 0,
+    )
+    .map((category) => ({
+      slug: category.slug as string,
+      name: category.name as string,
+      iri: category["@id"] as string,
+    }));
+});
+
+const selectedCategory = computed(() => {
+  if (!selectedCategorySlug.value) {
+    return null;
+  }
+
+  return categoryOptions.value.find((category) => category.slug === selectedCategorySlug.value) ?? null;
+});
+
+const emptyMessage = computed(() => {
+  return selectedCategory.value
+    ? `Fuer die Kategorie ${selectedCategory.value.name} sind derzeit keine Beitraege verfuegbar.`
+    : "Derzeit sind keine Beiträge verfügbar.";
 });
 
 const totalPages = computed(() => {
@@ -63,29 +104,63 @@ function getCategoryName(categories: { name: string }[]): string {
   return categories.length > 0 ? categories[0].name.toUpperCase() : "ALLGEMEIN";
 }
 
+function buildQuery(page: number, categorySlug = selectedCategorySlug.value) {
+  return {
+    ...(page > 1 ? { page: String(page) } : {}),
+    ...(categorySlug ? { category: categorySlug } : {}),
+  };
+}
+
 function updatePage(page: number) {
   const nextPage = Math.min(Math.max(1, page), totalPages.value);
 
   void router.push({
     name: "post-list",
-    query: nextPage === 1 ? {} : { page: String(nextPage) },
+    query: buildQuery(nextPage),
   });
 }
 
+function updateCategory(categorySlug: string | null) {
+  void router.push({
+    name: "post-list",
+    query: buildQuery(1, categorySlug),
+  });
+}
+
+function normalizeCategoryQuery() {
+  if (selectedCategorySlug.value && !selectedCategory.value) {
+    void router.replace({
+      name: "post-list",
+      query: buildQuery(currentPage.value, null),
+    });
+
+    return false;
+  }
+
+  return true;
+}
+
 function fetchPage(page: number) {
-  void postsStore.fetchPublishedPostsPage(page, POSTS_PER_PAGE).catch(() => undefined);
+  void postsStore
+    .fetchPublishedPostsPage(page, POSTS_PER_PAGE, selectedCategory.value?.iri)
+    .catch(() => undefined);
 }
 
 onMounted(() => {
+  if (!normalizeCategoryQuery()) {
+    return;
+  }
+
   fetchPage(currentPage.value);
 });
 
-watch(
-  () => route.query.page,
-  () => {
-    fetchPage(currentPage.value);
-  },
-);
+watch([() => route.query.page, () => route.query.category, categoryOptions], () => {
+  if (!normalizeCategoryQuery()) {
+    return;
+  }
+
+  fetchPage(currentPage.value);
+});
 
 watch(totalPages, (pageCount) => {
   if (currentPage.value > pageCount && paginatedPostsTotalItems.value > 0) {
@@ -117,8 +192,37 @@ onUnmounted(() => {
         :is-loading="paginatedPostsLoading"
         :error="paginatedPostsError"
         :empty="paginatedPosts.length === 0"
-        empty-message="Derzeit sind keine Beiträge verfügbar."
+        :empty-message="emptyMessage"
       >
+        <div class="mb-10 flex flex-wrap gap-3 border-b border-vsg-blue-100 pb-6">
+          <button
+            type="button"
+            class="rounded-full border px-4 py-2 font-body text-sm font-bold uppercase tracking-wider transition-colors"
+            :class="
+              selectedCategorySlug === null
+                ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
+                : 'border-vsg-blue-200 text-vsg-blue-800 hover:border-vsg-blue-600 hover:text-vsg-blue-600'
+            "
+            @click="updateCategory(null)"
+          >
+            Alle
+          </button>
+          <button
+            v-for="category in categoryOptions"
+            :key="category.slug"
+            type="button"
+            class="rounded-full border px-4 py-2 font-body text-sm font-bold uppercase tracking-wider transition-colors"
+            :class="
+              selectedCategorySlug === category.slug
+                ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
+                : 'border-vsg-blue-200 text-vsg-blue-800 hover:border-vsg-blue-600 hover:text-vsg-blue-600'
+            "
+            @click="updateCategory(category.slug)"
+          >
+            {{ category.name }}
+          </button>
+        </div>
+
         <div class="space-y-6">
           <NewsCardListItem
             v-for="post in paginatedPosts"
