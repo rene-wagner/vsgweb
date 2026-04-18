@@ -169,6 +169,7 @@ function encodeBase64(value: string): string {
                       >Telefon</span
                     >
                     <SecureContact
+                      :key="`phone-${selectedContactPerson.id}`"
                       :encrypted="encodeBase64(selectedContactPerson.phone)"
                       type="phone"
                       class="font-body text-lg text-vsg-blue-900 hover:text-vsg-gold-600 transition-colors"
@@ -188,6 +189,7 @@ function encodeBase64(value: string): string {
                       >E-Mail</span
                     >
                     <SecureContact
+                      :key="`email-${selectedContactPerson.id}`"
                       :encrypted="encodeBase64(selectedContactPerson.email)"
                       class="font-body text-lg text-vsg-blue-900 hover:text-vsg-gold-600 transition-colors"
                     />
@@ -225,6 +227,7 @@ function encodeBase64(value: string): string {
           >
             <ContactForm
               v-if="selectedContactPerson"
+              :key="selectedContactPerson.id"
               :contact-person-id="selectedContactPerson.id"
               :contact-person-name="`${selectedContactPerson.firstName} ${selectedContactPerson.lastName}`"
             />

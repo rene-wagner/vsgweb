@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 
 interface Props {
   encrypted: string;
@@ -21,6 +21,13 @@ const currentHref = computed(() => {
   if (!isDecoded.value) return "#";
   return `${protocol.value}${decodedValue.value}`;
 });
+
+function reset() {
+  isDecoded.value = false;
+  decodedValue.value = "";
+}
+
+watch(() => [props.encrypted, props.type], reset);
 
 function decode() {
   if (isDecoded.value) return;
