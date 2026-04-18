@@ -183,11 +183,12 @@ const departmentCta = computed<Cta>(() => {
       />
 
       <!-- News Section -->
-      <NewsSection
-        headline="AKTUELLE NEUIGKEITEN"
-        subtitle="Was bei uns los ist"
-        :category-iri="departmentCategoryIri"
-      />
+        <NewsSection
+          headline="AKTUELLE NEUIGKEITEN"
+          subtitle="Was bei uns los ist"
+          :category-iri="departmentCategoryIri"
+          :category-slug="currentDepartment?.slug ?? null"
+        />
 
       <!-- CTA Section -->
       <DepartmentCtaSection

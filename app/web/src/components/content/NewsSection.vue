@@ -14,6 +14,7 @@ interface Props {
   subtitle?: string;
   postsCount?: number;
   categoryIri?: string | null;
+  categorySlug?: string | null;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,6 +31,18 @@ const activeLoading = computed(() =>
   props.categoryIri ? isDepartmentPostsLoading.value : isLoading.value,
 );
 const activeError = computed(() => (props.categoryIri ? departmentPostsError.value : error.value));
+const postsOverviewRoute = computed(() => {
+  if (!props.categorySlug) {
+    return { name: "post-list" };
+  }
+
+  return {
+    name: "post-list",
+    query: {
+      category: props.categorySlug,
+    },
+  };
+});
 
 watch(
   [() => props.categoryIri, () => props.postsCount],
@@ -115,7 +128,7 @@ const listPosts = computed(() => activePosts.value.slice(1));
 
         <div class="mt-10 flex justify-center">
           <RouterLink
-            to="/beitraege"
+            :to="postsOverviewRoute"
             class="inline-flex items-center gap-2 font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-600 transition-colors hover:text-vsg-blue-800"
           >
             Weitere Beiträge ansehen
