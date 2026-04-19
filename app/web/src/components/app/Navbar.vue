@@ -111,7 +111,7 @@ function toggleAbteilungen() {
             </div>
           </div>
 
-          <!-- Verein Dropdown -->
+          <!-- Verein Dropdown
           <div class="group relative">
             <button
               type="button"
@@ -138,7 +138,7 @@ function toggleAbteilungen() {
                 </RouterLink>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <RouterLink
             to="/beitraege"
