@@ -11,6 +11,10 @@ export interface HomepageContent {
   postsDescription: string;
   postsSubtitle: string;
   postsCount: number;
+  galleryHeadline: string;
+  galleryDescription: string;
+  gallerySubtitle: string;
+  galleryCount: number;
   ctaHeadline: string;
   ctaDescription: string;
 }
@@ -45,6 +49,13 @@ Ihr wollt Vereinsmitglied werden, kein Problem, hier ist der [Formularlink](http
     "Bleib auf dem Laufenden mit Berichten, Terminen und Einblicken aus dem Vereinsalltag.",
   postsSubtitle: "Aus dem Verein",
   postsCount: 5,
+
+  // Gallery
+  galleryHeadline: "Momente aus dem Verein",
+  galleryDescription:
+    "Einblicke in Training, Spieltage und das Vereinsleben aus unseren Abteilungen.",
+  gallerySubtitle: "Galerie",
+  galleryCount: 20,
 
   // Call to Action
   ctaHeadline: "Werde Teil<br>unseres Vereins",

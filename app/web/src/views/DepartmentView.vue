@@ -12,9 +12,11 @@ import StatsSection from "../components/content/StatsSection.vue";
 import TrainingScheduleSection from "../components/department/TrainingScheduleSection.vue";
 import LocationSection from "../components/department/LocationSection.vue";
 import NewsSection from "../components/content/NewsSection.vue";
+import GalerieSection from "../components/content/GalerieSection.vue";
 import DepartmentCtaSection from "../components/department/DepartmentCtaSection.vue";
 import WelcomeSection from "../components/content/WelcomeSection.vue";
-import { Cta, DepartmentLocation, Statistic, TrainingGroup } from "@vsg/types";
+import { Cta, DepartmentLocation, DepartmentTrainingGroup, Statistic } from "@vsg/types";
+import { useMediaItemsStore } from "@/stores/mediaItemsStore";
 
 const route = useRoute();
 const categoriesStore = useCategoriesStore();
@@ -28,6 +30,7 @@ const {
 } = storeToRefs(departmentsStore);
 
 const postsStore = usePostsStore();
+const mediaItemsStore = useMediaItemsStore();
 
 const departmentCategoryIri = computed(() => {
   const slug = currentDepartment.value?.slug;
@@ -37,6 +40,16 @@ const departmentCategoryIri = computed(() => {
   }
 
   return categories.value.find((category) => category.slug === slug)?.["@id"] ?? null;
+});
+
+const departmentCategoryId = computed(() => {
+  const slug = currentDepartment.value?.slug;
+
+  if (!slug) {
+    return undefined;
+  }
+
+  return categories.value.find((category) => category.slug === slug)?.id ?? null;
 });
 
 function fetchDepartment() {
@@ -74,6 +87,7 @@ watchEffect(() => {
 onUnmounted(() => {
   departmentsStore.clearCurrentDepartment();
   postsStore.clearDepartmentPosts();
+  mediaItemsStore.clearDepartmentMediaItems();
 });
 
 // Transform API stats to component format
@@ -86,21 +100,8 @@ const departmentStats = computed<Statistic[]>(() => {
 });
 
 // Transform API training groups to component format
-const departmentTrainingGroups = computed<TrainingGroup[]>(() => {
-  if (!currentDepartment.value?.trainingGroups) return [];
-  return currentDepartment.value.trainingGroups.map((group) => ({
-    name: group.name,
-    ageRange: group.ageRange || "",
-    icon: group.icon as "youth" | "adults",
-    variant: group.variant as "primary" | "secondary",
-    sessions: group.sessions.map((session) => ({
-      day: session.day,
-      time: session.time,
-      group: "Allgemein",
-      level: "all" as const,
-      locationName: session.location?.name,
-    })),
-  }));
+const departmentTrainingGroups = computed<DepartmentTrainingGroup[]>(() => {
+  return currentDepartment.value?.trainingGroups ?? [];
 });
 
 // Transform API locations to component format
@@ -188,6 +189,14 @@ const departmentCta = computed<Cta>(() => {
         subtitle="Was bei uns los ist"
         :category-iri="departmentCategoryIri"
         :category-slug="currentDepartment?.slug ?? null"
+      />
+
+      <GalerieSection
+        headline="GALERIE"
+        subtitle="Bilder aus der Abteilung"
+        description="Aktuelle Einblicke aus Training, Spielbetrieb und Vereinsleben dieser Abteilung."
+        :items-count="20"
+        :category-id="departmentCategoryId"
       />
 
       <!-- CTA Section -->

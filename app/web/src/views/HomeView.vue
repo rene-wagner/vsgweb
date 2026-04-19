@@ -4,6 +4,7 @@ import WelcomeSection from "@/components/content/WelcomeSection.vue";
 import StatsSection from "@/components/content/StatsSection.vue";
 import DepartmentsSection from "@/components/department/DepartmentsSection.vue";
 import NewsSection from "@/components/content/NewsSection.vue";
+import GalerieSection from "@/components/content/GalerieSection.vue";
 import CtaSection from "@/components/content/CtaSection.vue";
 import { homepageContent } from "@/content/homepage-content";
 </script>
@@ -37,6 +38,13 @@ import { homepageContent } from "@/content/homepage-content";
       :description="homepageContent.postsDescription"
       :subtitle="homepageContent.postsSubtitle"
       :posts-count="homepageContent.postsCount"
+    />
+
+    <GalerieSection
+      :headline="homepageContent.galleryHeadline"
+      :description="homepageContent.galleryDescription"
+      :subtitle="homepageContent.gallerySubtitle"
+      :items-count="homepageContent.galleryCount"
     />
 
     <CtaSection

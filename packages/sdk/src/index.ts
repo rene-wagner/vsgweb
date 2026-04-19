@@ -102,6 +102,7 @@ export class VsgClient {
   readonly contactPeople;
   readonly departments;
   readonly events;
+  readonly gallery;
   readonly locations;
   readonly mediaFolders;
   readonly mediaItems;
@@ -139,6 +140,12 @@ export class VsgClient {
       list: (options?: RequestOptions) => this.getCollection<Event>("/api/events", options),
       get: (id: number | string, options?: RequestOptions) =>
         this.get<Event>(`/api/events/${encodeURIComponent(String(id))}`, options),
+    };
+
+    this.gallery = {
+      list: (options?: RequestOptions) => this.getCollection<MediaItem>("/api/gallery", options),
+      get: (id: number | string, options?: RequestOptions) =>
+        this.get<MediaItem>(`/api/gallery/${encodeURIComponent(String(id))}`, options),
     };
 
     this.locations = {
