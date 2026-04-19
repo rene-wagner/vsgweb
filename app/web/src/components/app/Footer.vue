@@ -81,7 +81,10 @@ const departmentLinks = computed(() => {
             <li v-if="departmentsLoading" class="font-body font-normal text-vsg-blue-300/60">
               Laden...
             </li>
-            <li v-else-if="departmentLinks.length === 0" class="font-body font-normal text-vsg-blue-300/60">
+            <li
+              v-else-if="departmentLinks.length === 0"
+              class="font-body font-normal text-vsg-blue-300/60"
+            >
               Keine Abteilungen
             </li>
             <li v-for="link in departmentLinks" v-else :key="link.to">

@@ -59,7 +59,9 @@ const selectedCategory = computed(() => {
     return null;
   }
 
-  return categoryOptions.value.find((category) => category.slug === selectedCategorySlug.value) ?? null;
+  return (
+    categoryOptions.value.find((category) => category.slug === selectedCategorySlug.value) ?? null
+  );
 });
 
 const emptyMessage = computed(() => {

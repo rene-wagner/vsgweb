@@ -68,12 +68,6 @@ function toggleAbteilungen() {
 
         <!-- Desktop Menu -->
         <div class="hidden items-center gap-8 md:flex">
-          <RouterLink
-            to="/beitraege"
-            class="font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
-            >Beiträge</RouterLink
-          >
-
           <!-- Abteilungen Dropdown -->
           <div class="group relative">
             <button
@@ -145,11 +139,20 @@ function toggleAbteilungen() {
               </div>
             </div>
           </div>
+
+          <RouterLink
+            to="/beitraege"
+            class="font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
+          >
+            Beiträge
+          </RouterLink>
+
           <RouterLink
             to="/kontakt"
             class="font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
-            >Kontakt</RouterLink
           >
+            Kontakt
+          </RouterLink>
         </div>
 
         <!-- Mobile Burger Button -->

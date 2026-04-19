@@ -77,12 +77,12 @@ function encodeBase64(value: string): string {
     />
 
     <ContentSection max-width="2xl">
-        <ApiState
-          :is-loading="contactPeopleStore.isLoading"
-          :error="contactPeopleStore.error"
-          :empty="contactPeopleStore.contactPeople.length === 0"
-          empty-message="Derzeit sind keine Ansprechpartner verfügbar."
-        >
+      <ApiState
+        :is-loading="contactPeopleStore.isLoading"
+        :error="contactPeopleStore.error"
+        :empty="contactPeopleStore.contactPeople.length === 0"
+        empty-message="Derzeit sind keine Ansprechpartner verfügbar."
+      >
         <div>
           <div class="mb-8">
             <label
@@ -103,9 +103,9 @@ function encodeBase64(value: string): string {
               "
             >
               <option :value="null">Bitte wählen...</option>
-               <option v-for="cp in contactPeopleStore.contactPeople" :key="cp.id" :value="cp.id">
-                 {{ formatOptionLabel(cp) }}
-               </option>
+              <option v-for="cp in contactPeopleStore.contactPeople" :key="cp.id" :value="cp.id">
+                {{ formatOptionLabel(cp) }}
+              </option>
             </select>
           </div>
 
