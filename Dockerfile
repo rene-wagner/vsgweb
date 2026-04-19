@@ -20,7 +20,7 @@ RUN npm run build
 
 FROM nginx:1.29-alpine AS runtime
 
-COPY .github/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY .docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/app/web/dist /usr/share/nginx/html
 
 EXPOSE 80

@@ -2,8 +2,6 @@ node_modules/
 .turbo/
 .git/
 .github/*
-!.github/nginx/
-!.github/nginx/default.conf
 dist/
 app/web/dist/
 packages/*/dist/
