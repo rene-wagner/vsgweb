@@ -15,7 +15,7 @@ import { homepageContent } from "@/content/homepage-content";
   >
     <HeroSection
       tag="Sportverein seit 1985"
-      logo="/public/logo.png"
+      logo="/logo.png"
       min-height="screen"
       :show-scroll-indicator="true"
     />
