@@ -4,6 +4,7 @@ import { RouterLink } from "vue-router";
 import { storeToRefs } from "pinia";
 import Logo from "./Logo.vue";
 import { useDepartmentsStore } from "@/stores/departmentsStore";
+import { useEditingMode } from "@/composables/useEditingMode";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 interface MenuItem {
@@ -17,6 +18,7 @@ const isAbteilungenOpen = ref(false);
 
 const departmentsStore = useDepartmentsStore();
 const { departments, isLoading: departmentsLoading } = storeToRefs(departmentsStore);
+const { isEditingMode } = useEditingMode();
 
 const vereinItems: MenuItem[] = [
   { label: "Geschichte", to: "/verein/geschichte" },
@@ -153,34 +155,54 @@ function toggleAbteilungen() {
           >
             Kontakt
           </RouterLink>
+
+          <div
+            v-if="isEditingMode"
+            class="flex items-center justify-end text-vsg-gold-300"
+            aria-label="Bearbeitungsmodus aktiv"
+            title="Im Bearbeitungsmodus"
+          >
+            <FontAwesomeIcon icon="pen" class="text-base" />
+          </div>
         </div>
 
-        <!-- Mobile Burger Button -->
-        <button
-          id="mobile-menu-toggle"
-          class="group flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
-          :aria-label="isMenuOpen ? 'Menü schließen' : 'Menü öffnen'"
-          :aria-expanded="isMenuOpen"
-          aria-controls="mobile-menu"
-          @click="toggleMenu"
-        >
-          <span
-            class="h-0.5 w-6 bg-vsg-gold-400 transition-all duration-300 group-hover:bg-vsg-gold-300"
-            :class="{
-              'translate-y-2 rotate-45': isMenuOpen,
-            }"
-          />
-          <span
-            class="h-0.5 w-6 bg-vsg-gold-400 transition-all duration-300 group-hover:bg-vsg-gold-300"
-            :class="{ 'opacity-0': isMenuOpen }"
-          />
-          <span
-            class="h-0.5 w-6 bg-vsg-gold-400 transition-all duration-300 group-hover:bg-vsg-gold-300"
-            :class="{
-              '-translate-y-2 -rotate-45': isMenuOpen,
-            }"
-          />
-        </button>
+        <div class="flex items-center gap-4 md:hidden">
+          <div
+            v-if="isEditingMode"
+            class="flex items-center gap-2 text-vsg-gold-300"
+            aria-label="Bearbeitungsmodus aktiv"
+          >
+            <FontAwesomeIcon icon="pen" class="text-sm" />
+            <span class="font-body text-sm font-semibold">Im Bearbeitungsmodus</span>
+          </div>
+
+          <!-- Mobile Burger Button -->
+          <button
+            id="mobile-menu-toggle"
+            class="group flex h-10 w-10 flex-col items-center justify-center gap-1.5"
+            :aria-label="isMenuOpen ? 'Menü schließen' : 'Menü öffnen'"
+            :aria-expanded="isMenuOpen"
+            aria-controls="mobile-menu"
+            @click="toggleMenu"
+          >
+            <span
+              class="h-0.5 w-6 bg-vsg-gold-400 transition-all duration-300 group-hover:bg-vsg-gold-300"
+              :class="{
+                'translate-y-2 rotate-45': isMenuOpen,
+              }"
+            />
+            <span
+              class="h-0.5 w-6 bg-vsg-gold-400 transition-all duration-300 group-hover:bg-vsg-gold-300"
+              :class="{ 'opacity-0': isMenuOpen }"
+            />
+            <span
+              class="h-0.5 w-6 bg-vsg-gold-400 transition-all duration-300 group-hover:bg-vsg-gold-300"
+              :class="{
+                '-translate-y-2 -rotate-45': isMenuOpen,
+              }"
+            />
+          </button>
+        </div>
       </div>
     </div>
   </nav>
