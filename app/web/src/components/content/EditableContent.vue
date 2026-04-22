@@ -77,7 +77,10 @@ watch(isEditingMode, (newVal) => {
 
   <div v-else class="group relative rounded-lg border-2 border-dashed border-vsg-gold-500 p-3">
     <div v-if="!isEditing">
-      <MarkdownRenderer :content="content" />
+      <MarkdownRenderer
+        :content="content"
+        :use-default-class="false"
+      />
       <button
         type="button"
         class="absolute top-2 right-2 text-vsg-gold-500 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
