@@ -17,7 +17,7 @@ const { isEditingMode } = useEditingMode();
 const isEditing = ref(false);
 const isStarting = ref(false);
 const localContent = ref("");
-const editorContainer = ref<HTMLElement | null>(null);
+const editorContainer = ref<HTMLTextAreaElement | null>(null);
 let easyMDEInstance: EasyMDE | null = null;
 
 async function startEditing() {
@@ -90,7 +90,7 @@ watch(isEditingMode, (newVal) => {
     </div>
 
     <div v-else>
-      <div ref="editorContainer"></div>
+      <textarea ref="editorContainer"></textarea>
       <div class="mt-2 flex justify-end gap-2">
         <button
           type="button"
