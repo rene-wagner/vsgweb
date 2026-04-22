@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onUnmounted, ref } from "vue";
+import { nextTick, onUnmounted, ref, watch } from "vue";
 import EasyMDE from "easymde";
 import MarkdownRenderer from "@/components/ui/MarkdownRenderer.vue";
 import { useEditingMode } from "@/composables/useEditingMode";
@@ -15,11 +15,14 @@ const props = defineProps<Props>();
 const { isEditingMode } = useEditingMode();
 
 const isEditing = ref(false);
+const isStarting = ref(false);
 const localContent = ref("");
 const editorContainer = ref<HTMLElement | null>(null);
 let easyMDEInstance: EasyMDE | null = null;
 
 async function startEditing() {
+  if (isStarting.value || isEditing.value) return;
+  isStarting.value = true;
   localContent.value = props.content ?? "";
   isEditing.value = true;
 
@@ -34,6 +37,7 @@ async function startEditing() {
       status: false,
     });
   }
+  isStarting.value = false;
 }
 
 function destroyEditor() {
@@ -60,6 +64,10 @@ function saveContent() {
 onUnmounted(() => {
   destroyEditor();
 });
+
+watch(isEditingMode, (newVal) => {
+  if (!newVal && isEditing.value) cancelEditing();
+});
 </script>
 
 <template>
@@ -77,6 +85,7 @@ onUnmounted(() => {
         type="button"
         class="absolute top-2 right-2 text-vsg-gold-500 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
         aria-label="Bearbeiten"
+        :disabled="isStarting"
         @click="startEditing"
       >
         <FontAwesomeIcon :icon="faPen" />
