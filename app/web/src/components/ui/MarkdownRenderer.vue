@@ -4,9 +4,12 @@ import { marked } from "marked";
 
 interface Props {
   content: string | null | undefined;
+  useDefaultClass?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  useDefaultClass: true,
+});
 
 const renderedHtml = computed(() => {
   if (!props.content) {
