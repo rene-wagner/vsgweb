@@ -25,5 +25,6 @@ dist/
 .opencode/
 openspec/
 
+.worktrees/
 .superpowers/
 docs/superpowers/
