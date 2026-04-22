@@ -17,7 +17,7 @@ This follows the project pattern where components are self-contained single-file
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
 | `uuid` | `string` | Yes | Identifies the content block; hard-coded by the parent |
-| `content` | `string` | undefined | Optional markdown string to render |
+| `content` | `string` | No (defaults to `''`) | Optional markdown string to render; empty string when not provided |
 
 ### External Dependencies
 
