@@ -18,7 +18,7 @@ const isAbteilungenOpen = ref(false);
 
 const departmentsStore = useDepartmentsStore();
 const { departments, isLoading: departmentsLoading } = storeToRefs(departmentsStore);
-const { isEditingMode } = useEditingMode();
+const { isEditingMode, isCheckingEditingMode } = useEditingMode();
 
 const vereinItems: MenuItem[] = [
   { label: "Geschichte", to: "/verein/geschichte" },
@@ -157,7 +157,7 @@ function toggleAbteilungen() {
           </RouterLink>
 
           <div
-            v-if="isEditingMode"
+            v-if="!isCheckingEditingMode && isEditingMode"
             class="flex items-center justify-end text-vsg-gold-300"
             aria-label="Bearbeitungsmodus aktiv"
             title="Im Bearbeitungsmodus"
@@ -168,7 +168,7 @@ function toggleAbteilungen() {
 
         <div class="flex items-center gap-4 md:hidden">
           <div
-            v-if="isEditingMode"
+            v-if="!isCheckingEditingMode && isEditingMode"
             class="flex items-center gap-2 text-vsg-gold-300"
             aria-label="Bearbeitungsmodus aktiv"
           >

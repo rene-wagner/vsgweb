@@ -1,35 +1,53 @@
-import { computed } from "vue";
+import { readonly, ref } from "vue";
+import {
+  hasAllowedReferrer,
+  isEmbeddedInIframe,
+  readEmbedTokenFromUrl,
+  removeEmbedTokenFromUrl,
+  verifyEditingMode,
+} from "@/lib/editing-mode";
 
-function isEmbeddedOnConfiguredOrigin(): boolean {
-  if (typeof window === "undefined") {
-    return false;
+const isEditingMode = ref(false);
+const isCheckingEditingMode = ref(true);
+
+let verificationPromise: Promise<void> | null = null;
+
+async function initializeEditingMode(): Promise<void> {
+  if (!isEmbeddedInIframe() || !hasAllowedReferrer()) {
+    console.log('E');
+    isEditingMode.value = false;
+    isCheckingEditingMode.value = false;
+    return;
   }
 
-  let isEmbedded = false;
+  const embedToken = readEmbedTokenFromUrl();
+  removeEmbedTokenFromUrl();
+
+  if (embedToken === null) {
+    isEditingMode.value = false;
+    isCheckingEditingMode.value = false;
+    return;
+  }
 
   try {
-    isEmbedded = window.self !== window.top;
-  } catch {
-    isEmbedded = true;
-  }
+    isEditingMode.value = await verifyEditingMode(embedToken);
+  } catch (error) {
+    if (import.meta.env.DEV) {
+      console.warn("[VSG] Editing mode verification failed unexpectedly", error);
+    }
 
-  if (!isEmbedded || document.referrer.length === 0) {
-    return false;
-  }
-
-  try {
-    const configuredOrigin = new URL(import.meta.env.VITE_API_BASE_URL).origin;
-    const referrerOrigin = new URL(document.referrer).origin;
-    return referrerOrigin === configuredOrigin;
-  } catch {
-    return false;
+    isEditingMode.value = false;
+  } finally {
+    isCheckingEditingMode.value = false;
   }
 }
 
 export function useEditingMode() {
-  const isEditingMode = computed(() => isEmbeddedOnConfiguredOrigin());
+  console.log('A');
+  verificationPromise ??= initializeEditingMode();
 
   return {
-    isEditingMode,
+    isEditingMode: readonly(isEditingMode),
+    isCheckingEditingMode: readonly(isCheckingEditingMode),
   };
 }
