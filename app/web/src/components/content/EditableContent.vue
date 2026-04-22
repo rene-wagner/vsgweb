@@ -75,10 +75,7 @@ watch(isEditingMode, (newVal) => {
     <MarkdownRenderer :content="content" />
   </div>
 
-  <div
-    v-else
-    class="group relative rounded-lg border-2 border-dashed border-vsg-gold-500 p-3"
-  >
+  <div v-else class="group relative rounded-lg border-2 border-dashed border-vsg-gold-500 p-3">
     <div v-if="!isEditing">
       <MarkdownRenderer :content="content" />
       <button
@@ -102,13 +99,7 @@ watch(isEditingMode, (newVal) => {
         >
           Abbrechen
         </button>
-        <button
-          type="button"
-          class="btn-primary"
-          @click="saveContent"
-        >
-          Speichern
-        </button>
+        <button type="button" class="btn-primary" @click="saveContent">Speichern</button>
       </div>
     </div>
   </div>

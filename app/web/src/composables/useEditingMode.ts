@@ -14,7 +14,7 @@ let verificationPromise: Promise<void> | null = null;
 
 async function initializeEditingMode(): Promise<void> {
   if (!isEmbeddedInIframe() || !hasAllowedReferrer()) {
-    console.log('E');
+    console.log("E");
     isEditingMode.value = false;
     isCheckingEditingMode.value = false;
     return;
@@ -43,7 +43,7 @@ async function initializeEditingMode(): Promise<void> {
 }
 
 export function useEditingMode() {
-  console.log('A');
+  console.log("A");
   verificationPromise ??= initializeEditingMode();
 
   return {
