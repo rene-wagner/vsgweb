@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import type { DepartmentTrainingGroup } from "@vsg/types";
+import EditableContent from "@/components/content/EditableContent.vue";
 import TrainingTable from "./TrainingTable.vue";
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
   groups: DepartmentTrainingGroup[];
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 function getHeaderClasses(variant: DepartmentTrainingGroup["variant"]): string {
   return variant === "primary" ? "bg-vsg-blue-600" : "bg-vsg-blue-900";
@@ -33,29 +34,38 @@ function getAgeRangeClasses(variant: DepartmentTrainingGroup["variant"]): string
   <section class="relative bg-white py-32">
     <div class="mx-auto max-w-7xl px-6">
       <!-- Section Header -->
-      <div class="mb-16 text-center">
-        <span class="font-body text-sm font-normal uppercase tracking-[0.4em] text-vsg-blue-600">
-          {{ subtitle }}
-        </span>
-        <h2 class="mt-4 font-display text-5xl tracking-wider text-vsg-blue-900 md:text-7xl">
-          {{ title }}
-        </h2>
-        <p
-          v-if="description"
-          class="mx-auto mt-4 max-w-2xl font-body text-lg font-normal text-gray-600"
-        >
-          {{ description }}
-        </p>
+      <div class="flex flex-col gap-4 text-center">
+        <EditableContent
+          uuid="training-schedule-subtitle"
+          :content="props.subtitle"
+          tag="span"
+          content-class="font-body text-sm font-normal uppercase tracking-[0.4em] text-vsg-blue-600"
+        />
+        <EditableContent
+          uuid="training-schedule-title"
+          :content="props.title"
+          tag="h2"
+          content-class="font-display text-5xl tracking-wider text-vsg-blue-900 md:text-7xl"
+        />
+        <EditableContent
+          v-if="props.description"
+          uuid="training-schedule-description"
+          :content="props.description"
+          tag="p"
+          content-class="mx-auto max-w-2xl font-body text-lg font-normal text-gray-600"
+        />
       </div>
 
       <!-- Training Groups Grid -->
-      <div :class="['gap-12', groups.length === 1 ? 'flex justify-center' : 'grid lg:grid-cols-2']">
+      <div
+        :class="['mt-16 gap-12', props.groups.length === 1 ? 'flex justify-center' : 'grid lg:grid-cols-2']"
+      >
         <div
-          v-for="group in groups"
+          v-for="group in props.groups"
           :key="group.name"
           :class="[
             'card-hover overflow-hidden rounded-xl border border-gray-200 bg-gray-50',
-            { 'w-full max-w-2xl': groups.length === 1 },
+            { 'w-full max-w-2xl': props.groups.length === 1 },
           ]"
         >
           <!-- Card Header -->
