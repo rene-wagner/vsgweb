@@ -11,6 +11,12 @@
       ],
       "outputs": []
     },
+    "check-types": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": []
+    },
     "lint": {
       "outputs": []
     },

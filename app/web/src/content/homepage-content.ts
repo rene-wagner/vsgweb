@@ -1,5 +1,4 @@
 import type { Statistic } from "@vsg/types";
-import { marked } from "marked";
 
 export interface HomepageContent {
   welcomeText: string;
@@ -21,13 +20,13 @@ export interface HomepageContent {
 
 export const homepageContent: HomepageContent = {
   // Welcome text
-  welcomeText: await marked.parse(`## Herzlich Willkommen auf unserer Homepage!
+  welcomeText: `## Herzlich Willkommen auf unserer Homepage!
 
 Schön, dass du auf unseren Verein aufmerksam geworden bist. Mit **Tischtennis, Badminton, Gymnastik und Volleyball** bieten wir eine ziemlich große Auswahl allseits beliebter Sportarten, welche nur drauf warten ausprobiert zu werden.
 
 Ansonsten für alle, die unsere Seite das erste Mal besuchen, viel Spaß beim Stöbern. Es gibt garantiert viel zu entdecken. Vielleicht wird ja sogar eine Mitgliedschaft daraus, [kontaktiert](/kontakt?person=1) mich einfach.
 
-Ihr wollt Vereinsmitglied werden, kein Problem, hier ist der [Formularlink](https://vsgapi.rwgnr.de/uploads/f252e251-759f-48f1-8599-7651fc3d859a.pdf) dazu.`),
+Ihr wollt Vereinsmitglied werden, kein Problem, hier ist der [Formularlink](https://vsgapi.rwgnr.de/uploads/f252e251-759f-48f1-8599-7651fc3d859a.pdf) dazu.`,
 
   // Statistics
   stats: [

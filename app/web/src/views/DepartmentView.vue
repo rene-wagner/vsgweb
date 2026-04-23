@@ -156,6 +156,7 @@ const departmentCta = computed<Cta>(() => {
       <!-- Stats Section -->
       <WelcomeSection
         v-if="currentDepartment!.welcomeText"
+        uuid="department-welcome-text"
         :welcome-text="currentDepartment!.welcomeText"
       />
 

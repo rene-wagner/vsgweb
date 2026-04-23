@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { marked } from "marked";
+import EditableContent from "./EditableContent.vue";
 
 interface Props {
+  uuid: string;
   welcomeText: string;
 }
 
-const props = defineProps<Props>();
-
-const renderedHtml = computed(() => marked(props.welcomeText));
+defineProps<Props>();
 </script>
 
 <template>
@@ -25,9 +23,10 @@ const renderedHtml = computed(() => marked(props.welcomeText));
         <div class="flex-1 h-px bg-vsg-gold-400"></div>
       </div>
 
-      <div
-        class="prose prose-lg mx-auto max-w-none text-center prose-headings:font-display prose-headings:text-vsg-blue-900 prose-p:font-body prose-p:text-gray-700 prose-a:text-vsg-blue-600 prose-a:no-underline hover:prose-a:text-vsg-gold-500 prose-strong:text-vsg-blue-900 prose-li:text-gray-700"
-        v-html="renderedHtml"
+      <EditableContent
+        :uuid="uuid"
+        :content="welcomeText"
+        content-class="prose prose-lg mx-auto max-w-none text-center prose-headings:font-display prose-headings:text-vsg-blue-900 prose-p:font-body prose-p:text-gray-700 prose-a:text-vsg-blue-600 prose-a:no-underline hover:prose-a:text-vsg-gold-500 prose-strong:text-vsg-blue-900 prose-li:text-gray-700"
       />
 
       <!-- Bottom gold divider -->

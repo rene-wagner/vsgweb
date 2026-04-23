@@ -17,6 +17,7 @@ import { homepageContent } from "@/content/homepage-content";
 
     <WelcomeSection
       v-if="homepageContent.welcomeText"
+      uuid="homepage-welcome-text"
       :welcome-text="homepageContent.welcomeText"
     />
 

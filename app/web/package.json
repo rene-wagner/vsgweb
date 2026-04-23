@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
+    "check-types": "vue-tsc -b",
     "type-check": "vue-tsc -b",
     "lint": "npm run type-check && oxlint --vue-plugin --deny-warnings src vite.config.ts",
     "format": "oxfmt --write src vite.config.ts",

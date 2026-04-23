@@ -6,6 +6,7 @@ interface Props {
   content: string | null | undefined;
   useDefaultClass?: boolean;
   tag?: string;
+  contentClass?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,7 +31,7 @@ const renderedHtml = computed(() => {
   <component
     :is="props.tag"
     v-if="renderedHtml"
-    :class="{ 'markdown-content': props.useDefaultClass }"
+    :class="[props.contentClass, { 'markdown-content': props.useDefaultClass }]"
     v-html="renderedHtml"
   ></component>
 </template>

@@ -9,6 +9,7 @@ interface Props {
   uuid: string;
   content?: string;
   tag?: string;
+  contentClass?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -78,12 +79,18 @@ watch(isEditingMode, (newVal) => {
     v-if="!isEditingMode"
     :content="content"
     :tag="tag"
+    :content-class="contentClass"
     :use-default-class="false"
   />
 
   <div v-else class="group relative border-2 border-dashed border-vsg-gold-500 p-3">
     <template v-if="!isEditing">
-      <MarkdownRenderer :content="content" :tag="tag" :use-default-class="false" />
+      <MarkdownRenderer
+        :content="content"
+        :tag="tag"
+        :content-class="contentClass"
+        :use-default-class="false"
+      />
       <button
         type="button"
         class="absolute top-2 right-2 text-base leading-none text-vsg-gold-500 opacity-0 transition-opacity duration-200 group-hover:opacity-100"

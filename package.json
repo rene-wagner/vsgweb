@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo run build",
+    "check-types": "turbo run check-types",
     "lint": "turbo run lint",
     "format": "turbo run format",
     "format:check": "turbo run format:check"
