@@ -26,7 +26,7 @@ defineProps<Props>();
       <EditableContent
         :uuid="uuid"
         :content="welcomeText"
-        content-class="prose prose-lg mx-auto max-w-none text-center prose-headings:font-display prose-headings:text-vsg-blue-900 prose-p:font-body prose-p:text-gray-700 prose-a:text-vsg-blue-600 prose-a:no-underline hover:prose-a:text-vsg-gold-500 prose-strong:text-vsg-blue-900 prose-li:text-gray-700"
+        content-class="prose prose-lg mx-auto max-w-none text-center prose-headings:font-display prose-headings:text-vsg-blue-900 prose-p:font-body prose-p:text-gray-700 prose-a:text-vsg-blue-600 prose-a:no-underline prose-a:hover:text-vsg-gold-500 prose-strong:text-vsg-blue-900 prose-li:text-gray-700"
       />
 
       <!-- Bottom gold divider -->
