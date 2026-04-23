@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
+import EditableContent from "@/components/content/EditableContent.vue";
 import SectionHeader from "@/components/ui/SectionHeader.vue";
 import ApiState from "@/components/ui/ApiState.vue";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
@@ -21,13 +22,20 @@ const { departments, isLoading, error } = storeToRefs(departmentsStore);
 <template>
   <section class="relative bg-white py-32">
     <div class="mx-auto max-w-7xl px-6">
-      <SectionHeader :subtitle="props.subtitle || ''" :title="props.headline || ''" class="mb-6" />
-      <p
+      <SectionHeader
+        :subtitle="props.subtitle || ''"
+        :title="props.headline || ''"
+        subtitle-uuid="departments-subtitle"
+        title-uuid="departments-title"
+        class="mb-6"
+      />
+      <EditableContent
         v-if="props.description"
-        class="mx-auto mt-6 mb-16 max-w-3xl text-center font-body text-lg text-gray-600"
-      >
-        {{ props.description }}
-      </p>
+        uuid="departments-description"
+        :content="props.description"
+        tag="p"
+        content-class="mx-auto mt-6 mb-16 max-w-3xl text-center font-body text-lg text-gray-600"
+      />
 
       <ApiState
         :is-loading="isLoading"

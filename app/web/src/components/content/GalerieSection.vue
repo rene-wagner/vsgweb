@@ -148,7 +148,13 @@ onUnmounted(() => {
 <template>
   <section class="relative bg-white py-32">
     <div class="mx-auto max-w-7xl px-6">
-      <SectionHeader :subtitle="props.subtitle || ''" :title="props.headline || ''" class="mb-6" />
+      <SectionHeader
+        :subtitle="props.subtitle || ''"
+        :title="props.headline || ''"
+        subtitle-uuid="gallery-subtitle"
+        title-uuid="gallery-title"
+        class="mb-6"
+      />
       <p
         v-if="props.description"
         class="mx-auto mt-6 mb-16 max-w-3xl text-center font-body text-lg text-gray-600"
