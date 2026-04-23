@@ -74,7 +74,7 @@ watch(isEditingMode, (newVal) => {
 </script>
 
 <template>
-  <MarkdownRenderer v-if="!isEditingMode" :content="content" :tag="tag" />
+  <MarkdownRenderer v-if="!isEditingMode" :content="content" :tag="tag" :use-default-class="false" />
 
   <div v-else class="group relative rounded-lg border-2 border-dashed border-vsg-gold-500 p-3">
     <template v-if="!isEditing">
