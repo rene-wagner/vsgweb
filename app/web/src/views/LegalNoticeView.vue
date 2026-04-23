@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HeroSection from "../components/content/HeroSection.vue";
+import HeroSectionSmall from "../components/content/HeroSectionSmall.vue";
 import ContentSection from "../components/content/ContentSection.vue";
 </script>
 
@@ -7,7 +7,7 @@ import ContentSection from "../components/content/ContentSection.vue";
   <div
     class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
-    <HeroSection headline="IMPRESSUM" description="Angaben gemäß § 5 TMG" min-height="70vh" />
+    <HeroSectionSmall headline="IMPRESSUM" description="Angaben gemäß § 5 TMG" />
 
     <ContentSection>
       <div class="space-y-12">

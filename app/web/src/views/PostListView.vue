@@ -3,7 +3,7 @@ import { computed, onMounted, onUnmounted, watch, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useCategoriesStore } from "@/stores/categoriesStore";
-import HeroSection from "@/components/content/HeroSection.vue";
+import HeroSectionSmall from "@/components/content/HeroSectionSmall.vue";
 import ContentSection from "@/components/content/ContentSection.vue";
 import NewsCardListItem from "@/components/content/NewsCardListItem.vue";
 import ApiState from "@/components/ui/ApiState.vue";
@@ -183,10 +183,9 @@ onUnmounted(() => {
   <div
     class="min-h-screen overflow-x-hidden text-white selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
-    <HeroSection
+    <HeroSectionSmall
       headline="BEITRÄGE"
       description="Alle Beiträge auf einen Blick."
-      min-height="70vh"
     />
 
     <ContentSection max-width="7xl">

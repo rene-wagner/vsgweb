@@ -7,7 +7,7 @@ import { useCategoriesStore } from "@/stores/categoriesStore";
 import { useDepartmentsStore } from "../stores/departmentsStore";
 import { usePostsStore } from "../stores/postsStore";
 import ApiState from "@/components/ui/ApiState.vue";
-import HeroSection from "../components/content/HeroSection.vue";
+import HeroSectionSmall from "../components/content/HeroSectionSmall.vue";
 import StatsSection from "../components/content/StatsSection.vue";
 import TrainingScheduleSection from "../components/department/TrainingScheduleSection.vue";
 import LocationSection from "../components/department/LocationSection.vue";
@@ -143,7 +143,7 @@ const departmentCta = computed<Cta>(() => {
       empty-message="Abteilung nicht gefunden"
     >
       <!-- Hero Section -->
-      <HeroSection
+      <HeroSectionSmall
         :headline="currentDepartment!.name.toUpperCase()"
         :description="currentDepartment!.shortDescription"
         :icon-url="currentDepartment!.icon ? getMediaUrl(currentDepartment!.icon) : undefined"
@@ -151,7 +151,6 @@ const departmentCta = computed<Cta>(() => {
         :primary-cta-anchor="departmentTrainingGroups.length > 0 ? '#trainingszeiten' : undefined"
         :secondary-cta-label="departmentLocations.length > 0 ? 'Unsere Standorte' : undefined"
         :secondary-cta-anchor="departmentLocations.length > 0 ? '#standorte' : undefined"
-        min-height="70vh"
       />
 
       <!-- Stats Section -->

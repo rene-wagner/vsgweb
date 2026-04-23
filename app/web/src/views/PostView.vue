@@ -5,7 +5,7 @@ import { storeToRefs } from "pinia";
 import { usePostsStore } from "../stores/postsStore";
 import ApiState from "@/components/ui/ApiState.vue";
 import MarkdownRenderer from "@/components/ui/MarkdownRenderer.vue";
-import HeroSection from "../components/content/HeroSection.vue";
+import HeroSectionSmall from "../components/content/HeroSectionSmall.vue";
 import ContentSection from "../components/content/ContentSection.vue";
 
 const route = useRoute();
@@ -61,7 +61,7 @@ onUnmounted(() => {
       empty-message="Beitrag nicht gefunden"
     >
       <!-- Hero Section -->
-      <HeroSection :headline="currentPost!.title.toUpperCase()" min-height="70vh" />
+      <HeroSectionSmall :headline="currentPost!.title.toUpperCase()" />
 
       <!-- Content Section -->
       <ContentSection v-if="currentPost!.content">

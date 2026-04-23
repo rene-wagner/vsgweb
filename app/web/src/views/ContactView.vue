@@ -6,7 +6,7 @@ import ContactForm from "../components/forms/ContactForm.vue";
 import SecureContact from "../components/forms/SecureContact.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import ApiState from "@/components/ui/ApiState.vue";
-import HeroSection from "../components/content/HeroSection.vue";
+import HeroSectionSmall from "../components/content/HeroSectionSmall.vue";
 import ContentSection from "../components/content/ContentSection.vue";
 import { getUploadUrl } from "@/services/media-items/media-item.service";
 
@@ -70,10 +70,9 @@ function encodeBase64(value: string): string {
   <div
     class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
-    <HeroSection
+    <HeroSectionSmall
       headline="Kontakt"
       description="Finden Sie den richtigen Ansprechpartner"
-      min-height="70vh"
     />
 
     <ContentSection max-width="2xl">

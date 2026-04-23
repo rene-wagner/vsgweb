@@ -1,56 +1,27 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import EditableContent from "./EditableContent.vue";
 
 interface Props {
-  // Content
   headline?: string;
   description?: string;
   subtitle?: string;
-  tag?: string;
-
-  // Visual elements
-  logo?: string | null;
   iconUrl?: string;
-
-  // Layout
-  minHeight?: "screen" | "70vh" | "80vh";
-
-  // CTA buttons
   primaryCtaLabel?: string;
   primaryCtaAnchor?: string;
   secondaryCtaLabel?: string;
   secondaryCtaAnchor?: string;
-
-  // UI elements
-  showScrollIndicator?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   headline: "",
   description: undefined,
   subtitle: undefined,
-  tag: undefined,
-  logo: null,
   iconUrl: undefined,
-  minHeight: "screen",
   primaryCtaLabel: undefined,
   primaryCtaAnchor: undefined,
   secondaryCtaLabel: undefined,
   secondaryCtaAnchor: undefined,
-  showScrollIndicator: false,
-});
-
-const minHeightClass = computed(() => {
-  switch (props.minHeight) {
-    case "70vh":
-      return "min-h-[70vh]";
-    case "80vh":
-      return "min-h-[80vh]";
-    default:
-      return "min-h-screen";
-  }
 });
 
 const hasCtaButtons = computed(() => {
@@ -73,40 +44,19 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
 </script>
 
 <template>
-  <section
-    class="relative flex items-center justify-center overflow-hidden pt-20"
-    :class="minHeightClass"
-  >
-    <!-- Background gradient overlay -->
+  <section class="relative flex min-h-[70vh] items-center justify-center overflow-hidden pt-20">
     <div
       class="absolute inset-0 bg-linear-to-br from-vsg-blue-900 via-vsg-blue-800/50 to-transparent"
     />
 
-    <!-- Decorative elements -->
     <div class="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-vsg-gold-400/10 blur-3xl" />
     <div class="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-vsg-blue-500/20 blur-3xl" />
 
-    <!-- Optional background icon -->
     <div v-if="iconUrl" class="absolute right-10 top-1/2 -translate-y-1/2 opacity-7">
       <img :src="iconUrl" alt="" class="h-125 w-125 object-contain" />
     </div>
 
     <div class="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center">
-      <!-- Logo -->
-      <div v-if="logo" class="animate-slide-up my-8 delay-100">
-        <img :src="logo" alt="VSG Kugelberg Logo" class="mx-auto h-24 w-auto md:h-32 lg:h-42" />
-      </div>
-
-      <!-- Tag badge -->
-      <div v-if="tag" class="animate-slide-up my-8 delay-200">
-        <span
-          class="inline-block border border-vsg-gold-400/30 px-6 py-2 font-body font-normal uppercase tracking-widest text-vsg-gold-400"
-        >
-          <EditableContent uuid="uuid-tag" :content="tag" />
-        </span>
-      </div>
-
-      <!-- Headline -->
       <h1
         v-if="headline"
         class="animate-slide-up text-glow font-display text-7xl text-white delay-300 md:text-8xl lg:text-9xl"
@@ -121,17 +71,24 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
         v-if="description"
         class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400"
       >
-        <EditableContent uuid="uuid-description" :content="description" class="whitespace-pre-line font-body text-lg font-normal text-vsg-blue-300 md:text-xl" />
+        <EditableContent
+          uuid="uuid-description"
+          :content="description"
+          class="whitespace-pre-line font-body text-lg font-normal text-vsg-blue-300 md:text-xl"
+        />
       </div>
 
       <div
         v-if="subtitle"
         class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400"
       >
-        <EditableContent uuid="uuid-subtitle" :content="subtitle" class="font-body text-lg font-normal text-vsg-gold-400 md:text-xl" />
+        <EditableContent
+          uuid="uuid-subtitle"
+          :content="subtitle"
+          class="font-body text-lg font-normal text-vsg-gold-400 md:text-xl"
+        />
       </div>
 
-      <!-- CTA buttons -->
       <div
         v-if="hasCtaButtons"
         class="animate-slide-up mt-12 flex flex-col items-center justify-center gap-6 delay-400 sm:flex-row"
@@ -152,14 +109,6 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
         >
           {{ secondaryCtaLabel }}
         </a>
-      </div>
-
-      <!-- Scroll indicator -->
-      <div
-        v-if="showScrollIndicator"
-        class="absolute bottom-1 left-1/2 -translate-x-1/2 animate-bounce"
-      >
-        <FontAwesomeIcon icon="arrow-down" class="text-vsg-gold-400" />
       </div>
     </div>
   </section>

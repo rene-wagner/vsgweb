@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HeroSection from "@/components/content/HeroSection.vue";
+import HeroSectionScreen from "@/components/content/HeroSectionScreen.vue";
 import WelcomeSection from "@/components/content/WelcomeSection.vue";
 import StatsSection from "@/components/content/StatsSection.vue";
 import DepartmentsSection from "@/components/department/DepartmentsSection.vue";
@@ -13,12 +13,7 @@ import { homepageContent } from "@/content/homepage-content";
   <div
     class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
-    <HeroSection
-      tag="Sportverein seit 1985"
-      logo="/logo.png"
-      min-height="screen"
-      :show-scroll-indicator="true"
-    />
+    <HeroSectionScreen tag="Sportverein seit 1985" />
 
     <WelcomeSection
       v-if="homepageContent.welcomeText"
