@@ -2,6 +2,7 @@
 import { computed, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { RouterLink } from "vue-router";
+import EditableContent from "@/components/content/EditableContent.vue";
 import SectionHeader from "@/components/ui/SectionHeader.vue";
 import ApiState from "@/components/ui/ApiState.vue";
 import NewsCardFeatured from "./NewsCardFeatured.vue";
@@ -90,22 +91,25 @@ const listPosts = computed(() => activePosts.value.slice(1));
 
 <template>
   <section class="relative bg-gray-50 py-32">
-    <div class="mx-auto max-w-7xl px-6">
-      <SectionHeader
-        :subtitle="props.subtitle || ''"
-        :title="props.headline || ''"
-        subtitle-uuid="news-subtitle"
-        title-uuid="news-title"
-        class="mb-6"
-      />
-      <p
-        v-if="props.description"
-        class="mx-auto mt-6 mb-16 max-w-3xl text-center font-body text-lg text-gray-600"
-      >
-        {{ props.description }}
-      </p>
+    <div class="mx-auto flex max-w-7xl flex-col px-6">
+      <div class="flex flex-col gap-6">
+        <SectionHeader
+          :subtitle="props.subtitle || ''"
+          :title="props.headline || ''"
+          subtitle-uuid="news-subtitle"
+          title-uuid="news-title"
+        />
+        <EditableContent
+          v-if="props.description"
+          uuid="news-description"
+          :content="props.description"
+          tag="p"
+          content-class="mx-auto max-w-3xl text-center font-body text-lg text-gray-600"
+        />
+      </div>
 
       <ApiState
+        class="mt-16"
         :is-loading="activeLoading"
         :error="activeError"
         :empty="activePosts.length === 0"
