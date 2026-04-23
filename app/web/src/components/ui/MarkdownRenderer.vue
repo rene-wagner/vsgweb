@@ -5,10 +5,12 @@ import { marked } from "marked";
 interface Props {
   content: string | null | undefined;
   useDefaultClass?: boolean;
+  tag?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   useDefaultClass: true,
+  tag: "div",
 });
 
 const renderedHtml = computed(() => {
@@ -25,11 +27,12 @@ const renderedHtml = computed(() => {
 
 <template>
   <!-- eslint-disable-next-line vue/no-v-html -->
-  <div
+  <component
+    :is="props.tag"
     v-if="renderedHtml"
     :class="{ 'markdown-content': props.useDefaultClass }"
     v-html="renderedHtml"
-  ></div>
+  ></component>
 </template>
 
 <style scoped>

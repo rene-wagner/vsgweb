@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import EditableContent from "./EditableContent.vue";
 
 interface Props {
   // Content
@@ -101,31 +102,34 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
         <span
           class="inline-block border border-vsg-gold-400/30 px-6 py-2 font-body font-normal uppercase tracking-widest text-vsg-gold-400"
         >
-          {{ tag }}
+          <EditableContent uuid="uuid-tag" :content="tag" />
         </span>
       </div>
 
       <!-- Headline -->
       <h1
+        v-if="headline"
         class="animate-slide-up text-glow font-display text-7xl text-white delay-300 md:text-8xl lg:text-9xl"
         :class="{
           'text-[5rem] leading-[0.85] tracking-tight md:text-[8rem] lg:text-[10rem]': iconUrl,
         }"
       >
-        {{ headline }}
+        <EditableContent uuid="uuid-headline" :content="headline" />
       </h1>
 
-      <!-- Description with optional subtitle -->
-      <p
-        v-if="description || subtitle"
-        class="animate-slide-up mx-auto mt-8 max-w-2xl whitespace-pre-line font-body text-lg font-normal text-vsg-blue-300 delay-400 md:text-xl"
-        :class="{ 'leading-relaxed text-vsg-blue-200': subtitle }"
+      <div
+        v-if="description"
+        class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400"
       >
-        {{ description }}
-        <span v-if="subtitle" class="mt-2 block text-vsg-gold-400">
-          {{ subtitle }}
-        </span>
-      </p>
+        <EditableContent uuid="uuid-description" :content="description" class="whitespace-pre-line font-body text-lg font-normal text-vsg-blue-300 md:text-xl" />
+      </div>
+
+      <div
+        v-if="subtitle"
+        class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400"
+      >
+        <EditableContent uuid="uuid-subtitle" :content="subtitle" class="font-body text-lg font-normal text-vsg-gold-400 md:text-xl" />
+      </div>
 
       <!-- CTA buttons -->
       <div

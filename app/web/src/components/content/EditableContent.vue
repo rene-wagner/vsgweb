@@ -8,9 +8,12 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 interface Props {
   uuid: string;
   content?: string;
+  tag?: string;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  tag: "div",
+});
 
 const { isEditingMode } = useEditingMode();
 
@@ -71,16 +74,11 @@ watch(isEditingMode, (newVal) => {
 </script>
 
 <template>
-  <div v-if="!isEditingMode">
-    <MarkdownRenderer :content="content" />
-  </div>
+  <MarkdownRenderer v-if="!isEditingMode" :content="content" :tag="tag" />
 
   <div v-else class="group relative rounded-lg border-2 border-dashed border-vsg-gold-500 p-3">
-    <div v-if="!isEditing">
-      <MarkdownRenderer
-        :content="content"
-        :use-default-class="false"
-      />
+    <template v-if="!isEditing">
+      <MarkdownRenderer :content="content" :tag="tag" :use-default-class="false" />
       <button
         type="button"
         class="absolute top-2 right-2 text-vsg-gold-500 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
@@ -90,7 +88,7 @@ watch(isEditingMode, (newVal) => {
       >
         <FontAwesomeIcon :icon="faPen" />
       </button>
-    </div>
+    </template>
 
     <div v-else>
       <textarea ref="editorContainer"></textarea>
