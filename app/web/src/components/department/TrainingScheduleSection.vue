@@ -2,6 +2,7 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import type { DepartmentTrainingGroup } from "@vsg/types";
 import EditableContent from "@/components/content/EditableContent.vue";
+import SectionHeader from "@/components/ui/SectionHeader.vue";
 import TrainingTable from "./TrainingTable.vue";
 
 interface Props {
@@ -34,25 +35,19 @@ function getAgeRangeClasses(variant: DepartmentTrainingGroup["variant"]): string
   <section class="relative bg-white py-32">
     <div class="mx-auto max-w-7xl px-6">
       <!-- Section Header -->
-      <div class="flex flex-col gap-4 text-center">
-        <EditableContent
-          uuid="training-schedule-subtitle"
-          :content="props.subtitle"
-          tag="span"
-          content-class="font-body text-sm font-normal uppercase tracking-[0.4em] text-vsg-blue-600"
-        />
-        <EditableContent
-          uuid="training-schedule-title"
-          :content="props.title"
-          tag="h2"
-          content-class="font-display text-5xl tracking-wider text-vsg-blue-900 md:text-7xl"
+      <div class="flex flex-col gap-6">
+        <SectionHeader
+          :subtitle="props.subtitle"
+          :title="props.title"
+          subtitle-uuid="training-schedule-subtitle"
+          title-uuid="training-schedule-title"
         />
         <EditableContent
           v-if="props.description"
           uuid="training-schedule-description"
           :content="props.description"
           tag="p"
-          content-class="mx-auto max-w-2xl font-body text-lg font-normal text-gray-600"
+          content-class="mx-auto max-w-3xl text-center font-body text-lg text-gray-600"
         />
       </div>
 
