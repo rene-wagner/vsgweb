@@ -74,33 +74,40 @@ watch(isEditingMode, (newVal) => {
 </script>
 
 <template>
-  <MarkdownRenderer v-if="!isEditingMode" :content="content" :tag="tag" :use-default-class="false" />
+  <MarkdownRenderer
+    v-if="!isEditingMode"
+    :content="content"
+    :tag="tag"
+    :use-default-class="false"
+  />
 
   <div v-else class="group relative rounded-lg border-2 border-dashed border-vsg-gold-500 p-3">
     <template v-if="!isEditing">
       <MarkdownRenderer :content="content" :tag="tag" :use-default-class="false" />
       <button
         type="button"
-        class="absolute top-2 right-2 text-vsg-gold-500 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+        class="absolute top-2 right-2 text-base leading-none text-vsg-gold-500 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
         aria-label="Bearbeiten"
         :disabled="isStarting"
         @click="startEditing"
       >
-        <FontAwesomeIcon :icon="faPen" />
+        <FontAwesomeIcon :icon="faPen" class="text-base" />
       </button>
     </template>
 
-    <div v-else>
+    <div v-else class="text-left text-base font-normal leading-normal normal-case tracking-normal">
       <textarea ref="editorContainer"></textarea>
       <div class="mt-2 flex justify-end gap-2">
         <button
           type="button"
-          class="rounded-md bg-gray-700 px-4 py-2 text-white transition-colors hover:bg-gray-600"
+          class="rounded-md bg-gray-700 px-4 py-2 text-base font-normal text-white transition-colors hover:bg-gray-600"
           @click="cancelEditing"
         >
           Abbrechen
         </button>
-        <button type="button" class="btn-primary" @click="saveContent">Speichern</button>
+        <button type="button" class="btn-primary text-base font-normal" @click="saveContent">
+          Speichern
+        </button>
       </div>
     </div>
   </div>

@@ -70,10 +70,7 @@ function encodeBase64(value: string): string {
   <div
     class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
-    <HeroSectionSmall
-      headline="Kontakt"
-      description="Finden Sie den richtigen Ansprechpartner"
-    />
+    <HeroSectionSmall headline="Kontakt" description="Finden Sie den richtigen Ansprechpartner" />
 
     <ContentSection max-width="2xl">
       <ApiState

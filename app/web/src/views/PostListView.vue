@@ -183,10 +183,7 @@ onUnmounted(() => {
   <div
     class="min-h-screen overflow-x-hidden text-white selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
-    <HeroSectionSmall
-      headline="BEITRÄGE"
-      description="Alle Beiträge auf einen Blick."
-    />
+    <HeroSectionSmall headline="BEITRÄGE" description="Alle Beiträge auf einen Blick." />
 
     <ContentSection max-width="7xl">
       <ApiState

@@ -67,10 +67,7 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
         <EditableContent uuid="uuid-headline" :content="headline" />
       </h1>
 
-      <div
-        v-if="description"
-        class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400"
-      >
+      <div v-if="description" class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400">
         <EditableContent
           uuid="uuid-description"
           :content="description"
@@ -78,10 +75,7 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
         />
       </div>
 
-      <div
-        v-if="subtitle"
-        class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400"
-      >
+      <div v-if="subtitle" class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400">
         <EditableContent
           uuid="uuid-subtitle"
           :content="subtitle"
