@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <div :class="{ 'text-center': centered }">
+  <div class="flex flex-col gap-2" :class="{ 'text-center': centered }">
     <EditableContent
       :uuid="props.subtitleUuid"
       :content="props.subtitle"
@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
       :uuid="props.titleUuid"
       :content="props.title"
       tag="h3"
-      content-class="mt-4 font-display text-6xl text-vsg-blue-900 md:text-7xl"
+      content-class="font-display text-6xl text-vsg-blue-900 md:text-7xl"
     />
   </div>
 </template>

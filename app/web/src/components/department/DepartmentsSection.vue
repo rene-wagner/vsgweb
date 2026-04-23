@@ -21,23 +21,25 @@ const { departments, isLoading, error } = storeToRefs(departmentsStore);
 
 <template>
   <section class="relative bg-white py-32">
-    <div class="mx-auto max-w-7xl px-6">
-      <SectionHeader
-        :subtitle="props.subtitle || ''"
-        :title="props.headline || ''"
-        subtitle-uuid="departments-subtitle"
-        title-uuid="departments-title"
-        class="mb-6"
-      />
-      <EditableContent
-        v-if="props.description"
-        uuid="departments-description"
-        :content="props.description"
-        tag="p"
-        content-class="mx-auto mt-6 mb-16 max-w-3xl text-center font-body text-lg text-gray-600"
-      />
+    <div class="mx-auto flex max-w-7xl flex-col px-6">
+      <div class="flex flex-col gap-6">
+        <SectionHeader
+          :subtitle="props.subtitle || ''"
+          :title="props.headline || ''"
+          subtitle-uuid="departments-subtitle"
+          title-uuid="departments-title"
+        />
+        <EditableContent
+          v-if="props.description"
+          uuid="departments-description"
+          :content="props.description"
+          tag="p"
+          content-class="mx-auto max-w-3xl text-center font-body text-lg text-gray-600"
+        />
+      </div>
 
       <ApiState
+        class="mt-16"
         :is-loading="isLoading"
         :error="error"
         :empty="departments.length === 0"
