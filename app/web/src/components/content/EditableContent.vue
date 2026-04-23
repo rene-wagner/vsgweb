@@ -81,7 +81,7 @@ watch(isEditingMode, (newVal) => {
     :use-default-class="false"
   />
 
-  <div v-else class="group relative rounded-lg border-2 border-dashed border-vsg-gold-500 p-3">
+  <div v-else class="group relative border-2 border-dashed border-vsg-gold-500 p-3">
     <template v-if="!isEditing">
       <MarkdownRenderer :content="content" :tag="tag" :use-default-class="false" />
       <button
@@ -100,12 +100,16 @@ watch(isEditingMode, (newVal) => {
       <div class="mt-2 flex justify-end gap-2">
         <button
           type="button"
-          class="rounded-md bg-gray-700 px-4 py-2 text-base font-normal text-white transition-colors hover:bg-gray-600"
+          class="bg-red-600 px-4 py-2 text-base font-normal text-white transition-colors hover:bg-red-500"
           @click="cancelEditing"
         >
           Abbrechen
         </button>
-        <button type="button" class="btn-primary text-base font-normal" @click="saveContent">
+        <button
+          type="button"
+          class="bg-green-600 px-4 py-2 text-base font-normal text-white transition-colors hover:bg-green-500"
+          @click="saveContent"
+        >
           Speichern
         </button>
       </div>
