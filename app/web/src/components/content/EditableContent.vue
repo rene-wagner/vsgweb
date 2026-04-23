@@ -10,10 +10,14 @@ interface Props {
   content?: string;
   tag?: string;
   contentClass?: string;
+  frameClass?: string;
+  editButtonClass?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   tag: "div",
+  frameClass: "border-vsg-gold-500",
+  editButtonClass: "text-vsg-gold-500",
 });
 
 const { isEditingMode } = useEditingMode();
@@ -83,7 +87,7 @@ watch(isEditingMode, (newVal) => {
     :use-default-class="false"
   />
 
-  <div v-else class="group relative border-2 border-dashed border-vsg-gold-500 p-3">
+  <div v-else class="group relative border-2 border-dashed p-3" :class="frameClass">
     <template v-if="!isEditing">
       <MarkdownRenderer
         :content="content"
@@ -93,7 +97,8 @@ watch(isEditingMode, (newVal) => {
       />
       <button
         type="button"
-        class="absolute top-2 right-2 text-base leading-none text-vsg-gold-500 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+        class="absolute top-2 right-2 text-base leading-none opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+        :class="editButtonClass"
         aria-label="Bearbeiten"
         :disabled="isStarting"
         @click="startEditing"

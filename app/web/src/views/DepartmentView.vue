@@ -13,7 +13,7 @@ import TrainingScheduleSection from "../components/department/TrainingScheduleSe
 import LocationSection from "../components/department/LocationSection.vue";
 import NewsSection from "../components/content/NewsSection.vue";
 import GalerieSection from "../components/content/GalerieSection.vue";
-import DepartmentCtaSection from "../components/department/DepartmentCtaSection.vue";
+import CtaSection from "../components/content/CtaSection.vue";
 import WelcomeSection from "../components/content/WelcomeSection.vue";
 import { Cta, DepartmentLocation, DepartmentTrainingGroup, Statistic } from "@vsg/types";
 import { useMediaItemsStore } from "@/stores/mediaItemsStore";
@@ -121,13 +121,13 @@ const departmentLocations = computed<DepartmentLocation[]>(() => {
 const departmentCta = computed<Cta>(() => {
   const departmentName = currentDepartment.value?.name || "";
   return {
-    title: `LUST AUF<br/>${departmentName.toUpperCase()}?`,
+    title: `Lust auf ${departmentName}?`,
     description:
       "Komm einfach zum Probetraining vorbei! Wir freuen uns auf dich - egal ob Anfänger oder erfahrener Sportfreund.",
     primaryCtaLabel: "Probetraining anfragen",
     primaryCtaRoute: "/kontakt",
-    secondaryCtaLabel: "E-Mail schreiben",
-    secondaryCtaRoute: `mailto:${departmentName.toLowerCase().replace(/\s+/g, "-")}@vsg-kugelberg.de`,
+    secondaryCtaLabel: "Mitglied werden",
+    secondaryCtaRoute: "/verein/mitgliedschaft",
   };
 });
 </script>
@@ -200,13 +200,15 @@ const departmentCta = computed<Cta>(() => {
       />
 
       <!-- CTA Section -->
-      <DepartmentCtaSection
-        :title="departmentCta.title"
+      <CtaSection
+        :headline="departmentCta.title"
         :description="departmentCta.description"
-        :primary-cta-label="departmentCta.primaryCtaLabel"
-        :primary-cta-route="departmentCta.primaryCtaRoute"
-        :secondary-cta-label="departmentCta.secondaryCtaLabel"
-        :secondary-cta-route="departmentCta.secondaryCtaRoute"
+        headline-uuid="department-cta-headline"
+        description-uuid="department-cta-description"
+        :primary-button-text="departmentCta.primaryCtaLabel"
+        :primary-button-link="departmentCta.primaryCtaRoute"
+        :secondary-button-text="departmentCta.secondaryCtaLabel"
+        :secondary-button-link="departmentCta.secondaryCtaRoute"
       />
     </ApiState>
   </div>

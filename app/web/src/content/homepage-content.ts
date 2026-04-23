@@ -57,7 +57,7 @@ Ihr wollt Vereinsmitglied werden, kein Problem, hier ist der [Formularlink](http
   galleryCount: 20,
 
   // Call to Action
-  ctaHeadline: "Werde Teil<br>unseres Vereins",
+  ctaHeadline: "Werde Teil unseres Vereins",
   ctaDescription:
     "Ob Mitgliedschaft, Probetraining oder Fragen zum Verein: Wir freuen uns auf deine Nachricht.",
 };
