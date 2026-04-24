@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import CardSection from "@/components/content/CardSection.vue";
 import HeroSectionSmall from "@/components/content/HeroSectionSmall.vue";
+import Card from "@/components/ui/Card.vue";
+import ApiState from "@/components/ui/ApiState.vue";
 import { clubBoardContent } from "@/content/club-board-content";
+import { getMediaUrl } from "@/services/media-items/media-item.service";
+import { useContactPeopleStore } from "@/stores/contactPeopleStore";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { computed } from "vue";
 
-const sortedBoardMembers = computed(() => {
-  return [...clubBoardContent.boardMembers].sort((a, b) => a.sort - b.sort);
-});
+const contactPeopleStore = useContactPeopleStore();
+const { contactPeople, isLoading, error } = storeToRefs(contactPeopleStore);
 
 function getBadgeColor(index: number): string {
   return index === 0 ? "bg-vsg-gold-400" : "bg-vsg-blue-200";
@@ -31,35 +34,38 @@ function getBadgeColor(index: number): string {
       title-uuid="club-board-section-headline"
       description-uuid="club-board-section-description"
       background="white"
-      :columns="3"
     >
-      <article
-        v-for="(member, index) in sortedBoardMembers"
-        :key="member.id"
-        class="rounded-3xl border border-vsg-blue-100 bg-white p-6 shadow-[0_20px_60px_-40px_rgba(12,42,84,0.45)]"
+      <ApiState
+        class="mt-16 grid grid-cols-2 gap-4"
+        :is-loading="isLoading"
+        :error="error"
+        :empty="contactPeople.length === 0"
+        empty-message="Derzeit sind keine Kontaktpersonen verfuegbar."
       >
-        <div class="flex items-start gap-4">
-          <div
-            class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full"
-            :class="getBadgeColor(index)"
-          >
-            <FontAwesomeIcon icon="user" class="text-xl text-vsg-blue-900" />
-          </div>
-
-          <div class="min-w-0 space-y-3">
-            <span
-              class="inline-flex rounded-full px-3 py-1 text-sm font-medium text-vsg-blue-900"
+        <Card
+          v-for="(person, index) in contactPeople"
+          :key="person.id"
+          :title="`${person.firstName} ${person.lastName}`"
+          :image-src="person.profileImage ? getMediaUrl(person.profileImage) : undefined"
+          :image-alt="`Profilbild von ${person.firstName} ${person.lastName}`"
+        >
+          <template #icon>
+            <div
+              class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full"
               :class="getBadgeColor(index)"
             >
-              {{ member.type }}
-            </span>
+              <FontAwesomeIcon icon="user" class="text-xl text-vsg-blue-900" />
+            </div>
+          </template>
 
-            <p class="font-body text-2xl font-semibold text-vsg-blue-900">
-              {{ member.firstName }} {{ member.lastName }}
-            </p>
-          </div>
-        </div>
-      </article>
+          <span
+            class="mt-2 inline-flex rounded-full px-3 py-1 text-sm font-medium text-vsg-blue-900"
+            :class="getBadgeColor(index)"
+          >
+            {{ person.type }}
+          </span>
+        </Card>
+      </ApiState>
     </CardSection>
   </div>
 </template>

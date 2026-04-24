@@ -17,7 +17,7 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <div class="vsg-api-state">
+  <div>
     <div v-if="isLoading" class="flex items-center justify-center py-8">
       <FontAwesomeIcon icon="spinner" class="animate-spin text-vsg-gold-400" />
       <span class="ml-3 text-vsg-blue-900 font-display tracking-wider">Laden...</span>

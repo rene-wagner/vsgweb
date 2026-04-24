@@ -1,12 +1,20 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
+import ApiState from "@/components/ui/ApiState.vue";
+import Card from "@/components/ui/Card.vue";
+import { getMediaUrl } from "@/services/media-items/media-item.service";
+import { useDepartmentsStore } from "@/stores/departmentsStore";
+import CardSection from "@/components/content/CardSection.vue";
 import HeroSectionScreen from "@/components/content/HeroSectionScreen.vue";
 import WelcomeSection from "@/components/content/WelcomeSection.vue";
 import StatsSection from "@/components/content/StatsSection.vue";
-import DepartmentsSection from "@/components/department/DepartmentsSection.vue";
 import NewsSection from "@/components/content/NewsSection.vue";
 import GalerieSection from "@/components/content/GalerieSection.vue";
 import CtaSection from "@/components/content/CtaSection.vue";
 import { homepageContent } from "@/content/homepage-content";
+
+const departmentsStore = useDepartmentsStore();
+const { departments, isLoading, error } = storeToRefs(departmentsStore);
 </script>
 
 <template>
@@ -23,11 +31,44 @@ import { homepageContent } from "@/content/homepage-content";
 
     <StatsSection :stats="homepageContent.stats" />
 
-    <DepartmentsSection
-      :headline="homepageContent.departmentsHeadline"
+    <CardSection
+      :title="homepageContent.departmentsHeadline"
       :description="homepageContent.departmentsDescription"
       :subtitle="homepageContent.departmentsSubtitle"
-    />
+      title-uuid="departments-title"
+      description-uuid="departments-description"
+      subtitle-uuid="departments-subtitle"
+    >
+      <ApiState
+        class="mt-16 grid grid-cols-2 gap-4"
+        :is-loading="isLoading"
+        :error="error"
+        :empty="departments.length === 0"
+        empty-message="Derzeit sind keine Abteilungen verfugbar."
+      >
+        <Card
+          v-for="department in departments"
+          :key="department.id"
+          :title="department.name"
+          :description="department.shortDescription"
+          :href="`/abteilung/${department.slug}`"
+        >
+          <template #icon>
+            <img
+              v-if="department.icon"
+              :src="getMediaUrl(department.icon)"
+              :alt="department.name"
+              class="h-8 w-8 object-contain"
+              style="
+                filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(200deg) brightness(89%)
+                  contrast(91%);
+              "
+            />
+            <FontAwesomeIcon v-else icon="circle" class="text-vsg-blue-600" />
+          </template>
+        </Card>
+      </ApiState>
+    </CardSection>
 
     <NewsSection
       :headline="homepageContent.postsHeadline"

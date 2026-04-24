@@ -11,7 +11,6 @@ interface Props {
   titleUuid: string;
   descriptionUuid?: string;
   background?: SectionBackground;
-  columns?: 2 | 3;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -21,9 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
   subtitleUuid: "card-section-subtitle",
   descriptionUuid: "card-section-description",
   background: "white",
-  columns: 3,
 });
-
 </script>
 
 <template>
@@ -38,8 +35,6 @@ const props = withDefaults(defineProps<Props>(), {
     description-class="font-body text-lg leading-relaxed text-vsg-blue-700"
     :background="props.background"
   >
-      <div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
-        <slot />
-      </div>
+    <slot />
   </Section>
 </template>
