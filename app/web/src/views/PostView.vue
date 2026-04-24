@@ -61,7 +61,7 @@ onUnmounted(() => {
       empty-message="Beitrag nicht gefunden"
     >
       <!-- Hero Section -->
-      <HeroSectionSmall :headline="currentPost!.title.toUpperCase()" />
+      <HeroSectionSmall :headline="currentPost!.title" :editable-headline="false" />
 
       <!-- Content Section -->
       <ContentSection v-if="currentPost!.content">

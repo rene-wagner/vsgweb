@@ -54,7 +54,7 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
           <DepartmentCard
             v-for="department in departments"
             :key="department.id"
-            :title="department.name.toUpperCase()"
+            :title="department.name"
             :description="department.shortDescription"
             :href="`/abteilung/${department.slug}`"
           >

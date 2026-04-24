@@ -23,7 +23,7 @@ defineProps<Props>();
     <!-- Location Details -->
     <div class="p-8">
       <h3 class="mb-2 font-display text-2xl tracking-wider text-vsg-blue-900">
-        {{ location.name.toUpperCase() }}
+        {{ location.name }}
       </h3>
 
       <div class="mb-6">

@@ -82,7 +82,7 @@ function formatDate(dateString: string): string {
 
 // Get category name from first category or default
 function getCategoryName(categories: { name: string }[]): string {
-  return categories.length > 0 ? categories[0].name.toUpperCase() : "ALLGEMEIN";
+  return categories.length > 0 ? categories[0].name : "Allgemein";
 }
 
 // Featured post is the first one
@@ -124,7 +124,7 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
             v-if="featuredPost"
             :category="getCategoryName(featuredPost.categories)"
             :date="formatDate(featuredPost.createdAt)"
-            :title="featuredPost.title.toUpperCase()"
+            :title="featuredPost.title"
             :to="`/beitrag/${featuredPost.slug}`"
           />
 

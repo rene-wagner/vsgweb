@@ -143,7 +143,7 @@ const departmentCta = computed<Cta>(() => {
       empty-message="Abteilung nicht gefunden"
     >
       <HeroSectionSmall
-        :headline="currentDepartment!.name.toUpperCase()"
+        :headline="currentDepartment!.name"
         :description="currentDepartment!.shortDescription"
         :icon-url="currentDepartment!.icon ? getMediaUrl(currentDepartment!.icon) : undefined"
         :editable-headline="false"

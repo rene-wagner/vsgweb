@@ -103,7 +103,7 @@ function formatDate(dateString: string): string {
 }
 
 function getCategoryName(categories: { name: string }[]): string {
-  return categories.length > 0 ? categories[0].name.toUpperCase() : "ALLGEMEIN";
+  return categories.length > 0 ? categories[0].name : "Allgemein";
 }
 
 function buildQuery(page: number, categorySlug = selectedCategorySlug.value) {

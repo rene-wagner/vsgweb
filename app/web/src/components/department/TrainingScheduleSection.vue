@@ -96,7 +96,7 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
               </div>
               <div>
                 <h3 class="font-display text-3xl tracking-wider text-white">
-                  {{ group.name.toUpperCase() }}
+                  {{ group.name }}
                 </h3>
                 <span :class="[getAgeRangeClasses(group.variant), 'font-body font-normal']">
                   {{ group.ageRange }}
