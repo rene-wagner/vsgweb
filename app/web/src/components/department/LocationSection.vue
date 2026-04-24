@@ -42,7 +42,10 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
 
       <!-- Locations Grid -->
       <div
-        :class="['mt-16 gap-8', props.locations.length === 1 ? 'flex justify-center' : 'grid md:grid-cols-2']"
+        :class="[
+          'mt-16 gap-8',
+          props.locations.length === 1 ? 'flex justify-center' : 'grid md:grid-cols-2',
+        ]"
       >
         <LocationCard
           v-for="location in props.locations"

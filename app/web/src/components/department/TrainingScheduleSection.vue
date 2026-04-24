@@ -59,7 +59,10 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
 
       <!-- Training Groups Grid -->
       <div
-        :class="['mt-16 gap-12', props.groups.length === 1 ? 'flex justify-center' : 'grid lg:grid-cols-2']"
+        :class="[
+          'mt-16 gap-12',
+          props.groups.length === 1 ? 'flex justify-center' : 'grid lg:grid-cols-2',
+        ]"
       >
         <div
           v-for="group in props.groups"
