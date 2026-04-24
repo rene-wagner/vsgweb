@@ -32,7 +32,6 @@ function getIconClasses(variant: DepartmentTrainingGroup["variant"]): string {
 function getAgeRangeClasses(variant: DepartmentTrainingGroup["variant"]): string {
   return variant === "primary" ? "text-vsg-blue-100" : "text-vsg-blue-300";
 }
-
 </script>
 
 <template>
@@ -46,58 +45,58 @@ function getAgeRangeClasses(variant: DepartmentTrainingGroup["variant"]): string
     description-tag="p"
     :background="props.background"
   >
+    <div
+      :class="[
+        'mt-16 gap-12',
+        props.groups.length === 1 ? 'flex justify-center' : 'grid lg:grid-cols-2',
+      ]"
+    >
       <div
+        v-for="group in props.groups"
+        :key="group.name"
         :class="[
-          'mt-16 gap-12',
-          props.groups.length === 1 ? 'flex justify-center' : 'grid lg:grid-cols-2',
+          'card-hover overflow-hidden rounded-xl border border-gray-200 bg-gray-50',
+          { 'w-full max-w-2xl': props.groups.length === 1 },
         ]"
       >
-        <div
-          v-for="group in props.groups"
-          :key="group.name"
-          :class="[
-            'card-hover overflow-hidden rounded-xl border border-gray-200 bg-gray-50',
-            { 'w-full max-w-2xl': props.groups.length === 1 },
-          ]"
-        >
-          <!-- Card Header -->
-          <div :class="[getHeaderClasses(group.variant), 'px-8 py-6']">
-            <div class="flex items-center gap-4">
-              <div
-                :class="[
-                  getIconBgClasses(group.variant),
-                  'flex h-14 w-14 items-center justify-center rounded-lg',
-                ]"
-              >
-                <!-- Youth Icon -->
-                <FontAwesomeIcon
-                  v-if="group.icon === 'youth'"
-                  icon="child"
-                  :class="[getIconClasses(group.variant)]"
-                />
-                <!-- Adults Icon -->
-                <FontAwesomeIcon
-                  v-else-if="group.icon === 'adults'"
-                  icon="person"
-                  :class="[getIconClasses(group.variant)]"
-                />
-              </div>
-              <div>
-                <h3 class="font-display text-3xl tracking-wider text-white">
-                  {{ group.name }}
-                </h3>
-                <span :class="[getAgeRangeClasses(group.variant), 'font-body font-normal']">
-                  {{ group.ageRange }}
-                </span>
-              </div>
+        <!-- Card Header -->
+        <div :class="[getHeaderClasses(group.variant), 'px-8 py-6']">
+          <div class="flex items-center gap-4">
+            <div
+              :class="[
+                getIconBgClasses(group.variant),
+                'flex h-14 w-14 items-center justify-center rounded-lg',
+              ]"
+            >
+              <!-- Youth Icon -->
+              <FontAwesomeIcon
+                v-if="group.icon === 'youth'"
+                icon="child"
+                :class="[getIconClasses(group.variant)]"
+              />
+              <!-- Adults Icon -->
+              <FontAwesomeIcon
+                v-else-if="group.icon === 'adults'"
+                icon="person"
+                :class="[getIconClasses(group.variant)]"
+              />
+            </div>
+            <div>
+              <h3 class="font-display text-3xl tracking-wider text-white">
+                {{ group.name }}
+              </h3>
+              <span :class="[getAgeRangeClasses(group.variant), 'font-body font-normal']">
+                {{ group.ageRange }}
+              </span>
             </div>
           </div>
+        </div>
 
-          <!-- Schedule Table -->
-          <div class="p-8">
-            <TrainingTable :sessions="group.sessions" />
-          </div>
+        <!-- Schedule Table -->
+        <div class="p-8">
+          <TrainingTable :sessions="group.sessions" />
         </div>
       </div>
+    </div>
   </Section>
 </template>

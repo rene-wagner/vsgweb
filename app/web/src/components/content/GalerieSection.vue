@@ -146,7 +146,6 @@ onUnmounted(() => {
   window.removeEventListener("keydown", handleKeydown);
   document.body.classList.remove("overflow-hidden");
 });
-
 </script>
 
 <template>
@@ -160,81 +159,81 @@ onUnmounted(() => {
     description-tag="p"
     :background="props.background"
   >
-      <ApiState
-        class="mt-16"
-        :is-loading="activeLoading"
-        :error="activeError"
-        :empty="activeMediaItems.length === 0"
-        empty-message="Derzeit sind keine Bilder verfuegbar."
-      >
-        <div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
-          <button
-            v-for="(item, index) in activeMediaItems"
-            :key="item.id"
-            type="button"
-            class="group relative aspect-square overflow-hidden rounded-2xl bg-vsg-blue-950 shadow-lg shadow-vsg-blue-900/10"
-            @click="openLightbox(index)"
+    <ApiState
+      class="mt-16"
+      :is-loading="activeLoading"
+      :error="activeError"
+      :empty="activeMediaItems.length === 0"
+      empty-message="Derzeit sind keine Bilder verfuegbar."
+    >
+      <div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+        <button
+          v-for="(item, index) in activeMediaItems"
+          :key="item.id"
+          type="button"
+          class="group relative aspect-square overflow-hidden rounded-2xl bg-vsg-blue-950 shadow-lg shadow-vsg-blue-900/10"
+          @click="openLightbox(index)"
+        >
+          <img
+            :src="getMediaThumbnailUrl(item)"
+            :alt="getImageAlt(item, index)"
+            class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-vsg-blue-950/70 via-vsg-blue-950/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          />
+          <div
+            class="absolute right-4 bottom-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-vsg-blue-900 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
           >
-            <img
-              :src="getMediaThumbnailUrl(item)"
-              :alt="getImageAlt(item, index)"
-              class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-              loading="lazy"
-            />
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-vsg-blue-950/70 via-vsg-blue-950/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            />
-            <div
-              class="absolute right-4 bottom-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-vsg-blue-900 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-            >
-              <FontAwesomeIcon icon="image" />
-            </div>
-          </button>
-        </div>
-      </ApiState>
+            <FontAwesomeIcon icon="image" />
+          </div>
+        </button>
+      </div>
+    </ApiState>
   </Section>
 
-    <div
-      v-if="selectedItem"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-vsg-blue-950/90 p-4 backdrop-blur-sm"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Galeriebild"
-      @click.self="closeLightbox"
+  <div
+    v-if="selectedItem"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-vsg-blue-950/90 p-4 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Galeriebild"
+    @click.self="closeLightbox"
+  >
+    <button
+      type="button"
+      class="absolute top-4 right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+      aria-label="Galerie schliessen"
+      @click="closeLightbox"
     >
-      <button
-        type="button"
-        class="absolute top-4 right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
-        aria-label="Galerie schliessen"
-        @click="closeLightbox"
-      >
-        <FontAwesomeIcon icon="xmark" class="text-xl" />
-      </button>
+      <FontAwesomeIcon icon="xmark" class="text-xl" />
+    </button>
 
-      <button
-        v-if="activeMediaItems.length > 1"
-        type="button"
-        class="absolute left-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
-        aria-label="Vorheriges Bild"
-        @click="showPrevious"
-      >
-        <FontAwesomeIcon icon="arrow-left" />
-      </button>
+    <button
+      v-if="activeMediaItems.length > 1"
+      type="button"
+      class="absolute left-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+      aria-label="Vorheriges Bild"
+      @click="showPrevious"
+    >
+      <FontAwesomeIcon icon="arrow-left" />
+    </button>
 
-      <img
-        :src="getMediaDisplayUrl(selectedItem)"
-        :alt="getImageAlt(selectedItem, selectedIndex ?? 0)"
-        class="max-h-[90vh] max-w-full rounded-2xl object-contain shadow-2xl"
-      />
+    <img
+      :src="getMediaDisplayUrl(selectedItem)"
+      :alt="getImageAlt(selectedItem, selectedIndex ?? 0)"
+      class="max-h-[90vh] max-w-full rounded-2xl object-contain shadow-2xl"
+    />
 
-      <button
-        v-if="activeMediaItems.length > 1"
-        type="button"
-        class="absolute right-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
-        aria-label="Naechstes Bild"
-        @click="showNext"
-      >
-        <FontAwesomeIcon icon="arrow-right" />
-      </button>
-    </div>
+    <button
+      v-if="activeMediaItems.length > 1"
+      type="button"
+      class="absolute right-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+      aria-label="Naechstes Bild"
+      @click="showNext"
+    >
+      <FontAwesomeIcon icon="arrow-right" />
+    </button>
+  </div>
 </template>

@@ -15,7 +15,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   background: "white",
 });
-
 </script>
 
 <template>
@@ -29,18 +28,18 @@ const props = withDefaults(defineProps<Props>(), {
     description-tag="p"
     :background="props.background"
   >
-      <div
-        :class="[
-          'mt-16 gap-8',
-          props.locations.length === 1 ? 'flex justify-center' : 'grid md:grid-cols-2',
-        ]"
-      >
-        <LocationCard
-          v-for="location in props.locations"
-          :key="location.name"
-          :location="location"
-          :class="{ 'w-full max-w-2xl': props.locations.length === 1 }"
-        />
-      </div>
+    <div
+      :class="[
+        'mt-16 gap-8',
+        props.locations.length === 1 ? 'flex justify-center' : 'grid md:grid-cols-2',
+      ]"
+    >
+      <LocationCard
+        v-for="location in props.locations"
+        :key="location.name"
+        :location="location"
+        :class="{ 'w-full max-w-2xl': props.locations.length === 1 }"
+      />
+    </div>
   </Section>
 </template>

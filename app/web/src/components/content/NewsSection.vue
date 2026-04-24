@@ -102,43 +102,43 @@ const listPosts = computed(() => activePosts.value.slice(1));
     description-tag="p"
     :background="props.background"
   >
-      <ApiState
-        class="mt-16"
-        :is-loading="activeLoading"
-        :error="activeError"
-        :empty="activePosts.length === 0"
-        empty-message="Derzeit sind keine Neuigkeiten verfugbar."
-      >
-        <div class="grid gap-8 md:grid-cols-2">
-          <NewsCardFeatured
-            v-if="featuredPost"
-            :category="getCategoryName(featuredPost.categories)"
-            :date="formatDate(featuredPost.createdAt)"
-            :title="featuredPost.title"
-            :to="`/beitrag/${featuredPost.slug}`"
+    <ApiState
+      class="mt-16"
+      :is-loading="activeLoading"
+      :error="activeError"
+      :empty="activePosts.length === 0"
+      empty-message="Derzeit sind keine Neuigkeiten verfugbar."
+    >
+      <div class="grid gap-8 md:grid-cols-2">
+        <NewsCardFeatured
+          v-if="featuredPost"
+          :category="getCategoryName(featuredPost.categories)"
+          :date="formatDate(featuredPost.createdAt)"
+          :title="featuredPost.title"
+          :to="`/beitrag/${featuredPost.slug}`"
+        />
+
+        <div v-if="listPosts.length > 0" class="space-y-6">
+          <NewsCardListItem
+            v-for="post in listPosts"
+            :key="post.id"
+            :category="getCategoryName(post.categories)"
+            :date="formatDate(post.createdAt)"
+            :title="post.title"
+            :to="`/beitrag/${post.slug}`"
           />
-
-          <div v-if="listPosts.length > 0" class="space-y-6">
-            <NewsCardListItem
-              v-for="post in listPosts"
-              :key="post.id"
-              :category="getCategoryName(post.categories)"
-              :date="formatDate(post.createdAt)"
-              :title="post.title"
-              :to="`/beitrag/${post.slug}`"
-            />
-          </div>
         </div>
+      </div>
 
-        <div class="mt-10 flex justify-center">
-          <RouterLink
-            :to="postsOverviewRoute"
-            class="inline-flex items-center gap-2 font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-600 transition-colors hover:text-vsg-blue-800"
-          >
-            Weitere Beiträge ansehen
-            <FontAwesomeIcon icon="arrow-right" />
-          </RouterLink>
-        </div>
-      </ApiState>
+      <div class="mt-10 flex justify-center">
+        <RouterLink
+          :to="postsOverviewRoute"
+          class="inline-flex items-center gap-2 font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-600 transition-colors hover:text-vsg-blue-800"
+        >
+          Weitere Beiträge ansehen
+          <FontAwesomeIcon icon="arrow-right" />
+        </RouterLink>
+      </div>
+    </ApiState>
   </Section>
 </template>

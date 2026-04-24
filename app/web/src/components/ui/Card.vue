@@ -22,7 +22,11 @@ const props = withDefaults(defineProps<Props>(), {
 <template>
   <div class="card-hover group overflow-hidden border border-gray-200 bg-gray-50">
     <div v-if="props.imageSrc" class="relative aspect-video">
-      <img :src="props.imageSrc" :alt="props.imageAlt || props.title" class="h-full w-full object-cover" />
+      <img
+        :src="props.imageSrc"
+        :alt="props.imageAlt || props.title"
+        class="h-full w-full object-cover"
+      />
     </div>
 
     <div class="p-8">

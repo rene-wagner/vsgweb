@@ -246,7 +246,8 @@ Von Anfang an standen nicht nur sportliche Leistungen im Mittelpunkt, sondern au
       title: "Bronzemedaille bei der Badminton-Weltmeisterschaft",
       description:
         "Mit dem Gewinn der Bronzemedaille bei einer Badminton-Weltmeisterschaft gelang einem Mitglied unseres Vereins ein Erfolg, der weit über die Region hinausstrahlte und bis heute einen besonderen Platz in unserer Geschichte einnimmt.",
-      highlight: "Ein historischer Moment für die VSG Kugelberg und ein Meilenstein für den Badmintonsport in unserem Verein.",
+      highlight:
+        "Ein historischer Moment für die VSG Kugelberg und ein Meilenstein für den Badmintonsport in unserem Verein.",
     },
     {
       year: "2004",
@@ -269,7 +270,8 @@ Von Anfang an standen nicht nur sportliche Leistungen im Mittelpunkt, sondern au
       title: "Zusammenhalt in herausfordernden Zeiten",
       description:
         "Auch in schwierigen Phasen blieb das Vereinsleben lebendig. Trainingsformen wurden angepasst, Kontakte gehalten und der Gemeinschaftsgedanke bewusst weitergetragen.",
-      highlight: "Nicht nur Medaillen, sondern auch gelebter Zusammenhalt gehören in unsere Hall of Fame.",
+      highlight:
+        "Nicht nur Medaillen, sondern auch gelebter Zusammenhalt gehören in unsere Hall of Fame.",
     },
   ],
 

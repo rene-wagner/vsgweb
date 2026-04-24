@@ -28,7 +28,6 @@ const props = withDefaults(defineProps<Props>(), {
   descriptionUuid: "festival-section-description",
   background: "white",
 });
-
 </script>
 
 <template>
@@ -43,25 +42,25 @@ const props = withDefaults(defineProps<Props>(), {
     description-tag="p"
     :background="props.background"
   >
-      <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <div
-          v-for="(item, index) in props.items"
-          :key="`${item.headline}-${index}`"
-          class="group relative overflow-hidden border border-gray-200 bg-white p-8 shadow-sm transition-all hover:bg-gray-50"
-        >
-          <EditableContent
-            :uuid="`${props.itemHeadlineUuidPrefix}-${index}`"
-            :content="item.headline"
-            tag="h4"
-            content-class="font-display text-2xl tracking-widest text-vsg-blue-900 uppercase"
-          />
-          <EditableContent
-            :uuid="`${props.itemTextUuidPrefix}-${index}`"
-            :content="item.text"
-            tag="p"
-            content-class="mt-4 font-body text-base leading-relaxed text-vsg-blue-700"
-          />
-        </div>
+    <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        v-for="(item, index) in props.items"
+        :key="`${item.headline}-${index}`"
+        class="group relative overflow-hidden border border-gray-200 bg-white p-8 shadow-sm transition-all hover:bg-gray-50"
+      >
+        <EditableContent
+          :uuid="`${props.itemHeadlineUuidPrefix}-${index}`"
+          :content="item.headline"
+          tag="h4"
+          content-class="font-display text-2xl tracking-widest text-vsg-blue-900 uppercase"
+        />
+        <EditableContent
+          :uuid="`${props.itemTextUuidPrefix}-${index}`"
+          :content="item.text"
+          tag="p"
+          content-class="mt-4 font-body text-base leading-relaxed text-vsg-blue-700"
+        />
       </div>
+    </div>
   </Section>
 </template>

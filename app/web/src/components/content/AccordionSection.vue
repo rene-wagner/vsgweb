@@ -32,7 +32,6 @@ const props = withDefaults(defineProps<Props>(), {
   descriptionUuid: "accordion-section-description",
   background: "white",
 });
-
 </script>
 
 <template>
@@ -48,8 +47,8 @@ const props = withDefaults(defineProps<Props>(), {
     description-class="mx-auto max-w-3xl font-body text-lg text-gray-600"
     :background="props.background"
   >
-      <div class="mt-16">
-        <Accordion :items="props.items" />
-      </div>
+    <div class="mt-16">
+      <Accordion :items="props.items" />
+    </div>
   </Section>
 </template>
