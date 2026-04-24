@@ -58,7 +58,7 @@ const { departments, isLoading, error } = storeToRefs(departmentsStore);
               v-if="department.icon"
               :src="getMediaUrl(department.icon)"
               :alt="department.name"
-              class="h-8 w-8 object-contain"
+              class="h-16 w-16 object-contain"
               style="
                 filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(200deg) brightness(89%)
                   contrast(91%);
