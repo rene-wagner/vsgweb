@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { DepartmentLocation } from "@vsg/types";
+import EditableContent from "@/components/content/EditableContent.vue";
+import SectionHeader from "@/components/ui/SectionHeader.vue";
 import LocationCard from "./LocationCard.vue";
 
 interface Props {
@@ -9,37 +11,38 @@ interface Props {
   locations: DepartmentLocation[];
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 </script>
 
 <template>
   <section class="relative bg-gray-50 py-32">
     <div class="mx-auto max-w-7xl px-6">
       <!-- Section Header -->
-      <div class="mb-16 text-center">
-        <span class="font-body text-sm font-normal uppercase tracking-[0.4em] text-vsg-blue-600">
-          {{ subtitle }}
-        </span>
-        <h2 class="mt-4 font-display text-5xl tracking-wider text-vsg-blue-900 md:text-7xl">
-          {{ title }}
-        </h2>
-        <p
-          v-if="description"
-          class="mx-auto mt-4 max-w-2xl font-body text-lg font-normal text-gray-600"
-        >
-          {{ description }}
-        </p>
+      <div class="flex flex-col gap-6">
+        <SectionHeader
+          :subtitle="props.subtitle"
+          :title="props.title"
+          subtitle-uuid="location-section-subtitle"
+          title-uuid="location-section-title"
+        />
+        <EditableContent
+          v-if="props.description"
+          uuid="location-section-description"
+          :content="props.description"
+          tag="p"
+          content-class="mx-auto max-w-3xl text-center font-body text-lg text-gray-600"
+        />
       </div>
 
       <!-- Locations Grid -->
       <div
-        :class="['gap-8', locations.length === 1 ? 'flex justify-center' : 'grid md:grid-cols-2']"
+        :class="['mt-16 gap-8', props.locations.length === 1 ? 'flex justify-center' : 'grid md:grid-cols-2']"
       >
         <LocationCard
-          v-for="location in locations"
+          v-for="location in props.locations"
           :key="location.name"
           :location="location"
-          :class="{ 'w-full max-w-2xl': locations.length === 1 }"
+          :class="{ 'w-full max-w-2xl': props.locations.length === 1 }"
         />
       </div>
     </div>
