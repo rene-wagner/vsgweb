@@ -44,15 +44,16 @@ function declineConsent(): void {
       class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4"
     >
       <p class="flex-1 font-body font-normal text-sm text-vsg-blue-100 leading-relaxed">
-        Diese Website kann Cookies verwenden, um Ihr Nutzungserlebnis zu verbessern. Mit einem Klick
-        auf
-        <strong class="text-white">„Akzeptieren"</strong> stimmen Sie der Verwendung zu. Mit
+        Diese Website kann Cookies verwenden, um dein Nutzungserlebnis zu verbessern. Mit einem
+        Klick auf
+        <strong class="text-white">„Akzeptieren"</strong> stimmst du der Verwendung zu. Mit
         <strong class="text-white">„Ablehnen"</strong> werden nur technisch notwendige Cookies
-        gesetzt. Weitere Informationen finden Sie in unserer
+        gesetzt. Weitere Informationen findest du in unserer
         <a
           href="/datenschutz"
           class="underline text-vsg-gold-300 hover:text-vsg-gold-200 transition-colors"
-          >Datenschutzerklärung</a
+        >
+          Datenschutzerklärung</a
         >.
       </p>
       <div class="flex items-center gap-3 shrink-0">

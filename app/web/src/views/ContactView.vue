@@ -70,7 +70,7 @@ function encodeBase64(value: string): string {
   <div
     class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
-    <HeroSectionSmall headline="Kontakt" description="Finden Sie den richtigen Ansprechpartner" />
+    <HeroSectionSmall headline="Kontakt" description="Finde die richtige Ansprechperson" />
 
     <ContentSection max-width="2xl">
       <ApiState
@@ -236,7 +236,7 @@ function encodeBase64(value: string): string {
           >
             <FontAwesomeIcon icon="users" class="mx-auto text-vsg-blue-200" />
             <p class="mt-4 font-body text-vsg-blue-500">
-              Wählen Sie einen Ansprechpartner aus der Liste, um die Kontaktdaten anzuzeigen.
+              Wähle eine Ansprechperson aus der Liste, um die Kontaktdaten anzuzeigen.
             </p>
           </div>
         </div>

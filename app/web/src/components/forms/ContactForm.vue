@@ -57,7 +57,7 @@ const validateField = (field: string, value: string): string | null => {
     case "senderEmail": {
       if (!value.trim()) return "E-Mail ist erforderlich";
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(value.trim())) return "Bitte geben Sie eine gueltige E-Mail-Adresse ein";
+      if (!emailRegex.test(value.trim())) return "Bitte gib eine gültige E-Mail-Adresse ein";
       return null;
     }
     case "subject":
@@ -128,14 +128,13 @@ const submitForm = async () => {
     });
 
     if (response.status === 429) {
-      submitError.value = "Zu viele Anfragen. Bitte versuchen Sie es spaeter erneut.";
+      submitError.value = "Zu viele Anfragen. Bitte versuche es spaeter erneut.";
       return;
     }
 
     if (!response.ok) {
       const data = await response.json();
-      submitError.value =
-        data.message || "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.";
+      submitError.value = data.message || "Ein Fehler ist aufgetreten. Bitte versuche es erneut.";
       return;
     }
 
@@ -152,7 +151,7 @@ const submitForm = async () => {
     await fetchToken();
   } catch (_e) {
     submitError.value =
-      "Ein Netzwerkfehler ist aufgetreten. Bitte ueberpruefen Sie Ihre Internetverbindung.";
+      "Ein Netzwerkfehler ist aufgetreten. Bitte ueberpruefe deine Internetverbindung.";
   } finally {
     isSubmitting.value = false;
   }
@@ -189,7 +188,7 @@ const clearSuccess = () => {
           <FontAwesomeIcon icon="check" class="text-green-600 mt-0.5 shrink-0" />
           <div class="flex-1">
             <p class="font-body text-green-800">
-              Ihre Nachricht wurde erfolgreich gesendet. Vielen Dank fuer Ihre Anfrage!
+              Deine Nachricht wurde erfolgreich gesendet. Vielen Dank fuer deine Anfrage!
             </p>
             <button
               class="mt-2 text-sm text-green-700 hover:text-green-900 underline font-body"
@@ -245,7 +244,7 @@ const clearSuccess = () => {
           for="senderName"
           class="block font-body font-normal text-sm tracking-wider text-vsg-blue-600 uppercase mb-2"
         >
-          Ihr Name *
+          Dein Name *
         </label>
         <input
           id="senderName"
@@ -273,7 +272,7 @@ const clearSuccess = () => {
           for="senderEmail"
           class="block font-body font-normal text-sm tracking-wider text-vsg-blue-600 uppercase mb-2"
         >
-          Ihre E-Mail *
+          Deine E-Mail *
         </label>
         <input
           id="senderEmail"
@@ -315,7 +314,7 @@ const clearSuccess = () => {
             errors.subject ? 'border-red-300' : 'border-vsg-blue-200',
             isSubmitting ? 'opacity-50 cursor-not-allowed' : '',
           ]"
-          placeholder="Ihre Anfrage"
+          placeholder="Deine Anfrage"
         />
         <p v-if="errors.subject" class="mt-1 text-sm text-red-600 font-body">
           {{ errors.subject }}
@@ -343,7 +342,7 @@ const clearSuccess = () => {
             errors.message ? 'border-red-300' : 'border-vsg-blue-200',
             isSubmitting ? 'opacity-50 cursor-not-allowed' : '',
           ]"
-          placeholder="Ihre Nachricht..."
+          placeholder="Deine Nachricht..."
         ></textarea>
         <p v-if="errors.message" class="mt-1 text-sm text-red-600 font-body">
           {{ errors.message }}

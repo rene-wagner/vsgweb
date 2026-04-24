@@ -40,7 +40,7 @@ Ihr wollt Vereinsmitglied werden, kein Problem, hier ist der [Formularlink](http
   departmentsSubtitle: "Für jeden das Richtige",
   departmentsHeadline: "Unsere Abteilungen",
   departmentsDescription:
-    "Entdecken Sie die Vielfalt unseres Sportangebots. Von Volleyball über Badminton bis hin zu Tischtennis und Turnen – bei uns findet jeder die passende Sportart.",
+    "Entdecke die Vielfalt unseres Sportangebots. Von Volleyball über Badminton bis hin zu Tischtennis und Turnen - bei uns findet jeder die passende Sportart.",
 
   // Posts
   postsHeadline: "Aktuelles aus dem Verein",
