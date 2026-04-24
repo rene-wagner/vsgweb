@@ -50,7 +50,7 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
         :empty="departments.length === 0"
         empty-message="Derzeit sind keine Abteilungen verfugbar."
       >
-        <div class="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
+        <div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-2">
           <DepartmentCard
             v-for="department in departments"
             :key="department.id"
