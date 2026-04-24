@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import EditableContent from "@/components/content/EditableContent.vue";
 import Section from "@/components/sections/Section.vue";
+import HallOfFameCard from "@/components/ui/HallOfFameCard.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
 
 interface HallOfFameCategory {
@@ -114,43 +114,19 @@ function getAccentClasses(categoryId: string): string {
     </div>
 
     <div class="mt-12 grid gap-6 md:grid-cols-2">
-      <div
+      <HallOfFameCard
         v-for="(item, index) in filteredItems"
         :key="`${item.year}-${item.title}-${index}`"
-        class="flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-8 shadow-sm transition-transform duration-200 hover:-translate-y-1"
-      >
-        <div class="mb-5 flex items-start justify-between gap-4">
-          <span class="font-display text-2xl text-vsg-gold-600">{{ item.year }}</span>
-          <span
-            class="rounded-full border px-3 py-1 text-xs font-body uppercase tracking-widest"
-            :class="getAccentClasses(item.category)"
-          >
-            {{ getCategoryLabel(item.category) }}
-          </span>
-        </div>
-
-        <EditableContent
-          :uuid="`${props.itemTitleUuidPrefix}-${index}`"
-          :content="item.title"
-          tag="h4"
-          content-class="font-display text-2xl tracking-widest text-vsg-blue-900 uppercase"
-        />
-
-        <EditableContent
-          :uuid="`${props.itemDescriptionUuidPrefix}-${index}`"
-          :content="item.description"
-          tag="div"
-          content-class="font-body text-base leading-relaxed text-vsg-blue-700"
-        />
-
-        <EditableContent
-          v-if="item.highlight"
-          :uuid="`${props.itemHighlightUuidPrefix}-${index}`"
-          :content="item.highlight"
-          tag="blockquote"
-          content-class="border-l-4 border-vsg-gold-500 pl-4 font-body text-base italic text-vsg-blue-600"
-        />
-      </div>
+        :year="item.year"
+        :category-label="getCategoryLabel(item.category)"
+        :category-accent-class="getAccentClasses(item.category)"
+        :title="item.title"
+        :description="item.description"
+        :highlight="item.highlight"
+        :title-uuid="`${props.itemTitleUuidPrefix}-${index}`"
+        :description-uuid="`${props.itemDescriptionUuidPrefix}-${index}`"
+        :highlight-uuid="`${props.itemHighlightUuidPrefix}-${index}`"
+      />
     </div>
   </Section>
 </template>
