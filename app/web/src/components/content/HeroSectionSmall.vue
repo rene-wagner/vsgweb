@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import EditableContent from "./EditableContent.vue";
+import MarkdownRenderer from "@/components/ui/MarkdownRenderer.vue";
 
 interface Props {
   headline?: string;
   description?: string;
   subtitle?: string;
   iconUrl?: string;
+  editableHeadline?: boolean;
+  editableDescription?: boolean;
   primaryCtaLabel?: string;
   primaryCtaAnchor?: string;
   secondaryCtaLabel?: string;
@@ -18,6 +21,8 @@ const props = withDefaults(defineProps<Props>(), {
   description: undefined,
   subtitle: undefined,
   iconUrl: undefined,
+  editableHeadline: true,
+  editableDescription: true,
   primaryCtaLabel: undefined,
   primaryCtaAnchor: undefined,
   secondaryCtaLabel: undefined,
@@ -64,14 +69,22 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
           'text-[5rem] leading-[0.85] tracking-tight md:text-[8rem] lg:text-[10rem]': iconUrl,
         }"
       >
-        <EditableContent uuid="uuid-headline" :content="headline" />
+        <EditableContent v-if="editableHeadline" uuid="uuid-headline" :content="headline" />
+        <span v-else>{{ headline }}</span>
       </h1>
 
       <div v-if="description" class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400">
         <EditableContent
+          v-if="editableDescription"
           uuid="uuid-description"
           :content="description"
           class="whitespace-pre-line font-body text-lg font-normal text-vsg-blue-300 md:text-xl"
+        />
+        <MarkdownRenderer
+          v-else
+          :content="description"
+          content-class="whitespace-pre-line font-body text-lg font-normal text-vsg-blue-300 md:text-xl"
+          :use-default-class="false"
         />
       </div>
 

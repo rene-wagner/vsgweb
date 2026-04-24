@@ -146,6 +146,8 @@ const departmentCta = computed<Cta>(() => {
         :headline="currentDepartment!.name.toUpperCase()"
         :description="currentDepartment!.shortDescription"
         :icon-url="currentDepartment!.icon ? getMediaUrl(currentDepartment!.icon) : undefined"
+        :editable-headline="false"
+        :editable-description="false"
         :primary-cta-label="departmentTrainingGroups.length > 0 ? 'Trainingszeiten' : undefined"
         :primary-cta-anchor="departmentTrainingGroups.length > 0 ? '#trainingszeiten' : undefined"
         :secondary-cta-label="departmentLocations.length > 0 ? 'Unsere Standorte' : undefined"
