@@ -17,6 +17,9 @@ import { clubHistoryContent } from "@/content/club-history-content";
       :headline="clubHistoryContent.heroHeadline"
       :description="clubHistoryContent.heroDescription"
       :subtitle="clubHistoryContent.heroSubtitle"
+      headline-uuid="club-history-hero-headline"
+      description-uuid="club-history-hero-description"
+      subtitle-uuid="club-history-hero-subtitle"
       :editable-headline="false"
       :editable-description="false"
       :primary-cta-label="clubHistoryContent.heroPrimaryCtaLabel"
@@ -74,7 +77,9 @@ import { clubHistoryContent } from "@/content/club-history-content";
             <h3 class="font-display text-2xl tracking-widest text-vsg-gold-600 uppercase">
               {{ clubHistoryContent.developmentChartHeadline }}
             </h3>
-            <div class="flex items-center gap-4 text-xs tracking-tighter text-vsg-blue-600 uppercase">
+            <div
+              class="flex items-center gap-4 text-xs tracking-tighter text-vsg-blue-600 uppercase"
+            >
               <span class="flex items-center gap-1">
                 <div class="h-3 w-3 rounded-full bg-vsg-gold-500"></div>
                 {{ clubHistoryContent.developmentChartLegendLabel }}
@@ -87,7 +92,9 @@ import { clubHistoryContent } from "@/content/club-history-content";
         </div>
 
         <div class="mx-auto max-w-4xl space-y-4">
-          <h3 class="mb-8 text-center font-display text-3xl tracking-widest text-vsg-blue-900 uppercase">
+          <h3
+            class="mb-8 text-center font-display text-3xl tracking-widest text-vsg-blue-900 uppercase"
+          >
             {{ clubHistoryContent.developmentChronicleHeadline }}
           </h3>
           <Accordion :items="clubHistoryContent.developmentChronicleGroups" />

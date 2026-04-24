@@ -182,7 +182,12 @@ onUnmounted(() => {
   <div
     class="min-h-screen overflow-x-hidden text-white selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
-    <HeroSectionSmall headline="BEITRÄGE" description="Alle Beiträge auf einen Blick." />
+    <HeroSectionSmall
+      headline="BEITRÄGE"
+      description="Alle Beiträge auf einen Blick."
+      headline-uuid="post-list-hero-headline"
+      description-uuid="post-list-hero-description"
+    />
 
     <section class="bg-white py-16">
       <div class="mx-auto max-w-7xl px-6">

@@ -9,6 +9,8 @@ import HeroSectionSmall from "@/components/content/HeroSectionSmall.vue";
     <HeroSectionSmall
       headline="SATZUNG"
       description="Die wichtigsten Grundlagen und Regeln unseres Vereins."
+      headline-uuid="club-statutes-hero-headline"
+      description-uuid="club-statutes-hero-description"
     />
 
     <section class="bg-white py-16">

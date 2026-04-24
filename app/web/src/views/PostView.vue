@@ -60,7 +60,11 @@ onUnmounted(() => {
       empty-message="Beitrag nicht gefunden"
     >
       <!-- Hero Section -->
-      <HeroSectionSmall :headline="currentPost!.title" :editable-headline="false" />
+      <HeroSectionSmall
+        :headline="currentPost!.title"
+        headline-uuid="post-detail-hero-headline"
+        :editable-headline="false"
+      />
 
       <!-- Content Section -->
       <section v-if="currentPost!.content" class="bg-white py-16">

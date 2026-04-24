@@ -9,6 +9,8 @@ import HeroSectionSmall from "@/components/content/HeroSectionSmall.vue";
     <HeroSectionSmall
       headline="SPORTVERSICHERUNG"
       description="Wichtige Hinweise rund um Versicherungsschutz im Vereinsalltag."
+      headline-uuid="club-sport-insurance-hero-headline"
+      description-uuid="club-sport-insurance-hero-description"
     />
 
     <section class="bg-white py-16">

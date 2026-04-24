@@ -69,7 +69,12 @@ function encodeBase64(value: string): string {
   <div
     class="min-h-screen text-white overflow-x-hidden selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
-    <HeroSectionSmall headline="Kontakt" description="Finde die richtige Ansprechperson" />
+    <HeroSectionSmall
+      headline="Kontakt"
+      description="Finde die richtige Ansprechperson"
+      headline-uuid="contact-hero-headline"
+      description-uuid="contact-hero-description"
+    />
 
     <section class="bg-white py-16">
       <div class="mx-auto max-w-2xl px-6">

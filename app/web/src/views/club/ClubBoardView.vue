@@ -9,6 +9,8 @@ import HeroSectionSmall from "@/components/content/HeroSectionSmall.vue";
     <HeroSectionSmall
       headline="VORSTAND"
       description="Die Menschen, die unseren Verein organisatorisch tragen."
+      headline-uuid="club-board-hero-headline"
+      description-uuid="club-board-hero-description"
     />
 
     <section class="bg-white py-16">

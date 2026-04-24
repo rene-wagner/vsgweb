@@ -8,6 +8,9 @@ interface Props {
   description?: string;
   subtitle?: string;
   iconUrl?: string;
+  headlineUuid?: string;
+  descriptionUuid?: string;
+  subtitleUuid?: string;
   editableHeadline?: boolean;
   editableDescription?: boolean;
   primaryCtaLabel?: string;
@@ -21,6 +24,9 @@ const props = withDefaults(defineProps<Props>(), {
   description: undefined,
   subtitle: undefined,
   iconUrl: undefined,
+  headlineUuid: "uuid-headline",
+  descriptionUuid: "uuid-description",
+  subtitleUuid: "uuid-subtitle",
   editableHeadline: true,
   editableDescription: true,
   primaryCtaLabel: undefined,
@@ -69,14 +75,14 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
           'text-[5rem] leading-[0.85] tracking-tight md:text-[8rem] lg:text-[10rem]': iconUrl,
         }"
       >
-        <EditableContent v-if="editableHeadline" uuid="uuid-headline" :content="headline" />
+        <EditableContent v-if="editableHeadline" :uuid="headlineUuid" :content="headline" />
         <span v-else>{{ headline }}</span>
       </h1>
 
       <div v-if="description" class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400">
         <EditableContent
           v-if="editableDescription"
-          uuid="uuid-description"
+          :uuid="descriptionUuid"
           :content="description"
           class="whitespace-pre-line font-body text-lg font-normal text-vsg-blue-300 md:text-xl"
         />
@@ -90,7 +96,7 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
 
       <div v-if="subtitle" class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400">
         <EditableContent
-          uuid="uuid-subtitle"
+          :uuid="subtitleUuid"
           :content="subtitle"
           class="font-body text-lg font-normal text-vsg-gold-400 md:text-xl"
         />

@@ -146,6 +146,8 @@ const departmentCta = computed<Cta>(() => {
         :headline="currentDepartment!.name"
         :description="currentDepartment!.shortDescription"
         :icon-url="currentDepartment!.icon ? getMediaUrl(currentDepartment!.icon) : undefined"
+        headline-uuid="department-hero-headline"
+        description-uuid="department-hero-description"
         :editable-headline="false"
         :editable-description="false"
         :primary-cta-label="departmentTrainingGroups.length > 0 ? 'Trainingszeiten' : undefined"

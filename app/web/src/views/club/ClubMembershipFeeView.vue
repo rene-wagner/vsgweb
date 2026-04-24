@@ -9,6 +9,8 @@ import HeroSectionSmall from "@/components/content/HeroSectionSmall.vue";
     <HeroSectionSmall
       headline="BEITRAGSORDNUNG"
       description="Uebersicht zu Beitraegen und Rahmenbedingungen im Verein."
+      headline-uuid="club-membership-fee-hero-headline"
+      description-uuid="club-membership-fee-hero-description"
     />
 
     <section class="bg-white py-16">
