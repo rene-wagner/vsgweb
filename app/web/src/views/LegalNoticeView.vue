@@ -9,8 +9,8 @@ import HeroSectionSmall from "../components/content/HeroSectionSmall.vue";
     class="min-h-screen overflow-x-hidden text-white selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
     <HeroSectionSmall
-      headline="IMPRESSUM"
-      description="Angaben gemäß § 5 TMG"
+      :headline="legalNoticeContent.headline"
+      :description="legalNoticeContent.description"
       headline-uuid="legal-notice-hero-headline"
       description-uuid="legal-notice-hero-description"
     />
@@ -20,7 +20,7 @@ import HeroSectionSmall from "../components/content/HeroSectionSmall.vue";
         <div class="prose prose-lg max-w-none font-body text-vsg-blue-700">
           <EditableContent
             uuid="legal-notice-content"
-            :content="legalNoticeContent"
+            :content="legalNoticeContent.content"
             content-class="prose prose-lg max-w-none font-body text-vsg-blue-700"
           />
         </div>

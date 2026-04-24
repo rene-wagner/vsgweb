@@ -9,8 +9,8 @@ import HeroSectionSmall from "../components/content/HeroSectionSmall.vue";
     class="min-h-screen overflow-x-hidden text-white selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
     <HeroSectionSmall
-      headline="DATENSCHUTZ"
-      description="Datenschutzerklärung gemäß DSGVO"
+      :headline="dataPrivacyContent.headline"
+      :description="dataPrivacyContent.description"
       headline-uuid="data-privacy-hero-headline"
       description-uuid="data-privacy-hero-description"
     />
@@ -20,7 +20,7 @@ import HeroSectionSmall from "../components/content/HeroSectionSmall.vue";
         <div class="prose prose-lg max-w-none font-body text-vsg-blue-700">
           <EditableContent
             uuid="data-privacy-content"
-            :content="dataPrivacyContent"
+            :content="dataPrivacyContent.content"
             content-class="prose prose-lg max-w-none font-body text-vsg-blue-700"
           />
         </div>
