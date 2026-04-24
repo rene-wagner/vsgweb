@@ -4,7 +4,6 @@ import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useCategoriesStore } from "@/stores/categoriesStore";
 import HeroSectionSmall from "@/components/content/HeroSectionSmall.vue";
-import ContentSection from "@/components/content/ContentSection.vue";
 import NewsCardListItem from "@/components/content/NewsCardListItem.vue";
 import ApiState from "@/components/ui/ApiState.vue";
 import { usePostsStore } from "@/stores/postsStore";
@@ -185,80 +184,82 @@ onUnmounted(() => {
   >
     <HeroSectionSmall headline="BEITRÄGE" description="Alle Beiträge auf einen Blick." />
 
-    <ContentSection max-width="7xl">
-      <ApiState
-        :is-loading="paginatedPostsLoading"
-        :error="paginatedPostsError"
-        :empty="paginatedPosts.length === 0"
-        :empty-message="emptyMessage"
-      >
-        <div class="mb-10 flex flex-wrap gap-3 border-b border-vsg-blue-100 pb-6">
-          <button
-            type="button"
-            class="rounded-full border px-4 py-2 font-body text-sm font-bold uppercase tracking-wider transition-colors"
-            :class="
-              selectedCategorySlug === null
-                ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
-                : 'border-vsg-blue-200 text-vsg-blue-800 hover:border-vsg-blue-600 hover:text-vsg-blue-600'
-            "
-            @click="updateCategory(null)"
-          >
-            Alle
-          </button>
-          <button
-            v-for="category in categoryOptions"
-            :key="category.slug"
-            type="button"
-            class="rounded-full border px-4 py-2 font-body text-sm font-bold uppercase tracking-wider transition-colors"
-            :class="
-              selectedCategorySlug === category.slug
-                ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
-                : 'border-vsg-blue-200 text-vsg-blue-800 hover:border-vsg-blue-600 hover:text-vsg-blue-600'
-            "
-            @click="updateCategory(category.slug)"
-          >
-            {{ category.name }}
-          </button>
-        </div>
-
-        <div class="space-y-6">
-          <NewsCardListItem
-            v-for="post in paginatedPosts"
-            :key="post.id"
-            :category="getCategoryName(post.categories)"
-            :date="formatDate(post.createdAt)"
-            :title="post.title"
-            :to="`/beitrag/${post.slug}`"
-          />
-        </div>
-
-        <div
-          v-if="paginatedPosts.length > 0"
-          class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-vsg-blue-100 pt-8 md:flex-row"
+    <section class="bg-white py-16">
+      <div class="mx-auto max-w-7xl px-6">
+        <ApiState
+          :is-loading="paginatedPostsLoading"
+          :error="paginatedPostsError"
+          :empty="paginatedPosts.length === 0"
+          :empty-message="emptyMessage"
         >
-          <button
-            type="button"
-            class="border border-vsg-blue-200 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:border-vsg-blue-600 hover:text-vsg-blue-600 disabled:cursor-not-allowed disabled:border-vsg-blue-100 disabled:text-vsg-blue-300"
-            :disabled="!hasPreviousPage"
-            @click="updatePage(currentPage - 1)"
-          >
-            Vorherige
-          </button>
+          <div class="mb-10 flex flex-wrap gap-3 border-b border-vsg-blue-100 pb-6">
+            <button
+              type="button"
+              class="rounded-full border px-4 py-2 font-body text-sm font-bold uppercase tracking-wider transition-colors"
+              :class="
+                selectedCategorySlug === null
+                  ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
+                  : 'border-vsg-blue-200 text-vsg-blue-800 hover:border-vsg-blue-600 hover:text-vsg-blue-600'
+              "
+              @click="updateCategory(null)"
+            >
+              Alle
+            </button>
+            <button
+              v-for="category in categoryOptions"
+              :key="category.slug"
+              type="button"
+              class="rounded-full border px-4 py-2 font-body text-sm font-bold uppercase tracking-wider transition-colors"
+              :class="
+                selectedCategorySlug === category.slug
+                  ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
+                  : 'border-vsg-blue-200 text-vsg-blue-800 hover:border-vsg-blue-600 hover:text-vsg-blue-600'
+              "
+              @click="updateCategory(category.slug)"
+            >
+              {{ category.name }}
+            </button>
+          </div>
 
-          <p class="font-body text-base text-vsg-blue-700">
-            Seite {{ paginatedPostsPage }} von {{ totalPages }}
-          </p>
+          <div class="space-y-6">
+            <NewsCardListItem
+              v-for="post in paginatedPosts"
+              :key="post.id"
+              :category="getCategoryName(post.categories)"
+              :date="formatDate(post.createdAt)"
+              :title="post.title"
+              :to="`/beitrag/${post.slug}`"
+            />
+          </div>
 
-          <button
-            type="button"
-            class="border border-vsg-blue-200 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:border-vsg-blue-600 hover:text-vsg-blue-600 disabled:cursor-not-allowed disabled:border-vsg-blue-100 disabled:text-vsg-blue-300"
-            :disabled="!hasNextPage"
-            @click="updatePage(currentPage + 1)"
+          <div
+            v-if="paginatedPosts.length > 0"
+            class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-vsg-blue-100 pt-8 md:flex-row"
           >
-            Nächste
-          </button>
-        </div>
-      </ApiState>
-    </ContentSection>
+            <button
+              type="button"
+              class="border border-vsg-blue-200 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:border-vsg-blue-600 hover:text-vsg-blue-600 disabled:cursor-not-allowed disabled:border-vsg-blue-100 disabled:text-vsg-blue-300"
+              :disabled="!hasPreviousPage"
+              @click="updatePage(currentPage - 1)"
+            >
+              Vorherige
+            </button>
+
+            <p class="font-body text-base text-vsg-blue-700">
+              Seite {{ paginatedPostsPage }} von {{ totalPages }}
+            </p>
+
+            <button
+              type="button"
+              class="border border-vsg-blue-200 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:border-vsg-blue-600 hover:text-vsg-blue-600 disabled:cursor-not-allowed disabled:border-vsg-blue-100 disabled:text-vsg-blue-300"
+              :disabled="!hasNextPage"
+              @click="updatePage(currentPage + 1)"
+            >
+              Nächste
+            </button>
+          </div>
+        </ApiState>
+      </div>
+    </section>
   </div>
 </template>

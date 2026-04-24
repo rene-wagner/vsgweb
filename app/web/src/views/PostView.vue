@@ -6,7 +6,6 @@ import { usePostsStore } from "../stores/postsStore";
 import ApiState from "@/components/ui/ApiState.vue";
 import MarkdownRenderer from "@/components/ui/MarkdownRenderer.vue";
 import HeroSectionSmall from "../components/content/HeroSectionSmall.vue";
-import ContentSection from "../components/content/ContentSection.vue";
 
 const route = useRoute();
 const postsStore = usePostsStore();
@@ -64,11 +63,13 @@ onUnmounted(() => {
       <HeroSectionSmall :headline="currentPost!.title" :editable-headline="false" />
 
       <!-- Content Section -->
-      <ContentSection v-if="currentPost!.content">
-        <div class="prose prose-lg max-w-none font-body text-vsg-blue-700">
-          <MarkdownRenderer :content="currentPost!.content" />
+      <section v-if="currentPost!.content" class="bg-white py-16">
+        <div class="mx-auto max-w-7xl px-6">
+          <div class="prose prose-lg max-w-none font-body text-vsg-blue-700">
+            <MarkdownRenderer :content="currentPost!.content" />
+          </div>
         </div>
-      </ContentSection>
+      </section>
     </ApiState>
   </div>
 </template>
