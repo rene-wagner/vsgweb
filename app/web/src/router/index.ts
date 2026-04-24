@@ -14,32 +14,32 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/verein/geschichte",
     name: "verein-geschichte",
-    component: () => import("@/views/club/DefaultClubHistoryView.vue"),
+    component: () => import("@/views/club/ClubHistoryView.vue"),
   },
   {
     path: "/verein/vorstand",
     name: "verein-vorstand",
-    component: () => import("@/views/club/DefaultClubBoardView.vue"),
+    component: () => import("@/views/club/ClubBoardView.vue"),
   },
   {
     path: "/verein/satzung",
     name: "verein-satzung",
-    component: () => import("@/views/club/DefaultClubStatutesView.vue"),
+    component: () => import("@/views/club/ClubStatutesView.vue"),
   },
   {
     path: "/verein/beitragsordnung",
     name: "verein-beitragsordnung",
-    component: () => import("@/views/club/DefaultClubMembershipFeeView.vue"),
+    component: () => import("@/views/club/ClubMembershipFeeView.vue"),
   },
   {
     path: "/verein/sportversicherung",
     name: "verein-sportversicherung",
-    component: () => import("@/views/club/DefaultClubSportInsuranceView.vue"),
+    component: () => import("@/views/club/ClubSportInsuranceView.vue"),
   },
   {
     path: "/verein/mitgliedschaft",
     name: "verein-mitgliedschaft",
-    component: () => import("@/views/club/DefaultClubMembershipView.vue"),
+    component: () => import("@/views/club/ClubMembershipView.vue"),
   },
   {
     path: "/beitraege",
