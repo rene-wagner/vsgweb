@@ -4,6 +4,7 @@ import CtaSection from "@/components/content/CtaSection.vue";
 import ChartSection from "@/components/content/ChartSection.vue";
 import EditableContent from "@/components/content/EditableContent.vue";
 import FestivalSection from "@/components/content/FestivalSection.vue";
+import HallOfFameSection from "@/components/content/HallOfFameSection.vue";
 import HeroSectionSmall from "@/components/content/HeroSectionSmall.vue";
 import FactCard from "@/components/ui/FactCard.vue";
 import Timeline from "@/components/ui/Timeline.vue";
@@ -109,6 +110,22 @@ import { clubHistoryContent } from "@/content/club-history-content";
       item-headline-uuid-prefix="club-history-festivals-item-headline"
       item-text-uuid-prefix="club-history-festivals-item-text"
       background="gray"
+    />
+
+    <HallOfFameSection
+      id="hall-of-fame"
+      :subtitle="clubHistoryContent.hallOfFameSubtitle"
+      :headline="clubHistoryContent.hallOfFameHeadline"
+      :description="clubHistoryContent.hallOfFameDescription"
+      :categories="clubHistoryContent.hallOfFameCategories"
+      :items="clubHistoryContent.hallOfFameItems"
+      subtitle-uuid="club-history-hall-of-fame-subtitle"
+      headline-uuid="club-history-hall-of-fame-headline"
+      description-uuid="club-history-hall-of-fame-description"
+      item-title-uuid-prefix="club-history-hall-of-fame-item-title"
+      item-description-uuid-prefix="club-history-hall-of-fame-item-description"
+      item-highlight-uuid-prefix="club-history-hall-of-fame-item-highlight"
+      background="white"
     />
 
     <CtaSection

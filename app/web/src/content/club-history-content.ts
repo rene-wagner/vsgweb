@@ -27,6 +27,19 @@ interface FestivalItem {
   text: string;
 }
 
+interface HallOfFameCategory {
+  id: string;
+  label: string;
+}
+
+interface HallOfFameItem {
+  year: string;
+  category: string;
+  title: string;
+  description: string;
+  highlight?: string;
+}
+
 export interface ClubHistoryContent {
   heroHeadline: string;
   heroDescription: string;
@@ -55,6 +68,11 @@ export interface ClubHistoryContent {
   festivalsHeadline: string;
   festivalsDescription: string;
   festivalsItems: FestivalItem[];
+  hallOfFameSubtitle: string;
+  hallOfFameHeadline: string;
+  hallOfFameDescription: string;
+  hallOfFameCategories: HallOfFameCategory[];
+  hallOfFameItems: HallOfFameItem[];
   ctaHeadline: string;
   ctaDescription: string;
   ctaPrimaryButtonText: string;
@@ -208,6 +226,50 @@ Von Anfang an standen nicht nur sportliche Leistungen im Mittelpunkt, sondern au
     {
       headline: "Jubilaeen und Ehrungen",
       text: "Besondere Vereinsmomente und langjaehriges Engagement bekommen bei uns den Raum, den sie verdienen.",
+    },
+  ],
+
+  hallOfFameSubtitle: "Unser Stolz",
+  hallOfFameHeadline: "Hall of Fame",
+  hallOfFameDescription:
+    "Einige Momente ragen aus unserer Vereinsgeschichte besonders heraus. Hier ehren wir sportliche Hoehepunkte, praegende Leistungen und Erfolge, auf die wir bis heute mit Recht stolz sind.",
+  hallOfFameCategories: [
+    { id: "badminton", label: "Badminton" },
+    { id: "table-tennis", label: "Tischtennis" },
+    { id: "volleyball", label: "Volleyball" },
+    { id: "club", label: "Verein" },
+  ],
+  hallOfFameItems: [
+    {
+      year: "1997",
+      category: "badminton",
+      title: "Bronzemedaille bei der Badminton-Weltmeisterschaft",
+      description:
+        "Mit dem Gewinn der Bronzemedaille bei einer Badminton-Weltmeisterschaft gelang einem Mitglied unseres Vereins ein Erfolg, der weit ueber die Region hinausstrahlte und bis heute einen besonderen Platz in unserer Geschichte einnimmt.",
+      highlight: "Ein historischer Moment fuer die VSG Kugelberg und ein Meilenstein fuer den Badmintonsport in unserem Verein.",
+    },
+    {
+      year: "2004",
+      category: "table-tennis",
+      title: "Aufstieg in die naechste Spielklasse",
+      description:
+        "Mit einer geschlossenen Mannschaftsleistung und viel Konstanz ueber die gesamte Saison gelang der entscheidende Aufstieg und damit einer der praegenden Erfolge der Abteilung.",
+      highlight: "Teamgeist, Verlaesslichkeit und sportlicher Ehrgeiz fuehrten diesen Erfolg herbei.",
+    },
+    {
+      year: "2011",
+      category: "volleyball",
+      title: "Erfolgreiche Turnierserie im Regionalvergleich",
+      description:
+        "Mehrere starke Auftritte bei regionalen Turnieren machten deutlich, wie viel Qualitaet und Zusammenhalt in der Mannschaft steckt.",
+    },
+    {
+      year: "2020",
+      category: "club",
+      title: "Zusammenhalt in herausfordernden Zeiten",
+      description:
+        "Auch in schwierigen Phasen blieb das Vereinsleben lebendig. Trainingsformen wurden angepasst, Kontakte gehalten und der Gemeinschaftsgedanke bewusst weitergetragen.",
+      highlight: "Nicht nur Medaillen, sondern auch gelebter Zusammenhalt gehoeren in unsere Hall of Fame.",
     },
   ],
 
