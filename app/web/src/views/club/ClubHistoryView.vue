@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import AccordionSection from "@/components/content/AccordionSection.vue";
 import CtaSection from "@/components/content/CtaSection.vue";
 import ChartSection from "@/components/content/ChartSection.vue";
 import EditableContent from "@/components/content/EditableContent.vue";
 import HeroSectionSmall from "@/components/content/HeroSectionSmall.vue";
 import FactCard from "@/components/ui/FactCard.vue";
 import Timeline from "@/components/ui/Timeline.vue";
-import Accordion from "@/components/ui/Accordion.vue";
 import { clubHistoryContent } from "@/content/club-history-content";
 </script>
 
@@ -85,18 +85,16 @@ import { clubHistoryContent } from "@/content/club-history-content";
       background="gray"
     />
 
-    <section class="bg-gray-50 pb-24">
-      <div class="mx-auto max-w-7xl px-6">
-        <div class="mx-auto max-w-4xl space-y-4">
-          <h3
-            class="mb-8 text-center font-display text-3xl tracking-widest text-vsg-blue-900 uppercase"
-          >
-            {{ clubHistoryContent.developmentChronicleHeadline }}
-          </h3>
-          <Accordion :items="clubHistoryContent.developmentChronicleGroups" />
-        </div>
-      </div>
-    </section>
+    <AccordionSection
+      :subtitle="clubHistoryContent.developmentChronicleSubtitle"
+      :title="clubHistoryContent.developmentChronicleHeadline"
+      :description="clubHistoryContent.developmentChronicleDescription"
+      subtitle-uuid="club-history-chronicle-subtitle"
+      title-uuid="club-history-chronicle-headline"
+      description-uuid="club-history-chronicle-description"
+      :items="clubHistoryContent.developmentChronicleGroups"
+      background="white"
+    />
 
     <CtaSection
       :headline="clubHistoryContent.ctaHeadline"

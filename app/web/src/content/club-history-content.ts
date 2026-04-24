@@ -42,7 +42,9 @@ export interface ClubHistoryContent {
   developmentChartHeadline: string;
   developmentChartLegendLabel: string;
   developmentChartData: ChartData<"line">;
+  developmentChronicleSubtitle: string;
   developmentChronicleHeadline: string;
+  developmentChronicleDescription?: string;
   developmentChronicleGroups: ChronicleGroup[];
   ctaHeadline: string;
   ctaDescription: string;
@@ -124,7 +126,10 @@ Von Anfang an standen nicht nur sportliche Leistungen im Mittelpunkt, sondern au
       },
     ],
   },
+  developmentChronicleSubtitle: "Chronik",
   developmentChronicleHeadline: "Chronik der Ereignisse",
+  developmentChronicleDescription:
+    "Ein Blick auf prägende Stationen, Entwicklungen und besondere Momente unserer Vereinsgeschichte.",
   developmentChronicleGroups: [
     {
       id: "aufbau",
