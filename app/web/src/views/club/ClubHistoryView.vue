@@ -21,10 +21,6 @@ import { clubHistoryContent } from "@/content/club-history-content";
       headline-uuid="club-history-hero-headline"
       description-uuid="club-history-hero-description"
       subtitle-uuid="club-history-hero-subtitle"
-      :primary-cta-label="clubHistoryContent.heroPrimaryCtaLabel"
-      :primary-cta-anchor="clubHistoryContent.heroPrimaryCtaAnchor"
-      :secondary-cta-label="clubHistoryContent.heroSecondaryCtaLabel"
-      :secondary-cta-anchor="clubHistoryContent.heroSecondaryCtaAnchor"
     />
 
     <section id="gruendung" class="bg-white py-24">
