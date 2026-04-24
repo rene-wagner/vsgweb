@@ -10,6 +10,7 @@ interface Props {
   icon?: string;
   imageSrc?: string;
   imageAlt?: string;
+  background?: "gray" | "white";
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -21,12 +22,14 @@ const props = withDefaults(defineProps<Props>(), {
   icon: undefined,
   imageSrc: undefined,
   imageAlt: undefined,
+  background: "gray",
 });
 </script>
 
 <template>
   <div
-    class="card-hover group overflow-hidden border border-gray-200 bg-gray-50 shadow-sm transition-transform duration-200 hover:-translate-y-1"
+    class="card-hover group overflow-hidden border border-gray-200 shadow-sm transition-transform duration-200 hover:-translate-y-1"
+    :class="props.background === 'white' ? 'bg-white' : 'bg-gray-50'"
   >
     <div v-if="props.imageSrc" class="relative aspect-video overflow-hidden bg-gray-100">
       <img :src="props.imageSrc" :alt="props.imageAlt || props.title || ''" class="h-full w-full object-cover" />

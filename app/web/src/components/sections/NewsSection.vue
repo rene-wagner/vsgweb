@@ -2,11 +2,12 @@
 import { computed, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { RouterLink } from "vue-router";
+import Card from "@/components/cards/Card.vue";
 import ApiState from "@/components/ui/ApiState.vue";
+import Badge from "@/components/ui/Badge.vue";
 import Section from "@/components/sections/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
 import NewsCardFeatured from "@/components/cards/NewsCardFeatured.vue";
-import NewsCardListItem from "@/components/cards/NewsCardListItem.vue";
 import { usePostsStore } from "@/stores/postsStore";
 
 interface Props {
@@ -119,14 +120,39 @@ const listPosts = computed(() => activePosts.value.slice(1));
         />
 
         <div v-if="listPosts.length > 0" class="space-y-6">
-          <NewsCardListItem
+          <Card
             v-for="post in listPosts"
             :key="post.id"
-            :category="getCategoryName(post.categories)"
-            :date="formatDate(post.createdAt)"
             :title="post.title"
-            :to="`/beitrag/${post.slug}`"
-          />
+            :background="props.background === 'white' ? 'gray' : 'white'"
+          >
+            <template #meta-start>
+              <Badge accent-class="border-vsg-blue-500 bg-vsg-blue-500 text-white">
+                {{ getCategoryName(post.categories) }}
+              </Badge>
+            </template>
+            <template #meta-end>
+              <span class="font-body text-sm font-normal text-vsg-blue-500">
+                {{ formatDate(post.createdAt) }}
+              </span>
+            </template>
+            <template #title>
+              <h5
+                class="mt-1 font-display text-xl tracking-wider text-vsg-blue-900 transition-colors group-hover:text-vsg-blue-600"
+              >
+                {{ post.title }}
+              </h5>
+            </template>
+            <template #link>
+              <RouterLink
+                :to="`/beitrag/${post.slug}`"
+                class="inline-flex items-center gap-2 font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-600 transition-colors hover:text-vsg-blue-800"
+              >
+                Beitrag lesen
+                <FontAwesomeIcon icon="arrow-right" />
+              </RouterLink>
+            </template>
+          </Card>
         </div>
       </div>
 
