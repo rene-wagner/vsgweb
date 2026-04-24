@@ -3,6 +3,7 @@ import AccordionSection from "@/components/content/AccordionSection.vue";
 import CtaSection from "@/components/content/CtaSection.vue";
 import ChartSection from "@/components/content/ChartSection.vue";
 import EditableContent from "@/components/content/EditableContent.vue";
+import FestivalSection from "@/components/content/FestivalSection.vue";
 import HeroSectionSmall from "@/components/content/HeroSectionSmall.vue";
 import FactCard from "@/components/ui/FactCard.vue";
 import Timeline from "@/components/ui/Timeline.vue";
@@ -94,6 +95,20 @@ import { clubHistoryContent } from "@/content/club-history-content";
       description-uuid="club-history-chronicle-description"
       :items="clubHistoryContent.developmentChronicleGroups"
       background="white"
+    />
+
+    <FestivalSection
+      id="festivals"
+      :subtitle="clubHistoryContent.festivalsSubtitle"
+      :headline="clubHistoryContent.festivalsHeadline"
+      :description="clubHistoryContent.festivalsDescription"
+      :items="clubHistoryContent.festivalsItems"
+      subtitle-uuid="club-history-festivals-subtitle"
+      headline-uuid="club-history-festivals-headline"
+      description-uuid="club-history-festivals-description"
+      item-headline-uuid-prefix="club-history-festivals-item-headline"
+      item-text-uuid-prefix="club-history-festivals-item-text"
+      background="gray"
     />
 
     <CtaSection

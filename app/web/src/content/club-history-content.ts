@@ -22,6 +22,11 @@ interface ChronicleGroup {
   content: ChronicleEntry[];
 }
 
+interface FestivalItem {
+  headline: string;
+  text: string;
+}
+
 export interface ClubHistoryContent {
   heroHeadline: string;
   heroDescription: string;
@@ -46,6 +51,10 @@ export interface ClubHistoryContent {
   developmentChronicleHeadline: string;
   developmentChronicleDescription?: string;
   developmentChronicleGroups: ChronicleGroup[];
+  festivalsSubtitle: string;
+  festivalsHeadline: string;
+  festivalsDescription: string;
+  festivalsItems: FestivalItem[];
   ctaHeadline: string;
   ctaDescription: string;
   ctaPrimaryButtonText: string;
@@ -180,6 +189,25 @@ Von Anfang an standen nicht nur sportliche Leistungen im Mittelpunkt, sondern au
           text: "Heute steht die VSG Kugelberg für Verlässlichkeit, Offenheit und Freude am gemeinsamen Sport.",
         },
       ],
+    },
+  ],
+
+  festivalsSubtitle: "Vereinsleben",
+  festivalsHeadline: "Feste und Traditionen",
+  festivalsDescription:
+    "Unser Verein lebt nicht nur vom Trainingsbetrieb, sondern auch von gemeinsamen Momenten, Begegnungen und festen Traditionen im Jahresverlauf.",
+  festivalsItems: [
+    {
+      headline: "Sommerfest",
+      text: "Beim Sommerfest kommen Mitglieder, Familien und Freunde zusammen, um die Saison in lockerer Atmosphaere zu feiern.",
+    },
+    {
+      headline: "Vereinsausfluege",
+      text: "Gemeinsame Ausfluege staerken das Miteinander und schaffen Erinnerungen, die weit ueber den Sport hinausreichen.",
+    },
+    {
+      headline: "Jubilaeen und Ehrungen",
+      text: "Besondere Vereinsmomente und langjaehriges Engagement bekommen bei uns den Raum, den sie verdienen.",
     },
   ],
 
