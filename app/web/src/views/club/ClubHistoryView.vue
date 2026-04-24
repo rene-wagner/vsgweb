@@ -6,8 +6,8 @@ import ChartSection from "@/components/sections/ChartSection.vue";
 import EditableContent from "@/components/content/EditableContent.vue";
 import HallOfFameSection from "@/components/sections/HallOfFameSection.vue";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
-import Card from "@/components/ui/Card.vue";
-import FactCard from "@/components/ui/FactCard.vue";
+import Card from "@/components/cards/Card.vue";
+import FactCard from "@/components/cards/FactCard.vue";
 import Timeline from "@/components/content/Timeline.vue";
 import { clubHistoryContent } from "@/content/club-history-content";
 </script>

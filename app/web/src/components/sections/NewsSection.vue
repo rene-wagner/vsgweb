@@ -5,8 +5,8 @@ import { RouterLink } from "vue-router";
 import ApiState from "@/components/ui/ApiState.vue";
 import Section from "@/components/sections/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
-import NewsCardFeatured from "@/components/content/NewsCardFeatured.vue";
-import NewsCardListItem from "@/components/content/NewsCardListItem.vue";
+import NewsCardFeatured from "@/components/cards/NewsCardFeatured.vue";
+import NewsCardListItem from "@/components/cards/NewsCardListItem.vue";
 import { usePostsStore } from "@/stores/postsStore";
 
 interface Props {

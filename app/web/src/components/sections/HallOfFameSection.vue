@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import Section from "@/components/sections/Section.vue";
-import HallOfFameCard from "@/components/ui/HallOfFameCard.vue";
+import HallOfFameCard from "@/components/cards/HallOfFameCard.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
 
 interface HallOfFameCategory {
@@ -70,6 +70,31 @@ function getAccentClasses(categoryId: string): string {
       return "border-vsg-blue-200 bg-gray-100 text-vsg-blue-700";
   }
 }
+
+function getCategoryIcon(categoryId: string): string {
+  switch (categoryId) {
+    case "badminton":
+      return "trophy";
+    case "table-tennis":
+      return "medal";
+    case "volleyball":
+      return "people-group";
+    default:
+      return "users";
+  }
+}
+
+function getItemImageSrc(categoryId: string, year: string): string | undefined {
+  if (categoryId === "badminton" && year === "1997") {
+    return "https://placehold.co/600x400/png";
+  }
+
+  return undefined;
+}
+
+function getItemImageAlt(title: string): string {
+  return `${title} Platzhalterbild`;
+}
 </script>
 
 <template>
@@ -120,13 +145,28 @@ function getAccentClasses(categoryId: string): string {
         :year="item.year"
         :category-label="getCategoryLabel(item.category)"
         :category-accent-class="getAccentClasses(item.category)"
+        :icon="getCategoryIcon(item.category)"
+        :image-src="getItemImageSrc(item.category, item.year)"
+        :image-alt="getItemImageAlt(item.title)"
         :title="item.title"
         :description="item.description"
         :highlight="item.highlight"
         :title-uuid="`${props.itemTitleUuidPrefix}-${index}`"
         :description-uuid="`${props.itemDescriptionUuidPrefix}-${index}`"
         :highlight-uuid="`${props.itemHighlightUuidPrefix}-${index}`"
-      />
+      >
+        <template #meta-start>
+          <span class="font-display text-2xl text-vsg-gold-600">{{ item.year }}</span>
+        </template>
+        <template #meta-end>
+          <span
+            class="inline-block rounded-full border px-3 py-1 text-sm font-medium"
+            :class="getAccentClasses(item.category)"
+          >
+            {{ getCategoryLabel(item.category) }}
+          </span>
+        </template>
+      </HallOfFameCard>
     </div>
   </Section>
 </template>

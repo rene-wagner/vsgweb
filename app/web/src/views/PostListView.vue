@@ -4,7 +4,7 @@ import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useCategoriesStore } from "@/stores/categoriesStore";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
-import NewsCardListItem from "@/components/content/NewsCardListItem.vue";
+import NewsCardListItem from "@/components/cards/NewsCardListItem.vue";
 import ApiState from "@/components/ui/ApiState.vue";
 import { usePostsStore } from "@/stores/postsStore";
 

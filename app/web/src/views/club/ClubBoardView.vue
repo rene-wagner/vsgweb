@@ -2,7 +2,7 @@
 import { storeToRefs } from "pinia";
 import CardSection from "@/components/sections/CardSection.vue";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
-import Card from "@/components/ui/Card.vue";
+import Card from "@/components/cards/Card.vue";
 import ApiState from "@/components/ui/ApiState.vue";
 import { clubBoardContent } from "@/content/club-board-content";
 import { getMediaUrl } from "@/services/media-items/media-item.service";

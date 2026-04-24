@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import ApiState from "@/components/ui/ApiState.vue";
-import Card from "@/components/ui/Card.vue";
+import Card from "@/components/cards/Card.vue";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
 import { useDepartmentsStore } from "@/stores/departmentsStore";
 import CardSection from "@/components/sections/CardSection.vue";
