@@ -5,6 +5,7 @@ import { RouterLink } from "vue-router";
 import EditableContent from "@/components/content/EditableContent.vue";
 import SectionHeader from "@/components/ui/SectionHeader.vue";
 import ApiState from "@/components/ui/ApiState.vue";
+import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
 import NewsCardFeatured from "./NewsCardFeatured.vue";
 import NewsCardListItem from "./NewsCardListItem.vue";
 import { usePostsStore } from "../../stores/postsStore";
@@ -16,10 +17,12 @@ interface Props {
   postsCount?: number;
   categoryIri?: string | null;
   categorySlug?: string | null;
+  background?: SectionBackground;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   postsCount: 5,
+  background: "white",
 });
 
 const postsStore = usePostsStore();
@@ -87,10 +90,11 @@ const featuredPost = computed(() => activePosts.value[0] || null);
 
 // Remaining posts for the list (skip first)
 const listPosts = computed(() => activePosts.value.slice(1));
+const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section class="relative bg-gray-50 py-32">
+  <section class="relative py-32" :class="sectionBackgroundClass">
     <div class="mx-auto flex max-w-7xl flex-col px-6">
       <div class="flex flex-col gap-6">
         <SectionHeader

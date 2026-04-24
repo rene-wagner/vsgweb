@@ -142,7 +142,6 @@ const departmentCta = computed<Cta>(() => {
       :empty="!currentDepartment"
       empty-message="Abteilung nicht gefunden"
     >
-      <!-- Hero Section -->
       <HeroSectionSmall
         :headline="currentDepartment!.name.toUpperCase()"
         :description="currentDepartment!.shortDescription"
@@ -153,17 +152,14 @@ const departmentCta = computed<Cta>(() => {
         :secondary-cta-anchor="departmentLocations.length > 0 ? '#standorte' : undefined"
       />
 
-      <!-- Stats Section -->
       <WelcomeSection
         v-if="currentDepartment!.welcomeText"
         uuid="department-welcome-text"
         :welcome-text="currentDepartment!.welcomeText"
       />
 
-      <!-- Stats Section -->
       <StatsSection v-if="departmentStats.length > 0" :stats="departmentStats" />
 
-      <!-- Training Schedule Section -->
       <TrainingScheduleSection
         v-if="departmentTrainingGroups.length > 0"
         id="trainingszeiten"
@@ -173,17 +169,16 @@ const departmentCta = computed<Cta>(() => {
         :groups="departmentTrainingGroups"
       />
 
-      <!-- Locations Section -->
       <LocationSection
         v-if="departmentLocations.length > 0"
         id="standorte"
         title="UNSERE STANDORTE"
         subtitle="Wo wir spielen"
         description="Moderne Hallen mit professioneller Ausstattung für optimale Trainingsbedingungen."
+        background="gray"
         :locations="departmentLocations"
       />
 
-      <!-- News Section -->
       <NewsSection
         headline="AKTUELLE NEUIGKEITEN"
         subtitle="Was bei uns los ist"
@@ -195,11 +190,11 @@ const departmentCta = computed<Cta>(() => {
         headline="GALERIE"
         subtitle="Bilder aus der Abteilung"
         description="Aktuelle Einblicke aus Training, Spielbetrieb und Vereinsleben dieser Abteilung."
+        background="gray"
         :items-count="20"
         :category-id="departmentCategoryId"
       />
 
-      <!-- CTA Section -->
       <CtaSection
         :headline="departmentCta.title"
         :description="departmentCta.description"

@@ -2,6 +2,7 @@
 import { DepartmentLocation } from "@vsg/types";
 import EditableContent from "@/components/content/EditableContent.vue";
 import SectionHeader from "@/components/ui/SectionHeader.vue";
+import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
 import LocationCard from "./LocationCard.vue";
 
 interface Props {
@@ -9,13 +10,18 @@ interface Props {
   subtitle: string;
   description?: string;
   locations: DepartmentLocation[];
+  background?: SectionBackground;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  background: "white",
+});
+
+const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section class="relative bg-gray-50 py-32">
+  <section class="relative py-32" :class="sectionBackgroundClass">
     <div class="mx-auto max-w-7xl px-6">
       <!-- Section Header -->
       <div class="flex flex-col gap-6">

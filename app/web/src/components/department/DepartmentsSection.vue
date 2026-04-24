@@ -3,6 +3,7 @@ import { storeToRefs } from "pinia";
 import EditableContent from "@/components/content/EditableContent.vue";
 import SectionHeader from "@/components/ui/SectionHeader.vue";
 import ApiState from "@/components/ui/ApiState.vue";
+import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
 import DepartmentCard from "./DepartmentCard.vue";
 import { useDepartmentsStore } from "../../stores/departmentsStore";
@@ -11,16 +12,20 @@ interface Props {
   headline?: string;
   description?: string;
   subtitle?: string;
+  background?: SectionBackground;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  background: "white",
+});
 
 const departmentsStore = useDepartmentsStore();
 const { departments, isLoading, error } = storeToRefs(departmentsStore);
+const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section class="relative bg-white py-32">
+  <section class="relative py-32" :class="sectionBackgroundClass">
     <div class="mx-auto flex max-w-7xl flex-col px-6">
       <div class="flex flex-col gap-6">
         <SectionHeader

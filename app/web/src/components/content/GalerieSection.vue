@@ -5,6 +5,7 @@ import type { MediaItem } from "@vsg/sdk";
 import EditableContent from "@/components/content/EditableContent.vue";
 import ApiState from "@/components/ui/ApiState.vue";
 import SectionHeader from "@/components/ui/SectionHeader.vue";
+import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
 import {
   getMediaDisplayUrl,
   getMediaThumbnailUrl,
@@ -17,10 +18,12 @@ interface Props {
   subtitle?: string;
   itemsCount?: number;
   categoryId?: number | null;
+  background?: SectionBackground;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   itemsCount: 20,
+  background: "white",
 });
 
 const mediaItemsStore = useMediaItemsStore();
@@ -144,10 +147,12 @@ onUnmounted(() => {
   window.removeEventListener("keydown", handleKeydown);
   document.body.classList.remove("overflow-hidden");
 });
+
+const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section class="relative bg-white py-32">
+  <section class="relative py-32" :class="sectionBackgroundClass">
     <div class="mx-auto flex max-w-7xl flex-col px-6">
       <div class="flex flex-col gap-6">
         <SectionHeader

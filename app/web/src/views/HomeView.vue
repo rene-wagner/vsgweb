@@ -34,6 +34,7 @@ import { homepageContent } from "@/content/homepage-content";
       :description="homepageContent.postsDescription"
       :subtitle="homepageContent.postsSubtitle"
       :posts-count="homepageContent.postsCount"
+      background="gray"
     />
 
     <GalerieSection

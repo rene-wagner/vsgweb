@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import type { DepartmentTrainingGroup } from "@vsg/types";
 import EditableContent from "@/components/content/EditableContent.vue";
 import SectionHeader from "@/components/ui/SectionHeader.vue";
+import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
 import TrainingTable from "./TrainingTable.vue";
 
 interface Props {
@@ -10,9 +11,12 @@ interface Props {
   subtitle: string;
   description?: string;
   groups: DepartmentTrainingGroup[];
+  background?: SectionBackground;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  background: "white",
+});
 
 function getHeaderClasses(variant: DepartmentTrainingGroup["variant"]): string {
   return variant === "primary" ? "bg-vsg-blue-600" : "bg-vsg-blue-900";
@@ -29,10 +33,12 @@ function getIconClasses(variant: DepartmentTrainingGroup["variant"]): string {
 function getAgeRangeClasses(variant: DepartmentTrainingGroup["variant"]): string {
   return variant === "primary" ? "text-vsg-blue-100" : "text-vsg-blue-300";
 }
+
+const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section class="relative bg-white py-32">
+  <section class="relative py-32" :class="sectionBackgroundClass">
     <div class="mx-auto max-w-7xl px-6">
       <!-- Section Header -->
       <div class="flex flex-col gap-6">
