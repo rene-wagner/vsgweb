@@ -7,10 +7,8 @@ interface Props {
   categoryAccentClass?: string;
   title: string;
   description: string;
-  highlight?: string;
   titleUuid: string;
   descriptionUuid: string;
-  highlightUuid: string;
   icon?: string;
   imageSrc?: string;
   imageAlt?: string;
@@ -20,7 +18,6 @@ const props = withDefaults(defineProps<Props>(), {
   year: undefined,
   categoryLabel: undefined,
   categoryAccentClass: "",
-  highlight: undefined,
   icon: undefined,
   imageSrc: undefined,
   imageAlt: undefined,
@@ -72,14 +69,6 @@ const props = withDefaults(defineProps<Props>(), {
       :content="props.description"
       tag="div"
       content-class="font-body text-base leading-relaxed text-vsg-blue-700"
-    />
-
-    <EditableContent
-      v-if="props.highlight"
-      :uuid="props.highlightUuid"
-      :content="props.highlight"
-      tag="blockquote"
-      content-class="border-l-4 border-vsg-gold-500 pl-4 font-body text-base italic text-vsg-blue-600"
     />
   </div>
 </template>

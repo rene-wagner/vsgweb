@@ -150,10 +150,8 @@ function getItemImageAlt(title: string): string {
         :image-alt="getItemImageAlt(item.title)"
         :title="item.title"
         :description="item.description"
-        :highlight="item.highlight"
         :title-uuid="`${props.itemTitleUuidPrefix}-${index}`"
         :description-uuid="`${props.itemDescriptionUuidPrefix}-${index}`"
-        :highlight-uuid="`${props.itemHighlightUuidPrefix}-${index}`"
       >
         <template #meta-start>
           <span class="font-display text-2xl text-vsg-gold-600">{{ item.year }}</span>
