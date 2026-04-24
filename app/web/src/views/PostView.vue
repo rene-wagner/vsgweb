@@ -3,9 +3,9 @@ import { watch, onMounted, onUnmounted, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { usePostsStore } from "../stores/postsStore";
-import ApiState from "@/components/ApiState.vue";
-import MarkdownRenderer from "@/components/MarkdownRenderer.vue";
-import HeroSectionSmall from "../components/HeroSectionSmall.vue";
+import ApiState from "@/components/ui/ApiState.vue";
+import MarkdownRenderer from "@/components/content/MarkdownRenderer.vue";
+import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
 
 const route = useRoute();
 const postsStore = usePostsStore();

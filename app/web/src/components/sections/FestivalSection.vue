@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import EditableContent from "@/components/EditableContent.vue";
-import Section from "@/components/Section.vue";
+import EditableContent from "@/components/content/EditableContent.vue";
+import Section from "@/components/sections/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
 
 interface FestivalItem {

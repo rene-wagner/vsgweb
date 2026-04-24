@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onErrorCaptured, onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
-import Navbar from "@/components/Navbar.vue";
-import Footer from "@/components/Footer.vue";
-import CookieConsentBanner from "@/components/CookieConsentBanner.vue";
+import Navbar from "@/components/app/Navbar.vue";
+import Footer from "@/components/app/Footer.vue";
+import CookieConsentBanner from "@/components/app/CookieConsentBanner.vue";
 import { useCategoriesStore } from "@/stores/categoriesStore";
 import { useContactPeopleStore } from "@/stores/contactPeopleStore";
 import { useDepartmentsStore } from "@/stores/departmentsStore";

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { nextTick, onUnmounted, ref, watch } from "vue";
 import EasyMDE from "easymde";
-import MarkdownRenderer from "@/components/MarkdownRenderer.vue";
+import MarkdownRenderer from "@/components/content/MarkdownRenderer.vue";
 import { useEditingMode } from "@/composables/useEditingMode";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 

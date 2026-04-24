@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { DepartmentLocation } from "@vsg/types";
-import Section from "@/components/Section.vue";
+import Section from "@/components/sections/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
-import LocationCard from "./LocationCard.vue";
+import LocationCard from "@/components/ui/LocationCard.vue";
 
 interface Props {
   title: string;

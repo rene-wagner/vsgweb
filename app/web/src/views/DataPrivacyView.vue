@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import EditableContent from "@/components/EditableContent.vue";
+import EditableContent from "@/components/content/EditableContent.vue";
 import { dataPrivacyContent } from "@/content/data-privacy-content";
-import HeroSectionSmall from "../components/HeroSectionSmall.vue";
+import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
 </script>
 
 <template>

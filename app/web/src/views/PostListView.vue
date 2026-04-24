@@ -3,9 +3,9 @@ import { computed, onMounted, onUnmounted, watch, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useCategoriesStore } from "@/stores/categoriesStore";
-import HeroSectionSmall from "@/components/HeroSectionSmall.vue";
-import NewsCardListItem from "@/components/NewsCardListItem.vue";
-import ApiState from "@/components/ApiState.vue";
+import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
+import NewsCardListItem from "@/components/content/NewsCardListItem.vue";
+import ApiState from "@/components/ui/ApiState.vue";
 import { usePostsStore } from "@/stores/postsStore";
 
 const POSTS_PER_PAGE = 10;

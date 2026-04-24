@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
-import EditableContent from "./EditableContent.vue";
+import EditableContent from "@/components/content/EditableContent.vue";
 
 interface Props {
   uuid: string;

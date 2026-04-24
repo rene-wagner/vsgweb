@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HeroSectionSmall from "@/components/HeroSectionSmall.vue";
+import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
 </script>
 
 <template>

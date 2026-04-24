@@ -2,12 +2,12 @@
 import { computed, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { RouterLink } from "vue-router";
-import ApiState from "@/components/ApiState.vue";
-import Section from "@/components/Section.vue";
+import ApiState from "@/components/ui/ApiState.vue";
+import Section from "@/components/sections/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
-import NewsCardFeatured from "./NewsCardFeatured.vue";
-import NewsCardListItem from "./NewsCardListItem.vue";
-import { usePostsStore } from "../stores/postsStore";
+import NewsCardFeatured from "@/components/content/NewsCardFeatured.vue";
+import NewsCardListItem from "@/components/content/NewsCardListItem.vue";
+import { usePostsStore } from "@/stores/postsStore";
 
 interface Props {
   headline?: string;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import EditableContent from "./EditableContent.vue";
-import MarkdownRenderer from "@/components/MarkdownRenderer.vue";
+import EditableContent from "@/components/content/EditableContent.vue";
+import MarkdownRenderer from "@/components/content/MarkdownRenderer.vue";
 
 interface Props {
   headline?: string;

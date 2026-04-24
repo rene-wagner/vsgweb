@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import ApiState from "@/components/ApiState.vue";
-import Card from "@/components/Card.vue";
+import ApiState from "@/components/ui/ApiState.vue";
+import Card from "@/components/ui/Card.vue";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
 import { useDepartmentsStore } from "@/stores/departmentsStore";
-import CardSection from "@/components/CardSection.vue";
-import HeroSectionScreen from "@/components/HeroSectionScreen.vue";
-import WelcomeSection from "@/components/WelcomeSection.vue";
-import StatsSection from "@/components/StatsSection.vue";
-import NewsSection from "@/components/NewsSection.vue";
-import GalerieSection from "@/components/GalerieSection.vue";
-import CtaSection from "@/components/CtaSection.vue";
+import CardSection from "@/components/sections/CardSection.vue";
+import HeroSectionScreen from "@/components/sections/HeroSectionScreen.vue";
+import WelcomeSection from "@/components/sections/WelcomeSection.vue";
+import StatsSection from "@/components/sections/StatsSection.vue";
+import NewsSection from "@/components/sections/NewsSection.vue";
+import GalerieSection from "@/components/sections/GalerieSection.vue";
+import CtaSection from "@/components/sections/CtaSection.vue";
 import { homepageContent } from "@/content/homepage-content";
 
 const departmentsStore = useDepartmentsStore();

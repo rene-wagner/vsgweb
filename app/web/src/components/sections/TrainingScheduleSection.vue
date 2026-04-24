@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import type { DepartmentTrainingGroup } from "@vsg/types";
-import Section from "@/components/Section.vue";
+import Section from "@/components/sections/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
-import TrainingTable from "./TrainingTable.vue";
+import TrainingTable from "@/components/ui/TrainingTable.vue";
 
 interface Props {
   title: string;

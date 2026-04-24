@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { ChartData } from "chart.js";
-import EditableContent from "@/components/EditableContent.vue";
-import Chart from "@/components/Chart.vue";
-import Section from "@/components/Section.vue";
+import EditableContent from "@/components/content/EditableContent.vue";
+import Chart from "@/components/ui/Chart.vue";
+import Section from "@/components/sections/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
 
 interface Props {

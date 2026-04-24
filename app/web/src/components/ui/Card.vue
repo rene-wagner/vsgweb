@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LinkArrow from "@/components/LinkArrow.vue";
+import LinkArrow from "@/components/ui/LinkArrow.vue";
 
 interface Props {
   title: string;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
-import EditableContent from "./EditableContent.vue";
+import EditableContent from "@/components/content/EditableContent.vue";
 
 interface Props {
   headline?: string;
