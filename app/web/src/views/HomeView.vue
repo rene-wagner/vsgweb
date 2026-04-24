@@ -40,7 +40,7 @@ const { departments, isLoading, error } = storeToRefs(departmentsStore);
       subtitle-uuid="departments-subtitle"
     >
       <ApiState
-        class="mt-16 grid grid-cols-2 gap-4"
+        class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-4"
         :is-loading="isLoading"
         :error="error"
         :empty="departments.length === 0"
