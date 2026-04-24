@@ -2,6 +2,7 @@
 import { storeToRefs } from "pinia";
 import ApiState from "@/components/ui/ApiState.vue";
 import Card from "@/components/cards/Card.vue";
+import LinkArrow from "@/components/ui/LinkArrow.vue";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
 import { useDepartmentsStore } from "@/stores/departmentsStore";
 import CardSection from "@/components/sections/CardSection.vue";
@@ -51,7 +52,6 @@ const { departments, isLoading, error } = storeToRefs(departmentsStore);
           :key="department.id"
           :title="department.name"
           :description="department.shortDescription"
-          :href="`/abteilung/${department.slug}`"
         >
           <template #icon>
             <img
@@ -62,9 +62,12 @@ const { departments, isLoading, error } = storeToRefs(departmentsStore);
               style="
                 filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(200deg) brightness(89%)
                   contrast(91%);
-              "
-            />
+               "
+             />
             <FontAwesomeIcon v-else icon="circle" class="text-vsg-blue-600" />
+          </template>
+          <template #link>
+            <LinkArrow :href="`/abteilung/${department.slug}`">Mehr erfahren</LinkArrow>
           </template>
         </Card>
       </ApiState>

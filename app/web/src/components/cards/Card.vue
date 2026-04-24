@@ -1,55 +1,79 @@
 <script setup lang="ts">
-import LinkArrow from "@/components/ui/LinkArrow.vue";
+import Badge from "@/components/ui/Badge.vue";
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
-  href?: string;
-  linkLabel?: string;
+  year?: string;
+  categoryLabel?: string;
+  categoryAccentClass?: string;
+  icon?: string;
   imageSrc?: string;
   imageAlt?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  title: undefined,
   description: undefined,
-  href: undefined,
-  linkLabel: "Mehr erfahren",
+  year: undefined,
+  categoryLabel: undefined,
+  categoryAccentClass: "",
+  icon: undefined,
   imageSrc: undefined,
   imageAlt: undefined,
 });
 </script>
 
 <template>
-  <div class="card-hover group overflow-hidden border border-gray-200 bg-gray-50">
-    <div v-if="props.imageSrc" class="relative aspect-video">
-      <img
-        :src="props.imageSrc"
-        :alt="props.imageAlt || props.title"
-        class="h-full w-full object-cover"
-      />
+  <div
+    class="card-hover group overflow-hidden border border-gray-200 bg-gray-50 shadow-sm transition-transform duration-200 hover:-translate-y-1"
+  >
+    <div v-if="props.imageSrc" class="relative aspect-video overflow-hidden bg-gray-100">
+      <img :src="props.imageSrc" :alt="props.imageAlt || props.title || ''" class="h-full w-full object-cover" />
     </div>
 
     <div class="p-8">
       <div
-        v-if="!props.imageSrc"
-        class="mb-6 flex h-16 w-16 items-center justify-center rounded-lg bg-vsg-blue-600/10 transition-colors group-hover:bg-vsg-blue-600/20"
+        v-if="$slots['meta-start'] || $slots['meta-end'] || props.year || props.categoryLabel"
+        class="mb-5 flex items-start justify-between gap-4"
       >
+        <div v-if="$slots['meta-start'] || props.year">
+          <slot name="meta-start">
+            <span class="font-display text-2xl text-vsg-gold-600">{{ props.year }}</span>
+          </slot>
+        </div>
+
+        <div v-if="$slots['meta-end'] || props.categoryLabel">
+          <slot name="meta-end">
+            <Badge :accent-class="props.categoryAccentClass">{{ props.categoryLabel }}</Badge>
+          </slot>
+        </div>
+      </div>
+
+      <div v-if="!props.imageSrc && ($slots.icon || props.icon)" class="mb-6">
         <slot name="icon">
-          <FontAwesomeIcon icon="circle" class="text-vsg-blue-600" />
+          <div
+            class="flex h-16 w-16 items-center justify-center rounded-lg bg-vsg-blue-600/10 text-vsg-blue-600 transition-colors group-hover:bg-vsg-blue-600/20"
+          >
+            <FontAwesomeIcon :icon="props.icon!" class="text-2xl" />
+          </div>
         </slot>
       </div>
 
-      <h4 class="mb-3 font-display text-3xl tracking-wider text-vsg-blue-900">
-        {{ props.title }}
+      <h4 v-if="$slots.title || props.title" class="mb-3 font-display text-3xl tracking-wider text-vsg-blue-900">
+        <slot name="title">{{ props.title }}</slot>
       </h4>
 
-      <p v-if="props.description" class="font-body font-normal leading-relaxed text-gray-600">
+      <template v-if="$slots.default">
+        <slot />
+      </template>
+      <p v-else-if="props.description" class="font-body font-normal leading-relaxed text-gray-600">
         {{ props.description }}
       </p>
 
-      <slot />
-
-      <LinkArrow v-if="props.href" :href="props.href" class="mt-6">{{ props.linkLabel }}</LinkArrow>
+      <div v-if="$slots.link" class="mt-6">
+        <slot name="link" />
+      </div>
     </div>
   </div>
 </template>

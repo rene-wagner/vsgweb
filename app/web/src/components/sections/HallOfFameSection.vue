@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import EditableContent from "@/components/content/EditableContent.vue";
+import Card from "@/components/cards/Card.vue";
 import Section from "@/components/sections/Section.vue";
-import HallOfFameCard from "@/components/cards/HallOfFameCard.vue";
+import Badge from "@/components/ui/Badge.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
 
 interface HallOfFameCategory {
@@ -139,32 +141,43 @@ function getItemImageAlt(title: string): string {
     </div>
 
     <div class="mt-12 grid gap-6 md:grid-cols-2">
-      <HallOfFameCard
+      <Card
         v-for="(item, index) in filteredItems"
         :key="`${item.year}-${item.title}-${index}`"
-        :year="item.year"
-        :category-label="getCategoryLabel(item.category)"
-        :category-accent-class="getAccentClasses(item.category)"
         :icon="getCategoryIcon(item.category)"
         :image-src="getItemImageSrc(item.category, item.year)"
         :image-alt="getItemImageAlt(item.title)"
-        :title="item.title"
-        :description="item.description"
-        :title-uuid="`${props.itemTitleUuidPrefix}-${index}`"
-        :description-uuid="`${props.itemDescriptionUuidPrefix}-${index}`"
       >
         <template #meta-start>
           <span class="font-display text-2xl text-vsg-gold-600">{{ item.year }}</span>
         </template>
         <template #meta-end>
-          <span
-            class="inline-block rounded-full border px-3 py-1 text-sm font-medium"
-            :class="getAccentClasses(item.category)"
-          >
+          <Badge :accent-class="getAccentClasses(item.category)">
             {{ getCategoryLabel(item.category) }}
-          </span>
+          </Badge>
         </template>
-      </HallOfFameCard>
+        <template #title>
+          <EditableContent
+            :uuid="`${props.itemTitleUuidPrefix}-${index}`"
+            :content="item.title"
+            tag="span"
+            content-class="font-display text-2xl tracking-widest text-vsg-blue-900 uppercase"
+          />
+        </template>
+        <EditableContent
+          :uuid="`${props.itemDescriptionUuidPrefix}-${index}`"
+          :content="item.description"
+          tag="div"
+          content-class="font-body text-base leading-relaxed text-vsg-blue-700"
+        />
+        <EditableContent
+          v-if="item.highlight"
+          :uuid="`${props.itemHighlightUuidPrefix}-${index}`"
+          :content="item.highlight"
+          tag="blockquote"
+          content-class="mt-4 border-l-4 border-vsg-gold-500 pl-4 font-body text-base italic text-vsg-blue-600"
+        />
+      </Card>
     </div>
   </Section>
 </template>
