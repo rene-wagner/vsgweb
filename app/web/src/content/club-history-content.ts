@@ -25,6 +25,7 @@ interface ChronicleGroup {
 interface FestivalItem {
   headline: string;
   text: string;
+  imageSrc?: string;
 }
 
 interface HallOfFameCategory {
@@ -218,14 +219,22 @@ Von Anfang an standen nicht nur sportliche Leistungen im Mittelpunkt, sondern au
     {
       headline: "Sommerfest",
       text: "Beim Sommerfest kommen Mitglieder, Familien und Freunde zusammen, um die Saison in lockerer Atmosphäre zu feiern.",
+      imageSrc: "https://placehold.co/600x400/png"
     },
     {
       headline: "Vereinsausflüge",
       text: "Gemeinsame Ausflüge stärken das Miteinander und schaffen Erinnerungen, die weit über den Sport hinausreichen.",
+      imageSrc: "https://placehold.co/600x400/png"
     },
     {
       headline: "Jubiläen und Ehrungen",
       text: "Besondere Vereinsmomente und langjähriges Engagement bekommen bei uns den Raum, den sie verdienen.",
+      imageSrc: "https://placehold.co/600x400/png"
+    },
+    {
+      headline: "Dummy Veranstaltung",
+      text: "Ein ganz besonderer Moment im Vereinsleben, der noch lange in Erinnerung bleiben wird.",
+      imageSrc: "https://placehold.co/600x400/png"
     },
   ],
 

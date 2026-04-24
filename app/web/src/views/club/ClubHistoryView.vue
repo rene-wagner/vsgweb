@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import AccordionSection from "@/components/sections/AccordionSection.vue";
+import CardSection from "@/components/sections/CardSection.vue";
 import CtaSection from "@/components/sections/CtaSection.vue";
 import ChartSection from "@/components/sections/ChartSection.vue";
 import EditableContent from "@/components/content/EditableContent.vue";
-import FestivalSection from "@/components/sections/FestivalSection.vue";
 import HallOfFameSection from "@/components/sections/HallOfFameSection.vue";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
+import Card from "@/components/ui/Card.vue";
 import FactCard from "@/components/ui/FactCard.vue";
 import Timeline from "@/components/content/Timeline.vue";
 import { clubHistoryContent } from "@/content/club-history-content";
@@ -94,19 +95,41 @@ import { clubHistoryContent } from "@/content/club-history-content";
       background="white"
     />
 
-    <FestivalSection
+    <CardSection
       id="festivals"
       :subtitle="clubHistoryContent.festivalsSubtitle"
-      :headline="clubHistoryContent.festivalsHeadline"
+      :title="clubHistoryContent.festivalsHeadline"
       :description="clubHistoryContent.festivalsDescription"
-      :items="clubHistoryContent.festivalsItems"
       subtitle-uuid="club-history-festivals-subtitle"
-      headline-uuid="club-history-festivals-headline"
+      title-uuid="club-history-festivals-headline"
       description-uuid="club-history-festivals-description"
-      item-headline-uuid-prefix="club-history-festivals-item-headline"
-      item-text-uuid-prefix="club-history-festivals-item-text"
       background="gray"
-    />
+    >
+      <div class="mt-16 grid gap-6 md:grid-cols-2">
+        <Card
+          v-for="(item, index) in clubHistoryContent.festivalsItems"
+          :key="`${item.headline}-${index}`"
+          :title="item.headline"
+          :image-src="item.imageSrc"
+        >
+          <template #icon></template>
+          <template #title>
+            <EditableContent
+              :uuid="`club-history-festivals-item-headline-${index}`"
+              :content="item.headline"
+              tag="span"
+              content-class="font-display text-3xl tracking-wider text-vsg-blue-900 uppercase"
+            />
+          </template>
+          <EditableContent
+            :uuid="`club-history-festivals-item-text-${index}`"
+            :content="item.text"
+            tag="p"
+            content-class="font-body text-base leading-relaxed text-vsg-blue-700"
+          />
+        </Card>
+      </div>
+    </CardSection>
 
     <HallOfFameSection
       id="hall-of-fame"
