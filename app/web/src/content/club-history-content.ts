@@ -217,22 +217,22 @@ Von Anfang an standen nicht nur sportliche Leistungen im Mittelpunkt, sondern au
   festivalsItems: [
     {
       headline: "Sommerfest",
-      text: "Beim Sommerfest kommen Mitglieder, Familien und Freunde zusammen, um die Saison in lockerer Atmosphaere zu feiern.",
+      text: "Beim Sommerfest kommen Mitglieder, Familien und Freunde zusammen, um die Saison in lockerer Atmosphäre zu feiern.",
     },
     {
-      headline: "Vereinsausfluege",
-      text: "Gemeinsame Ausfluege staerken das Miteinander und schaffen Erinnerungen, die weit ueber den Sport hinausreichen.",
+      headline: "Vereinsausflüge",
+      text: "Gemeinsame Ausflüge stärken das Miteinander und schaffen Erinnerungen, die weit über den Sport hinausreichen.",
     },
     {
-      headline: "Jubilaeen und Ehrungen",
-      text: "Besondere Vereinsmomente und langjaehriges Engagement bekommen bei uns den Raum, den sie verdienen.",
+      headline: "Jubiläen und Ehrungen",
+      text: "Besondere Vereinsmomente und langjähriges Engagement bekommen bei uns den Raum, den sie verdienen.",
     },
   ],
 
   hallOfFameSubtitle: "Unser Stolz",
   hallOfFameHeadline: "Hall of Fame",
   hallOfFameDescription:
-    "Einige Momente ragen aus unserer Vereinsgeschichte besonders heraus. Hier ehren wir sportliche Hoehepunkte, praegende Leistungen und Erfolge, auf die wir bis heute mit Recht stolz sind.",
+    "Einige Momente ragen aus unserer Vereinsgeschichte besonders heraus. Hier ehren wir sportliche Höhepunkte, prägende Leistungen und Erfolge, auf die wir bis heute mit Recht stolz sind.",
   hallOfFameCategories: [
     { id: "badminton", label: "Badminton" },
     { id: "table-tennis", label: "Tischtennis" },
@@ -245,23 +245,23 @@ Von Anfang an standen nicht nur sportliche Leistungen im Mittelpunkt, sondern au
       category: "badminton",
       title: "Bronzemedaille bei der Badminton-Weltmeisterschaft",
       description:
-        "Mit dem Gewinn der Bronzemedaille bei einer Badminton-Weltmeisterschaft gelang einem Mitglied unseres Vereins ein Erfolg, der weit ueber die Region hinausstrahlte und bis heute einen besonderen Platz in unserer Geschichte einnimmt.",
-      highlight: "Ein historischer Moment fuer die VSG Kugelberg und ein Meilenstein fuer den Badmintonsport in unserem Verein.",
+        "Mit dem Gewinn der Bronzemedaille bei einer Badminton-Weltmeisterschaft gelang einem Mitglied unseres Vereins ein Erfolg, der weit über die Region hinausstrahlte und bis heute einen besonderen Platz in unserer Geschichte einnimmt.",
+      highlight: "Ein historischer Moment für die VSG Kugelberg und ein Meilenstein für den Badmintonsport in unserem Verein.",
     },
     {
       year: "2004",
       category: "table-tennis",
-      title: "Aufstieg in die naechste Spielklasse",
+      title: "Aufstieg in die nächste Spielklasse",
       description:
-        "Mit einer geschlossenen Mannschaftsleistung und viel Konstanz ueber die gesamte Saison gelang der entscheidende Aufstieg und damit einer der praegenden Erfolge der Abteilung.",
-      highlight: "Teamgeist, Verlaesslichkeit und sportlicher Ehrgeiz fuehrten diesen Erfolg herbei.",
+        "Mit einer geschlossenen Mannschaftsleistung und viel Konstanz über die gesamte Saison gelang der entscheidende Aufstieg und damit einer der prägenden Erfolge der Abteilung.",
+      highlight: "Teamgeist, Verlässlichkeit und sportlicher Ehrgeiz führten diesen Erfolg herbei.",
     },
     {
       year: "2011",
       category: "volleyball",
       title: "Erfolgreiche Turnierserie im Regionalvergleich",
       description:
-        "Mehrere starke Auftritte bei regionalen Turnieren machten deutlich, wie viel Qualitaet und Zusammenhalt in der Mannschaft steckt.",
+        "Mehrere starke Auftritte bei regionalen Turnieren machten deutlich, wie viel Qualität und Zusammenhalt in der Mannschaft steckt.",
     },
     {
       year: "2020",
@@ -269,7 +269,7 @@ Von Anfang an standen nicht nur sportliche Leistungen im Mittelpunkt, sondern au
       title: "Zusammenhalt in herausfordernden Zeiten",
       description:
         "Auch in schwierigen Phasen blieb das Vereinsleben lebendig. Trainingsformen wurden angepasst, Kontakte gehalten und der Gemeinschaftsgedanke bewusst weitergetragen.",
-      highlight: "Nicht nur Medaillen, sondern auch gelebter Zusammenhalt gehoeren in unsere Hall of Fame.",
+      highlight: "Nicht nur Medaillen, sondern auch gelebter Zusammenhalt gehören in unsere Hall of Fame.",
     },
   ],
 
