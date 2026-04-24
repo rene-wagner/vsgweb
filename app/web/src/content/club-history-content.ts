@@ -25,7 +25,6 @@ interface ChronicleGroup {
 export interface ClubHistoryContent {
   heroHeadline: string;
   heroDescription: string;
-  heroSubtitle: string;
   heroPrimaryCtaLabel: string;
   heroPrimaryCtaAnchor: string;
   heroSecondaryCtaLabel: string;
@@ -37,6 +36,7 @@ export interface ClubHistoryContent {
   foundingFacts: FactItem[];
   foundingMilestonesHeadline: string;
   foundingMilestones: TimelineItem[];
+  developmentSubtitle: string;
   developmentHeadline: string;
   developmentDescription: string;
   developmentChartHeadline: string;
@@ -54,7 +54,6 @@ export const clubHistoryContent: ClubHistoryContent = {
   heroHeadline: "Geschichte",
   heroDescription:
     "Von den ersten Trainingseinheiten bis zum lebendigen Vereinsalltag von heute - unsere Geschichte ist von Gemeinschaft, Einsatz und viel Leidenschaft für den Sport geprägt.",
-  heroSubtitle: "Tradition seit 1985",
   heroPrimaryCtaLabel: "Gründung",
   heroPrimaryCtaAnchor: "#gruendung",
   heroSecondaryCtaLabel: "Entwicklung",
@@ -102,6 +101,7 @@ Von Anfang an standen nicht nur sportliche Leistungen im Mittelpunkt, sondern au
     },
   ],
 
+  developmentSubtitle: "Entwicklung",
   developmentHeadline: "Entwicklung des Vereins",
   developmentDescription:
     "Aus den ersten Jahren des Aufbaus entstand Schritt für Schritt ein aktiver Verein mit sportlicher Vielfalt, wachsender Verantwortung und einem klaren Platz im lokalen Vereinsleben.",

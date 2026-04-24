@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import EditableContent from "@/components/content/EditableContent.vue";
+
 interface TimelineItem {
   year: string;
   title: string;
@@ -7,13 +9,19 @@ interface TimelineItem {
 
 defineProps<{
   title: string;
+  titleUuid: string;
   items: TimelineItem[];
 }>();
 </script>
 
 <template>
   <div class="lg:pl-12 border-l-2 border-gray-100 relative space-y-12">
-    <h3 class="font-display text-3xl text-vsg-blue-900 mb-8">{{ title }}</h3>
+    <EditableContent
+      :uuid="titleUuid"
+      :content="title"
+      tag="h3"
+      content-class="font-display text-3xl text-vsg-blue-900 mb-8"
+    />
 
     <div v-for="item in items" :key="item.year" class="timeline-item relative pl-10">
       <span class="font-display text-vsg-gold-600 text-xl">{{ item.year }}</span>
