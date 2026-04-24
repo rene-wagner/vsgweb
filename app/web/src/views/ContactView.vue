@@ -2,11 +2,11 @@
 import { ref, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useContactPeopleStore, type ContactPerson } from "@/stores/contactPeopleStore";
-import ContactForm from "../components/forms/ContactForm.vue";
-import SecureContact from "../components/forms/SecureContact.vue";
+import ContactForm from "../components/ContactForm.vue";
+import SecureContact from "../components/SecureContact.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import ApiState from "@/components/ui/ApiState.vue";
-import HeroSectionSmall from "../components/content/HeroSectionSmall.vue";
+import ApiState from "@/components/ApiState.vue";
+import HeroSectionSmall from "../components/HeroSectionSmall.vue";
 import { getUploadUrl } from "@/services/media-items/media-item.service";
 
 const route = useRoute();

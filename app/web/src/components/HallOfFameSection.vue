@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import EditableContent from "@/components/content/EditableContent.vue";
-import Section from "@/components/ui/Section.vue";
+import EditableContent from "@/components/EditableContent.vue";
+import Section from "@/components/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
 
 interface HallOfFameCategory {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import EditableContent from "./EditableContent.vue";
-import Logo from "@/components/app/Logo.vue";
+import Logo from "@/components/Logo.vue";
 
 interface Props {
   tag?: string;

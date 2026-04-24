@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import EditableContent from "@/components/content/EditableContent.vue";
+import EditableContent from "@/components/EditableContent.vue";
 
 interface Props {
   subtitle: string;

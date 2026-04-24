@@ -2,8 +2,8 @@
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import type { MediaItem } from "@vsg/sdk";
-import ApiState from "@/components/ui/ApiState.vue";
-import Section from "@/components/ui/Section.vue";
+import ApiState from "@/components/ApiState.vue";
+import Section from "@/components/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
 import {
   getMediaDisplayUrl,

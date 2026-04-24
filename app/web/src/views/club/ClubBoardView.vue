@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import CardSection from "@/components/content/CardSection.vue";
-import HeroSectionSmall from "@/components/content/HeroSectionSmall.vue";
-import Card from "@/components/ui/Card.vue";
-import ApiState from "@/components/ui/ApiState.vue";
+import CardSection from "@/components/CardSection.vue";
+import HeroSectionSmall from "@/components/HeroSectionSmall.vue";
+import Card from "@/components/Card.vue";
+import ApiState from "@/components/ApiState.vue";
 import { clubBoardContent } from "@/content/club-board-content";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
 import { useContactPeopleStore } from "@/stores/contactPeopleStore";

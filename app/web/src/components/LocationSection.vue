@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { DepartmentLocation } from "@vsg/types";
-import Section from "@/components/ui/Section.vue";
+import Section from "@/components/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
 import LocationCard from "./LocationCard.vue";
 

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import AccordionSection from "@/components/content/AccordionSection.vue";
-import CtaSection from "@/components/content/CtaSection.vue";
-import ChartSection from "@/components/content/ChartSection.vue";
-import EditableContent from "@/components/content/EditableContent.vue";
-import FestivalSection from "@/components/content/FestivalSection.vue";
-import HallOfFameSection from "@/components/content/HallOfFameSection.vue";
-import HeroSectionSmall from "@/components/content/HeroSectionSmall.vue";
-import FactCard from "@/components/ui/FactCard.vue";
-import Timeline from "@/components/ui/Timeline.vue";
+import AccordionSection from "@/components/AccordionSection.vue";
+import CtaSection from "@/components/CtaSection.vue";
+import ChartSection from "@/components/ChartSection.vue";
+import EditableContent from "@/components/EditableContent.vue";
+import FestivalSection from "@/components/FestivalSection.vue";
+import HallOfFameSection from "@/components/HallOfFameSection.vue";
+import HeroSectionSmall from "@/components/HeroSectionSmall.vue";
+import FactCard from "@/components/FactCard.vue";
+import Timeline from "@/components/Timeline.vue";
 import { clubHistoryContent } from "@/content/club-history-content";
 </script>
 

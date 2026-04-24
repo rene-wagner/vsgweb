@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import type { DepartmentTrainingGroup } from "@vsg/types";
-import Section from "@/components/ui/Section.vue";
+import Section from "@/components/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
 import TrainingTable from "./TrainingTable.vue";
 

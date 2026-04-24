@@ -1,24 +1,35 @@
 <script setup lang="ts">
-import Section from "@/components/ui/Section.vue";
+import Accordion from "@/components/Accordion.vue";
+import Section from "@/components/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
+
+interface AccordionItem {
+  id: string | number;
+  title: string;
+  content: {
+    year?: string;
+    text: string;
+  }[];
+}
 
 interface Props {
   id?: string;
-  subtitle?: string;
   title: string;
-  description?: string;
-  subtitleUuid?: string;
   titleUuid: string;
+  subtitle?: string;
+  subtitleUuid?: string;
+  description?: string;
   descriptionUuid?: string;
+  items: AccordionItem[];
   background?: SectionBackground;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   id: undefined,
   subtitle: "",
+  subtitleUuid: "accordion-section-subtitle",
   description: undefined,
-  subtitleUuid: "card-section-subtitle",
-  descriptionUuid: "card-section-description",
+  descriptionUuid: "accordion-section-description",
   background: "white",
 });
 </script>
@@ -32,9 +43,12 @@ const props = withDefaults(defineProps<Props>(), {
     :title-uuid="props.titleUuid"
     :description="props.description"
     :description-uuid="props.descriptionUuid"
-    description-class="font-body text-lg leading-relaxed text-vsg-blue-700"
+    description-tag="p"
+    description-class="mx-auto max-w-3xl font-body text-lg text-gray-600"
     :background="props.background"
   >
-    <slot />
+    <div class="mt-16">
+      <Accordion :items="props.items" />
+    </div>
   </Section>
 </template>
