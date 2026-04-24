@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { ChartData } from "chart.js";
 import EditableContent from "@/components/content/EditableContent.vue";
-import SectionHeader from "@/components/ui/SectionHeader.vue";
 import Chart from "@/components/ui/Chart.vue";
-import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
+import Section from "@/components/ui/Section.vue";
+import type { SectionBackground } from "@/composables/useSectionBackground";
 
 interface Props {
   id?: string;
@@ -30,28 +30,21 @@ const props = withDefaults(defineProps<Props>(), {
   background: "white",
 });
 
-const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section :id="props.id" class="relative py-32" :class="sectionBackgroundClass">
-    <div class="mx-auto max-w-7xl px-6">
-      <div class="flex flex-col gap-6 text-center">
-        <SectionHeader
-          :subtitle="props.subtitle"
-          :title="props.title"
-          :subtitle-uuid="props.subtitleUuid"
-          :title-uuid="props.titleUuid"
-        />
-        <EditableContent
-          v-if="props.description"
-          :uuid="props.descriptionUuid"
-          :content="props.description"
-          tag="p"
-          content-class="mx-auto max-w-3xl font-body text-lg text-gray-600"
-        />
-      </div>
-
+  <Section
+    :id="props.id"
+    :subtitle="props.subtitle"
+    :title="props.title"
+    :subtitle-uuid="props.subtitleUuid"
+    :title-uuid="props.titleUuid"
+    :description="props.description"
+    :description-uuid="props.descriptionUuid"
+    description-tag="p"
+    description-class="mx-auto max-w-3xl font-body text-lg text-gray-600"
+    :background="props.background"
+  >
       <div class="mt-16 rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
         <div class="mb-8 flex items-center justify-between gap-6">
           <EditableContent
@@ -77,6 +70,5 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
           <Chart :data="props.data" />
         </div>
       </div>
-    </div>
-  </section>
+  </Section>
 </template>

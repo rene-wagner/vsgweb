@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import EditableContent from "@/components/content/EditableContent.vue";
 import Accordion from "@/components/ui/Accordion.vue";
-import SectionHeader from "@/components/ui/SectionHeader.vue";
-import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
+import Section from "@/components/ui/Section.vue";
+import type { SectionBackground } from "@/composables/useSectionBackground";
 
 interface AccordionItem {
   id: string | number;
@@ -34,31 +33,23 @@ const props = withDefaults(defineProps<Props>(), {
   background: "white",
 });
 
-const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section :id="props.id" class="relative py-32" :class="sectionBackgroundClass">
-    <div class="mx-auto max-w-7xl px-6">
-      <div class="flex flex-col gap-6 text-center">
-        <SectionHeader
-          :subtitle="props.subtitle"
-          :title="props.title"
-          :subtitle-uuid="props.subtitleUuid"
-          :title-uuid="props.titleUuid"
-        />
-        <EditableContent
-          v-if="props.description"
-          :uuid="props.descriptionUuid"
-          :content="props.description"
-          tag="p"
-          content-class="mx-auto max-w-3xl font-body text-lg text-gray-600"
-        />
-      </div>
-
+  <Section
+    :id="props.id"
+    :subtitle="props.subtitle"
+    :title="props.title"
+    :subtitle-uuid="props.subtitleUuid"
+    :title-uuid="props.titleUuid"
+    :description="props.description"
+    :description-uuid="props.descriptionUuid"
+    description-tag="p"
+    description-class="mx-auto max-w-3xl font-body text-lg text-gray-600"
+    :background="props.background"
+  >
       <div class="mt-16">
         <Accordion :items="props.items" />
       </div>
-    </div>
-  </section>
+  </Section>
 </template>

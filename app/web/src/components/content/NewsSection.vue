@@ -2,10 +2,9 @@
 import { computed, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { RouterLink } from "vue-router";
-import EditableContent from "@/components/content/EditableContent.vue";
-import SectionHeader from "@/components/ui/SectionHeader.vue";
 import ApiState from "@/components/ui/ApiState.vue";
-import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
+import Section from "@/components/ui/Section.vue";
+import type { SectionBackground } from "@/composables/useSectionBackground";
 import NewsCardFeatured from "./NewsCardFeatured.vue";
 import NewsCardListItem from "./NewsCardListItem.vue";
 import { usePostsStore } from "../../stores/postsStore";
@@ -90,28 +89,19 @@ const featuredPost = computed(() => activePosts.value[0] || null);
 
 // Remaining posts for the list (skip first)
 const listPosts = computed(() => activePosts.value.slice(1));
-const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section class="relative py-32" :class="sectionBackgroundClass">
-    <div class="mx-auto flex max-w-7xl flex-col px-6">
-      <div class="flex flex-col gap-6">
-        <SectionHeader
-          :subtitle="props.subtitle || ''"
-          :title="props.headline || ''"
-          subtitle-uuid="news-subtitle"
-          title-uuid="news-title"
-        />
-        <EditableContent
-          v-if="props.description"
-          uuid="news-description"
-          :content="props.description"
-          tag="p"
-          content-class="mx-auto max-w-3xl text-center font-body text-lg text-gray-600"
-        />
-      </div>
-
+  <Section
+    :subtitle="props.subtitle || ''"
+    :title="props.headline || ''"
+    subtitle-uuid="news-subtitle"
+    title-uuid="news-title"
+    :description="props.description"
+    description-uuid="news-description"
+    description-tag="p"
+    :background="props.background"
+  >
       <ApiState
         class="mt-16"
         :is-loading="activeLoading"
@@ -150,6 +140,5 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
           </RouterLink>
         </div>
       </ApiState>
-    </div>
-  </section>
+  </Section>
 </template>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import EditableContent from "@/components/content/EditableContent.vue";
-import SectionHeader from "@/components/ui/SectionHeader.vue";
-import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
+import Section from "@/components/ui/Section.vue";
+import type { SectionBackground } from "@/composables/useSectionBackground";
 
 interface HallOfFameCategory {
   id: string;
@@ -41,7 +41,6 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const currentFilter = ref("all");
-const sectionBackgroundClass = useSectionBackground(() => props.background);
 
 const filteredItems = computed(() => {
   if (currentFilter.value === "all") {
@@ -74,24 +73,17 @@ function getAccentClasses(categoryId: string): string {
 </script>
 
 <template>
-  <section :id="props.id" class="relative py-32" :class="sectionBackgroundClass">
-    <div class="mx-auto flex max-w-7xl flex-col px-6">
-      <div class="flex flex-col gap-6">
-        <SectionHeader
-          :subtitle="props.subtitle"
-          :title="props.headline"
-          :subtitle-uuid="props.subtitleUuid"
-          :title-uuid="props.headlineUuid"
-        />
-        <EditableContent
-          v-if="props.description"
-          :uuid="props.descriptionUuid"
-          :content="props.description"
-          tag="p"
-          content-class="mx-auto max-w-3xl text-center font-body text-lg text-gray-600"
-        />
-      </div>
-
+  <Section
+    :id="props.id"
+    :subtitle="props.subtitle"
+    :title="props.headline"
+    :subtitle-uuid="props.subtitleUuid"
+    :title-uuid="props.headlineUuid"
+    :description="props.description"
+    :description-uuid="props.descriptionUuid"
+    description-tag="p"
+    :background="props.background"
+  >
       <div class="mt-16 flex flex-wrap justify-center gap-4">
         <button
           type="button"
@@ -160,6 +152,5 @@ function getAccentClasses(categoryId: string): string {
           />
         </div>
       </div>
-    </div>
-  </section>
+  </Section>
 </template>

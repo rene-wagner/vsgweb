@@ -2,10 +2,9 @@
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import type { MediaItem } from "@vsg/sdk";
-import EditableContent from "@/components/content/EditableContent.vue";
 import ApiState from "@/components/ui/ApiState.vue";
-import SectionHeader from "@/components/ui/SectionHeader.vue";
-import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
+import Section from "@/components/ui/Section.vue";
+import type { SectionBackground } from "@/composables/useSectionBackground";
 import {
   getMediaDisplayUrl,
   getMediaThumbnailUrl,
@@ -148,28 +147,19 @@ onUnmounted(() => {
   document.body.classList.remove("overflow-hidden");
 });
 
-const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section class="relative py-32" :class="sectionBackgroundClass">
-    <div class="mx-auto flex max-w-7xl flex-col px-6">
-      <div class="flex flex-col gap-6">
-        <SectionHeader
-          :subtitle="props.subtitle || ''"
-          :title="props.headline || ''"
-          subtitle-uuid="gallery-subtitle"
-          title-uuid="gallery-title"
-        />
-        <EditableContent
-          v-if="props.description"
-          uuid="gallery-description"
-          :content="props.description"
-          tag="p"
-          content-class="mx-auto max-w-3xl text-center font-body text-lg text-gray-600"
-        />
-      </div>
-
+  <Section
+    :subtitle="props.subtitle || ''"
+    :title="props.headline || ''"
+    subtitle-uuid="gallery-subtitle"
+    title-uuid="gallery-title"
+    :description="props.description"
+    description-uuid="gallery-description"
+    description-tag="p"
+    :background="props.background"
+  >
       <ApiState
         class="mt-16"
         :is-loading="activeLoading"
@@ -202,7 +192,7 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
           </button>
         </div>
       </ApiState>
-    </div>
+  </Section>
 
     <div
       v-if="selectedItem"
@@ -247,5 +237,4 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
         <FontAwesomeIcon icon="arrow-right" />
       </button>
     </div>
-  </section>
 </template>

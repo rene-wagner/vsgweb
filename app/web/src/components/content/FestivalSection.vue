@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import EditableContent from "@/components/content/EditableContent.vue";
-import SectionHeader from "@/components/ui/SectionHeader.vue";
-import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
+import Section from "@/components/ui/Section.vue";
+import type { SectionBackground } from "@/composables/useSectionBackground";
 
 interface FestivalItem {
   headline: string;
@@ -29,28 +29,20 @@ const props = withDefaults(defineProps<Props>(), {
   background: "white",
 });
 
-const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section :id="props.id" class="relative py-32" :class="sectionBackgroundClass">
-    <div class="mx-auto flex max-w-7xl flex-col px-6">
-      <div class="flex flex-col gap-6">
-        <SectionHeader
-          :subtitle="props.subtitle"
-          :title="props.headline"
-          :subtitle-uuid="props.subtitleUuid"
-          :title-uuid="props.headlineUuid"
-        />
-        <EditableContent
-          v-if="props.description"
-          :uuid="props.descriptionUuid"
-          :content="props.description"
-          tag="p"
-          content-class="mx-auto max-w-3xl text-center font-body text-lg text-gray-600"
-        />
-      </div>
-
+  <Section
+    :id="props.id"
+    :subtitle="props.subtitle"
+    :title="props.headline"
+    :subtitle-uuid="props.subtitleUuid"
+    :title-uuid="props.headlineUuid"
+    :description="props.description"
+    :description-uuid="props.descriptionUuid"
+    description-tag="p"
+    :background="props.background"
+  >
       <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <div
           v-for="(item, index) in props.items"
@@ -71,6 +63,5 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
           />
         </div>
       </div>
-    </div>
-  </section>
+  </Section>
 </template>

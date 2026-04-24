@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import type { DepartmentTrainingGroup } from "@vsg/types";
-import EditableContent from "@/components/content/EditableContent.vue";
-import SectionHeader from "@/components/ui/SectionHeader.vue";
-import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
+import Section from "@/components/ui/Section.vue";
+import type { SectionBackground } from "@/composables/useSectionBackground";
 import TrainingTable from "./TrainingTable.vue";
 
 interface Props {
@@ -34,30 +33,19 @@ function getAgeRangeClasses(variant: DepartmentTrainingGroup["variant"]): string
   return variant === "primary" ? "text-vsg-blue-100" : "text-vsg-blue-300";
 }
 
-const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section class="relative py-32" :class="sectionBackgroundClass">
-    <div class="mx-auto max-w-7xl px-6">
-      <!-- Section Header -->
-      <div class="flex flex-col gap-6">
-        <SectionHeader
-          :subtitle="props.subtitle"
-          :title="props.title"
-          subtitle-uuid="training-schedule-subtitle"
-          title-uuid="training-schedule-title"
-        />
-        <EditableContent
-          v-if="props.description"
-          uuid="training-schedule-description"
-          :content="props.description"
-          tag="p"
-          content-class="mx-auto max-w-3xl text-center font-body text-lg text-gray-600"
-        />
-      </div>
-
-      <!-- Training Groups Grid -->
+  <Section
+    :subtitle="props.subtitle"
+    :title="props.title"
+    subtitle-uuid="training-schedule-subtitle"
+    title-uuid="training-schedule-title"
+    :description="props.description"
+    description-uuid="training-schedule-description"
+    description-tag="p"
+    :background="props.background"
+  >
       <div
         :class="[
           'mt-16 gap-12',
@@ -111,6 +99,5 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
           </div>
         </div>
       </div>
-    </div>
-  </section>
+  </Section>
 </template>

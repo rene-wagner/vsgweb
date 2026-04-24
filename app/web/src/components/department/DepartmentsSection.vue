@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import EditableContent from "@/components/content/EditableContent.vue";
-import SectionHeader from "@/components/ui/SectionHeader.vue";
 import ApiState from "@/components/ui/ApiState.vue";
-import { useSectionBackground, type SectionBackground } from "@/composables/useSectionBackground";
+import Section from "@/components/ui/Section.vue";
+import type { SectionBackground } from "@/composables/useSectionBackground";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
 import DepartmentCard from "./DepartmentCard.vue";
 import { useDepartmentsStore } from "../../stores/departmentsStore";
@@ -21,28 +20,19 @@ const props = withDefaults(defineProps<Props>(), {
 
 const departmentsStore = useDepartmentsStore();
 const { departments, isLoading, error } = storeToRefs(departmentsStore);
-const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section class="relative py-32" :class="sectionBackgroundClass">
-    <div class="mx-auto flex max-w-7xl flex-col px-6">
-      <div class="flex flex-col gap-6">
-        <SectionHeader
-          :subtitle="props.subtitle || ''"
-          :title="props.headline || ''"
-          subtitle-uuid="departments-subtitle"
-          title-uuid="departments-title"
-        />
-        <EditableContent
-          v-if="props.description"
-          uuid="departments-description"
-          :content="props.description"
-          tag="p"
-          content-class="mx-auto max-w-3xl text-center font-body text-lg text-gray-600"
-        />
-      </div>
-
+  <Section
+    :subtitle="props.subtitle || ''"
+    :title="props.headline || ''"
+    subtitle-uuid="departments-subtitle"
+    title-uuid="departments-title"
+    :description="props.description"
+    description-uuid="departments-description"
+    description-tag="p"
+    :background="props.background"
+  >
       <ApiState
         class="mt-16"
         :is-loading="isLoading"
@@ -74,6 +64,5 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
           </DepartmentCard>
         </div>
       </ApiState>
-    </div>
-  </section>
+  </Section>
 </template>
