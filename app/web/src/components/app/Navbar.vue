@@ -113,7 +113,7 @@ function toggleAbteilungen() {
             </div>
           </div>
 
-          <!-- Verein Dropdown
+          <!-- Verein Dropdown -->
           <div class="group relative">
             <button
               type="button"
@@ -140,7 +140,7 @@ function toggleAbteilungen() {
                 </RouterLink>
               </div>
             </div>
-          </div> -->
+          </div>
 
           <RouterLink
             to="/beitraege"
@@ -214,15 +214,6 @@ function toggleAbteilungen() {
     :class="isMenuOpen ? 'translate-x-0' : 'translate-x-full'"
   >
     <div class="flex min-h-full flex-col items-center gap-6 px-8 pb-12 pt-28">
-      <div class="mb-4 w-full max-w-xs">
-        <RouterLink
-          to="/beitraege"
-          class="block font-display text-4xl tracking-wider text-white transition-colors hover:text-vsg-gold-400"
-          @click="closeMenu"
-          >Beiträge</RouterLink
-        >
-      </div>
-
       <!-- Abteilungen with submenu -->
       <div class="flex w-full max-w-xs flex-col">
         <button
@@ -288,6 +279,15 @@ function toggleAbteilungen() {
             {{ item.label }}
           </RouterLink>
         </div>
+      </div>
+
+      <div class="mb-4 w-full max-w-xs">
+        <RouterLink
+          to="/beitraege"
+          class="block font-display text-4xl tracking-wider text-white transition-colors hover:text-vsg-gold-400"
+          @click="closeMenu"
+          >Beiträge</RouterLink
+        >
       </div>
 
       <div class="mb-4 w-full max-w-xs">
