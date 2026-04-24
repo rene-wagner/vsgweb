@@ -7,6 +7,7 @@ import { useCategoriesStore } from "@/stores/categoriesStore";
 import { useDepartmentsStore } from "../stores/departmentsStore";
 import { usePostsStore } from "../stores/postsStore";
 import ApiState from "@/components/ui/ApiState.vue";
+import { departmentViewContent } from "@/content/department-view-content";
 import HeroSectionSmall from "../components/content/HeroSectionSmall.vue";
 import StatsSection from "../components/content/StatsSection.vue";
 import TrainingScheduleSection from "../components/department/TrainingScheduleSection.vue";
@@ -122,12 +123,11 @@ const departmentCta = computed<Cta>(() => {
   const departmentName = currentDepartment.value?.name || "";
   return {
     title: `Lust auf ${departmentName}?`,
-    description:
-      "Komm einfach zum Probetraining vorbei! Wir freuen uns auf dich - egal ob Anfänger oder erfahrener Sportfreund.",
-    primaryCtaLabel: "Probetraining anfragen",
-    primaryCtaRoute: "/kontakt",
-    secondaryCtaLabel: "Mitglied werden",
-    secondaryCtaRoute: "/verein/mitgliedschaft",
+    description: departmentViewContent.ctaDescription,
+    primaryCtaLabel: departmentViewContent.ctaPrimaryButtonText,
+    primaryCtaRoute: departmentViewContent.ctaPrimaryButtonLink,
+    secondaryCtaLabel: departmentViewContent.ctaSecondaryButtonText,
+    secondaryCtaRoute: departmentViewContent.ctaSecondaryButtonLink,
   };
 });
 </script>
@@ -163,33 +163,33 @@ const departmentCta = computed<Cta>(() => {
       <TrainingScheduleSection
         v-if="departmentTrainingGroups.length > 0"
         id="trainingszeiten"
-        title="TRAININGSZEITEN"
-        subtitle="Wann wir trainieren"
-        description="Regelmäßiges Training für alle Altersgruppen. Anfänger und Fortgeschrittene sind herzlich willkommen!"
+        :title="departmentViewContent.trainingScheduleTitle"
+        :subtitle="departmentViewContent.trainingScheduleSubtitle"
+        :description="departmentViewContent.trainingScheduleDescription"
         :groups="departmentTrainingGroups"
       />
 
       <LocationSection
         v-if="departmentLocations.length > 0"
         id="standorte"
-        title="UNSERE STANDORTE"
-        subtitle="Wo wir spielen"
-        description="Moderne Hallen mit professioneller Ausstattung für optimale Trainingsbedingungen."
+        :title="departmentViewContent.locationsTitle"
+        :subtitle="departmentViewContent.locationsSubtitle"
+        :description="departmentViewContent.locationsDescription"
         background="gray"
         :locations="departmentLocations"
       />
 
       <NewsSection
-        headline="AKTUELLE NEUIGKEITEN"
-        subtitle="Was bei uns los ist"
+        :headline="departmentViewContent.newsHeadline"
+        :subtitle="departmentViewContent.newsSubtitle"
         :category-iri="departmentCategoryIri"
         :category-slug="currentDepartment?.slug ?? null"
       />
 
       <GalerieSection
-        headline="GALERIE"
-        subtitle="Bilder aus der Abteilung"
-        description="Aktuelle Einblicke aus Training, Spielbetrieb und Vereinsleben dieser Abteilung."
+        :headline="departmentViewContent.galleryHeadline"
+        :subtitle="departmentViewContent.gallerySubtitle"
+        :description="departmentViewContent.galleryDescription"
         background="gray"
         :items-count="20"
         :category-id="departmentCategoryId"
