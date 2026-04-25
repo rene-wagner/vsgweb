@@ -127,14 +127,14 @@ const listPosts = computed(() => activePosts.value.slice(1));
             :background="props.background === 'white' ? 'gray' : 'white'"
           >
             <template #meta-start>
-              <Badge accent-class="border-vsg-blue-500 bg-vsg-blue-500 text-white">
-                {{ getCategoryName(post.categories) }}
-              </Badge>
-            </template>
-            <template #meta-end>
               <span class="font-body text-sm font-normal text-vsg-blue-500">
                 {{ formatDate(post.createdAt) }}
               </span>
+            </template>
+            <template #meta-end>
+              <Badge accent-class="border-vsg-blue-500 bg-vsg-blue-500 text-white">
+                {{ getCategoryName(post.categories) }}
+              </Badge>
             </template>
             <template #title>
               <h5

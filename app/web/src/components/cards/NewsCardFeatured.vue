@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Badge from "@/components/ui/Badge.vue";
 import { RouterLink } from "vue-router";
 
 interface Props {
@@ -18,11 +19,9 @@ withDefaults(defineProps<Props>(), {
     <div class="relative aspect-video overflow-hidden bg-vsg-blue-700">
       <div class="absolute inset-0 bg-linear-to-t from-vsg-blue-600 to-transparent" />
       <div class="absolute bottom-4 left-4">
-        <span
-          class="inline-block bg-vsg-gold-400 px-3 py-1 font-display text-sm tracking-wider text-vsg-blue-900"
-        >
+        <Badge accent-class="border-vsg-gold-400 bg-vsg-gold-400 text-vsg-blue-900">
           {{ category }}
-        </span>
+        </Badge>
       </div>
     </div>
     <div class="p-8">
