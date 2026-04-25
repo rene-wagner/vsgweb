@@ -7,7 +7,6 @@ import ApiState from "@/components/ui/ApiState.vue";
 import Badge from "@/components/ui/Badge.vue";
 import Section from "@/components/sections/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
-import NewsCardFeatured from "@/components/cards/NewsCardFeatured.vue";
 import { usePostsStore } from "@/stores/postsStore";
 
 interface Props {
@@ -111,13 +110,38 @@ const listPosts = computed(() => activePosts.value.slice(1));
       empty-message="Derzeit sind keine Neuigkeiten verfugbar."
     >
       <div class="grid gap-8 md:grid-cols-2">
-        <NewsCardFeatured
+        <Card
           v-if="featuredPost"
-          :category="getCategoryName(featuredPost.categories)"
-          :date="formatDate(featuredPost.createdAt)"
           :title="featuredPost.title"
-          :to="`/beitrag/${featuredPost.slug}`"
-        />
+          background="blue"
+        >
+          <template #meta-start>
+            <span class="font-body text-sm font-normal text-vsg-blue-200">
+              {{ formatDate(featuredPost.createdAt) }}
+            </span>
+          </template>
+          <template #meta-end>
+            <Badge accent-class="border-vsg-gold-400 bg-vsg-gold-400 text-vsg-blue-900">
+              {{ getCategoryName(featuredPost.categories) }}
+            </Badge>
+          </template>
+          <template #title>
+            <h4
+              class="mb-4 mt-2 font-display text-3xl tracking-wider text-white transition-colors group-hover:text-vsg-gold-400"
+            >
+              {{ featuredPost.title }}
+            </h4>
+          </template>
+          <template #link>
+            <RouterLink
+              :to="`/beitrag/${featuredPost.slug}`"
+              class="inline-flex items-center gap-2 font-body text-sm font-bold uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
+            >
+              Beitrag lesen
+              <FontAwesomeIcon icon="arrow-right" />
+            </RouterLink>
+          </template>
+        </Card>
 
         <div v-if="listPosts.length > 0" class="space-y-6">
           <Card
