@@ -53,7 +53,7 @@ const props = withDefaults(defineProps<Props>(), {
         </template>
 
         <div class="mb-6">
-          <div class="flex items-start gap-3">
+          <div class="flex items-start gap-2">
             <FontAwesomeIcon icon="location-dot" class="mt-0.5 text-vsg-blue-600" />
             <div class="flex gap-2">
               <span class="font-semibold text-vsg-blue-800">{{ location.street }}</span>
