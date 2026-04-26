@@ -62,8 +62,8 @@ const { departments, isLoading, error } = storeToRefs(departmentsStore);
               style="
                 filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(200deg) brightness(89%)
                   contrast(91%);
-               "
-             />
+              "
+            />
             <FontAwesomeIcon v-else icon="circle" class="text-vsg-blue-600" />
           </template>
           <template #link>

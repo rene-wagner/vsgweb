@@ -228,11 +228,7 @@ onUnmounted(() => {
           </div>
 
           <div class="space-y-6">
-            <Card
-              v-for="post in paginatedPosts"
-              :key="post.id"
-              :title="post.title"
-            >
+            <Card v-for="post in paginatedPosts" :key="post.id" :title="post.title">
               <template #meta-start>
                 <Badge accent-class="border-vsg-blue-500 bg-vsg-blue-500 text-white">
                   {{ getCategoryName(post.categories) }}

@@ -38,11 +38,15 @@ const props = withDefaults(defineProps<Props>(), {
     "
   >
     <div v-if="props.imageSrc" class="relative aspect-video overflow-hidden bg-gray-100">
-      <img :src="props.imageSrc" :alt="props.imageAlt || props.title || ''" class="h-full w-full object-cover" />
+      <img
+        :src="props.imageSrc"
+        :alt="props.imageAlt || props.title || ''"
+        class="h-full w-full object-cover"
+      />
     </div>
 
     <div class="flex h-full flex-col p-8">
-      <div class="flex flex-1 flex-col justify-center">
+      <div class="flex flex-col justify-center">
         <div
           v-if="$slots['meta-start'] || $slots['meta-end'] || props.year || props.categoryLabel"
           class="mb-5 flex items-start justify-between gap-4"
@@ -70,20 +74,26 @@ const props = withDefaults(defineProps<Props>(), {
           </slot>
         </div>
 
-        <h4 v-if="$slots.title || props.title" class="mb-3 font-display text-3xl tracking-wider text-vsg-blue-900">
+        <h4
+          v-if="$slots.title || props.title"
+          class="mb-3 font-display text-3xl tracking-wider text-vsg-blue-900"
+        >
           <slot name="title">{{ props.title }}</slot>
         </h4>
-
-        <div v-if="$slots.link" class="mb-6">
-          <slot name="link" />
-        </div>
 
         <template v-if="$slots.default">
           <slot />
         </template>
-        <p v-else-if="props.description" class="font-body font-normal leading-relaxed text-gray-600">
+        <p
+          v-else-if="props.description"
+          class="font-body font-normal leading-relaxed text-gray-600"
+        >
           {{ props.description }}
         </p>
+
+        <div v-if="$slots.link" class="mt-6">
+          <slot name="link" />
+        </div>
       </div>
     </div>
   </div>

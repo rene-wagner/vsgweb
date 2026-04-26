@@ -110,21 +110,19 @@ const listPosts = computed(() => activePosts.value.slice(1));
       empty-message="Derzeit sind keine Neuigkeiten verfugbar."
     >
       <div class="grid gap-8 md:grid-cols-2">
-        <Card
-          v-if="featuredPost"
-          :title="featuredPost.title"
-          background="blue"
-        >
+        <Card v-if="featuredPost" :title="featuredPost.title" background="blue">
           <template #meta-start>
             <span class="font-body text-sm font-normal text-vsg-blue-200">
               {{ formatDate(featuredPost.createdAt) }}
             </span>
           </template>
+
           <template #meta-end>
             <Badge accent-class="border-vsg-gold-400 bg-vsg-gold-400 text-vsg-blue-900">
               {{ getCategoryName(featuredPost.categories) }}
             </Badge>
           </template>
+
           <template #title>
             <h4
               class="mb-4 mt-2 font-display text-3xl tracking-wider text-white transition-colors group-hover:text-vsg-gold-400"
@@ -132,6 +130,7 @@ const listPosts = computed(() => activePosts.value.slice(1));
               {{ featuredPost.title }}
             </h4>
           </template>
+
           <template #link>
             <RouterLink
               :to="`/beitrag/${featuredPost.slug}`"
