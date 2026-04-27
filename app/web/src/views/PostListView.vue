@@ -186,8 +186,9 @@ onUnmounted(() => {
     <HeroSectionSmall
       headline="BEITRÄGE"
       description="Alle Beiträge auf einen Blick."
-      headline-uuid="post-list-hero-headline"
-      description-uuid="post-list-hero-description"
+      headline-uuid="a99a4ebb-2760-4220-a1de-a7d919c7799f"
+      description-uuid="c43df88c-e20e-4647-9f45-f360439bf4ee"
+      subtitle-uuid="dd986e9b-ff63-40bc-aa07-f36d01d4b7f3"
     />
 
     <section class="bg-white py-16">

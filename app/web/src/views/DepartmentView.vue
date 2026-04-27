@@ -146,8 +146,9 @@ const departmentCta = computed<Cta>(() => {
         :headline="currentDepartment!.name"
         :description="currentDepartment!.shortDescription"
         :icon-url="currentDepartment!.icon ? getMediaUrl(currentDepartment!.icon) : undefined"
-        headline-uuid="department-hero-headline"
-        description-uuid="department-hero-description"
+        headline-uuid="1647fd06-761f-4038-8539-9bc98790faf3"
+        description-uuid="062f3a4b-d164-45f6-8577-01b4484a2a8c"
+        subtitle-uuid="3c1aeba6-99b8-4729-93b0-4623ecb770c8"
         :editable-headline="false"
         :editable-description="false"
         :primary-cta-label="departmentTrainingGroups.length > 0 ? 'Trainingszeiten' : undefined"
@@ -158,7 +159,7 @@ const departmentCta = computed<Cta>(() => {
 
       <WelcomeSection
         v-if="currentDepartment!.welcomeText"
-        uuid="department-welcome-text"
+        uuid="07fc79ce-148f-4c7b-9763-583873591ef1"
         :welcome-text="currentDepartment!.welcomeText"
       />
 
@@ -202,8 +203,8 @@ const departmentCta = computed<Cta>(() => {
       <CtaSection
         :headline="departmentCta.title"
         :description="departmentCta.description"
-        headline-uuid="department-cta-headline"
-        description-uuid="department-cta-description"
+        headline-uuid="97796941-76b9-4311-848f-3be2438b8a04"
+        description-uuid="d3486e32-9298-46ef-b03f-a844e3869564"
         :primary-button-text="departmentCta.primaryCtaLabel"
         :primary-button-link="departmentCta.primaryCtaRoute"
         :secondary-button-text="departmentCta.secondaryCtaLabel"

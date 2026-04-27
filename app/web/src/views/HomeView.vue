@@ -26,7 +26,7 @@ const { departments, isLoading, error } = storeToRefs(departmentsStore);
 
     <WelcomeSection
       v-if="homepageContent.welcomeText"
-      uuid="homepage-welcome-text"
+      uuid="4856f6d8-4c6a-47cf-848f-550bbaf0b0d3"
       :welcome-text="homepageContent.welcomeText"
     />
 
@@ -36,9 +36,9 @@ const { departments, isLoading, error } = storeToRefs(departmentsStore);
       :title="homepageContent.departmentsHeadline"
       :description="homepageContent.departmentsDescription"
       :subtitle="homepageContent.departmentsSubtitle"
-      title-uuid="departments-title"
-      description-uuid="departments-description"
-      subtitle-uuid="departments-subtitle"
+      title-uuid="60eca3af-5954-4517-b203-9f968512d5d5"
+      description-uuid="86f731ce-1d12-46a8-a9b0-55e09909cc64"
+      subtitle-uuid="cf092f5b-b28e-4bb8-9b36-d930caaa6770"
     >
       <ApiState
         class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -91,6 +91,8 @@ const { departments, isLoading, error } = storeToRefs(departmentsStore);
     <CtaSection
       :headline="homepageContent.ctaHeadline"
       :description="homepageContent.ctaDescription"
+      headline-uuid="f0da9902-792c-43d7-9f5c-b53bec8eea6c"
+      description-uuid="bd911e4e-23ae-4062-a62a-99074ddb0076"
     />
   </div>
 </template>

@@ -8,9 +8,9 @@ interface Props {
   description?: string;
   subtitle?: string;
   iconUrl?: string;
-  headlineUuid?: string;
-  descriptionUuid?: string;
-  subtitleUuid?: string;
+  headlineUuid: string;
+  descriptionUuid: string;
+  subtitleUuid: string;
   editableHeadline?: boolean;
   editableDescription?: boolean;
   primaryCtaLabel?: string;
@@ -24,9 +24,6 @@ const props = withDefaults(defineProps<Props>(), {
   description: undefined,
   subtitle: undefined,
   iconUrl: undefined,
-  headlineUuid: "uuid-headline",
-  descriptionUuid: "uuid-description",
-  subtitleUuid: "uuid-subtitle",
   editableHeadline: true,
   editableDescription: true,
   primaryCtaLabel: undefined,

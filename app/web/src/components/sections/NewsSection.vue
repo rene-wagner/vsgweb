@@ -95,10 +95,10 @@ const listPosts = computed(() => activePosts.value.slice(1));
   <Section
     :subtitle="props.subtitle || ''"
     :title="props.headline || ''"
-    subtitle-uuid="news-subtitle"
-    title-uuid="news-title"
+    subtitle-uuid="69b6c91c-9d93-4ee2-ac67-0297a6732c21"
+    title-uuid="8e78d0d4-ed1f-4267-a98e-17b7e998621b"
     :description="props.description"
-    description-uuid="news-description"
+    description-uuid="7c07766a-29c4-48c6-a3d4-85180c341d7a"
     description-tag="p"
     :background="props.background"
   >

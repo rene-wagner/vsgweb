@@ -29,15 +29,17 @@ function getBadgeColor(index: number): string {
     <HeroSectionSmall
       :headline="clubBoardContent.heroHeadline"
       :description="clubBoardContent.heroDescription"
-      headline-uuid="club-board-hero-headline"
-      description-uuid="club-board-hero-description"
+      headline-uuid="eafad2b5-2378-4daa-9076-57177260b0ab"
+      description-uuid="3f35f0ef-3049-454e-a21a-466d15afaff0"
+      subtitle-uuid="6a456144-30d6-40c2-85cd-abd8f264368b"
     />
 
     <CardSection
       :title="clubBoardContent.sectionHeadline"
       :description="clubBoardContent.sectionDescription"
-      title-uuid="club-board-section-headline"
-      description-uuid="club-board-section-description"
+      subtitle-uuid="860bca74-5933-4e8b-872e-7c046fdcbb27"
+      title-uuid="97a4f95d-03d5-46fb-b9f0-2fa0417c91cd"
+      description-uuid="eed8113c-a686-42cc-9a7c-4ba96c323eaf"
       background="white"
     >
       <ApiState

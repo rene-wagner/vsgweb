@@ -62,7 +62,9 @@ onUnmounted(() => {
       <!-- Hero Section -->
       <HeroSectionSmall
         :headline="currentPost!.title"
-        headline-uuid="post-detail-hero-headline"
+        headline-uuid="dd9a4c3d-81e6-4b5b-bb44-45879f2ad5f5"
+        description-uuid="64621c6c-c04a-4088-93a0-1e94fdf94456"
+        subtitle-uuid="4dc7f391-add9-453c-ba11-19b458cf65e9"
         :editable-headline="false"
       />
 

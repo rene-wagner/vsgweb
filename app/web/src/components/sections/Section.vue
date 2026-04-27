@@ -7,10 +7,10 @@ interface Props {
   id?: string;
   subtitle?: string;
   title: string;
-  subtitleUuid?: string;
+  subtitleUuid: string;
   titleUuid: string;
   description?: string;
-  descriptionUuid?: string;
+  descriptionUuid: string;
   descriptionTag?: string;
   descriptionClass?: string;
   background?: SectionBackground;
@@ -20,8 +20,6 @@ const props = withDefaults(defineProps<Props>(), {
   id: undefined,
   subtitle: "",
   description: undefined,
-  subtitleUuid: "section-subtitle",
-  descriptionUuid: "section-description",
   descriptionTag: "div",
   descriptionClass: "mx-auto max-w-3xl text-center font-body text-lg text-gray-600",
   background: "white",

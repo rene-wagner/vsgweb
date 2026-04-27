@@ -7,9 +7,9 @@ interface Props {
   subtitle?: string;
   title: string;
   description?: string;
-  subtitleUuid?: string;
+  subtitleUuid: string;
   titleUuid: string;
-  descriptionUuid?: string;
+  descriptionUuid: string;
   background?: SectionBackground;
 }
 
@@ -17,8 +17,6 @@ const props = withDefaults(defineProps<Props>(), {
   id: undefined,
   subtitle: "",
   description: undefined,
-  subtitleUuid: "card-section-subtitle",
-  descriptionUuid: "card-section-description",
   background: "white",
 });
 </script>

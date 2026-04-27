@@ -30,7 +30,7 @@ withDefaults(defineProps<Props>(), {
         <span
           class="inline-block border border-vsg-gold-400/30 px-6 py-2 font-body font-normal uppercase tracking-widest text-vsg-gold-400"
         >
-          <EditableContent uuid="uuid-tag" :content="tag" />
+          <EditableContent uuid="68f283d4-d97c-4117-a020-4a77212a894d" :content="tag" />
         </span>
       </div>
 

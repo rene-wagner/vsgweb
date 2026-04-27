@@ -152,10 +152,10 @@ onUnmounted(() => {
   <Section
     :subtitle="props.subtitle || ''"
     :title="props.headline || ''"
-    subtitle-uuid="gallery-subtitle"
-    title-uuid="gallery-title"
+    subtitle-uuid="82431eca-8b9e-4b9d-9550-4ce9a0f0b409"
+    title-uuid="ac99896f-f380-4f37-9d4b-64012049c1ac"
     :description="props.description"
-    description-uuid="gallery-description"
+    description-uuid="476c1bb2-d7b6-444d-bb49-7b73c632e934"
     description-tag="p"
     :background="props.background"
   >
@@ -181,7 +181,7 @@ onUnmounted(() => {
             loading="lazy"
           />
           <div
-            class="absolute inset-0 bg-gradient-to-t from-vsg-blue-950/70 via-vsg-blue-950/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            class="absolute inset-0 bg-linear-to-t from-vsg-blue-950/70 via-vsg-blue-950/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           />
           <div
             class="absolute right-4 bottom-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-vsg-blue-900 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"

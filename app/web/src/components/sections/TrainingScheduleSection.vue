@@ -38,10 +38,10 @@ function getAgeRangeClasses(variant: DepartmentTrainingGroup["variant"]): string
   <Section
     :subtitle="props.subtitle"
     :title="props.title"
-    subtitle-uuid="training-schedule-subtitle"
-    title-uuid="training-schedule-title"
+    subtitle-uuid="3fe6cf03-5b68-43a4-a766-cd58363c39ce"
+    title-uuid="423f9a1b-d136-47dc-bd91-11ab0e6662bb"
     :description="props.description"
-    description-uuid="training-schedule-description"
+    description-uuid="1570a11e-c61e-4372-93a9-d30947a42145"
     description-tag="p"
     :background="props.background"
   >

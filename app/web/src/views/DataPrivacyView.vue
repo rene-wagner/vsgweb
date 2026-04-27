@@ -11,15 +11,16 @@ import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
     <HeroSectionSmall
       :headline="dataPrivacyContent.headline"
       :description="dataPrivacyContent.description"
-      headline-uuid="data-privacy-hero-headline"
-      description-uuid="data-privacy-hero-description"
+      headline-uuid="fc2c3d20-8447-4aca-98f6-e219334bfbe3"
+      description-uuid="887f2db2-2f8f-43d4-8013-c832e104fbaf"
+      subtitle-uuid="dce41cdf-c437-4059-87e9-76c8a28ab2a0"
     />
 
     <section class="bg-white py-16">
       <div class="mx-auto max-w-7xl px-6">
         <div class="prose prose-lg max-w-none font-body text-vsg-blue-700">
           <EditableContent
-            uuid="data-privacy-content"
+            uuid="29aab20b-586b-4727-b451-b36d3e86ddb6"
             :content="dataPrivacyContent.content"
             content-class="prose prose-lg max-w-none font-body text-vsg-blue-700"
           />

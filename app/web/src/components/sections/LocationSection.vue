@@ -23,10 +23,10 @@ const props = withDefaults(defineProps<Props>(), {
   <Section
     :subtitle="props.subtitle"
     :title="props.title"
-    subtitle-uuid="location-section-subtitle"
-    title-uuid="location-section-title"
+    subtitle-uuid="089a3382-105a-45c1-9523-5c24fd6716f7"
+    title-uuid="805a5b43-64fb-4a0c-9414-7c86635774a6"
     :description="props.description"
-    description-uuid="location-section-description"
+    description-uuid="d0359eb3-b408-4a60-b97c-27c75905a684"
     description-tag="p"
     :background="props.background"
   >

@@ -11,15 +11,16 @@ import { clubSportInsuranceContent } from "@/content/club-sport-insurance-conten
     <HeroSectionSmall
       :headline="clubSportInsuranceContent.headline"
       :description="clubSportInsuranceContent.description"
-      headline-uuid="club-sport-insurance-hero-headline"
-      description-uuid="club-sport-insurance-hero-description"
+      headline-uuid="8bad0c8e-e6ed-4b3e-8325-4edde40b7d50"
+      description-uuid="9b1e5e81-d0e3-4500-83f1-0227055e616b"
+      subtitle-uuid="66dbde05-fcf9-40df-8524-93a310da6a06"
     />
 
     <section class="bg-white py-16">
       <div class="mx-auto max-w-7xl px-6">
         <div class="prose prose-lg max-w-none font-body text-vsg-blue-700">
           <EditableContent
-            uuid="club-sport-insurance-content"
+            uuid="f27b7591-7196-4991-b181-20fb62912745"
             :content="clubSportInsuranceContent.content"
             content-class="prose prose-lg max-w-none font-body text-vsg-blue-700"
           />

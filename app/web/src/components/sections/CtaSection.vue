@@ -5,8 +5,8 @@ import EditableContent from "@/components/content/EditableContent.vue";
 interface Props {
   headline?: string;
   description?: string;
-  headlineUuid?: string;
-  descriptionUuid?: string;
+  headlineUuid: string;
+  descriptionUuid: string;
   primaryButtonText?: string;
   primaryButtonLink?: string;
   secondaryButtonText?: string;
@@ -15,8 +15,6 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  headlineUuid: "cta-headline",
-  descriptionUuid: "cta-description",
   primaryButtonText: "Mitglied werden",
   primaryButtonLink: "/verein/mitgliedschaft",
   secondaryButtonText: "Kontakt",

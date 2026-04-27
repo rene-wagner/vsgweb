@@ -72,8 +72,9 @@ function encodeBase64(value: string): string {
     <HeroSectionSmall
       headline="Kontakt"
       description="Finde die richtige Ansprechperson"
-      headline-uuid="contact-hero-headline"
-      description-uuid="contact-hero-description"
+      headline-uuid="1b426045-2080-4b69-bc0f-35e3fc45bb98"
+      description-uuid="8d4d8cfc-0801-43de-afdf-860f28cd8854"
+      subtitle-uuid="4389f6dc-09de-4bdc-a4d6-e1f9e6e0f27b"
     />
 
     <section class="bg-white py-16">
