@@ -20,7 +20,6 @@
     "@tailwindcss/vite": "^4.2.2",
     "@vsg/sdk": "^0.0.0",
     "@vsg/types": "^0.0.0",
-    "chart.js": "^4.5.1",
     "easymde": "^2.20.0",
     "marked": "^18.0.0",
     "pinia": "^3.0.4",
