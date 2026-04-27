@@ -41,7 +41,7 @@ function getBadgeColor(index: number): string {
       background="white"
     >
       <ApiState
-        class="mt-16 grid grid-cols-2 gap-4"
+        class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-4"
         :is-loading="isBoardLoading"
         :error="boardError"
         :empty="boardContactPeople.length === 0"
@@ -53,6 +53,7 @@ function getBadgeColor(index: number): string {
           :title="`${person.firstName} ${person.lastName}`"
           :image-src="person.profileImage ? getMediaUrl(person.profileImage) : undefined"
           :image-alt="`Profilbild von ${person.firstName} ${person.lastName}`"
+          image-layout="left"
         >
           <template #icon>
             <div

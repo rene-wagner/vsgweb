@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import Badge from "@/components/ui/Badge.vue";
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
   icon?: string;
   imageSrc?: string;
   imageAlt?: string;
+  imageLayout?: "top" | "left";
   background?: "gray" | "white" | "blue";
 }
 
@@ -22,22 +24,32 @@ const props = withDefaults(defineProps<Props>(), {
   icon: undefined,
   imageSrc: undefined,
   imageAlt: undefined,
+  imageLayout: "top",
   background: "gray",
 });
+
+const hasLeftImageLayout = computed(() => props.imageSrc && props.imageLayout === "left");
 </script>
 
 <template>
   <div
     class="card-hover group overflow-hidden border border-gray-200 shadow-sm transition-transform duration-200 hover:-translate-y-1"
     :class="
-      props.background === 'white'
-        ? 'bg-white'
-        : props.background === 'blue'
-          ? 'border-vsg-blue-700 bg-vsg-blue-600'
-          : 'bg-gray-50'
+      [
+        props.background === 'white'
+          ? 'bg-white'
+          : props.background === 'blue'
+            ? 'border-vsg-blue-700 bg-vsg-blue-600'
+            : 'bg-gray-50',
+        hasLeftImageLayout ? 'flex items-stretch' : '',
+      ]
     "
   >
-    <div v-if="props.imageSrc" class="relative aspect-video overflow-hidden bg-gray-100">
+    <div
+      v-if="props.imageSrc"
+      class="relative overflow-hidden bg-gray-100"
+      :class="hasLeftImageLayout ? 'w-28 shrink-0 self-stretch sm:w-32 md:w-40' : 'aspect-video'"
+    >
       <img
         :src="props.imageSrc"
         :alt="props.imageAlt || props.title || ''"
@@ -45,7 +57,7 @@ const props = withDefaults(defineProps<Props>(), {
       />
     </div>
 
-    <div class="flex h-full flex-col p-8">
+    <div class="flex h-full min-w-0 flex-1 flex-col p-8">
       <div class="flex flex-col justify-center">
         <div
           v-if="$slots['meta-start'] || $slots['meta-end'] || props.year || props.categoryLabel"
