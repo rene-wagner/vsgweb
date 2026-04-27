@@ -7,6 +7,11 @@ import type {
 } from "./types/client.types.js";
 import type { ApiCollection } from "./types/api-collection.types.js";
 import type { Category } from "./types/category.types.js";
+import type {
+  ContentBlock,
+  ContentBlockCsrfTokenResponse,
+  SaveContentBlockInput,
+} from "./types/content-block.types.js";
 import type { ContactPerson } from "./types/contact-person.types.js";
 import type { Event } from "./types/event.types.js";
 import type { Location } from "./types/location.types.js";
@@ -100,6 +105,7 @@ function getErrorMessage(body: unknown, response: Response): string {
 export class VsgClient {
   readonly categories;
   readonly contactPeople;
+  readonly contentBlocks;
   readonly departments;
   readonly events;
   readonly gallery;
@@ -127,6 +133,26 @@ export class VsgClient {
         this.getCollection<ContactPerson>("/api/contact_people", options),
       get: (slug: string, options?: RequestOptions) =>
         this.get<ContactPerson>(`/api/contact_people/${encodeURIComponent(slug)}`, options),
+    };
+
+    this.contentBlocks = {
+      list: (options?: RequestOptions) =>
+        this.getCollection<ContentBlock>("/api/content_blocks", options),
+      getCsrfToken: (options?: RequestOptions) =>
+        this.get<ContentBlockCsrfTokenResponse>("/api/content-blocks/csrf-token", options),
+      save: async (input: SaveContentBlockInput, options: RequestOptions = {}) => {
+        const response = await this.request<ContentBlock | undefined>("/api/content_blocks", {
+          ...options,
+          method: "POST",
+          body: JSON.stringify(input),
+          headers: {
+            "Content-Type": "application/ld+json",
+            ...options.headers,
+          },
+        });
+
+        return response ?? { ...input, "@type": "ContentBlock" };
+      },
     };
 
     this.departments = {
@@ -198,7 +224,7 @@ export class VsgClient {
 
     const response = await fetch(url, {
       ...requestInit,
-      method: "GET",
+      method: requestInit.method ?? "GET",
       headers: {
         Accept: "application/ld+json, application/json",
         ...this.defaultHeaders,

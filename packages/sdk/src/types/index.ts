@@ -21,6 +21,11 @@ export type {
 } from "@vsg/types";
 export type { Event, EventRecurrence } from "./event.types.js";
 export type { MediaFolder, MediaItem } from "./media.types.js";
+export type {
+  ContentBlock,
+  ContentBlockCsrfTokenResponse,
+  SaveContentBlockInput,
+} from "./content-block.types.js";
 export type { ApiConstraintViolation, ApiErrorBody } from "./api-error.types.js";
 export type {
   QueryParams,
