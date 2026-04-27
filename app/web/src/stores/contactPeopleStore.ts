@@ -5,6 +5,7 @@ import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 export interface ContactPerson {
   id: number;
+  slug: string;
   firstName: string;
   lastName: string;
   type: string;
@@ -17,6 +18,7 @@ export interface ContactPerson {
 function normalizeContactPerson(contactPerson: ApiContactPerson): ContactPerson {
   return {
     id: contactPerson.id,
+    slug: contactPerson.slug,
     firstName: contactPerson.firstName,
     lastName: contactPerson.lastName,
     type: contactPerson.position,

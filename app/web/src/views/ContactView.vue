@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { ref, computed, onMounted, watch } from "vue";
+import { useRoute, type LocationQueryValue } from "vue-router";
 import { useContactPeopleStore, type ContactPerson } from "@/stores/contactPeopleStore";
 import ContactForm from "@/components/forms/ContactForm.vue";
 import SecureContact from "@/components/forms/SecureContact.vue";
@@ -25,19 +25,57 @@ const selectedContactPerson = computed<ContactPerson | null>(() => {
 onMounted(async () => {
   await contactPeopleStore.ensureLoaded();
 
-  // Check for person query parameter to pre-select contact person
-  const personIdParam = route.query.person;
-  if (personIdParam) {
-    const personId = Number(personIdParam);
-    if (!isNaN(personId) && personId > 0) {
-      // Verify contact person exists
-      const exists = contactPeopleStore.contactPeople.some((cp) => cp.id === personId);
-      if (exists) {
-        selectedContactPersonId.value = personId;
-      }
+  applyPersonQuerySelection();
+});
+
+function normalizePersonQuery(
+  personQuery: LocationQueryValue | LocationQueryValue[] | undefined,
+): string | null {
+  const normalizedValue = Array.isArray(personQuery) ? personQuery[0] : personQuery;
+
+  if (typeof normalizedValue !== "string") {
+    return null;
+  }
+
+  const trimmedValue = normalizedValue.trim();
+  return trimmedValue.length > 0 ? trimmedValue : null;
+}
+
+function applyPersonQuerySelection(): void {
+  const personQuery = normalizePersonQuery(route.query.person);
+
+  if (personQuery === null) {
+    return;
+  }
+
+  const contactPersonBySlug = contactPeopleStore.contactPeople.find((cp) => cp.slug === personQuery);
+
+  if (contactPersonBySlug) {
+    selectedContactPersonId.value = contactPersonBySlug.id;
+    return;
+  }
+
+  const personId = Number(personQuery);
+
+  if (Number.isInteger(personId) && personId > 0) {
+    const contactPersonById = contactPeopleStore.contactPeople.find((cp) => cp.id === personId);
+
+    if (contactPersonById) {
+      selectedContactPersonId.value = contactPersonById.id;
     }
   }
-});
+}
+
+watch(
+  () => route.query.person,
+  () => {
+    if (contactPeopleStore.contactPeople.length === 0) {
+      return;
+    }
+
+    applyPersonQuerySelection();
+  },
+);
 
 function formatOptionLabel(cp: ContactPerson): string {
   return `${cp.type}: ${cp.firstName} ${cp.lastName}`;
