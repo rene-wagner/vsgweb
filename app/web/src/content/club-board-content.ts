@@ -8,8 +8,8 @@ export interface ClubBoardContent {
 export const clubBoardContent: ClubBoardContent = {
   heroHeadline: "Vorstand",
   heroDescription:
-    "Die Menschen, die unseren Verein organisatorisch tragen, Verantwortung uebernehmen und das Vereinsleben gemeinsam gestalten.",
+    "Die Menschen, die unseren Verein organisatorisch tragen, Verantwortung übernehmen und das Vereinsleben gemeinsam gestalten.",
   sectionHeadline: "Menschen mit Verantwortung",
   sectionDescription:
-    "Der Vorstand kuemmert sich um die organisatorischen, finanziellen und sportlichen Rahmenbedingungen im Verein. Hier findet ihr die aktuell hinterlegten Ansprechpartnerinnen und Ansprechpartner.",
+    "Der Vorstand kümmert sich um die organisatorischen, finanziellen und sportlichen Rahmenbedingungen im Verein. Hier findet ihr die aktuell hinterlegten Ansprechpartnerinnen und Ansprechpartner.",
 };
