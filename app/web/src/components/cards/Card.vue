@@ -34,16 +34,14 @@ const hasLeftImageLayout = computed(() => props.imageSrc && props.imageLayout ==
 <template>
   <div
     class="card-hover group overflow-hidden border border-gray-200 shadow-sm transition-transform duration-200 hover:-translate-y-1"
-    :class="
-      [
-        props.background === 'white'
-          ? 'bg-white'
-          : props.background === 'blue'
-            ? 'border-vsg-blue-700 bg-vsg-blue-600'
-            : 'bg-gray-50',
-        hasLeftImageLayout ? 'flex items-stretch' : '',
-      ]
-    "
+    :class="[
+      props.background === 'white'
+        ? 'bg-white'
+        : props.background === 'blue'
+          ? 'border-vsg-blue-700 bg-vsg-blue-600'
+          : 'bg-gray-50',
+      hasLeftImageLayout ? 'flex items-stretch' : '',
+    ]"
   >
     <div
       v-if="props.imageSrc"
