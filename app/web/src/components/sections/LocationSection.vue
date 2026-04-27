@@ -4,9 +4,7 @@ import Card from "@/components/cards/Card.vue";
 import Section from "@/components/sections/Section.vue";
 import type { SectionBackground } from "@/composables/useSectionBackground";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
-import LinkArrow from "../ui/LinkArrow.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { RouterLink } from "vue-router";
 
 interface Props {
   title: string;

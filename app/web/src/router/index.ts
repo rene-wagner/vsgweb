@@ -12,11 +12,6 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/views/DepartmentView.vue"),
   },
   {
-    path: "/verein/geschichte",
-    name: "verein-geschichte",
-    component: () => import("@/views/club/ClubHistoryView.vue"),
-  },
-  {
     path: "/verein/vorstand",
     name: "verein-vorstand",
     component: () => import("@/views/club/ClubBoardView.vue"),

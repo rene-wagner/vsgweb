@@ -1,46 +1,18 @@
 <script setup lang="ts">
 import EditableContent from "@/components/content/EditableContent.vue";
 
-interface TimelineItem {
-  year: string;
-  title: string;
-  description: string;
-}
-
 defineProps<{
-  title: string;
-  titleUuid: string;
-  items: TimelineItem[];
+  content: string;
+  contentUuid: string;
 }>();
 </script>
 
 <template>
-  <div class="lg:pl-12 border-l-2 border-gray-100 relative space-y-12">
+  <div class="timeline prose-li:text-vsg-blue-900 prose-li:mb-4 prose-strong:text-vsg-gold-600 prose-strong:font-display prose-p:first:flex prose-p:first:gap-4 prose-p:first:font-semibold prose-p:first:ml-0 prose-p:ml-11 prose-h3::font-display prose-h3:text-3xl prose-h3:uppercase prose-h3:text-vsg-blue-900 prose-h3:mb-8">
     <EditableContent
-      :uuid="titleUuid"
-      :content="title"
-      tag="h3"
-      content-class="font-display text-3xl text-vsg-blue-900 mb-8"
+      :uuid="contentUuid"
+      :content="content"
+      content-class="timeline"
     />
-
-    <div v-for="item in items" :key="item.year" class="timeline-item relative pl-10">
-      <span class="font-display text-vsg-gold-600 text-xl">{{ item.year }}</span>
-      <h4 class="font-bold text-vsg-blue-900 mt-1">{{ item.title }}</h4>
-      <p class="text-base text-gray-600 mt-2">{{ item.description }}</p>
-    </div>
   </div>
 </template>
-
-<style scoped>
-.timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -9px;
-  top: 0;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #fcd34d; /* var(--vsg-gold-primary) */
-  border: 4px solid #ffffff;
-}
-</style>

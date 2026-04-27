@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import CardSection from "@/components/sections/CardSection.vue";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
@@ -10,7 +11,11 @@ import { useContactPeopleStore } from "@/stores/contactPeopleStore";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const contactPeopleStore = useContactPeopleStore();
-const { contactPeople, isLoading, error } = storeToRefs(contactPeopleStore);
+const { boardContactPeople, isBoardLoading, boardError } = storeToRefs(contactPeopleStore);
+
+onMounted(() => {
+  void contactPeopleStore.ensureBoardLoaded();
+});
 
 function getBadgeColor(index: number): string {
   return index === 0 ? "bg-vsg-gold-400" : "bg-vsg-blue-200";
@@ -37,13 +42,13 @@ function getBadgeColor(index: number): string {
     >
       <ApiState
         class="mt-16 grid grid-cols-2 gap-4"
-        :is-loading="isLoading"
-        :error="error"
-        :empty="contactPeople.length === 0"
-        empty-message="Derzeit sind keine Kontaktpersonen verfuegbar."
+        :is-loading="isBoardLoading"
+        :error="boardError"
+        :empty="boardContactPeople.length === 0"
+        empty-message="Derzeit sind keine Kontaktpersonen verfügbar."
       >
         <Card
-          v-for="(person, index) in contactPeople"
+          v-for="(person, index) in boardContactPeople"
           :key="person.id"
           :title="`${person.firstName} ${person.lastName}`"
           :image-src="person.profileImage ? getMediaUrl(person.profileImage) : undefined"

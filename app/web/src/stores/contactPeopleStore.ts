@@ -29,9 +29,13 @@ function normalizeContactPerson(contactPerson: ApiContactPerson): ContactPerson 
 
 export const useContactPeopleStore = defineStore("contact-people", () => {
   const contactPeople = ref<ContactPerson[]>([]);
+  const boardContactPeople = ref<ContactPerson[]>([]);
   const isLoading = ref(false);
+  const isBoardLoading = ref(false);
   const error = ref<string | null>(null);
+  const boardError = ref<string | null>(null);
   let contactPeopleRequest: Promise<void> | null = null;
+  let boardContactPeopleRequest: Promise<void> | null = null;
 
   async function fetchContactPeople(): Promise<void> {
     isLoading.value = true;
@@ -45,6 +49,21 @@ export const useContactPeopleStore = defineStore("contact-people", () => {
       throw e;
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  async function fetchBoardContactPeople(): Promise<void> {
+    isBoardLoading.value = true;
+    boardError.value = null;
+
+    try {
+      const result = await vsg.contactPeople.list({ query: { itemsPerPage: 50, isBoard: true } });
+      boardContactPeople.value = (result.member ?? []).map(normalizeContactPerson);
+    } catch (e) {
+      boardError.value = getApiErrorMessage(e);
+      throw e;
+    } finally {
+      isBoardLoading.value = false;
     }
   }
 
@@ -62,11 +81,30 @@ export const useContactPeopleStore = defineStore("contact-people", () => {
     await contactPeopleRequest;
   }
 
+  async function ensureBoardLoaded(): Promise<void> {
+    if (boardContactPeople.value.length > 0) {
+      return;
+    }
+
+    if (!boardContactPeopleRequest) {
+      boardContactPeopleRequest = fetchBoardContactPeople().finally(() => {
+        boardContactPeopleRequest = null;
+      });
+    }
+
+    await boardContactPeopleRequest;
+  }
+
   return {
     contactPeople,
+    boardContactPeople,
     isLoading,
+    isBoardLoading,
     error,
+    boardError,
     fetchContactPeople,
+    fetchBoardContactPeople,
     ensureLoaded,
+    ensureBoardLoaded,
   };
 });

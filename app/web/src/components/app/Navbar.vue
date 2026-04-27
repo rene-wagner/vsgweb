@@ -21,7 +21,6 @@ const { departments, isLoading: departmentsLoading } = storeToRefs(departmentsSt
 const { isEditingMode, isCheckingEditingMode } = useEditingMode();
 
 const vereinItems: MenuItem[] = [
-  { label: "Geschichte", to: "/verein/geschichte" },
   { label: "Vorstand", to: "/verein/vorstand" },
   { label: "Satzung", to: "/verein/satzung" },
   { label: "Beitragsordnung", to: "/verein/beitragsordnung" },
