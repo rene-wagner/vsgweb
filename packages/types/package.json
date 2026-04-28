@@ -23,8 +23,8 @@
     "format:check": "oxfmt --check --no-error-on-unmatched-pattern \"src/**/*.{ts,tsx,js,jsx,mjs,cjs}\""
   },
   "devDependencies": {
-    "oxfmt": "^0.45.0",
-    "oxlint": "^1.60.0",
-    "typescript": "^6.0.2"
+    "oxfmt": "^0.47.0",
+    "oxlint": "^1.62.0",
+    "typescript": "^6.0.3"
   }
 }

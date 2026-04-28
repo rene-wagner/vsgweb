@@ -26,8 +26,8 @@
     "@vsg/types": "^0.0.0"
   },
   "devDependencies": {
-    "oxfmt": "^0.45.0",
-    "oxlint": "^1.60.0",
-    "typescript": "^6.0.2"
+    "oxfmt": "^0.47.0",
+    "oxlint": "^1.62.0",
+    "typescript": "^6.0.3"
   }
 }
