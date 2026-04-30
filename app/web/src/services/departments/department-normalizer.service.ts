@@ -49,6 +49,7 @@ export function normalizeDepartment(department: ApiDepartment): Department {
     id: department.id,
     name: department.name,
     slug: department.slug,
+    color: department.color,
     shortDescription: department.description ?? "",
     welcomeText: null,
     iconId: icon?.id ?? null,

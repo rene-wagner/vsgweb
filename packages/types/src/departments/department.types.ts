@@ -4,10 +4,13 @@ import type { DepartmentLocation } from "./department-location.types.js";
 import type { DepartmentTrainer } from "./department-trainer.types.js";
 import type { DepartmentTrainingGroup } from "./department-training-group.types.js";
 
+export type DepartmentColor = "purple" | "green" | "red" | "blue";
+
 export interface Department {
   id: number;
   name: string;
   slug: string;
+  color: DepartmentColor;
   shortDescription: string;
   welcomeText: string | null;
   iconId: number | null;
