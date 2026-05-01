@@ -151,6 +151,16 @@
   --color-vsg-gold-800: #8a700f;
   --color-vsg-gold-900: #5c4a0a;
 
+  /* Department colors */
+  --color-vsg-badminton-primary: #800080;
+  --color-vsg-badminton-secondary: #ffe6ff;
+  --color-vsg-gymnastik-primary: #00ff00;
+  --color-vsg-gymnastik-secondary: #e6ffe6;
+  --color-vsg-tischtennis-primary: #ff0000;
+  --color-vsg-tischtennis-secondary: #ffe6e6;
+  --color-vsg-volleyball-primary: #0000ff;
+  --color-vsg-volleyball-secondary: #e6e6ff;
+
   /* Typography */
   --font-display: "Bebas Neue", sans-serif;
   --font-body: "Source Sans 3", sans-serif;
