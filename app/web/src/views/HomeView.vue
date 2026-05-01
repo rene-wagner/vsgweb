@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import ApiState from "@/components/ui/ApiState.vue";
-import Card from "@/components/cards/Card.vue";
-import LinkArrow from "@/components/ui/LinkArrow.vue";
+import DepartmentCard from "@/components/cards/DepartmentCard.vue";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
 import { useDepartmentsStore } from "@/stores/departmentsStore";
 import CardSection from "@/components/sections/CardSection.vue";
@@ -47,29 +46,16 @@ const { departments, isLoading, error } = storeToRefs(departmentsStore);
         :empty="departments.length === 0"
         empty-message="Derzeit sind keine Abteilungen verfugbar."
       >
-        <Card
+        <DepartmentCard
           v-for="department in departments"
           :key="department.id"
           :title="department.name"
           :description="department.shortDescription"
-        >
-          <template #icon>
-            <img
-              v-if="department.icon"
-              :src="getMediaUrl(department.icon)"
-              :alt="department.name"
-              class="h-16 w-16 object-contain"
-              style="
-                filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(200deg) brightness(89%)
-                  contrast(91%);
-              "
-            />
-            <FontAwesomeIcon v-else icon="circle" class="text-vsg-blue-600" />
-          </template>
-          <template #link>
-            <LinkArrow :href="`/abteilung/${department.slug}`">Mehr erfahren</LinkArrow>
-          </template>
-        </Card>
+          :href="`/abteilung/${department.slug}`"
+          :icon-url="department.icon ? getMediaUrl(department.icon) : undefined"
+          :icon-alt="department.name"
+          :color="department.color"
+        />
       </ApiState>
     </CardSection>
 
