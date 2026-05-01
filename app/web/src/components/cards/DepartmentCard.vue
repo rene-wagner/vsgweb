@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import type { DepartmentColor } from "@vsg/types";
+import DepartmentIcon from "@/components/department/DepartmentIcon.vue";
 
 interface Props {
   title: string;
@@ -65,16 +66,8 @@ const beamStyle = computed(() => ({
 
     <div class="relative flex h-full flex-col">
       <div class="flex items-start justify-between gap-4">
-        <div
-          class="floating-badge flex h-14 w-14 items-center justify-center rounded-full border border-[#fef9c3]/20 bg-[#fcd34d]/12 text-[#fef9c3] shadow-[0_0_36px_rgba(251,191,36,0.2)]"
-        >
-          <img
-            v-if="iconUrl"
-            :src="iconUrl"
-            :alt="iconAlt || title"
-            class="object-contain"
-          />
-          <FontAwesomeIcon v-else icon="circle" class="text-xl" />
+        <div class="floating-badge">
+          <DepartmentIcon :icon-url="iconUrl" :alt="iconAlt || title" :color="color" />
         </div>
       </div>
 
