@@ -9,6 +9,30 @@ const props = defineProps<{
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+type ApiErrorResponse = {
+  error?: string;
+  message?: string;
+  detail?: string;
+};
+
+async function readErrorMessage(
+  response: Response,
+  fallback: string,
+): Promise<string> {
+  const contentType = response.headers.get("content-type") ?? "";
+
+  if (!contentType.includes("json")) {
+    return fallback;
+  }
+
+  try {
+    const data = (await response.json()) as ApiErrorResponse;
+    return data.error ?? data.message ?? data.detail ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 // Form state
 const senderName = ref("");
 const senderEmail = ref("");
@@ -91,11 +115,35 @@ const submitForm = async () => {
   submitError.value = null;
 
   try {
+    const csrfResponse = await fetch(`${API_BASE_URL}/api/contact-form/csrf-token`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (!csrfResponse.ok) {
+      submitError.value = await readErrorMessage(
+        csrfResponse,
+        "CSRF-Token konnte nicht geladen werden.",
+      );
+      return;
+    }
+
+    const { token } = (await csrfResponse.json()) as { token?: string };
+
+    if (!token) {
+      submitError.value = "CSRF-Token konnte nicht geladen werden.";
+      return;
+    }
+
     const response = await fetch(`${API_BASE_URL}/api/contact`, {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify({
         contactPersonId: props.contactPersonId,
@@ -104,8 +152,17 @@ const submitForm = async () => {
         subject: subject.value.trim(),
         message: message.value.trim(),
         website: website.value, // Honeypot
+        csrfToken: token,
       }),
     });
+
+    if (response.status === 403) {
+      submitError.value = await readErrorMessage(
+        response,
+        "CSRF-Token fehlt oder ist ungültig.",
+      );
+      return;
+    }
 
     if (response.status === 429) {
       submitError.value = "Zu viele Anfragen. Bitte versuche es später erneut.";
@@ -113,8 +170,10 @@ const submitForm = async () => {
     }
 
     if (!response.ok) {
-      const data = await response.json();
-      submitError.value = data.message || "Ein Fehler ist aufgetreten. Bitte versuche es erneut.";
+      submitError.value = await readErrorMessage(
+        response,
+        "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+      );
       return;
     }
 
