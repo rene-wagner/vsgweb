@@ -31,6 +31,20 @@ function getDepartmentIconBackgroundClass(color: DepartmentColor) {
       return "bg-vsg-volleyball-secondary";
   }
 }
+
+function getDepartmentIconBorderClass(color: DepartmentColor) {
+  switch (color) {
+    case "purple":
+      return "border-vsg-badminton-primary";
+    case "green":
+      return "border-vsg-gymnastik-primary";
+    case "red":
+      return "border-vsg-tischtennis-primary";
+    case "blue":
+    default:
+      return "border-vsg-volleyball-primary";
+  }
+}
 </script>
 
 <template>
@@ -70,8 +84,11 @@ function getDepartmentIconBackgroundClass(color: DepartmentColor) {
         >
           <template #icon>
             <div
-              class="flex h-20 w-20 items-center justify-center rounded-full p-4 text-vsg-blue-600 transition-transform"
-              :class="getDepartmentIconBackgroundClass(department.color)"
+              class="flex h-20 w-20 items-center justify-center rounded-full border-2 p-4 text-vsg-blue-600 transition-transform"
+              :class="[
+                getDepartmentIconBackgroundClass(department.color),
+                getDepartmentIconBorderClass(department.color),
+              ]"
             >
               <img
                 v-if="department.icon"
