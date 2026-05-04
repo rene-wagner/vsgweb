@@ -128,7 +128,7 @@ const submitForm = async () => {
     });
 
     if (response.status === 429) {
-      submitError.value = "Zu viele Anfragen. Bitte versuche es spaeter erneut.";
+      submitError.value = "Zu viele Anfragen. Bitte versuche es später erneut.";
       return;
     }
 
@@ -151,7 +151,7 @@ const submitForm = async () => {
     await fetchToken();
   } catch (_e) {
     submitError.value =
-      "Ein Netzwerkfehler ist aufgetreten. Bitte ueberpruefe deine Internetverbindung.";
+      "Ein Netzwerkfehler ist aufgetreten. Bitte überprüfe deine Internetverbindung.";
   } finally {
     isSubmitting.value = false;
   }
@@ -188,7 +188,7 @@ const clearSuccess = () => {
           <FontAwesomeIcon icon="check" class="text-green-600 mt-0.5 shrink-0" />
           <div class="flex-1">
             <p class="font-body text-green-800">
-              Deine Nachricht wurde erfolgreich gesendet. Vielen Dank fuer deine Anfrage!
+              Deine Nachricht wurde erfolgreich gesendet. Vielen Dank für deine Anfrage!
             </p>
             <button
               class="mt-2 text-sm text-green-700 hover:text-green-900 underline font-body"

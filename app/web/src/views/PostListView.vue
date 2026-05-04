@@ -66,7 +66,7 @@ const selectedCategory = computed(() => {
 
 const emptyMessage = computed(() => {
   return selectedCategory.value
-    ? `Fuer die Kategorie ${selectedCategory.value.name} sind derzeit keine Beitraege verfuegbar.`
+    ? `Für die Kategorie ${selectedCategory.value.name} sind derzeit keine Beiträge verfügbar.`
     : "Derzeit sind keine Beiträge verfügbar.";
 });
 

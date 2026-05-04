@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
+import type { DepartmentColor } from "@vsg/types";
 import ApiState from "@/components/ui/ApiState.vue";
-import DepartmentCard from "@/components/cards/DepartmentCard.vue";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
 import { useDepartmentsStore } from "@/stores/departmentsStore";
 import CardSection from "@/components/sections/CardSection.vue";
@@ -12,9 +12,25 @@ import NewsSection from "@/components/sections/NewsSection.vue";
 import GalerieSection from "@/components/sections/GalerieSection.vue";
 import CtaSection from "@/components/sections/CtaSection.vue";
 import { homepageContent } from "@/content/homepage-content";
+import Card from "@/components/cards/Card.vue";
+import LinkArrow from "@/components/ui/LinkArrow.vue";
 
 const departmentsStore = useDepartmentsStore();
 const { departments, isLoading, error } = storeToRefs(departmentsStore);
+
+function getDepartmentIconBackgroundClass(color: DepartmentColor) {
+  switch (color) {
+    case "purple":
+      return "bg-vsg-badminton-secondary";
+    case "green":
+      return "bg-vsg-gymnastik-secondary";
+    case "red":
+      return "bg-vsg-tischtennis-secondary";
+    case "blue":
+    default:
+      return "bg-vsg-volleyball-secondary";
+  }
+}
 </script>
 
 <template>
@@ -46,16 +62,30 @@ const { departments, isLoading, error } = storeToRefs(departmentsStore);
         :empty="departments.length === 0"
         empty-message="Derzeit sind keine Abteilungen verfugbar."
       >
-        <DepartmentCard
+        <Card
           v-for="department in departments"
           :key="department.id"
           :title="department.name"
           :description="department.shortDescription"
-          :href="`/abteilung/${department.slug}`"
-          :icon-url="department.icon ? getMediaUrl(department.icon) : undefined"
-          :icon-alt="department.name"
-          :color="department.color"
-        />
+        >
+          <template #icon>
+            <div
+              class="flex h-20 w-20 items-center justify-center rounded-full p-4 text-vsg-blue-600 transition-transform"
+              :class="getDepartmentIconBackgroundClass(department.color)"
+            >
+              <img
+                v-if="department.icon"
+                :src="getMediaUrl(department.icon)"
+                :alt="department.name"
+                class="h-full w-full object-contain"
+              />
+              <FontAwesomeIcon v-else icon="circle" class="text-2xl" />
+            </div>
+          </template>
+          <template #link>
+            <LinkArrow :href="`/abteilung/${department.slug}`">Mehr erfahren</LinkArrow>
+          </template>
+        </Card>
       </ApiState>
     </CardSection>
 

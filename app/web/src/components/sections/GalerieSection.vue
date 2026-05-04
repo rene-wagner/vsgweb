@@ -164,7 +164,7 @@ onUnmounted(() => {
       :is-loading="activeLoading"
       :error="activeError"
       :empty="activeMediaItems.length === 0"
-      empty-message="Derzeit sind keine Bilder verfuegbar."
+      empty-message="Derzeit sind keine Bilder verfügbar."
     >
       <div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
         <button
