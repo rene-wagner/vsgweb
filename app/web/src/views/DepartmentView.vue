@@ -9,13 +9,20 @@ import ApiState from "@/components/ui/ApiState.vue";
 import { departmentViewContent } from "@/content/department-view-content";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
 import StatsSection from "@/components/sections/StatsSection.vue";
+import ListSection from "@/components/sections/ListSection.vue";
 import TrainingScheduleSection from "@/components/sections/TrainingScheduleSection.vue";
 import LocationSection from "@/components/sections/LocationSection.vue";
 import NewsSection from "@/components/sections/NewsSection.vue";
 import GalerieSection from "@/components/sections/GalerieSection.vue";
 import CtaSection from "@/components/sections/CtaSection.vue";
 import WelcomeSection from "@/components/sections/WelcomeSection.vue";
-import { Cta, DepartmentLocation, DepartmentTrainingGroup, Statistic } from "@vsg/types";
+import {
+  Cta,
+  DepartmentLocation,
+  DepartmentResult,
+  DepartmentTrainingGroup,
+  Statistic,
+} from "@vsg/types";
 import { useMediaItemsStore } from "@/stores/mediaItemsStore";
 
 const route = useRoute();
@@ -97,6 +104,10 @@ const departmentStats = computed<Statistic[]>(() => {
     value: stat.value,
     label: stat.label,
   }));
+});
+
+const departmentResults = computed<DepartmentResult[]>(() => {
+  return currentDepartment.value?.departmentResults ?? [];
 });
 
 // Transform API training groups to component format
@@ -189,11 +200,23 @@ const departmentCta = computed<Cta>(() => {
         :category-slug="currentDepartment?.slug ?? null"
       />
 
+      <ListSection
+        v-if="departmentResults.length > 0"
+        :title="departmentViewContent.resultsTitle"
+        :subtitle="departmentViewContent.resultsSubtitle"
+        :description="departmentViewContent.resultsDescription"
+        subtitle-uuid="30176e5c-9d3a-45f9-bec2-231ba2ec4f05"
+        title-uuid="d6ea12ba-610f-480f-ba72-2850081bdf55"
+        description-uuid="c5a28826-1c8a-4319-b259-4e90d6a208ef"
+        :items="departmentResults"
+        background="gray"
+      />
+
       <GalerieSection
         :headline="departmentViewContent.galleryHeadline"
         :subtitle="departmentViewContent.gallerySubtitle"
         :description="departmentViewContent.galleryDescription"
-        background="gray"
+        background="white"
         :items-count="20"
         :category-id="departmentCategoryId"
       />

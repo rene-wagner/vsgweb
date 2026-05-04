@@ -40,7 +40,7 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
         />
 
         <EditableContent
-          v-if="props.description"
+          v-if="props.description !== undefined"
           :uuid="props.descriptionUuid"
           :content="props.description"
           :tag="props.descriptionTag"

@@ -1,4 +1,7 @@
 export interface DepartmentViewContent {
+  resultsTitle: string;
+  resultsSubtitle: string;
+  resultsDescription: string;
   trainingScheduleTitle: string;
   trainingScheduleSubtitle: string;
   trainingScheduleDescription: string;
@@ -18,6 +21,10 @@ export interface DepartmentViewContent {
 }
 
 export const departmentViewContent: DepartmentViewContent = {
+  resultsTitle: "",
+  resultsSubtitle: "",
+  resultsDescription: "",
+
   trainingScheduleTitle: "Trainingszeiten",
   trainingScheduleSubtitle: "Wann wir trainieren",
   trainingScheduleDescription:
