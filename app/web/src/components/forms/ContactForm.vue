@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 
 const props = defineProps<{
   contactPersonId: number;
@@ -17,7 +17,6 @@ const message = ref("");
 
 // Honeypot fields
 const website = ref("");
-const timestamp = ref("");
 
 // UI state
 const isSubmitting = ref(false);
@@ -26,25 +25,6 @@ const submitError = ref<string | null>(null);
 
 // Validation state
 const errors = ref<Record<string, string>>({});
-
-// Fetch encrypted timestamp token from API
-const fetchToken = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/contact/token`);
-    if (response.ok) {
-      const data = await response.json();
-      timestamp.value = data.token;
-    }
-  } catch (_e) {
-    // Silently fail - form will still work but honeypot validation may fail
-    console.warn("Failed to fetch contact form token");
-  }
-};
-
-// Generate encrypted timestamp on mount
-onMounted(() => {
-  fetchToken();
-});
 
 // Validation
 const validateField = (field: string, value: string): string | null => {
@@ -113,6 +93,7 @@ const submitForm = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/contact`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -123,7 +104,6 @@ const submitForm = async () => {
         subject: subject.value.trim(),
         message: message.value.trim(),
         website: website.value, // Honeypot
-        timestamp: timestamp.value, // Timing validation
       }),
     });
 
@@ -147,8 +127,6 @@ const submitForm = async () => {
     subject.value = "";
     message.value = "";
 
-    // Fetch new token for potential next submission
-    await fetchToken();
   } catch (_e) {
     submitError.value =
       "Ein Netzwerkfehler ist aufgetreten. Bitte überprüfe deine Internetverbindung.";
@@ -236,8 +214,6 @@ const clearSuccess = () => {
           autocomplete="off"
         />
       </div>
-      <input type="hidden" name="timestamp" :value="timestamp" />
-
       <!-- Name Field -->
       <div>
         <label
