@@ -1,8 +1,10 @@
 import type {
   ApiDepartment,
+  ApiDepartmentResult,
   ApiDepartmentTrainingSession,
   Department,
   DepartmentLocation,
+  DepartmentResult,
   DepartmentTrainingSession,
   LocationSummary,
 } from "@vsg/types";
@@ -30,6 +32,15 @@ function normalizeDepartmentSession(
     sort: 0,
     createdAt: "",
     updatedAt: "",
+  };
+}
+
+function normalizeDepartmentResult(result: ApiDepartmentResult): DepartmentResult {
+  return {
+    id: result.id,
+    title: result.title,
+    league: result.league,
+    url: result.url,
   };
 }
 
@@ -62,6 +73,7 @@ export function normalizeDepartment(department: ApiDepartment): Department {
       createdAt: "",
       updatedAt: "",
     })),
+    departmentResults: (department.departmentResults ?? []).map(normalizeDepartmentResult),
     trainingGroups: (department.trainingGroups ?? []).map((group, index) => ({
       id: group.id,
       name: group.name,

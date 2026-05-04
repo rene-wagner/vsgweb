@@ -12,6 +12,8 @@ export type { Location, LocationSummary } from "./location.types.js";
 export type {
   ApiDepartment as Department,
   ApiDepartment,
+  ApiDepartmentResult,
+  ApiDepartmentResult as DepartmentResult,
   DepartmentAPI,
   ApiDepartmentStatistic as DepartmentStatistic,
   ApiDepartmentTrainingGroup as DepartmentTrainingGroup,

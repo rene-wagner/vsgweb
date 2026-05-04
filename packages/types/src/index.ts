@@ -1,5 +1,6 @@
 export type {
   ApiDepartment,
+  ApiDepartmentResult,
   ApiDepartmentStatistic,
   ApiDepartmentTrainingGroup,
   ApiDepartmentTrainingSession,
@@ -13,6 +14,7 @@ export type { UserSummary } from "./api/user.types.js";
 export type { Cta } from "./cta.types.js";
 export type { Department, DepartmentColor } from "./departments/department.types.js";
 export type { DepartmentLocation } from "./departments/department-location.types.js";
+export type { DepartmentResult } from "./departments/department-result.types.js";
 export type {
   DepartmentTrainer,
   DepartmentTrainerContactPerson,

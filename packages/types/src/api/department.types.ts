@@ -23,6 +23,13 @@ export interface ApiDepartmentTrainingGroup extends JsonLdResource {
   departmentTrainingSessions: ApiDepartmentTrainingSession[];
 }
 
+export interface ApiDepartmentResult extends JsonLdResource {
+  id: number;
+  title: string;
+  league: string;
+  url: string;
+}
+
 export interface ApiDepartment extends JsonLdResource {
   id: number;
   name: string;
@@ -31,6 +38,7 @@ export interface ApiDepartment extends JsonLdResource {
   description?: string | null;
   icon?: string | MediaItem | null;
   departmentStats: ApiDepartmentStatistic[];
+  departmentResults: ApiDepartmentResult[];
   trainingGroups: ApiDepartmentTrainingGroup[];
 }
 

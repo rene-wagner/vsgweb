@@ -1,6 +1,7 @@
 import type { MediaItem } from "../media-items/media-item.types.js";
 import type { Statistic } from "../statistic.types.js";
 import type { DepartmentLocation } from "./department-location.types.js";
+import type { DepartmentResult } from "./department-result.types.js";
 import type { DepartmentTrainer } from "./department-trainer.types.js";
 import type { DepartmentTrainingGroup } from "./department-training-group.types.js";
 
@@ -16,6 +17,7 @@ export interface Department {
   iconId: number | null;
   icon: MediaItem | null;
   stats: Statistic[];
+  departmentResults: DepartmentResult[];
   trainingGroups: DepartmentTrainingGroup[];
   locations: DepartmentLocation[];
   trainers: DepartmentTrainer[];
