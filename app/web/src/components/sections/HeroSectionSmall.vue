@@ -7,7 +7,6 @@ interface Props {
   headline?: string;
   description?: string;
   subtitle?: string;
-  iconUrl?: string;
   headlineUuid: string;
   descriptionUuid: string;
   subtitleUuid: string;
@@ -23,7 +22,6 @@ const props = withDefaults(defineProps<Props>(), {
   headline: "",
   description: undefined,
   subtitle: undefined,
-  iconUrl: undefined,
   editableHeadline: true,
   editableDescription: true,
   primaryCtaLabel: undefined,
@@ -60,17 +58,10 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
     <div class="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-vsg-gold-400/10 blur-3xl" />
     <div class="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-vsg-blue-500/20 blur-3xl" />
 
-    <div v-if="iconUrl" class="absolute right-10 top-1/2 -translate-y-1/2 opacity-7">
-      <img :src="iconUrl" alt="" class="h-125 w-125 object-contain" />
-    </div>
-
     <div class="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center">
       <h1
         v-if="headline"
         class="animate-slide-up text-glow font-display text-7xl text-white delay-300 md:text-8xl lg:text-9xl"
-        :class="{
-          'text-[5rem] leading-[0.85] tracking-tight md:text-[8rem] lg:text-[10rem]': iconUrl,
-        }"
       >
         <EditableContent v-if="editableHeadline" :uuid="headlineUuid" :content="headline" />
         <span v-else>{{ headline }}</span>

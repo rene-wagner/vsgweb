@@ -2,7 +2,6 @@
 import { watch, onMounted, onUnmounted, watchEffect, computed } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
-import { getMediaUrl } from "@/services/media-items/media-item.service";
 import { useCategoriesStore } from "@/stores/categoriesStore";
 import { useDepartmentsStore } from "../stores/departmentsStore";
 import { usePostsStore } from "../stores/postsStore";
@@ -145,7 +144,6 @@ const departmentCta = computed<Cta>(() => {
       <HeroSectionSmall
         :headline="currentDepartment!.name"
         :description="currentDepartment!.shortDescription"
-        :icon-url="currentDepartment!.icon ? getMediaUrl(currentDepartment!.icon) : undefined"
         headline-uuid="1647fd06-761f-4038-8539-9bc98790faf3"
         description-uuid="062f3a4b-d164-45f6-8577-01b4484a2a8c"
         subtitle-uuid="3c1aeba6-99b8-4729-93b0-4623ecb770c8"
