@@ -16,7 +16,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   primaryButtonText: "Mitglied werden",
-  primaryButtonLink: "/verein/mitgliedschaft",
+  primaryButtonLink: "/verein/aufnahmeantrag",
   secondaryButtonText: "Kontakt",
   secondaryButtonLink: "/kontakt",
   theme: "gold",

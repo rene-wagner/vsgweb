@@ -48,5 +48,5 @@ export const departmentViewContent: DepartmentViewContent = {
   ctaPrimaryButtonText: "Probetraining anfragen",
   ctaPrimaryButtonLink: "/kontakt",
   ctaSecondaryButtonText: "Mitglied werden",
-  ctaSecondaryButtonLink: "/verein/mitgliedschaft",
+  ctaSecondaryButtonLink: "/verein/aufnahmeantrag",
 };

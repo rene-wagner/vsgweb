@@ -37,6 +37,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/views/club/ClubMembershipView.vue"),
   },
   {
+    path: "/verein/aufnahmeantrag",
+    name: "verein-aufnahmeantrag",
+    component: () => import("@/views/club/ClubMembershipApplicationView.vue"),
+  },
+  {
     path: "/beitraege",
     name: "post-list",
     component: () => import("@/views/PostListView.vue"),

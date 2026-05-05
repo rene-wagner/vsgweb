@@ -26,7 +26,7 @@ Schön, dass du auf unseren Verein aufmerksam geworden bist. Mit **Tischtennis, 
 
 Ansonsten für alle, die unsere Seite das erste Mal besuchen, viel Spaß beim Stöbern. Es gibt garantiert viel zu entdecken. Vielleicht wird ja sogar eine Mitgliedschaft daraus, [kontaktiert](/kontakt?person=1) mich einfach.
 
-Ihr wollt Vereinsmitglied werden, kein Problem, hier ist der [Formularlink](https://vsgapi.rwgnr.de/uploads/f252e251-759f-48f1-8599-7651fc3d859a.pdf) dazu.`,
+Ihr wollt Vereinsmitglied werden, kein Problem, hier geht es direkt zum [digital vorbereiteten Aufnahmeantrag](/verein/aufnahmeantrag).`,
 
   // Statistics
   stats: [
