@@ -2,32 +2,13 @@
 import { computed, reactive, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
-type Department = "volleyball" | "gymnastik" | "tischtennis" | "badminton";
-
-type FormState = {
-  department: Department | "";
-  firstName: string;
-  lastName: string;
-  birthDate: string;
-  phone: string;
-  email: string;
-  street: string;
-  postalCode: string;
-  city: string;
-  otherClub: string;
-  bankName: string;
-  iban: string;
-  bic: string;
-  accountHolder: string;
-  place: string;
-  applicationDate: string;
-  legalGuardianName: string;
-  acceptsStatutes: boolean;
-  acceptsEmailInvitation: boolean;
-  acceptsPrivacyPolicy: boolean;
-  confirmsMinorAttachment: boolean;
-};
+import {
+  formatIban,
+  isMinorByBirthDate,
+  validateMembershipApplication,
+  type Department,
+  type MembershipApplicationFormData,
+} from "@/lib/validation/membership-application";
 
 const PDF_APPLICATION_URL = `${import.meta.env.VITE_API_BASE_URL}/media/20-aufnahmeantrag2018-pdf.pdf`;
 
@@ -63,7 +44,7 @@ const departmentOptions: Array<{
   },
 ];
 
-const form = reactive<FormState>({
+const form = reactive<MembershipApplicationFormData>({
   department: "",
   firstName: "",
   lastName: "",
@@ -90,178 +71,15 @@ const form = reactive<FormState>({
 const errors = ref<Record<string, string>>({});
 const submitSuccess = ref(false);
 
-const isMinor = computed(() => {
-  if (!form.birthDate) {
-    return false;
-  }
-
-  const birthDate = new Date(form.birthDate);
-
-  if (Number.isNaN(birthDate.getTime())) {
-    return false;
-  }
-
-  const today = new Date();
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDifference = today.getMonth() - birthDate.getMonth();
-
-  if (
-    monthDifference < 0 ||
-    (monthDifference === 0 && today.getDate() < birthDate.getDate())
-  ) {
-    age -= 1;
-  }
-
-  return age < 18;
-});
-
-function normalizeIban(value: string): string {
-  return value.replace(/\s+/g, "").toUpperCase();
-}
-
-function formatIban(value: string): string {
-  return normalizeIban(value)
-    .match(/.{1,4}/g)
-    ?.join(" ") ?? "";
-}
-
-function isValidGermanPostalCode(value: string): boolean {
-  return /^\d{5}$/.test(value.trim());
-}
-
-function isValidEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-}
-
-function isValidIban(value: string): boolean {
-  const iban = normalizeIban(value);
-
-  if (!/^DE\d{20}$/.test(iban)) {
-    return false;
-  }
-
-  const rearranged = `${iban.slice(4)}${iban.slice(0, 4)}`;
-  const numericRepresentation = rearranged.replace(/[A-Z]/g, (letter) => {
-    return String(letter.charCodeAt(0) - 55);
-  });
-
-  let remainder = 0;
-
-  for (const digit of numericRepresentation) {
-    remainder = (remainder * 10 + Number(digit)) % 97;
-  }
-
-  return remainder === 1;
-}
-
-function isValidBic(value: string): boolean {
-  if (!value.trim()) {
-    return true;
-  }
-
-  return /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/.test(value.trim().toUpperCase());
-}
-
-function isValidDate(value: string): boolean {
-  if (!value) {
-    return false;
-  }
-
-  const date = new Date(value);
-  return !Number.isNaN(date.getTime());
-}
-
-function isBirthDatePlausible(value: string): boolean {
-  if (!isValidDate(value)) {
-    return false;
-  }
-
-  const date = new Date(value);
-  const today = new Date();
-  const earliestYear = today.getFullYear() - 120;
-
-  return date <= today && date.getFullYear() >= earliestYear;
-}
-
-function validateForm(): boolean {
-  const nextErrors: Record<string, string> = {};
-
-  if (!form.department) nextErrors.department = "Bitte wähle eine Abteilung aus.";
-  if (!form.firstName.trim()) nextErrors.firstName = "Vorname ist erforderlich.";
-  if (!form.lastName.trim()) nextErrors.lastName = "Name ist erforderlich.";
-
-  if (!form.birthDate) {
-    nextErrors.birthDate = "Geburtsdatum ist erforderlich.";
-  } else if (!isBirthDatePlausible(form.birthDate)) {
-    nextErrors.birthDate = "Bitte gib ein plausibles Geburtsdatum an.";
-  }
-
-  if (!form.phone.trim()) nextErrors.phone = "Telefon ist erforderlich.";
-
-  if (!form.email.trim()) {
-    nextErrors.email = "Mailadresse ist erforderlich.";
-  } else if (!isValidEmail(form.email)) {
-    nextErrors.email = "Bitte gib eine gültige Mailadresse ein.";
-  }
-
-  if (!form.street.trim()) nextErrors.street = "Straße ist erforderlich.";
-
-  if (!form.postalCode.trim()) {
-    nextErrors.postalCode = "PLZ ist erforderlich.";
-  } else if (!isValidGermanPostalCode(form.postalCode)) {
-    nextErrors.postalCode = "Bitte gib eine fünfstellige PLZ an.";
-  }
-
-  if (!form.city.trim()) nextErrors.city = "Wohnort ist erforderlich.";
-  if (!form.bankName.trim()) nextErrors.bankName = "Kreditinstitut ist erforderlich.";
-
-  if (!form.iban.trim()) {
-    nextErrors.iban = "IBAN ist erforderlich.";
-  } else if (!isValidIban(form.iban)) {
-    nextErrors.iban = "Bitte gib eine gültige deutsche IBAN ein.";
-  }
-
-  if (!isValidBic(form.bic)) {
-    nextErrors.bic = "Bitte gib eine gültige BIC ein oder lasse das Feld leer.";
-  }
-
-  if (!form.accountHolder.trim()) {
-    nextErrors.accountHolder = "KontoinhaberIn ist erforderlich.";
-  }
-
-  if (!form.place.trim()) nextErrors.place = "Ort ist erforderlich.";
-
-  if (!form.applicationDate) {
-    nextErrors.applicationDate = "Datum ist erforderlich.";
-  } else if (!isValidDate(form.applicationDate)) {
-    nextErrors.applicationDate = "Bitte gib ein gültiges Datum an.";
-  }
-
-  if (isMinor.value && !form.legalGuardianName.trim()) {
-    nextErrors.legalGuardianName = "Bei Minderjährigen ist die gesetzliche Vertretung erforderlich.";
-  }
-
-  if (!form.acceptsStatutes) {
-    nextErrors.acceptsStatutes = "Bitte bestätige Satzung und Beitragsordnung.";
-  }
-
-  if (!form.acceptsPrivacyPolicy) {
-    nextErrors.acceptsPrivacyPolicy = "Bitte erteile die DSGVO-Einwilligung.";
-  }
-
-  if (isMinor.value && !form.confirmsMinorAttachment) {
-    nextErrors.confirmsMinorAttachment =
-      "Bitte bestätige den Hinweis zur Aufsichtspflicht für Minderjährige.";
-  }
-
-  errors.value = nextErrors;
-  return Object.keys(nextErrors).length === 0;
-}
+const isMinor = computed(() => isMinorByBirthDate(form.birthDate));
 
 function handleSubmit(): void {
   submitSuccess.value = false;
 
-  if (!validateForm()) {
+  const validationResult = validateMembershipApplication(form);
+  errors.value = validationResult.errors;
+
+  if (!validationResult.success) {
     return;
   }
 
