@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { ref, computed } from "vue";
+import { computed, reactive, ref } from "vue";
+import { isContactFormValid, validateContactForm } from "@/lib/validation/contact-form";
 
 const props = defineProps<{
   contactPersonId: number;
@@ -33,14 +34,13 @@ async function readErrorMessage(
   }
 }
 
-// Form state
-const senderName = ref("");
-const senderEmail = ref("");
-const subject = ref("");
-const message = ref("");
-
-// Honeypot fields
-const website = ref("");
+const form = reactive({
+  senderName: "",
+  senderEmail: "",
+  subject: "",
+  message: "",
+  website: "",
+});
 
 // UI state
 const isSubmitting = ref(false);
@@ -50,61 +50,14 @@ const submitError = ref<string | null>(null);
 // Validation state
 const errors = ref<Record<string, string>>({});
 
-// Validation
-const validateField = (field: string, value: string): string | null => {
-  switch (field) {
-    case "senderName":
-      if (!value.trim()) return "Name ist erforderlich";
-      if (value.trim().length < 2) return "Name muss mindestens 2 Zeichen haben";
-      if (value.trim().length > 100) return "Name darf maximal 100 Zeichen haben";
-      return null;
-    case "senderEmail": {
-      if (!value.trim()) return "E-Mail ist erforderlich";
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(value.trim())) return "Bitte gib eine gültige E-Mail-Adresse ein";
-      return null;
-    }
-    case "subject":
-      if (!value.trim()) return "Betreff ist erforderlich";
-      if (value.trim().length < 5) return "Betreff muss mindestens 5 Zeichen haben";
-      if (value.trim().length > 200) return "Betreff darf maximal 200 Zeichen haben";
-      return null;
-    case "message":
-      if (!value.trim()) return "Nachricht ist erforderlich";
-      if (value.trim().length < 10) return "Nachricht muss mindestens 10 Zeichen haben";
-      if (value.trim().length > 5000) return "Nachricht darf maximal 5000 Zeichen haben";
-      return null;
-    default:
-      return null;
-  }
-};
-
 const validateForm = (): boolean => {
-  errors.value = {};
-
-  const nameError = validateField("senderName", senderName.value);
-  if (nameError) errors.value.senderName = nameError;
-
-  const emailError = validateField("senderEmail", senderEmail.value);
-  if (emailError) errors.value.senderEmail = emailError;
-
-  const subjectError = validateField("subject", subject.value);
-  if (subjectError) errors.value.subject = subjectError;
-
-  const messageError = validateField("message", message.value);
-  if (messageError) errors.value.message = messageError;
-
-  return Object.keys(errors.value).length === 0;
+  const validationResult = validateContactForm(form);
+  errors.value = validationResult.errors;
+  return validationResult.success;
 };
 
 const isFormValid = computed(() => {
-  return (
-    senderName.value.trim().length >= 2 &&
-    senderEmail.value.trim().length > 0 &&
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(senderEmail.value.trim()) &&
-    subject.value.trim().length >= 5 &&
-    message.value.trim().length >= 10
-  );
+  return isContactFormValid(form);
 });
 
 // Submit handler
@@ -147,11 +100,11 @@ const submitForm = async () => {
       },
       body: JSON.stringify({
         contactPersonId: props.contactPersonId,
-        senderName: senderName.value.trim(),
-        senderEmail: senderEmail.value.trim(),
-        subject: subject.value.trim(),
-        message: message.value.trim(),
-        website: website.value, // Honeypot
+        senderName: form.senderName.trim(),
+        senderEmail: form.senderEmail.trim(),
+        subject: form.subject.trim(),
+        message: form.message.trim(),
+        website: form.website, // Honeypot
         csrfToken: token,
       }),
     });
@@ -181,10 +134,11 @@ const submitForm = async () => {
     submitSuccess.value = true;
 
     // Reset form
-    senderName.value = "";
-    senderEmail.value = "";
-    subject.value = "";
-    message.value = "";
+    form.senderName = "";
+    form.senderEmail = "";
+    form.subject = "";
+    form.message = "";
+    form.website = "";
 
   } catch (_e) {
     submitError.value =
@@ -266,7 +220,7 @@ const clearSuccess = () => {
         <label for="website">Website (Leave this field blank)</label>
         <input
           id="website"
-          v-model="website"
+          v-model="form.website"
           type="text"
           name="website"
           tabindex="-1"
@@ -283,7 +237,7 @@ const clearSuccess = () => {
         </label>
         <input
           id="senderName"
-          v-model="senderName"
+          v-model="form.senderName"
           type="text"
           required
           maxlength="100"
@@ -311,7 +265,7 @@ const clearSuccess = () => {
         </label>
         <input
           id="senderEmail"
-          v-model="senderEmail"
+          v-model="form.senderEmail"
           type="email"
           required
           :disabled="isSubmitting"
@@ -338,7 +292,7 @@ const clearSuccess = () => {
         </label>
         <input
           id="subject"
-          v-model="subject"
+          v-model="form.subject"
           type="text"
           required
           maxlength="200"
@@ -366,7 +320,7 @@ const clearSuccess = () => {
         </label>
         <textarea
           id="message"
-          v-model="message"
+          v-model="form.message"
           required
           rows="5"
           maxlength="5000"
@@ -382,7 +336,9 @@ const clearSuccess = () => {
         <p v-if="errors.message" class="mt-1 text-sm text-red-600 font-body">
           {{ errors.message }}
         </p>
-        <p class="mt-1 text-xs text-vsg-blue-400 font-body">{{ message.length }} / 5000 Zeichen</p>
+        <p class="mt-1 text-xs text-vsg-blue-400 font-body">
+          {{ form.message.length }} / 5000 Zeichen
+        </p>
       </div>
 
       <!-- Submit Button -->

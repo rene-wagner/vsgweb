@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { mapZodIssuesToFieldErrors } from "@/lib/validation/zod-errors";
 
 export const departmentValues = ["volleyball", "gymnastik", "tischtennis", "badminton"] as const;
 
@@ -186,17 +187,5 @@ export function validateMembershipApplication(form: MembershipApplicationFormDat
     return { success: true, errors: {} };
   }
 
-  const fieldErrors: Record<string, string> = {};
-
-  for (const issue of result.error.issues) {
-    const [field] = issue.path;
-
-    if (typeof field !== "string" || fieldErrors[field]) {
-      continue;
-    }
-
-    fieldErrors[field] = issue.message;
-  }
-
-  return { success: false, errors: fieldErrors };
+  return { success: false, errors: mapZodIssuesToFieldErrors(result.error) };
 }

@@ -116,7 +116,7 @@ function encodeBase64(value: string): string {
     />
 
     <section class="bg-white py-16">
-      <div class="mx-auto max-w-2xl px-6">
+      <div class="mx-auto max-w-5xl px-6">
         <ApiState
           :is-loading="contactPeopleStore.isLoading"
           :error="contactPeopleStore.error"
