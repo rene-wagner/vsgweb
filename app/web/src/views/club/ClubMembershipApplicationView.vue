@@ -4,7 +4,7 @@ import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
 
 const heroHeadline = "Aufnahmeantrag";
 const heroDescription =
-  "Bereite hier den digitalen Aufnahmeantrag für den Verein vor. Der Online-Versand wird aktuell noch eingerichtet.";
+  "Fülle hier den digitalen Aufnahmeantrag für den Verein aus und sende ihn direkt an den Verein.";
 </script>
 
 <template>
@@ -14,28 +14,13 @@ const heroDescription =
     <HeroSectionSmall
       :headline="heroHeadline"
       :description="heroDescription"
-      headline-uuid="membership-application-headline"
-      description-uuid="membership-application-description"
-      subtitle-uuid="membership-application-subtitle"
-      :editable-headline="false"
-      :editable-description="false"
-      primary-cta-label="Zum Formular"
-      primary-cta-anchor="#mitgliedsantrag-formular"
-      secondary-cta-label="Beitragsordnung"
-      secondary-cta-anchor="/verein/beitragsordnung"
+      headline-uuid="11efd754-cacd-4c62-9a34-0c36444caba3"
+      description-uuid="f6d749da-3c43-406e-a687-16b495ffd2b4"
+      subtitle-uuid="bfe0eaac-fca7-4bb5-ab4b-e56ef0e99237"
     />
 
     <section id="mitgliedsantrag-formular" class="bg-white py-16">
       <div class="mx-auto max-w-5xl px-6">
-        <div class="mb-10 max-w-3xl text-vsg-blue-900">
-          <h2 class="font-display text-3xl tracking-wider md:text-4xl">Digital vorbereitet</h2>
-          <p class="mt-4 font-body text-lg leading-relaxed text-vsg-blue-700">
-            Diese Seite bildet den bisherigen Aufnahmeantrag bereits digital ab. Interne Felder des
-            Vereins, etwa zur Befürwortung oder zum Vorstandsbeschluss, sind hier bewusst nicht
-            enthalten.
-          </p>
-        </div>
-
         <MembershipApplicationForm />
       </div>
     </section>

@@ -5,12 +5,15 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   formatIban,
   isMinorByBirthDate,
+  normalizeIban,
   validateMembershipApplication,
   type Department,
   type MembershipApplicationFormData,
 } from "@/lib/validation/membership-application";
-
-const PDF_APPLICATION_URL = `${import.meta.env.VITE_API_BASE_URL}/media/20-aufnahmeantrag2018-pdf.pdf`;
+import {
+  submitMembershipApplication,
+  type MembershipApplicationPayload,
+} from "@/services/membership-application/membership-application.service";
 
 const departmentOptions: Array<{
   label: string;
@@ -69,12 +72,41 @@ const form = reactive<MembershipApplicationFormData>({
 });
 
 const errors = ref<Record<string, string>>({});
+const isSubmitting = ref(false);
+const submitError = ref<string | null>(null);
 const submitSuccess = ref(false);
 
 const isMinor = computed(() => isMinorByBirthDate(form.birthDate));
 
-function handleSubmit(): void {
+function toMembershipApplicationPayload(): MembershipApplicationPayload {
+  return {
+    department: form.department,
+    firstName: form.firstName.trim(),
+    lastName: form.lastName.trim(),
+    birthDate: form.birthDate,
+    phone: form.phone.trim(),
+    email: form.email.trim(),
+    street: form.street.trim(),
+    postalCode: form.postalCode.trim(),
+    city: form.city.trim(),
+    otherClub: form.otherClub.trim(),
+    bankName: form.bankName.trim(),
+    iban: normalizeIban(form.iban),
+    bic: form.bic.trim().toUpperCase(),
+    accountHolder: form.accountHolder.trim(),
+    place: form.place.trim(),
+    applicationDate: form.applicationDate,
+    legalGuardianName: form.legalGuardianName.trim(),
+    acceptsStatutes: form.acceptsStatutes,
+    acceptsEmailInvitation: form.acceptsEmailInvitation,
+    acceptsPrivacyPolicy: form.acceptsPrivacyPolicy,
+    confirmsMinorAttachment: form.confirmsMinorAttachment,
+  };
+}
+
+async function handleSubmit(): Promise<void> {
   submitSuccess.value = false;
+  submitError.value = null;
 
   const validationResult = validateMembershipApplication(form);
   errors.value = validationResult.errors;
@@ -85,7 +117,20 @@ function handleSubmit(): void {
 
   form.iban = formatIban(form.iban);
   form.bic = form.bic.trim().toUpperCase();
-  submitSuccess.value = true;
+
+  isSubmitting.value = true;
+
+  try {
+    await submitMembershipApplication(toMembershipApplicationPayload());
+    submitSuccess.value = true;
+  } catch (error) {
+    submitError.value =
+      error instanceof Error && error.message.length > 0
+        ? error.message
+        : "Ein Netzwerkfehler ist aufgetreten. Bitte versuche es erneut.";
+  } finally {
+    isSubmitting.value = false;
+  }
 }
 
 function clearFieldError(field: string): void {
@@ -109,26 +154,14 @@ function handleBicBlur(): void {
 
 <template>
   <div class="rounded-3xl border border-vsg-blue-100 bg-white p-6 shadow-sm md:p-8">
-    <div
-      class="mb-8 rounded-2xl border border-vsg-gold-300/40 bg-vsg-gold-50 px-5 py-4 text-vsg-blue-900"
-    >
+    <div class="mb-8 rounded-2xl border border-vsg-gold-300/40 bg-vsg-gold-50 px-5 py-4 text-vsg-blue-900">
       <div class="flex items-start gap-3">
         <FontAwesomeIcon icon="circle-info" class="mt-1 text-vsg-gold-600" />
         <div class="space-y-2 font-body text-sm leading-relaxed md:text-base">
-          <p class="font-semibold">Der digitale Versand ist noch nicht freigeschaltet.</p>
+          <p class="font-semibold">Der Aufnahmeantrag wird digital an den Verein übermittelt.</p>
           <p>
-            Du kannst das Formular bereits vollständig ausfüllen und prüfen. Bis zur Freischaltung
-            nutzt der Verein weiterhin den bisherigen PDF-Antrag.
+            Bitte fülle alle Pflichtfelder sorgfältig aus.
           </p>
-          <a
-            :href="PDF_APPLICATION_URL"
-            target="_blank"
-            rel="noreferrer"
-            class="inline-flex items-center gap-2 font-semibold text-vsg-blue-700 underline hover:text-vsg-blue-900"
-          >
-            <FontAwesomeIcon icon="file-pdf" />
-            PDF-Antrag öffnen
-          </a>
         </div>
       </div>
     </div>
@@ -150,17 +183,38 @@ function handleBicBlur(): void {
         <div class="flex items-start gap-3">
           <FontAwesomeIcon icon="check" class="mt-0.5 text-green-600" />
           <div class="font-body text-green-800">
-            <p class="font-semibold">Die Eingaben wurden lokal erfolgreich geprüft.</p>
+            <p class="font-semibold">Der Aufnahmeantrag wurde erfolgreich versendet.</p>
             <p>
-              Der Online-Versand wird noch vorbereitet. Bis dahin reiche bitte weiterhin den
-              PDF-Antrag ein.
+              Deine Angaben wurden an den Verein übermittelt und können nun weiterverarbeitet
+              werden.
             </p>
           </div>
         </div>
       </div>
     </Transition>
 
-    <form class="space-y-10" @submit.prevent="handleSubmit">
+    <Transition
+      enter-active-class="transition-all duration-300 ease-out"
+      enter-from-class="translate-y-2 opacity-0"
+      enter-to-class="translate-y-0 opacity-100"
+      leave-active-class="transition-all duration-200 ease-in"
+      leave-from-class="translate-y-0 opacity-100"
+      leave-to-class="translate-y-2 opacity-0"
+    >
+      <div
+        v-if="submitError"
+        class="mb-8 rounded-2xl border border-red-200 bg-red-50 p-4"
+        role="alert"
+        aria-live="polite"
+      >
+        <div class="flex items-start gap-3">
+          <FontAwesomeIcon icon="exclamation-triangle" class="mt-0.5 text-red-600" />
+          <p class="font-body text-red-800">{{ submitError }}</p>
+        </div>
+      </div>
+    </Transition>
+
+    <form class="space-y-10" :aria-busy="isSubmitting" @submit.prevent="handleSubmit">
       <section class="space-y-4">
         <div>
           <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">Abteilung</h2>
@@ -365,8 +419,8 @@ function handleBicBlur(): void {
         <div>
           <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">Bankverbindung</h2>
           <p class="mt-2 font-body text-vsg-blue-600">
-            Die Beitragszahlung erfolgt laut Antrag per Lastschrift. Die Daten werden aktuell noch
-            nicht digital versendet.
+            Die Beitragszahlung erfolgt laut Antrag per Lastschrift. Die Angaben werden zusammen
+            mit dem Aufnahmeantrag digital uebermittelt.
           </p>
         </div>
 
@@ -603,14 +657,15 @@ function handleBicBlur(): void {
 
       <div class="flex flex-col gap-4 border-t border-vsg-blue-100 pt-6 md:flex-row md:items-center md:justify-between">
         <p class="max-w-2xl font-body text-sm text-vsg-blue-600">
-          Mit dem Klick auf den Button wird noch nichts versendet. Das Formular wird nur lokal auf
-          Vollständigkeit geprüft.
+          Mit dem Klick auf den Button wird der ausgefuellte Aufnahmeantrag digital an den Verein
+          uebermittelt.
         </p>
         <button
           type="submit"
-          class="inline-flex items-center justify-center rounded-xl bg-vsg-blue-900 px-6 py-3 font-display text-lg tracking-wider text-vsg-gold-400 transition-colors hover:bg-vsg-blue-800"
+          :disabled="isSubmitting"
+          class="inline-flex items-center justify-center rounded-xl bg-vsg-blue-900 px-6 py-3 font-display text-lg tracking-wider text-vsg-gold-400 transition-colors hover:bg-vsg-blue-800 disabled:cursor-not-allowed disabled:opacity-70"
         >
-          Formular prüfen
+          {{ isSubmitting ? "Wird gesendet..." : "Aufnahmeantrag senden" }}
         </button>
       </div>
     </form>
