@@ -7,7 +7,7 @@ import SecureContact from "@/components/forms/SecureContact.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import ApiState from "@/components/ui/ApiState.vue";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
-import { getUploadUrl } from "@/services/media-items/media-item.service";
+import { getMediaThumbnailUrl } from "@/services/media-items/media-item.service";
 
 const route = useRoute();
 const contactPeopleStore = useContactPeopleStore();
@@ -90,7 +90,7 @@ function getInitials(cp: ContactPerson): string {
 function getProfileImageUrl(cp: ContactPerson): string | null {
   if (!cp.profileImage) return null;
 
-  return getUploadUrl(cp.profileImage.url ?? cp.profileImage.display_url ?? cp.profileImage.name);
+  return getMediaThumbnailUrl(cp.profileImage);
 }
 
 function encodeBase64(value: string): string {

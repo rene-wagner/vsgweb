@@ -10,22 +10,13 @@ export function getUploadUrl(pathOrFilename: string | null | undefined): string 
 }
 
 export function getMediaUrl(item: MediaItem): string {
-  return getUploadUrl(item.url) ?? "";
+  return getUploadUrl(item.thumbnail_url || item.original_url) ?? "";
 }
 
 export function getMediaDisplayUrl(item: MediaItem): string {
-  return getUploadUrl(item.display_url || item.cropped_url || item.original_url || item.url) ?? "";
+  return getUploadUrl(item.original_url) ?? "";
 }
 
 export function getMediaThumbnailUrl(item: MediaItem): string {
-  return (
-    getUploadUrl(
-      item.cropped_thumbnail_url ||
-        item.thumbnail_url ||
-        item.display_url ||
-        item.cropped_url ||
-        item.original_url ||
-        item.url,
-    ) ?? ""
-  );
+  return getUploadUrl(item.thumbnail_url || item.original_url) ?? "";
 }
