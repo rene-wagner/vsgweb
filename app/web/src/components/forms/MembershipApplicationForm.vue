@@ -75,6 +75,7 @@ const errors = ref<Record<string, string>>({});
 const isSubmitting = ref(false);
 const submitError = ref<string | null>(null);
 const submitSuccess = ref(false);
+const submitSuccessPdfUrl = ref<string | null>(null);
 
 const isMinor = computed(() => isMinorByBirthDate(form.birthDate));
 
@@ -106,6 +107,7 @@ function toMembershipApplicationPayload(): MembershipApplicationPayload {
 
 async function handleSubmit(): Promise<void> {
   submitSuccess.value = false;
+  submitSuccessPdfUrl.value = null;
   submitError.value = null;
 
   const validationResult = validateMembershipApplication(form);
@@ -121,7 +123,7 @@ async function handleSubmit(): Promise<void> {
   isSubmitting.value = true;
 
   try {
-    await submitMembershipApplication(toMembershipApplicationPayload());
+    submitSuccessPdfUrl.value = await submitMembershipApplication(toMembershipApplicationPayload());
     submitSuccess.value = true;
   } catch (error) {
     submitError.value =
@@ -154,7 +156,10 @@ function handleBicBlur(): void {
 
 <template>
   <div class="rounded-3xl border border-vsg-blue-100 bg-white p-6 shadow-sm md:p-8">
-    <div class="mb-8 rounded-2xl border border-vsg-gold-300/40 bg-vsg-gold-50 px-5 py-4 text-vsg-blue-900">
+    <div
+      v-if="!submitSuccess"
+      class="mb-8 rounded-2xl border border-vsg-gold-300/40 bg-vsg-gold-50 px-5 py-4 text-vsg-blue-900"
+    >
       <div class="flex items-start gap-3">
         <FontAwesomeIcon icon="circle-info" class="mt-1 text-vsg-gold-600" />
         <div class="space-y-2 font-body text-sm leading-relaxed md:text-base">
@@ -188,6 +193,16 @@ function handleBicBlur(): void {
               Deine Angaben wurden an den Verein übermittelt und können nun weiterverarbeitet
               werden.
             </p>
+            <p v-if="submitSuccessPdfUrl" class="mt-3">
+              <a
+                :href="submitSuccessPdfUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-semibold underline hover:text-green-900"
+              >
+                PDF zum Aufnahmeantrag öffnen
+              </a>
+            </p>
           </div>
         </div>
       </div>
@@ -202,7 +217,7 @@ function handleBicBlur(): void {
       leave-to-class="translate-y-2 opacity-0"
     >
       <div
-        v-if="submitError"
+        v-if="submitError && !submitSuccess"
         class="mb-8 rounded-2xl border border-red-200 bg-red-50 p-4"
         role="alert"
         aria-live="polite"
@@ -214,12 +229,12 @@ function handleBicBlur(): void {
       </div>
     </Transition>
 
-    <form class="space-y-10" :aria-busy="isSubmitting" @submit.prevent="handleSubmit">
+    <form v-if="!submitSuccess" class="space-y-10" :aria-busy="isSubmitting" @submit.prevent="handleSubmit">
       <section class="space-y-4">
         <div>
           <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">Abteilung</h2>
           <p class="mt-2 font-body text-vsg-blue-600">
-            Wähle die Abteilung, für die der Aufnahmeantrag vorbereitet werden soll.
+            Wähle die Abteilung, für die du die Mitgliedschaft beantragen möchtest.
           </p>
         </div>
 
@@ -256,7 +271,7 @@ function handleBicBlur(): void {
             Persönliche Daten
           </h2>
           <p class="mt-2 font-body text-vsg-blue-600">
-            Diese Angaben entsprechen dem auszufüllenden Teil des bisherigen Aufnahmeantrags.
+            Bitte trage hier deine persönlichen Daten vollständig ein.
           </p>
         </div>
 
@@ -419,8 +434,8 @@ function handleBicBlur(): void {
         <div>
           <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">Bankverbindung</h2>
           <p class="mt-2 font-body text-vsg-blue-600">
-            Die Beitragszahlung erfolgt laut Antrag per Lastschrift. Die Angaben werden zusammen
-            mit dem Aufnahmeantrag digital uebermittelt.
+            Die Beitragszahlung erfolgt per Lastschrift. Deine Angaben werden sicher digital an
+            den Verein übermittelt.
           </p>
         </div>
 
@@ -512,8 +527,7 @@ function handleBicBlur(): void {
               @change="clearFieldError('acceptsStatutes')"
             />
             <span class="font-body text-vsg-blue-900">
-              Vereinssatzung und Beitragsordnung wurden mir ausgehändigt bzw. ich habe sie über
-              die Homepage des Vereins zur Kenntnis genommen. *
+              Ich habe die Vereinssatzung und Beitragsordnung zur Kenntnis genommen. *
             </span>
           </label>
           <p v-if="errors.acceptsStatutes" class="text-sm font-body text-red-600">
@@ -553,8 +567,7 @@ function handleBicBlur(): void {
             class="rounded-xl border border-vsg-gold-300/50 bg-white p-4 text-vsg-blue-900"
           >
             <p class="font-body text-sm leading-relaxed md:text-base">
-              Für Minderjährige ist zusätzlich die Erklärung zur Aufsichtspflicht für das Kind als
-              Anlage vorgesehen.
+              Für Minderjährige gelten zusätzliche Hinweise zur Aufsichtspflicht.
             </p>
             <label class="mt-4 flex items-start gap-3">
               <input
@@ -657,8 +670,8 @@ function handleBicBlur(): void {
 
       <div class="flex flex-col gap-4 border-t border-vsg-blue-100 pt-6 md:flex-row md:items-center md:justify-between">
         <p class="max-w-2xl font-body text-sm text-vsg-blue-600">
-          Mit dem Klick auf den Button wird der ausgefuellte Aufnahmeantrag digital an den Verein
-          uebermittelt.
+          Mit dem Klick auf den Button wird der ausgefüllte Aufnahmeantrag digital an den Verein
+          übermittelt.
         </p>
         <button
           type="submit"

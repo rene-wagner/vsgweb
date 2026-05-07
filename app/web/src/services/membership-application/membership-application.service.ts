@@ -6,6 +6,12 @@ type ApiErrorResponse = {
   detail?: string;
 };
 
+type MembershipApplicationSuccessResponse = {
+  pdfUrl?: string;
+  url?: string;
+  downloadUrl?: string;
+};
+
 export type MembershipApplicationPayload = {
   department: string;
   firstName: string;
@@ -47,7 +53,7 @@ async function readErrorMessage(response: Response, fallback: string): Promise<s
 
 export async function submitMembershipApplication(
   payload: MembershipApplicationPayload,
-): Promise<void> {
+): Promise<string | null> {
   const response = await fetch(`${API_BASE_URL}/api/membership-application`, {
     method: "POST",
     headers: {
@@ -69,5 +75,18 @@ export async function submitMembershipApplication(
     throw new Error(
       await readErrorMessage(response, "Der Aufnahmeantrag konnte nicht versendet werden."),
     );
+  }
+
+  const contentType = response.headers.get("content-type") ?? "";
+
+  if (!contentType.includes("json")) {
+    return null;
+  }
+
+  try {
+    const data = (await response.json()) as MembershipApplicationSuccessResponse;
+    return data.pdfUrl ?? data.downloadUrl ?? data.url ?? null;
+  } catch {
+    return null;
   }
 }
