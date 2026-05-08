@@ -18,10 +18,13 @@ export type {
   ApiDepartmentStatistic as DepartmentStatistic,
   ApiDepartmentTrainingGroup as DepartmentTrainingGroup,
   ApiDepartmentTrainingSession as DepartmentTrainingSession,
+  ApiEvent as Event,
+  ApiEvent,
+  EventAPI,
+  EventRecurrence,
   ApiPost as Post,
   PostAPI,
 } from "@vsg/types";
-export type { Event, EventRecurrence } from "./event.types.js";
 export type { MediaFolder, MediaItem } from "./media.types.js";
 export type {
   ContentBlock,

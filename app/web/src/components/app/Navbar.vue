@@ -149,6 +149,13 @@ function toggleAbteilungen() {
           </RouterLink>
 
           <RouterLink
+            to="/termine"
+            class="font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
+          >
+            Termine
+          </RouterLink>
+
+          <RouterLink
             to="/kontakt"
             class="font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
           >
@@ -286,6 +293,15 @@ function toggleAbteilungen() {
           class="block font-display text-4xl tracking-wider text-white transition-colors hover:text-vsg-gold-400"
           @click="closeMenu"
           >Beiträge</RouterLink
+        >
+      </div>
+
+      <div class="mb-4 w-full max-w-xs">
+        <RouterLink
+          to="/termine"
+          class="block font-display text-4xl tracking-wider text-white transition-colors hover:text-vsg-gold-400"
+          @click="closeMenu"
+          >Termine</RouterLink
         >
       </div>
 

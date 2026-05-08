@@ -13,11 +13,10 @@ import type {
   SaveContentBlockInput,
 } from "./types/content-block.types.js";
 import type { ContactPerson } from "./types/contact-person.types.js";
-import type { Event } from "./types/event.types.js";
 import type { Location } from "./types/location.types.js";
 import type { MediaFolder, MediaItem } from "./types/media.types.js";
 import type { User } from "./types/user.types.js";
-import type { ApiDepartment, ApiPost } from "@vsg/types";
+import type { ApiDepartment, ApiEvent, ApiPost } from "@vsg/types";
 
 export type * from "./types/index.js";
 
@@ -163,9 +162,9 @@ export class VsgClient {
     };
 
     this.events = {
-      list: (options?: RequestOptions) => this.getCollection<Event>("/api/events", options),
+      list: (options?: RequestOptions) => this.getCollection<ApiEvent>("/api/events", options),
       get: (id: number | string, options?: RequestOptions) =>
-        this.get<Event>(`/api/events/${encodeURIComponent(String(id))}`, options),
+        this.get<ApiEvent>(`/api/events/${encodeURIComponent(String(id))}`, options),
     };
 
     this.gallery = {
