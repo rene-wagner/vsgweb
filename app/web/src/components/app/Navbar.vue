@@ -323,6 +323,16 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
           >Kontakt</RouterLink
         >
       </div>
+
+      <div class="mt-4 w-full max-w-xs">
+        <RouterLink
+          to="/verein/aufnahmeantrag"
+          class="block bg-vsg-gold-400 px-6 py-4 text-center font-display text-2xl tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-gold-300"
+          @click="closeMenu"
+        >
+          Mitglied werden
+        </RouterLink>
+      </div>
     </div>
   </div>
 </template>
