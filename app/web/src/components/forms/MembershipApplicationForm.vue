@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
-import { RouterLink } from "vue-router";
+import { computed, reactive, ref, watch } from "vue";
+import { RouterLink, useRoute } from "vue-router";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
+  departmentValues,
   formatIban,
   isMinorByBirthDate,
   normalizeIban,
@@ -47,6 +48,18 @@ const departmentOptions: Array<{
   },
 ];
 
+const route = useRoute();
+
+function getDepartmentFromQuery(value: unknown): Department | "" {
+  const queryValue = Array.isArray(value) ? value[0] : value;
+
+  if (typeof queryValue !== "string") {
+    return "";
+  }
+
+  return departmentValues.includes(queryValue as Department) ? (queryValue as Department) : "";
+}
+
 const form = reactive<MembershipApplicationFormData>({
   department: "",
   firstName: "",
@@ -78,6 +91,19 @@ const submitSuccess = ref(false);
 const submitSuccessPdfUrl = ref<string | null>(null);
 
 const isMinor = computed(() => isMinorByBirthDate(form.birthDate));
+
+watch(
+  () => route.query.abteilung,
+  (abteilung) => {
+    const department = getDepartmentFromQuery(abteilung);
+
+    if (department) {
+      form.department = department;
+      clearFieldError("department");
+    }
+  },
+  { immediate: true },
+);
 
 function toMembershipApplicationPayload(): MembershipApplicationPayload {
   return {

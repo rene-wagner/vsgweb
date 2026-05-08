@@ -137,7 +137,7 @@ const departmentCta = computed<Cta>(() => {
     primaryCtaLabel: departmentViewContent.ctaPrimaryButtonText,
     primaryCtaRoute: departmentViewContent.ctaPrimaryButtonLink,
     secondaryCtaLabel: departmentViewContent.ctaSecondaryButtonText,
-    secondaryCtaRoute: departmentViewContent.ctaSecondaryButtonLink,
+    secondaryCtaRoute: `${departmentViewContent.ctaSecondaryButtonLink}?abteilung=${currentDepartment.value?.slug ?? ""}`,
   };
 });
 </script>
