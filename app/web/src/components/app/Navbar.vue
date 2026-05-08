@@ -54,6 +54,14 @@ function toggleVerein() {
 function toggleAbteilungen() {
   isAbteilungenOpen.value = !isAbteilungenOpen.value;
 }
+
+function handleDesktopDropdownNavigation(event: MouseEvent) {
+  const target = event.currentTarget;
+
+  if (target instanceof HTMLElement) {
+    target.blur();
+  }
+}
 </script>
 
 <template>
@@ -104,6 +112,7 @@ function toggleAbteilungen() {
                     :key="item.to"
                     :to="item.to"
                     class="block px-4 py-2 font-body text-sm font-normal text-vsg-gold-300 transition-colors hover:bg-vsg-blue-800/50 hover:text-vsg-gold-400"
+                    @click="handleDesktopDropdownNavigation"
                   >
                     {{ item.label }}
                   </RouterLink>
@@ -134,6 +143,7 @@ function toggleAbteilungen() {
                   :key="item.label"
                   :to="item.to"
                   class="block px-4 py-2 font-body text-sm font-normal text-vsg-gold-300 transition-colors hover:bg-vsg-blue-800/50 hover:text-vsg-gold-400"
+                  @click="handleDesktopDropdownNavigation"
                 >
                   {{ item.label }}
                 </RouterLink>
