@@ -10,14 +10,22 @@ import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
 import ApiState from "@/components/ui/ApiState.vue";
 import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
+interface EventOccurrence {
+  instanceId: string;
+  event: VsgEvent;
+  startsAt: string;
+  endsAt: string | null;
+}
+
 const calendarElement = ref<HTMLElement | null>(null);
 const calendar = ref<Calendar | null>(null);
 const events = ref<VsgEvent[]>([]);
-const selectedEvent = ref<VsgEvent | null>(null);
+const selectedEvent = ref<EventOccurrence | null>(null);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
 
-const hasEvents = computed(() => events.value.length > 0);
+const eventOccurrences = computed(() => sortEventOccurrences(expandEventOccurrences(events.value)));
+const hasEvents = computed(() => eventOccurrences.value.length > 0);
 const showCalendar = computed(() => !error.value);
 
 const selectedEventDateLabel = computed(() => {
@@ -25,7 +33,7 @@ const selectedEventDateLabel = computed(() => {
     return "";
   }
 
-  return formatEventDateRange(selectedEvent.value.startsAt, selectedEvent.value.endsAt ?? null);
+  return formatEventDateRange(selectedEvent.value.startsAt, selectedEvent.value.endsAt);
 });
 
 function isValidDateString(value: string | null | undefined): value is string {
@@ -42,19 +50,81 @@ function sortEvents(items: VsgEvent[]): VsgEvent[] {
   });
 }
 
-function toCalendarEvents(items: VsgEvent[]): EventInput[] {
-  return items
-    .filter((event) => isValidDateString(event.startsAt))
-    .map((event) => ({
-      id: String(event.id),
-      title: event.title,
-      start: event.startsAt,
-      end: isValidDateString(event.endsAt) ? event.endsAt : undefined,
-      extendedProps: {
-        description: event.description,
-        location: event.location,
-      },
-    }));
+function sortEventOccurrences(items: EventOccurrence[]): EventOccurrence[] {
+  return [...items].sort((a, b) => {
+    return new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime();
+  });
+}
+
+function addRecurrenceInterval(date: Date, recurrence: NonNullable<VsgEvent["recurrence"]>): Date {
+  const next = new Date(date);
+
+  switch (recurrence) {
+    case "DAILY":
+      next.setUTCDate(next.getUTCDate() + 1);
+      return next;
+    case "WEEKLY":
+      next.setUTCDate(next.getUTCDate() + 7);
+      return next;
+    case "MONTHLY":
+      next.setUTCMonth(next.getUTCMonth() + 1);
+      return next;
+    case "YEARLY":
+      next.setUTCFullYear(next.getUTCFullYear() + 1);
+      return next;
+    default:
+      return next;
+  }
+}
+
+function expandEventOccurrences(items: VsgEvent[]): EventOccurrence[] {
+  return items.flatMap((event) => {
+    if (!isValidDateString(event.startsAt)) {
+      return [];
+    }
+
+    const occurrences: EventOccurrence[] = [];
+    const eventStart = new Date(event.startsAt);
+    const eventEnd = isValidDateString(event.endsAt) ? new Date(event.endsAt) : null;
+    const durationMs = eventEnd ? eventEnd.getTime() - eventStart.getTime() : null;
+
+    let occurrenceStart = new Date(eventStart);
+    let occurrenceIndex = 0;
+
+    do {
+      const occurrenceEnd = durationMs !== null ? new Date(occurrenceStart.getTime() + durationMs) : null;
+
+      occurrences.push({
+        instanceId: `${event.id}-${occurrenceIndex}`,
+        event,
+        startsAt: occurrenceStart.toISOString(),
+        endsAt: occurrenceEnd?.toISOString() ?? null,
+      });
+
+      if (!event.recurrence || !isValidDateString(event.recurrenceUntil)) {
+        break;
+      }
+
+      occurrenceStart = addRecurrenceInterval(occurrenceStart, event.recurrence);
+      occurrenceIndex += 1;
+    } while (occurrenceStart.getTime() <= new Date(event.recurrenceUntil).getTime());
+
+    return occurrences;
+  });
+}
+
+function toCalendarEvents(items: EventOccurrence[]): EventInput[] {
+  return items.map((occurrence) => ({
+    id: occurrence.instanceId,
+    title: occurrence.event.title,
+    start: occurrence.startsAt,
+    end: isValidDateString(occurrence.endsAt) ? occurrence.endsAt : undefined,
+    extendedProps: {
+      eventId: occurrence.event.id,
+      description: occurrence.event.description,
+      location: occurrence.event.location,
+    },
+  }));
 }
 
 function formatEventDateRange(startsAt: string, endsAt: string | null): string {
@@ -93,8 +163,8 @@ function formatEventDateRange(startsAt: string, endsAt: string | null): string {
 }
 
 function handleEventClick(clickInfo: EventClickArg): void {
-  const eventId = Number.parseInt(clickInfo.event.id, 10);
-  selectedEvent.value = events.value.find((event) => event.id === eventId) ?? null;
+  selectedEvent.value =
+    eventOccurrences.value.find((occurrence) => occurrence.instanceId === clickInfo.event.id) ?? null;
 }
 
 function destroyCalendar(): void {
@@ -125,7 +195,7 @@ function renderCalendar(): void {
       today: "Heute",
       month: "Monat",
     },
-    events: toCalendarEvents(events.value),
+    events: toCalendarEvents(eventOccurrences.value),
     eventClick: handleEventClick,
   });
 
@@ -139,7 +209,7 @@ async function loadEvents(): Promise<void> {
   try {
     const response = await vsg.events.list();
     events.value = sortEvents(response.member);
-    selectedEvent.value = events.value[0] ?? null;
+    selectedEvent.value = eventOccurrences.value[0] ?? null;
 
   } catch (loadError) {
     error.value = getApiErrorMessage(loadError, "Termine konnten nicht geladen werden.");
@@ -194,19 +264,19 @@ watchEffect(() => {
 
             <div v-if="selectedEvent" class="mt-4 space-y-4">
               <h2 class="font-display text-3xl tracking-wider text-vsg-blue-900">
-                {{ selectedEvent.title }}
+                {{ selectedEvent.event.title }}
               </h2>
               <p class="font-body text-base text-vsg-blue-700">
                 {{ selectedEventDateLabel }}
               </p>
-              <p v-if="selectedEvent.location" class="font-body text-base text-vsg-blue-800">
-                <span class="font-bold">Ort:</span> {{ selectedEvent.location }}
+              <p v-if="selectedEvent.event.location" class="font-body text-base text-vsg-blue-800">
+                <span class="font-bold">Ort:</span> {{ selectedEvent.event.location }}
               </p>
               <p
-                v-if="selectedEvent.description"
+                v-if="selectedEvent.event.description"
                 class="whitespace-pre-line font-body text-base text-vsg-blue-800"
               >
-                {{ selectedEvent.description }}
+                {{ selectedEvent.event.description }}
               </p>
             </div>
 
