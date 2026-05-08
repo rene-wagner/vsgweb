@@ -50,13 +50,16 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
 </script>
 
 <template>
-  <section class="relative flex min-h-[70vh] items-center justify-center overflow-hidden pt-20">
+  <section
+    class="hero-section-small relative flex min-h-[70vh] items-center justify-center overflow-hidden pt-20"
+  >
     <div
       class="absolute inset-0 bg-linear-to-br from-vsg-blue-900 via-vsg-blue-800/50 to-transparent"
     />
-
-    <div class="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-vsg-gold-400/10 blur-3xl" />
-    <div class="absolute bottom-1/4 left-0 h-80 w-80 rounded-full bg-vsg-blue-500/20 blur-3xl" />
+    <div class="pulse-grid absolute inset-0 opacity-40" />
+    <div class="spotlight spotlight-gold absolute -right-24 top-[12%] h-[24rem] w-[24rem]" />
+    <div class="spotlight spotlight-blue absolute -left-28 bottom-[8%] h-[20rem] w-[20rem]" />
+    <div class="spotlight spotlight-soft absolute left-1/2 top-[-5rem] h-[18rem] w-[28rem] -translate-x-1/2" />
 
     <div class="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center">
       <h1
@@ -114,3 +117,104 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
     </div>
   </section>
 </template>
+
+<style scoped>
+.hero-section-small::before {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% -10%, rgb(250 204 21 / 0.2), transparent 35%);
+  content: "";
+  opacity: 0.85;
+}
+
+.pulse-grid {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0.9), transparent 90%);
+  animation: grid-pulse 4.5s ease-in-out infinite;
+}
+
+.spotlight {
+  border-radius: 9999px;
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.spotlight-gold {
+  background: radial-gradient(circle, rgb(250 204 21 / 0.28), rgb(250 204 21 / 0.14) 38%, transparent 72%);
+  animation: spotlight-drift-a 11s ease-in-out infinite;
+}
+
+.spotlight-blue {
+  background: radial-gradient(circle, rgb(59 130 246 / 0.25), rgb(29 78 216 / 0.14) 42%, transparent 72%);
+  animation: spotlight-drift-b 13s ease-in-out infinite;
+}
+
+.spotlight-soft {
+  background: radial-gradient(circle, rgb(255 255 255 / 0.14), rgb(250 204 21 / 0.08) 36%, transparent 70%);
+  animation: spotlight-drift-c 15s ease-in-out infinite;
+}
+
+@keyframes grid-pulse {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes spotlight-drift-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+
+  30% {
+    transform: translate3d(-3rem, 2.5rem, 0) scale(1.08) rotate(-4deg);
+  }
+
+  65% {
+    transform: translate3d(2rem, -1.75rem, 0) scale(1.16) rotate(3deg);
+  }
+}
+
+@keyframes spotlight-drift-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+
+  35% {
+    transform: translate3d(3.5rem, -2.5rem, 0) scale(1.14) rotate(5deg);
+  }
+
+  70% {
+    transform: translate3d(-2rem, 2rem, 0) scale(1.08) rotate(-3deg);
+  }
+}
+
+@keyframes spotlight-drift-c {
+  0%,
+  100% {
+    transform: translate3d(-50%, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.45;
+  }
+
+  25% {
+    transform: translate3d(calc(-50% - 2.5rem), 1.5rem, 0) scale(1.06) rotate(-3deg);
+    opacity: 0.58;
+  }
+
+  60% {
+    transform: translate3d(calc(-50% + 3rem), 2.5rem, 0) scale(1.14) rotate(4deg);
+    opacity: 0.78;
+  }
+}
+</style>
