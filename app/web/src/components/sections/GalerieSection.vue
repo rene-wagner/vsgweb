@@ -12,6 +12,7 @@ import {
 import { useMediaItemsStore } from "@/stores/mediaItemsStore";
 
 interface Props {
+  id?: string;
   headline?: string;
   description?: string;
   subtitle?: string;
@@ -150,6 +151,7 @@ onUnmounted(() => {
 
 <template>
   <Section
+    :id="props.id"
     :subtitle="props.subtitle || ''"
     :title="props.headline || ''"
     subtitle-uuid="82431eca-8b9e-4b9d-9550-4ce9a0f0b409"

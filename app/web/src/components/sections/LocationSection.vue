@@ -7,6 +7,7 @@ import { getMediaUrl } from "@/services/media-items/media-item.service";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 interface Props {
+  id?: string;
   title: string;
   subtitle: string;
   description?: string;
@@ -15,12 +16,14 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  id: undefined,
   background: "white",
 });
 </script>
 
 <template>
   <Section
+    :id="props.id"
     :subtitle="props.subtitle"
     :title="props.title"
     subtitle-uuid="089a3382-105a-45c1-9523-5c24fd6716f7"

@@ -168,11 +168,12 @@ const departmentCta = computed<Cta>(() => {
 
       <WelcomeSection
         v-if="currentDepartment!.welcomeText"
+        id="willkommen"
         uuid="07fc79ce-148f-4c7b-9763-583873591ef1"
         :welcome-text="currentDepartment!.welcomeText"
       />
 
-      <StatsSection v-if="departmentStats.length > 0" :stats="departmentStats" />
+      <StatsSection v-if="departmentStats.length > 0" id="zahlen-fakten" :stats="departmentStats" />
 
       <TrainingScheduleSection
         v-if="departmentTrainingGroups.length > 0"
@@ -194,6 +195,7 @@ const departmentCta = computed<Cta>(() => {
       />
 
       <NewsSection
+        id="neuigkeiten"
         :headline="departmentViewContent.newsHeadline"
         :subtitle="departmentViewContent.newsSubtitle"
         :category-iri="departmentCategoryIri"
@@ -202,6 +204,7 @@ const departmentCta = computed<Cta>(() => {
 
       <ListSection
         v-if="departmentResults.length > 0"
+        id="ergebnisse"
         :title="departmentViewContent.resultsTitle"
         :subtitle="departmentViewContent.resultsSubtitle"
         :description="departmentViewContent.resultsDescription"
@@ -213,6 +216,7 @@ const departmentCta = computed<Cta>(() => {
       />
 
       <GalerieSection
+        id="galerie"
         :headline="departmentViewContent.galleryHeadline"
         :subtitle="departmentViewContent.gallerySubtitle"
         :description="departmentViewContent.galleryDescription"

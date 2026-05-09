@@ -6,6 +6,7 @@ import type { SectionBackground } from "@/composables/useSectionBackground";
 import TrainingTable from "@/components/ui/TrainingTable.vue";
 
 interface Props {
+  id?: string;
   title: string;
   subtitle: string;
   description?: string;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  id: undefined,
   background: "white",
 });
 
@@ -36,6 +38,7 @@ function getAgeRangeClasses(variant: DepartmentTrainingGroup["variant"]): string
 
 <template>
   <Section
+    :id="props.id"
     :subtitle="props.subtitle"
     :title="props.title"
     subtitle-uuid="3fe6cf03-5b68-43a4-a766-cd58363c39ce"

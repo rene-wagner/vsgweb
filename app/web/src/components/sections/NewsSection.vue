@@ -10,6 +10,7 @@ import type { SectionBackground } from "@/composables/useSectionBackground";
 import { usePostsStore } from "@/stores/postsStore";
 
 interface Props {
+  id?: string;
   headline?: string;
   description?: string;
   subtitle?: string;
@@ -93,6 +94,7 @@ const listPosts = computed(() => activePosts.value.slice(1));
 
 <template>
   <Section
+    :id="props.id"
     :subtitle="props.subtitle || ''"
     :title="props.headline || ''"
     subtitle-uuid="69b6c91c-9d93-4ee2-ac67-0297a6732c21"

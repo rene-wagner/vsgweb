@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import type { Statistic } from "@vsg/types";
 
 interface Props {
+  id?: string;
   stats?: Statistic[];
 }
 
@@ -151,7 +152,7 @@ watch(isVisible, (visible) => {
 </script>
 
 <template>
-  <section ref="sectionRef" class="relative bg-gray-50 py-20">
+  <section :id="props.id" ref="sectionRef" class="relative bg-gray-50 py-20">
     <div class="mx-auto max-w-7xl px-6">
       <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
         <div

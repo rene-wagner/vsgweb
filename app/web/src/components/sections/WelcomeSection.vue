@@ -3,12 +3,14 @@ import { useSectionBackground, type SectionBackground } from "@/composables/useS
 import EditableContent from "@/components/content/EditableContent.vue";
 
 interface Props {
+  id?: string;
   uuid: string;
   welcomeText: string;
   background?: SectionBackground;
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  id: undefined,
   background: "white",
 });
 
@@ -16,7 +18,7 @@ const sectionBackgroundClass = useSectionBackground(() => props.background);
 </script>
 
 <template>
-  <section class="py-20" :class="sectionBackgroundClass">
+  <section :id="props.id" class="py-20" :class="sectionBackgroundClass">
     <div class="mx-auto max-w-3xl px-6">
       <!-- Top gold divider -->
       <div class="flex items-center gap-4 mb-10">
