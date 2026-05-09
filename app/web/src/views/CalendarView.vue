@@ -189,11 +189,10 @@ function renderCalendar(): void {
     headerToolbar: {
       left: "prev,next today",
       center: "title",
-      right: "dayGridMonth",
+      right: "",
     },
     buttonText: {
       today: "Heute",
-      month: "Monat",
     },
     events: toCalendarEvents(eventOccurrences.value),
     eventClick: handleEventClick,
@@ -325,5 +324,23 @@ watchEffect(() => {
 .calendar-shell :deep(.fc-button) {
   box-shadow: none;
   text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .calendar-shell :deep(.fc-header-toolbar) {
+    gap: 0.75rem;
+  }
+
+  .calendar-shell :deep(.fc-toolbar-chunk) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .calendar-shell :deep(.fc-button-group) {
+    display: inline-flex;
+    gap: 0.5rem;
+  }
 }
 </style>
