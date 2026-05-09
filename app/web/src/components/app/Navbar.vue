@@ -221,6 +221,13 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
             Kontakt
           </RouterLink>
 
+          <RouterLink
+            to="/verein/aufnahmeantrag"
+            class="bg-vsg-gold-400 px-4 py-2 font-display text-sm tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-gold-300"
+          >
+            Mitglied werden
+          </RouterLink>
+
           <div
             v-if="!isCheckingEditingMode && isEditingMode"
             class="flex items-center justify-end text-vsg-gold-300"
