@@ -24,6 +24,7 @@
     "@vsg/sdk": "^0.0.0",
     "@vsg/types": "^0.0.0",
     "easymde": "^2.20.0",
+    "iban": "^0.0.14",
     "marked": "^18.0.2",
     "pinia": "^3.0.4",
     "tailwindcss": "^4.2.4",
@@ -32,6 +33,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@types/iban": "^0.0.35",
     "@types/node": "^25.6.0",
     "@vitejs/plugin-vue": "^6.0.6",
     "oxfmt": "^0.47.0",

@@ -1,3 +1,4 @@
+import IBAN from "iban";
 import { z } from "zod";
 import { mapZodIssuesToFieldErrors } from "@/lib/validation/zod-errors";
 
@@ -42,22 +43,7 @@ export function formatIban(value: string): string {
 export function isValidIban(value: string): boolean {
   const iban = normalizeIban(value);
 
-  if (!/^DE\d{20}$/.test(iban)) {
-    return false;
-  }
-
-  const rearranged = `${iban.slice(4)}${iban.slice(0, 4)}`;
-  const numericRepresentation = rearranged.replace(/[A-Z]/g, (letter) => {
-    return String(letter.charCodeAt(0) - 55);
-  });
-
-  let remainder = 0;
-
-  for (const digit of numericRepresentation) {
-    remainder = (remainder * 10 + Number(digit)) % 97;
-  }
-
-  return remainder === 1;
+  return iban.startsWith("DE") && IBAN.isValid(iban);
 }
 
 export function isValidBic(value: string): boolean {
