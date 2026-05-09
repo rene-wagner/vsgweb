@@ -11,17 +11,26 @@ type MembershipApplicationRequest = {
   postalCode: string;
   city: string;
   otherClub: string;
+  acceptsStatutes: boolean;
+  acceptsEmailInvitation: boolean;
+  acceptsPrivacyPolicy: boolean;
+  place: string;
+  applicationDate: string;
   bankName: string;
   iban: string;
   bic: string;
   accountHolder: string;
-  place: string;
-  applicationDate: string;
   legalGuardianName: string;
-  acceptsStatutes: boolean;
-  acceptsEmailInvitation: boolean;
-  acceptsPrivacyPolicy: boolean;
   confirmsMinorAttachment: boolean;
+  isChild: boolean;
+  guardianOneName: string;
+  guardianOneAddress: string;
+  guardianOnePhone: string;
+  guardianTwoName: string;
+  guardianTwoAddress: string;
+  guardianTwoPhone: string;
+  underTwelveMayWalkHomeAlone: boolean | null;
+  overTwelveMayWalkHomeAlone: boolean | null;
 };
 
 async function stubAppBootstrap(route: Route): Promise<void> {
@@ -62,16 +71,15 @@ async function fillAdultApplication(page: Page): Promise<void> {
   await page.locator("#lastName").fill("Mustermann");
   await page.locator("#firstName").fill("Max");
   await page.locator("#birthDate").fill("1990-05-10");
-  await page.locator("#phone").fill("0301234567");
   await page.locator("#street").fill("Musterstraße 1");
   await page.locator("#postalCode").fill("10115");
   await page.locator("#city").fill("Berlin");
+  await page.locator("#phone").fill("0301234567");
   await page.locator("#email").fill("max@example.com");
   await page.locator("#bankName").fill("Musterbank");
   await page.locator("#accountHolder").fill("Max Mustermann");
   await page.locator("#iban").fill("de44 5001 0517 5407 3249 31");
   await page.locator("#bic").fill("testdeffxxx");
-  await page.locator("#place").fill("Berlin");
   await page.getByLabel("Ich habe die Vereinssatzung und Beitragsordnung zur Kenntnis genommen. *").check();
   await page.getByLabel("Ich willige in die Verarbeitung und Speicherung personenbezogener Daten nach DSGVO ein. *").check();
   await page.getByLabel("Ich bestätige, dass dieses Formular auch ohne Unterschrift gültig ist.").check();
@@ -87,19 +95,27 @@ test("übernimmt die Abteilung aus dem Query-Parameter", async ({ page }) => {
   await expect(page.getByLabel("Badminton")).toBeChecked();
 });
 
-test("zeigt für Minderjährige zusätzliche Pflichtfelder an", async ({ page }) => {
+test("zeigt für Kinder zusätzliche Felder zur Aufsichtspflicht an", async ({ page }) => {
   await gotoForm(page);
 
-  await selectDepartment(page, "Badminton");
-  await page.locator("#birthDate").fill("2012-05-10");
-  await page.getByLabel("Ich bestätige, dass dieses Formular auch ohne Unterschrift gültig ist.").check();
-  await page.getByRole("button", { name: "Aufnahmeantrag senden" }).click();
+  await page.getByLabel("Es handelt sich bei der antragstellenden Person um ein Kind.").check();
 
-  await expect(page.getByText("Für Minderjährige gelten zusätzliche Hinweise zur Aufsichtspflicht.")).toBeVisible();
-  await expect(page.getByLabel("Gesetzliche VertreterIn *")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Erziehungsberechtigte Person 1" })).toBeVisible();
   await expect(
-    page.getByLabel("Ich habe den Hinweis zur Aufsichtspflicht für Minderjährige zur Kenntnis genommen. *"),
+    page.getByText("Bitte ergänze die Angaben aus der Erklärung zur Aufsichtspflicht."),
   ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Sofern unser/mein Kind das 12. Lebensjahr noch nicht vollendet hat, verpflichten",
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Sofern unser/mein Kind das 12. Lebensjahr vollendet hat, darf es nach dem regulären",
+    ),
+  ).toBeVisible();
+  await expect(page.locator('input[name="underTwelveMayWalkHomeAlone"]')).toHaveCount(2);
+  await expect(page.locator('input[name="overTwelveMayWalkHomeAlone"]')).toHaveCount(2);
 });
 
 test("sendet den Aufnahmeantrag erfolgreich ab und zeigt den PDF-Link an", async ({ page }) => {
@@ -130,11 +146,14 @@ test("sendet den Aufnahmeantrag erfolgreich ab und zeigt den PDF-Link an", async
     department: "volleyball",
     firstName: "Max",
     lastName: "Mustermann",
+    city: "Berlin",
+    place: "Berlin",
     iban: "DE44500105175407324931",
     bic: "TESTDEFFXXX",
     acceptsStatutes: true,
     acceptsPrivacyPolicy: true,
     confirmsMinorAttachment: false,
+    isChild: false,
   });
 });
 

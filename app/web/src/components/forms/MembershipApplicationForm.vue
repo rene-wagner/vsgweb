@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   departmentValues,
   formatIban,
-  isMinorByBirthDate,
+  getAgeFromBirthDate,
   normalizeIban,
   validateMembershipApplication,
   type Department,
@@ -71,17 +71,24 @@ const form = reactive<MembershipApplicationFormData>({
   postalCode: "",
   city: "",
   otherClub: "",
+  acceptsStatutes: false,
+  acceptsEmailInvitation: false,
+  acceptsPrivacyPolicy: false,
+  place: "",
+  applicationDate: new Date().toISOString().slice(0, 10),
   bankName: "",
   iban: "",
   bic: "",
   accountHolder: "",
-  place: "",
-  applicationDate: new Date().toISOString().slice(0, 10),
-  legalGuardianName: "",
-  acceptsStatutes: false,
-  acceptsEmailInvitation: false,
-  acceptsPrivacyPolicy: false,
-  confirmsMinorAttachment: false,
+  isChild: false,
+  guardianOneName: "",
+  guardianOneAddress: "",
+  guardianOnePhone: "",
+  guardianTwoName: "",
+  guardianTwoAddress: "",
+  guardianTwoPhone: "",
+  underTwelveMayWalkHomeAlone: null,
+  overTwelveMayWalkHomeAlone: null,
 });
 
 const errors = ref<Record<string, string>>({});
@@ -91,7 +98,9 @@ const submitSuccess = ref(false);
 const submitSuccessPdfUrl = ref<string | null>(null);
 const confirmsValidityWithoutSignature = ref(false);
 
-const isMinor = computed(() => isMinorByBirthDate(form.birthDate));
+const childAge = computed(() => getAgeFromBirthDate(form.birthDate));
+const isChildUnderTwelve = computed(() => childAge.value !== null && childAge.value < 12);
+const isChildTwelveOrOlder = computed(() => childAge.value !== null && childAge.value >= 12);
 
 watch(
   () => route.query.abteilung,
@@ -106,6 +115,47 @@ watch(
   { immediate: true },
 );
 
+watch(
+  () => form.isChild,
+  (isChild) => {
+    if (isChild) {
+      return;
+    }
+
+    form.guardianOneName = "";
+    form.guardianOneAddress = "";
+    form.guardianOnePhone = "";
+    form.guardianTwoName = "";
+    form.guardianTwoAddress = "";
+    form.guardianTwoPhone = "";
+    form.underTwelveMayWalkHomeAlone = null;
+    form.overTwelveMayWalkHomeAlone = null;
+
+    clearFieldError("guardianOneName");
+    clearFieldError("guardianOneAddress");
+    clearFieldError("guardianOnePhone");
+    clearFieldError("guardianTwoName");
+    clearFieldError("guardianTwoAddress");
+    clearFieldError("guardianTwoPhone");
+    clearFieldError("underTwelveMayWalkHomeAlone");
+    clearFieldError("overTwelveMayWalkHomeAlone");
+  },
+);
+
+watch(isChildUnderTwelve, (value) => {
+  if (value) {
+    form.overTwelveMayWalkHomeAlone = null;
+    clearFieldError("overTwelveMayWalkHomeAlone");
+  }
+});
+
+watch(isChildTwelveOrOlder, (value) => {
+  if (value) {
+    form.underTwelveMayWalkHomeAlone = null;
+    clearFieldError("underTwelveMayWalkHomeAlone");
+  }
+});
+
 function toMembershipApplicationPayload(): MembershipApplicationPayload {
   return {
     department: form.department,
@@ -118,17 +168,28 @@ function toMembershipApplicationPayload(): MembershipApplicationPayload {
     postalCode: form.postalCode.trim(),
     city: form.city.trim(),
     otherClub: form.otherClub.trim(),
+    acceptsStatutes: form.acceptsStatutes,
+    acceptsEmailInvitation: form.acceptsEmailInvitation,
+    acceptsPrivacyPolicy: form.acceptsPrivacyPolicy,
+    place: form.place.trim() || form.city.trim(),
+    applicationDate: form.applicationDate,
     bankName: form.bankName.trim(),
     iban: normalizeIban(form.iban),
     bic: form.bic.trim().toUpperCase(),
     accountHolder: form.accountHolder.trim(),
-    place: form.place.trim(),
-    applicationDate: form.applicationDate,
-    legalGuardianName: form.legalGuardianName.trim(),
-    acceptsStatutes: form.acceptsStatutes,
-    acceptsEmailInvitation: form.acceptsEmailInvitation,
-    acceptsPrivacyPolicy: form.acceptsPrivacyPolicy,
-    confirmsMinorAttachment: form.confirmsMinorAttachment,
+    legalGuardianName: [form.guardianOneName.trim(), form.guardianTwoName.trim()]
+      .filter((value) => value.length > 0)
+      .join(" / "),
+    confirmsMinorAttachment: form.isChild,
+    isChild: form.isChild,
+    guardianOneName: form.guardianOneName.trim(),
+    guardianOneAddress: form.guardianOneAddress.trim(),
+    guardianOnePhone: form.guardianOnePhone.trim(),
+    guardianTwoName: form.guardianTwoName.trim(),
+    guardianTwoAddress: form.guardianTwoAddress.trim(),
+    guardianTwoPhone: form.guardianTwoPhone.trim(),
+    underTwelveMayWalkHomeAlone: form.underTwelveMayWalkHomeAlone,
+    overTwelveMayWalkHomeAlone: form.overTwelveMayWalkHomeAlone,
   };
 }
 
@@ -191,25 +252,18 @@ function handleBicBlur(): void {
   form.bic = form.bic.trim().toUpperCase();
   clearFieldError("bic");
 }
+
+function setBooleanField(
+  field: "underTwelveMayWalkHomeAlone" | "overTwelveMayWalkHomeAlone",
+  value: boolean,
+): void {
+  form[field] = value;
+  clearFieldError(field);
+}
 </script>
 
 <template>
   <div class="rounded-3xl border border-vsg-blue-100 bg-white p-6 shadow-sm md:p-8">
-    <div
-      v-if="!submitSuccess"
-      class="mb-8 rounded-2xl border border-vsg-gold-300/40 bg-vsg-gold-50 px-5 py-4 text-vsg-blue-900"
-    >
-      <div class="flex items-start gap-3">
-        <FontAwesomeIcon icon="circle-info" class="mt-1 text-vsg-gold-600" />
-        <div class="space-y-2 font-body text-sm leading-relaxed md:text-base">
-          <p class="font-semibold">Der Aufnahmeantrag wird digital an den Verein übermittelt.</p>
-          <p>
-            Bitte fülle alle Pflichtfelder sorgfältig aus.
-          </p>
-        </div>
-      </div>
-    </div>
-
     <Transition
       enter-active-class="transition-all duration-300 ease-out"
       enter-from-class="translate-y-2 opacity-0"
@@ -268,7 +322,12 @@ function handleBicBlur(): void {
       </div>
     </Transition>
 
-    <form v-if="!submitSuccess" class="space-y-10" :aria-busy="isSubmitting" @submit.prevent="handleSubmit">
+    <form
+      v-if="!submitSuccess"
+      class="space-y-10"
+      :aria-busy="isSubmitting"
+      @submit.prevent="handleSubmit"
+    >
       <section class="space-y-4">
         <div>
           <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">Abteilung</h2>
@@ -296,7 +355,9 @@ function handleBicBlur(): void {
               class="sr-only"
               @change="clearFieldError('department')"
             />
-            <span class="font-display text-xl tracking-wide text-vsg-blue-900">{{ option.label }}</span>
+            <span class="font-display text-xl tracking-wide text-vsg-blue-900">{{
+              option.label
+            }}</span>
           </label>
         </div>
         <p v-if="errors.department" class="text-sm font-body text-red-600">
@@ -306,17 +367,15 @@ function handleBicBlur(): void {
 
       <section class="space-y-5">
         <div>
-          <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">
-            Persönliche Daten
-          </h2>
-          <p class="mt-2 font-body text-vsg-blue-600">
-            Bitte trage hier deine persönlichen Daten vollständig ein.
-          </p>
+          <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">Persönliche Daten</h2>
         </div>
 
         <div class="grid gap-5 md:grid-cols-2">
           <div>
-            <label for="lastName" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
+            <label
+              for="lastName"
+              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+            >
               Name *
             </label>
             <input
@@ -328,11 +387,16 @@ function handleBicBlur(): void {
               :class="errors.lastName ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('lastName')"
             />
-            <p v-if="errors.lastName" class="mt-1 text-sm font-body text-red-600">{{ errors.lastName }}</p>
+            <p v-if="errors.lastName" class="mt-1 text-sm font-body text-red-600">
+              {{ errors.lastName }}
+            </p>
           </div>
 
           <div>
-            <label for="firstName" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
+            <label
+              for="firstName"
+              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+            >
               Vorname *
             </label>
             <input
@@ -344,11 +408,16 @@ function handleBicBlur(): void {
               :class="errors.firstName ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('firstName')"
             />
-            <p v-if="errors.firstName" class="mt-1 text-sm font-body text-red-600">{{ errors.firstName }}</p>
+            <p v-if="errors.firstName" class="mt-1 text-sm font-body text-red-600">
+              {{ errors.firstName }}
+            </p>
           </div>
 
           <div>
-            <label for="birthDate" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
+            <label
+              for="birthDate"
+              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+            >
               Geboren am *
             </label>
             <input
@@ -359,24 +428,11 @@ function handleBicBlur(): void {
               :class="errors.birthDate ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('birthDate')"
             />
-            <p v-if="errors.birthDate" class="mt-1 text-sm font-body text-red-600">{{ errors.birthDate }}</p>
+            <p v-if="errors.birthDate" class="mt-1 text-sm font-body text-red-600">
+              {{ errors.birthDate }}
+            </p>
           </div>
 
-          <div>
-            <label for="phone" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
-              Telefon *
-            </label>
-            <input
-              id="phone"
-              v-model="form.phone"
-              type="tel"
-              maxlength="30"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
-              :class="errors.phone ? 'border-red-300' : 'border-vsg-blue-200'"
-              @input="clearFieldError('phone')"
-            />
-            <p v-if="errors.phone" class="mt-1 text-sm font-body text-red-600">{{ errors.phone }}</p>
-          </div>
         </div>
       </section>
 
@@ -389,7 +445,10 @@ function handleBicBlur(): void {
 
         <div class="grid gap-5 md:grid-cols-2">
           <div class="md:col-span-2">
-            <label for="street" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
+            <label
+              for="street"
+              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+            >
               Straße *
             </label>
             <input
@@ -401,11 +460,16 @@ function handleBicBlur(): void {
               :class="errors.street ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('street')"
             />
-            <p v-if="errors.street" class="mt-1 text-sm font-body text-red-600">{{ errors.street }}</p>
+            <p v-if="errors.street" class="mt-1 text-sm font-body text-red-600">
+              {{ errors.street }}
+            </p>
           </div>
 
           <div>
-            <label for="postalCode" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
+            <label
+              for="postalCode"
+              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+            >
               PLZ *
             </label>
             <input
@@ -418,11 +482,16 @@ function handleBicBlur(): void {
               :class="errors.postalCode ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('postalCode')"
             />
-            <p v-if="errors.postalCode" class="mt-1 text-sm font-body text-red-600">{{ errors.postalCode }}</p>
+            <p v-if="errors.postalCode" class="mt-1 text-sm font-body text-red-600">
+              {{ errors.postalCode }}
+            </p>
           </div>
 
           <div>
-            <label for="city" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
+            <label
+              for="city"
+              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+            >
               Wohnort *
             </label>
             <input
@@ -438,7 +507,31 @@ function handleBicBlur(): void {
           </div>
 
           <div>
-            <label for="email" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
+            <label
+              for="phone"
+              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+            >
+              Telefon *
+            </label>
+            <input
+              id="phone"
+              v-model="form.phone"
+              type="tel"
+              maxlength="30"
+              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              :class="errors.phone ? 'border-red-300' : 'border-vsg-blue-200'"
+              @input="clearFieldError('phone')"
+            />
+            <p v-if="errors.phone" class="mt-1 text-sm font-body text-red-600">
+              {{ errors.phone }}
+            </p>
+          </div>
+
+          <div>
+            <label
+              for="email"
+              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+            >
               Mailadresse *
             </label>
             <input
@@ -450,22 +543,104 @@ function handleBicBlur(): void {
               :class="errors.email ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('email')"
             />
-            <p v-if="errors.email" class="mt-1 text-sm font-body text-red-600">{{ errors.email }}</p>
+            <p v-if="errors.email" class="mt-1 text-sm font-body text-red-600">
+              {{ errors.email }}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="space-y-5">
+        <div>
+          <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">
+            Erklärungen / Hinweise zur Beitragszahlung / Einwilligung nach DSGVO
+          </h2>
+        </div>
+
+        <div class="space-y-5 rounded-2xl border border-vsg-blue-100 bg-vsg-blue-50 p-5">
+          <div class="space-y-3 font-body text-sm leading-relaxed text-vsg-blue-900 md:text-base">
+            <p>
+              Vereinssatzung und Beitragsordnung wurden mir ausgehändigt bzw. habe ich über die
+              Homepage des Vereins www.vsg-kugelberg.de zur Kenntnis genommen. Ich erkenne sie in
+              vollem Umfang an.
+            </p>
+            <p>
+              Ich bin außerdem damit einverstanden, dass die Einladung zur Jahreshauptversammlung
+              auch und sofern vorhanden über meine Mailadresse erfolgt.
+            </p>
+            <p>
+              Die Beitragszahlung erfolgt auf Grundlage der nachfolgend zu erteilenden
+              Einzugsermächtigung jeweils zum 10. des Quartalsbeginns (10.01; 10.04; 10.07; 10.10);
+              Gläubigeridentifikationsnummer: DE86VSG00000976375; Mandatsreferenznummer: eigene
+              Vereinsmitgliedsnummer (wird nach positivem Aufnahmebeschluss des Vorstands
+              mitgeteilt).
+            </p>
           </div>
 
-          <div class="md:col-span-2">
-            <label for="otherClub" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
-              Ich bin außerdem noch Mitglied im Verein
+          <div class="space-y-4">
+            <label class="flex items-start gap-3">
+              <input
+                v-model="form.acceptsStatutes"
+                type="checkbox"
+                class="mt-1 h-4 w-4 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+                @change="clearFieldError('acceptsStatutes')"
+              />
+              <span class="font-body text-vsg-blue-900">
+                Ich habe die Vereinssatzung und Beitragsordnung zur Kenntnis genommen. *
+              </span>
             </label>
-            <input
-              id="otherClub"
-              v-model="form.otherClub"
-              type="text"
-              maxlength="160"
-              placeholder="Optionaler Vereinsname"
-              class="w-full rounded-xl border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
-            />
+            <p v-if="errors.acceptsStatutes" class="text-sm font-body text-red-600">
+              {{ errors.acceptsStatutes }}
+            </p>
+
+            <label class="flex items-start gap-3">
+              <input
+                v-model="form.acceptsEmailInvitation"
+                type="checkbox"
+                class="mt-1 h-4 w-4 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+              />
+              <span class="font-body text-vsg-blue-900">
+                Ich bin damit einverstanden, dass Einladungen zur Jahreshauptversammlung an meine
+                Mailadresse gesendet werden, sofern eine Mailadresse vorliegt.
+              </span>
+            </label>
+
+            <label class="flex items-start gap-3">
+              <input
+                v-model="form.acceptsPrivacyPolicy"
+                type="checkbox"
+                class="mt-1 h-4 w-4 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+                @change="clearFieldError('acceptsPrivacyPolicy')"
+              />
+              <span class="font-body text-vsg-blue-900">
+                Ich willige in die Verarbeitung und Speicherung personenbezogener Daten nach DSGVO
+                ein. *
+              </span>
+            </label>
+            <p v-if="errors.acceptsPrivacyPolicy" class="text-sm font-body text-red-600">
+              {{ errors.acceptsPrivacyPolicy }}
+            </p>
           </div>
+
+          <p class="font-body text-sm text-vsg-blue-700">
+            Details zu Satzung, Beitragsordnung und Datenschutz findest du unter
+            <RouterLink
+              to="/verein/satzung"
+              class="font-semibold underline hover:text-vsg-blue-900"
+            >
+              Satzung </RouterLink
+            >,
+            <RouterLink
+              to="/verein/beitragsordnung"
+              class="font-semibold underline hover:text-vsg-blue-900"
+            >
+              Beitragsordnung
+            </RouterLink>
+            und
+            <RouterLink to="/datenschutz" class="font-semibold underline hover:text-vsg-blue-900">
+              Datenschutz </RouterLink
+            >.
+          </p>
         </div>
       </section>
 
@@ -473,14 +648,17 @@ function handleBicBlur(): void {
         <div>
           <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">Bankverbindung</h2>
           <p class="mt-2 font-body text-vsg-blue-600">
-            Die Beitragszahlung erfolgt per Lastschrift. Deine Angaben werden sicher digital an
-            den Verein übermittelt.
+            Hiermit ermächtige ich den Verein widerruflich, die von mir zu entrichtende Zahlung des
+            Mitgliedsbeitrages bei Fälligkeit zu Lasten meines Kontos durch Lastschrift einzuziehen.
           </p>
         </div>
 
         <div class="grid gap-5 md:grid-cols-2">
           <div>
-            <label for="bankName" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
+            <label
+              for="bankName"
+              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+            >
               Kreditinstitut *
             </label>
             <input
@@ -492,11 +670,16 @@ function handleBicBlur(): void {
               :class="errors.bankName ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('bankName')"
             />
-            <p v-if="errors.bankName" class="mt-1 text-sm font-body text-red-600">{{ errors.bankName }}</p>
+            <p v-if="errors.bankName" class="mt-1 text-sm font-body text-red-600">
+              {{ errors.bankName }}
+            </p>
           </div>
 
           <div>
-            <label for="accountHolder" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
+            <label
+              for="accountHolder"
+              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+            >
               KontoinhaberIn *
             </label>
             <input
@@ -508,11 +691,16 @@ function handleBicBlur(): void {
               :class="errors.accountHolder ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('accountHolder')"
             />
-            <p v-if="errors.accountHolder" class="mt-1 text-sm font-body text-red-600">{{ errors.accountHolder }}</p>
+            <p v-if="errors.accountHolder" class="mt-1 text-sm font-body text-red-600">
+              {{ errors.accountHolder }}
+            </p>
           </div>
 
           <div>
-            <label for="iban" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
+            <label
+              for="iban"
+              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+            >
               IBAN *
             </label>
             <input
@@ -531,7 +719,10 @@ function handleBicBlur(): void {
           </div>
 
           <div>
-            <label for="bic" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
+            <label
+              for="bic"
+              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+            >
               BIC
             </label>
             <input
@@ -552,162 +743,251 @@ function handleBicBlur(): void {
 
       <section class="space-y-5">
         <div>
-          <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">
-            Erklärungen und Einwilligungen
-          </h2>
+          <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">Anderer Verein</h2>
         </div>
 
-        <div class="space-y-4 rounded-2xl border border-vsg-blue-100 bg-vsg-blue-50 p-5">
-          <label class="flex items-start gap-3">
-            <input
-              v-model="form.acceptsStatutes"
-              type="checkbox"
-              class="mt-1 h-4 w-4 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
-              @change="clearFieldError('acceptsStatutes')"
-            />
-            <span class="font-body text-vsg-blue-900">
-              Ich habe die Vereinssatzung und Beitragsordnung zur Kenntnis genommen. *
-            </span>
-          </label>
-          <p v-if="errors.acceptsStatutes" class="text-sm font-body text-red-600">
-            {{ errors.acceptsStatutes }}
-          </p>
-
-          <label class="flex items-start gap-3">
-            <input
-              v-model="form.acceptsEmailInvitation"
-              type="checkbox"
-              class="mt-1 h-4 w-4 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
-            />
-            <span class="font-body text-vsg-blue-900">
-              Ich bin damit einverstanden, dass Einladungen zur Jahreshauptversammlung an meine
-              Mailadresse gesendet werden, sofern eine Mailadresse vorliegt.
-            </span>
-          </label>
-
-          <label class="flex items-start gap-3">
-            <input
-              v-model="form.acceptsPrivacyPolicy"
-              type="checkbox"
-              class="mt-1 h-4 w-4 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
-              @change="clearFieldError('acceptsPrivacyPolicy')"
-            />
-            <span class="font-body text-vsg-blue-900">
-              Ich willige in die Verarbeitung und Speicherung personenbezogener Daten nach DSGVO
-              ein. *
-            </span>
-          </label>
-          <p v-if="errors.acceptsPrivacyPolicy" class="text-sm font-body text-red-600">
-            {{ errors.acceptsPrivacyPolicy }}
-          </p>
-
-          <div
-            v-if="isMinor"
-            class="rounded-xl border border-vsg-gold-300/50 bg-white p-4 text-vsg-blue-900"
+        <div>
+          <label
+            for="otherClub"
+            class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
           >
-            <p class="font-body text-sm leading-relaxed md:text-base">
-              Für Minderjährige gelten zusätzliche Hinweise zur Aufsichtspflicht.
-            </p>
-            <label class="mt-4 flex items-start gap-3">
-              <input
-                v-model="form.confirmsMinorAttachment"
-                type="checkbox"
-                class="mt-1 h-4 w-4 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
-                @change="clearFieldError('confirmsMinorAttachment')"
-              />
-              <span class="font-body text-vsg-blue-900">
-                Ich habe den Hinweis zur Aufsichtspflicht für Minderjährige zur Kenntnis genommen.
-                *
-              </span>
-            </label>
-            <p v-if="errors.confirmsMinorAttachment" class="mt-2 text-sm font-body text-red-600">
-              {{ errors.confirmsMinorAttachment }}
-            </p>
-          </div>
-
-          <p class="font-body text-sm text-vsg-blue-700">
-            Details zu Satzung, Beitragsordnung und Datenschutz findest du unter
-            <RouterLink to="/verein/satzung" class="font-semibold underline hover:text-vsg-blue-900">
-              Satzung
-            </RouterLink>,
-            <RouterLink
-              to="/verein/beitragsordnung"
-              class="font-semibold underline hover:text-vsg-blue-900"
-            >
-              Beitragsordnung
-            </RouterLink>
-            und
-            <RouterLink to="/datenschutz" class="font-semibold underline hover:text-vsg-blue-900">
-              Datenschutz
-            </RouterLink>.
-          </p>
+            Ich bin außerdem noch Mitglied im Verein
+          </label>
+          <input
+            id="otherClub"
+            v-model="form.otherClub"
+            type="text"
+            maxlength="160"
+            placeholder="Optionaler Vereinsname"
+            class="w-full rounded-xl border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+          />
         </div>
       </section>
 
       <section class="space-y-5">
         <div>
-          <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">Bestätigung</h2>
+          <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">
+            Angabe, ob es sich um ein Kind handelt
+          </h2>
         </div>
 
-        <div class="grid gap-5 md:grid-cols-2">
-          <div>
-            <label for="place" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
-              Ort *
-            </label>
+        <div class="space-y-5 rounded-2xl border border-vsg-blue-100 bg-vsg-blue-50 p-5">
+          <label class="flex items-start gap-3">
             <input
-              id="place"
-              v-model="form.place"
-              type="text"
-              maxlength="100"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
-              :class="errors.place ? 'border-red-300' : 'border-vsg-blue-200'"
-              @input="clearFieldError('place')"
+              v-model="form.isChild"
+              type="checkbox"
+              class="mt-1 h-4 w-4 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
             />
-            <p v-if="errors.place" class="mt-1 text-sm font-body text-red-600">{{ errors.place }}</p>
-          </div>
+            <span class="font-body text-vsg-blue-900">
+              Es handelt sich bei der antragstellenden Person um ein Kind.
+            </span>
+          </label>
 
-          <div>
-            <label for="applicationDate" class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600">
-              Datum *
-            </label>
-            <input
-              id="applicationDate"
-              v-model="form.applicationDate"
-              type="date"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
-              :class="errors.applicationDate ? 'border-red-300' : 'border-vsg-blue-200'"
-              @input="clearFieldError('applicationDate')"
-            />
-            <p v-if="errors.applicationDate" class="mt-1 text-sm font-body text-red-600">
-              {{ errors.applicationDate }}
+          <div v-if="form.isChild" class="space-y-5">
+            <p class="font-body text-sm leading-relaxed text-vsg-blue-900 md:text-base">
+              Bitte ergänze die Angaben aus der Erklärung zur Aufsichtspflicht.
             </p>
-          </div>
 
-          <div class="md:col-span-2">
-            <label
-              for="legalGuardianName"
-              class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
-            >
-              Gesetzliche VertreterIn<span v-if="isMinor"> *</span>
-            </label>
-            <input
-              id="legalGuardianName"
-              v-model="form.legalGuardianName"
-              type="text"
-              maxlength="120"
-              :placeholder="isMinor ? 'Pflichtfeld bei Minderjährigen' : 'Nur bei Minderjährigen erforderlich'"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
-              :class="errors.legalGuardianName ? 'border-red-300' : 'border-vsg-blue-200'"
-              @input="clearFieldError('legalGuardianName')"
-            />
-            <p v-if="errors.legalGuardianName" class="mt-1 text-sm font-body text-red-600">
-              {{ errors.legalGuardianName }}
-            </p>
+            <div class="rounded-xl border border-vsg-gold-300/50 bg-white p-4">
+              <h3 class="font-display text-xl tracking-wide text-vsg-blue-900">
+                Erziehungsberechtigte Person 1
+              </h3>
+              <div class="mt-4 grid gap-5 md:grid-cols-2">
+                <div>
+                  <label
+                    for="guardianOneName"
+                    class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+                  >
+                    Name, Vorname *
+                  </label>
+                  <input
+                    id="guardianOneName"
+                    v-model="form.guardianOneName"
+                    type="text"
+                    maxlength="120"
+                    class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    :class="errors.guardianOneName ? 'border-red-300' : 'border-vsg-blue-200'"
+                    @input="clearFieldError('guardianOneName')"
+                  />
+                  <p v-if="errors.guardianOneName" class="mt-1 text-sm font-body text-red-600">
+                    {{ errors.guardianOneName }}
+                  </p>
+                </div>
+
+                <div>
+                  <label
+                    for="guardianOnePhone"
+                    class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+                  >
+                    Telefon *
+                  </label>
+                  <input
+                    id="guardianOnePhone"
+                    v-model="form.guardianOnePhone"
+                    type="tel"
+                    maxlength="30"
+                    class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    :class="errors.guardianOnePhone ? 'border-red-300' : 'border-vsg-blue-200'"
+                    @input="clearFieldError('guardianOnePhone')"
+                  />
+                  <p v-if="errors.guardianOnePhone" class="mt-1 text-sm font-body text-red-600">
+                    {{ errors.guardianOnePhone }}
+                  </p>
+                </div>
+
+                <div class="md:col-span-2">
+                  <label
+                    for="guardianOneAddress"
+                    class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+                  >
+                    Anschrift *
+                  </label>
+                  <input
+                    id="guardianOneAddress"
+                    v-model="form.guardianOneAddress"
+                    type="text"
+                    maxlength="160"
+                    class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    :class="errors.guardianOneAddress ? 'border-red-300' : 'border-vsg-blue-200'"
+                    @input="clearFieldError('guardianOneAddress')"
+                  />
+                  <p v-if="errors.guardianOneAddress" class="mt-1 text-sm font-body text-red-600">
+                    {{ errors.guardianOneAddress }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-xl border border-vsg-blue-100 bg-white p-4">
+              <h3 class="font-display text-xl tracking-wide text-vsg-blue-900">
+                Erziehungsberechtigte Person 2
+              </h3>
+              <p class="mt-2 font-body text-sm text-vsg-blue-600">Optional</p>
+              <div class="mt-4 grid gap-5 md:grid-cols-2">
+                <div>
+                  <label
+                    for="guardianTwoName"
+                    class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+                  >
+                    Name, Vorname
+                  </label>
+                  <input
+                    id="guardianTwoName"
+                    v-model="form.guardianTwoName"
+                    type="text"
+                    maxlength="120"
+                    class="w-full rounded-xl border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    for="guardianTwoPhone"
+                    class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+                  >
+                    Telefon
+                  </label>
+                  <input
+                    id="guardianTwoPhone"
+                    v-model="form.guardianTwoPhone"
+                    type="tel"
+                    maxlength="30"
+                    class="w-full rounded-xl border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                  />
+                </div>
+
+                <div class="md:col-span-2">
+                  <label
+                    for="guardianTwoAddress"
+                    class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
+                  >
+                    Anschrift
+                  </label>
+                  <input
+                    id="guardianTwoAddress"
+                    v-model="form.guardianTwoAddress"
+                    type="text"
+                    maxlength="160"
+                    class="w-full rounded-xl border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <fieldset class="space-y-3 rounded-xl border border-vsg-gold-300/50 bg-white p-4">
+              <div class="font-body font-semibold leading-relaxed text-vsg-blue-900">
+                Sofern unser/mein Kind das 12. Lebensjahr noch nicht vollendet hat, verpflichten
+                wir uns / ich mich dafür Sorge zu tragen, dass es sicher zur Sportstätte und nach
+                dem Training / Wettkampf wieder nach Hause gelangt.
+              </div>
+              <p class="font-body text-sm leading-relaxed text-vsg-blue-700">
+                Ausnahmeregelung: Da unser/mein Kind in der Nähe der Sportstätte wohnt bzw. unter
+                normalen Umständen gefahrlos dorthin gelangen kann, darf es nach dem regulären
+                Trainings- / Wettkampfende auch ohne Begleitung den Heimweg antreten.
+                <span v-if="isChildUnderTwelve" class="font-semibold">*</span>
+              </p>
+              <label class="flex items-center gap-3 font-body text-vsg-blue-900">
+                <input
+                  :checked="form.underTwelveMayWalkHomeAlone === true"
+                  type="radio"
+                  name="underTwelveMayWalkHomeAlone"
+                  class="h-4 w-4 border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+                  @change="setBooleanField('underTwelveMayWalkHomeAlone', true)"
+                />
+                Ja
+              </label>
+              <label class="flex items-center gap-3 font-body text-vsg-blue-900">
+                <input
+                  :checked="form.underTwelveMayWalkHomeAlone === false"
+                  type="radio"
+                  name="underTwelveMayWalkHomeAlone"
+                  class="h-4 w-4 border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+                  @change="setBooleanField('underTwelveMayWalkHomeAlone', false)"
+                />
+                Nein
+              </label>
+              <p v-if="errors.underTwelveMayWalkHomeAlone" class="text-sm font-body text-red-600">
+                {{ errors.underTwelveMayWalkHomeAlone }}
+              </p>
+            </fieldset>
+
+            <fieldset class="space-y-3 rounded-xl border border-vsg-gold-300/50 bg-white p-4">
+              <div class="font-body font-semibold leading-relaxed text-vsg-blue-900">
+                Sofern unser/mein Kind das 12. Lebensjahr vollendet hat, darf es nach dem
+                regulären Trainings- / Wettkampfende auch ohne Begleitung den Heimweg antreten.
+                <span v-if="isChildTwelveOrOlder" class="font-semibold">*</span>
+              </div>
+              <label class="flex items-center gap-3 font-body text-vsg-blue-900">
+                <input
+                  :checked="form.overTwelveMayWalkHomeAlone === true"
+                  type="radio"
+                  name="overTwelveMayWalkHomeAlone"
+                  class="h-4 w-4 border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+                  @change="setBooleanField('overTwelveMayWalkHomeAlone', true)"
+                />
+                Ja
+              </label>
+              <label class="flex items-center gap-3 font-body text-vsg-blue-900">
+                <input
+                  :checked="form.overTwelveMayWalkHomeAlone === false"
+                  type="radio"
+                  name="overTwelveMayWalkHomeAlone"
+                  class="h-4 w-4 border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+                  @change="setBooleanField('overTwelveMayWalkHomeAlone', false)"
+                />
+                Nein
+              </label>
+              <p v-if="errors.overTwelveMayWalkHomeAlone" class="text-sm font-body text-red-600">
+                {{ errors.overTwelveMayWalkHomeAlone }}
+              </p>
+            </fieldset>
           </div>
         </div>
       </section>
 
-      <div class="flex flex-col gap-4 border-t border-vsg-blue-100 pt-6 md:flex-row md:items-center md:justify-between">
+      <div
+        class="flex flex-col gap-4 border-t border-vsg-blue-100 pt-6 md:flex-row md:items-center md:justify-between"
+      >
         <div class="max-w-2xl space-y-2">
           <label class="flex items-center gap-3">
             <input
@@ -720,7 +1000,10 @@ function handleBicBlur(): void {
               Ich bestätige, dass dieses Formular auch ohne Unterschrift gültig ist.
             </span>
           </label>
-          <p v-if="errors.confirmsValidityWithoutSignature" class="pl-7 text-sm font-body text-red-600">
+          <p
+            v-if="errors.confirmsValidityWithoutSignature"
+            class="pl-7 text-sm font-body text-red-600"
+          >
             {{ errors.confirmsValidityWithoutSignature }}
           </p>
         </div>

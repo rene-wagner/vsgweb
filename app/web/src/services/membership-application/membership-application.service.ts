@@ -23,17 +23,26 @@ export type MembershipApplicationPayload = {
   postalCode: string;
   city: string;
   otherClub: string;
+  acceptsStatutes: boolean;
+  acceptsEmailInvitation: boolean;
+  acceptsPrivacyPolicy: boolean;
+  place: string;
+  applicationDate: string;
   bankName: string;
   iban: string;
   bic: string;
   accountHolder: string;
-  place: string;
-  applicationDate: string;
   legalGuardianName: string;
-  acceptsStatutes: boolean;
-  acceptsEmailInvitation: boolean;
-  acceptsPrivacyPolicy: boolean;
   confirmsMinorAttachment: boolean;
+  isChild: boolean;
+  guardianOneName: string;
+  guardianOneAddress: string;
+  guardianOnePhone: string;
+  guardianTwoName: string;
+  guardianTwoAddress: string;
+  guardianTwoPhone: string;
+  underTwelveMayWalkHomeAlone: boolean | null;
+  overTwelveMayWalkHomeAlone: boolean | null;
 };
 
 async function readErrorMessage(response: Response, fallback: string): Promise<string> {
@@ -64,7 +73,9 @@ export async function submitMembershipApplication(
   });
 
   if (response.status === 400) {
-    throw new Error(await readErrorMessage(response, "Die Anfrage konnte nicht verarbeitet werden."));
+    throw new Error(
+      await readErrorMessage(response, "Die Anfrage konnte nicht verarbeitet werden."),
+    );
   }
 
   if (response.status === 429) {
