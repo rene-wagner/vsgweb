@@ -11,6 +11,11 @@ target/
 dist/
 *.config.d.ts
 
+# Playwright
+playwright-report/
+test-results/
+blob-report/
+
 # Turborepo
 .turbo/
 

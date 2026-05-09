@@ -10,7 +10,9 @@
     "type-check": "vue-tsc -b",
     "lint": "npm run type-check && oxlint --vue-plugin --deny-warnings src vite.config.ts",
     "format": "oxfmt --write src vite.config.ts",
-    "format:check": "oxfmt --check src vite.config.ts"
+    "format:check": "oxfmt --check src vite.config.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -33,6 +35,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@types/iban": "^0.0.35",
     "@types/node": "^25.6.0",
     "@vitejs/plugin-vue": "^6.0.6",
