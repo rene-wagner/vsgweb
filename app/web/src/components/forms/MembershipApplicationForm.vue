@@ -89,6 +89,7 @@ const isSubmitting = ref(false);
 const submitError = ref<string | null>(null);
 const submitSuccess = ref(false);
 const submitSuccessPdfUrl = ref<string | null>(null);
+const confirmsValidityWithoutSignature = ref(false);
 
 const isMinor = computed(() => isMinorByBirthDate(form.birthDate));
 
@@ -139,7 +140,15 @@ async function handleSubmit(): Promise<void> {
   const validationResult = validateMembershipApplication(form);
   errors.value = validationResult.errors;
 
-  if (!validationResult.success) {
+  if (!confirmsValidityWithoutSignature.value) {
+    errors.value = {
+      ...errors.value,
+      confirmsValidityWithoutSignature:
+        "Bitte bestätige, dass der Antrag auch ohne Unterschrift gültig ist.",
+    };
+  }
+
+  if (!validationResult.success || !confirmsValidityWithoutSignature.value) {
     return;
   }
 
@@ -167,6 +176,10 @@ function clearFieldError(field: string): void {
     delete nextErrors[field];
     errors.value = nextErrors;
   }
+}
+
+function handleValidityWithoutSignatureChange(): void {
+  clearFieldError("confirmsValidityWithoutSignature");
 }
 
 function handleIbanBlur(): void {
@@ -695,13 +708,25 @@ function handleBicBlur(): void {
       </section>
 
       <div class="flex flex-col gap-4 border-t border-vsg-blue-100 pt-6 md:flex-row md:items-center md:justify-between">
-        <p class="max-w-2xl font-body text-sm text-vsg-blue-600">
-          Mit dem Klick auf den Button wird der ausgefüllte Aufnahmeantrag digital an den Verein
-          übermittelt.
-        </p>
+        <div class="max-w-2xl space-y-2">
+          <label class="flex items-center gap-3">
+            <input
+              v-model="confirmsValidityWithoutSignature"
+              type="checkbox"
+              class="h-4 w-4 shrink-0 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+              @change="handleValidityWithoutSignatureChange"
+            />
+            <span class="font-body text-sm leading-relaxed text-vsg-blue-600">
+              Ich bestätige, dass dieses Formular auch ohne Unterschrift gültig ist.
+            </span>
+          </label>
+          <p v-if="errors.confirmsValidityWithoutSignature" class="pl-7 text-sm font-body text-red-600">
+            {{ errors.confirmsValidityWithoutSignature }}
+          </p>
+        </div>
         <button
           type="submit"
-          :disabled="isSubmitting"
+          :disabled="isSubmitting || !confirmsValidityWithoutSignature"
           class="inline-flex items-center justify-center rounded-xl bg-vsg-blue-900 px-6 py-3 font-display text-lg tracking-wider text-vsg-gold-400 transition-colors hover:bg-vsg-blue-800 disabled:cursor-not-allowed disabled:opacity-70"
         >
           {{ isSubmitting ? "Wird gesendet..." : "Aufnahmeantrag senden" }}
