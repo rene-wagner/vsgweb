@@ -85,6 +85,30 @@ async function fillAdultApplication(page: Page): Promise<void> {
   await page.getByLabel("Ich bestätige, dass dieses Formular auch ohne Unterschrift gültig ist.").check();
 }
 
+async function fillChildApplication(page: Page): Promise<void> {
+  await selectDepartment(page, "Badminton");
+  await page.locator("#lastName").fill("Musterkind");
+  await page.locator("#firstName").fill("Mia");
+  await page.locator("#birthDate").fill("2016-05-10");
+  await page.locator("#street").fill("Musterstraße 2");
+  await page.locator("#postalCode").fill("10115");
+  await page.locator("#city").fill("Berlin");
+  await page.locator("#phone").fill("0301234567");
+  await page.locator("#email").fill("eltern@example.com");
+  await page.locator("#bankName").fill("Musterbank");
+  await page.locator("#accountHolder").fill("Erika Muster");
+  await page.locator("#iban").fill("de44 5001 0517 5407 3249 31");
+  await page.locator("#bic").fill("testdeffxxx");
+  await page.getByLabel("Ich habe die Vereinssatzung und Beitragsordnung zur Kenntnis genommen. *").check();
+  await page.getByLabel("Ich willige in die Verarbeitung und Speicherung personenbezogener Daten nach DSGVO ein. *").check();
+  await page.getByLabel("Es handelt sich bei der antragstellenden Person um ein Kind.").check();
+  await page.locator("#guardianOneName").fill("Erika Muster");
+  await page.locator("#guardianOnePhone").fill("0301234568");
+  await page.locator("#guardianOneAddress").fill("Musterstraße 2, 10115 Berlin");
+  await page.locator('input[name="underTwelveMayWalkHomeAlone"]').nth(0).check();
+  await page.getByLabel("Ich bestätige, dass dieses Formular auch ohne Unterschrift gültig ist.").check();
+}
+
 test.beforeEach(async ({ page }) => {
   await preparePage(page);
 });
@@ -127,7 +151,7 @@ test("sendet den Aufnahmeantrag erfolgreich ab und zeigt den PDF-Link an", async
     await route.fulfill({
       status: 200,
       contentType: "application/json",
-      body: JSON.stringify({ pdfUrl: "https://example.com/antrag.pdf" }),
+      body: JSON.stringify({ url: "https://example.com/antrag.pdf" }),
     });
   });
 
@@ -155,6 +179,33 @@ test("sendet den Aufnahmeantrag erfolgreich ab und zeigt den PDF-Link an", async
     confirmsMinorAttachment: false,
     isChild: false,
   });
+});
+
+test("zeigt bei Kindern auch den Link zur Aufsichtspflicht an", async ({ page }) => {
+  await page.route("**/api/membership-application", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        success: true,
+        url: "https://example.com/antrag-kind.pdf",
+        supervisionDutyUrl: "https://example.com/aufsichtspflicht.pdf",
+      }),
+    });
+  });
+
+  await gotoForm(page);
+  await fillChildApplication(page);
+  await page.getByRole("button", { name: "Aufnahmeantrag senden" }).click();
+
+  await expect(page.getByRole("link", { name: "PDF zum Aufnahmeantrag öffnen" })).toHaveAttribute(
+    "href",
+    "https://example.com/antrag-kind.pdf",
+  );
+  await expect(page.getByRole("link", { name: "PDF zur Aufsichtspflicht öffnen" })).toHaveAttribute(
+    "href",
+    "https://example.com/aufsichtspflicht.pdf",
+  );
 });
 
 test("zeigt API-Fehler aus dem Backend an", async ({ page }) => {

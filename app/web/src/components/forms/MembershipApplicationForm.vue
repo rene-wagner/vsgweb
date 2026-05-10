@@ -96,6 +96,7 @@ const isSubmitting = ref(false);
 const submitError = ref<string | null>(null);
 const submitSuccess = ref(false);
 const submitSuccessPdfUrl = ref<string | null>(null);
+const submitSuccessSupervisionDutyPdfUrl = ref<string | null>(null);
 const confirmsValidityWithoutSignature = ref(false);
 
 const childAge = computed(() => getAgeFromBirthDate(form.birthDate));
@@ -196,6 +197,7 @@ function toMembershipApplicationPayload(): MembershipApplicationPayload {
 async function handleSubmit(): Promise<void> {
   submitSuccess.value = false;
   submitSuccessPdfUrl.value = null;
+  submitSuccessSupervisionDutyPdfUrl.value = null;
   submitError.value = null;
 
   const validationResult = validateMembershipApplication(form);
@@ -219,7 +221,9 @@ async function handleSubmit(): Promise<void> {
   isSubmitting.value = true;
 
   try {
-    submitSuccessPdfUrl.value = await submitMembershipApplication(toMembershipApplicationPayload());
+    const submitResult = await submitMembershipApplication(toMembershipApplicationPayload());
+    submitSuccessPdfUrl.value = submitResult.applicationPdfUrl;
+    submitSuccessSupervisionDutyPdfUrl.value = submitResult.supervisionDutyPdfUrl;
     submitSuccess.value = true;
   } catch (error) {
     submitError.value =
@@ -286,16 +290,28 @@ function setBooleanField(
               Deine Angaben wurden an den Verein übermittelt und können nun weiterverarbeitet
               werden.
             </p>
-            <p v-if="submitSuccessPdfUrl" class="mt-3">
-              <a
-                :href="submitSuccessPdfUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="font-semibold underline hover:text-green-900"
-              >
-                PDF zum Aufnahmeantrag öffnen
-              </a>
-            </p>
+            <div class="mt-3 space-y-2">
+              <p v-if="submitSuccessPdfUrl">
+                <a
+                  :href="submitSuccessPdfUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="font-semibold underline hover:text-green-900"
+                >
+                  PDF zum Aufnahmeantrag öffnen
+                </a>
+              </p>
+              <p v-if="submitSuccessSupervisionDutyPdfUrl">
+                <a
+                  :href="submitSuccessSupervisionDutyPdfUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="font-semibold underline hover:text-green-900"
+                >
+                  PDF zur Aufsichtspflicht öffnen
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </div>

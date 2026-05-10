@@ -10,6 +10,12 @@ type MembershipApplicationSuccessResponse = {
   pdfUrl?: string;
   url?: string;
   downloadUrl?: string;
+  supervisionDutyUrl?: string;
+};
+
+export type MembershipApplicationSubmitResult = {
+  applicationPdfUrl: string | null;
+  supervisionDutyPdfUrl: string | null;
 };
 
 export type MembershipApplicationPayload = {
@@ -62,7 +68,7 @@ async function readErrorMessage(response: Response, fallback: string): Promise<s
 
 export async function submitMembershipApplication(
   payload: MembershipApplicationPayload,
-): Promise<string | null> {
+): Promise<MembershipApplicationSubmitResult> {
   const response = await fetch(`${API_BASE_URL}/api/membership-application`, {
     method: "POST",
     headers: {
@@ -91,13 +97,23 @@ export async function submitMembershipApplication(
   const contentType = response.headers.get("content-type") ?? "";
 
   if (!contentType.includes("json")) {
-    return null;
+    return {
+      applicationPdfUrl: null,
+      supervisionDutyPdfUrl: null,
+    };
   }
 
   try {
     const data = (await response.json()) as MembershipApplicationSuccessResponse;
-    return data.pdfUrl ?? data.downloadUrl ?? data.url ?? null;
+
+    return {
+      applicationPdfUrl: data.pdfUrl ?? data.downloadUrl ?? data.url ?? null,
+      supervisionDutyPdfUrl: data.supervisionDutyUrl ?? null,
+    };
   } catch {
-    return null;
+    return {
+      applicationPdfUrl: null,
+      supervisionDutyPdfUrl: null,
+    };
   }
 }
