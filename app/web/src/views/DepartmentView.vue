@@ -16,6 +16,7 @@ import NewsSection from "@/components/sections/NewsSection.vue";
 import GalerieSection from "@/components/sections/GalerieSection.vue";
 import CtaSection from "@/components/sections/CtaSection.vue";
 import WelcomeSection from "@/components/sections/WelcomeSection.vue";
+import type { SectionBackground } from "@/composables/useSectionBackground";
 import {
   Cta,
   DepartmentLocation,
@@ -205,6 +206,56 @@ const departmentCta = computed<Cta>(() => {
     secondaryCtaRoute: `${departmentViewContent.ctaSecondaryButtonLink}?abteilung=${currentDepartment.value?.slug ?? ""}`,
   };
 });
+
+const sectionBackgrounds = computed<{
+  training: SectionBackground;
+  locations: SectionBackground;
+  news: SectionBackground;
+  results: SectionBackground;
+  gallery: SectionBackground;
+}>(() => {
+  let previousBackground: SectionBackground | null = null;
+
+  if (currentDepartment.value?.welcomeText) {
+    previousBackground = "white";
+  }
+
+  if (departmentStats.value.length > 0) {
+    previousBackground = "gray";
+  }
+
+  const getNextBackground = (): SectionBackground => {
+    const nextBackground = previousBackground === "white" ? "gray" : "white";
+    previousBackground = nextBackground;
+    return nextBackground;
+  };
+
+  const backgrounds = {
+    training: "white" as SectionBackground,
+    locations: "white" as SectionBackground,
+    news: "white" as SectionBackground,
+    results: "white" as SectionBackground,
+    gallery: "white" as SectionBackground,
+  };
+
+  if (departmentTrainingGroups.value.length > 0) {
+    backgrounds.training = getNextBackground();
+  }
+
+  if (departmentLocations.value.length > 0) {
+    backgrounds.locations = getNextBackground();
+  }
+
+  backgrounds.news = getNextBackground();
+
+  if (departmentResults.value.length > 0) {
+    backgrounds.results = getNextBackground();
+  }
+
+  backgrounds.gallery = getNextBackground();
+
+  return backgrounds;
+});
 </script>
 
 <template>
@@ -245,6 +296,7 @@ const departmentCta = computed<Cta>(() => {
           :subtitle="departmentViewContent.trainingScheduleSubtitle"
           :description="departmentViewContent.trainingScheduleDescription"
           :groups="departmentTrainingGroups"
+          :background="sectionBackgrounds.training"
         />
       </div>
 
@@ -253,7 +305,7 @@ const departmentCta = computed<Cta>(() => {
           :title="departmentViewContent.locationsTitle"
           :subtitle="departmentViewContent.locationsSubtitle"
           :description="departmentViewContent.locationsDescription"
-          background="gray"
+          :background="sectionBackgrounds.locations"
           :locations="departmentLocations"
         />
       </div>
@@ -264,6 +316,7 @@ const departmentCta = computed<Cta>(() => {
           :subtitle="departmentViewContent.newsSubtitle"
           :category-iri="departmentCategoryIri"
           :category-slug="currentDepartment?.slug ?? null"
+          :background="sectionBackgrounds.news"
         />
       </div>
 
@@ -276,7 +329,7 @@ const departmentCta = computed<Cta>(() => {
           title-uuid="d6ea12ba-610f-480f-ba72-2850081bdf55"
           description-uuid="c5a28826-1c8a-4319-b259-4e90d6a208ef"
           :items="departmentResults"
-          background="gray"
+          :background="sectionBackgrounds.results"
         />
       </div>
 
@@ -285,7 +338,7 @@ const departmentCta = computed<Cta>(() => {
           :headline="departmentViewContent.galleryHeadline"
           :subtitle="departmentViewContent.gallerySubtitle"
           :description="departmentViewContent.galleryDescription"
-          background="white"
+          :background="sectionBackgrounds.gallery"
           :items-count="20"
           :category-id="departmentCategoryId"
         />
