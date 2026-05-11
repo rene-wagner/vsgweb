@@ -19,7 +19,6 @@ const vereinLinks = [
   { label: "Satzung", to: "/verein/satzung" },
   { label: "Beitragsordnung", to: "/verein/beitragsordnung" },
   { label: "Sportversicherung", to: "/verein/sportversicherung" },
-  { label: "Mitgliedschaft", to: "/verein/mitgliedschaft" },
 ];
 
 const age = computed(() => {
