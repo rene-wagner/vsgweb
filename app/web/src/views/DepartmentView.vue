@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { watch, onMounted, onUnmounted, watchEffect, computed } from "vue";
-import { useRoute } from "vue-router";
+import { watch, onMounted, onUnmounted, watchEffect, computed, nextTick, onUpdated, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useCategoriesStore } from "@/stores/categoriesStore";
 import { useDepartmentsStore } from "../stores/departmentsStore";
@@ -25,7 +25,10 @@ import {
 } from "@vsg/types";
 import { useMediaItemsStore } from "@/stores/mediaItemsStore";
 
+const SCROLL_OFFSET = 120;
+
 const route = useRoute();
+const router = useRouter();
 const categoriesStore = useCategoriesStore();
 const departmentsStore = useDepartmentsStore();
 const { categories } = storeToRefs(categoriesStore);
@@ -38,6 +41,7 @@ const {
 
 const postsStore = usePostsStore();
 const mediaItemsStore = useMediaItemsStore();
+const lastScrolledHashKey = ref<string | null>(null);
 
 const departmentCategoryIri = computed(() => {
   const slug = currentDepartment.value?.slug;
@@ -66,18 +70,79 @@ function fetchDepartment() {
   }
 }
 
+async function scrollToRouteHash() {
+  if (!route.hash) {
+    return false;
+  }
+
+  await nextTick();
+
+  const target = document.querySelector(route.hash);
+
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+
+  const top = target.getBoundingClientRect().top + window.scrollY - SCROLL_OFFSET;
+
+  window.scrollTo({
+    top,
+    behavior: "smooth",
+  });
+
+  lastScrolledHashKey.value = `${String(route.params.slug)}:${route.hash}`;
+
+  return true;
+}
+
+async function ensureRouteHashScroll() {
+  if (!route.hash || currentDepartmentLoading.value || !currentDepartment.value?.id) {
+    return;
+  }
+
+  const currentHashKey = `${String(route.params.slug)}:${route.hash}`;
+
+  if (lastScrolledHashKey.value === currentHashKey) {
+    return;
+  }
+
+  await scrollToRouteHash();
+}
+
 // Fetch on mount
 onMounted(() => {
   fetchDepartment();
+
+  void router.isReady().then(() => ensureRouteHashScroll());
 });
 
 // Watch for route param changes
 watch(
   () => route.params.slug,
   () => {
+    lastScrolledHashKey.value = null;
     fetchDepartment();
   },
 );
+
+watch(
+  () => route.hash,
+  () => {
+    lastScrolledHashKey.value = null;
+  },
+);
+
+watch(
+  [() => route.hash, currentDepartmentLoading, () => currentDepartment.value?.id],
+  () => {
+    void ensureRouteHashScroll();
+  },
+  { flush: "post" },
+);
+
+onUpdated(() => {
+  void ensureRouteHashScroll();
+});
 
 // Set dynamic page title
 watchEffect(() => {
@@ -166,64 +231,65 @@ const departmentCta = computed<Cta>(() => {
         :secondary-cta-anchor="departmentLocations.length > 0 ? '#standorte' : undefined"
       />
 
-      <WelcomeSection
-        v-if="currentDepartment!.welcomeText"
-        id="willkommen"
-        uuid="07fc79ce-148f-4c7b-9763-583873591ef1"
-        :welcome-text="currentDepartment!.welcomeText"
-      />
+      <div v-if="currentDepartment!.welcomeText" id="willkommen" class="scroll-mt-32">
+        <WelcomeSection uuid="07fc79ce-148f-4c7b-9763-583873591ef1" :welcome-text="currentDepartment!.welcomeText" />
+      </div>
 
-      <StatsSection v-if="departmentStats.length > 0" id="zahlen-fakten" :stats="departmentStats" />
+      <div v-if="departmentStats.length > 0" id="zahlen-fakten" class="scroll-mt-32">
+        <StatsSection :stats="departmentStats" />
+      </div>
 
-      <TrainingScheduleSection
-        v-if="departmentTrainingGroups.length > 0"
-        id="trainingszeiten"
-        :title="departmentViewContent.trainingScheduleTitle"
-        :subtitle="departmentViewContent.trainingScheduleSubtitle"
-        :description="departmentViewContent.trainingScheduleDescription"
-        :groups="departmentTrainingGroups"
-      />
+      <div v-if="departmentTrainingGroups.length > 0" id="trainingszeiten" class="scroll-mt-32">
+        <TrainingScheduleSection
+          :title="departmentViewContent.trainingScheduleTitle"
+          :subtitle="departmentViewContent.trainingScheduleSubtitle"
+          :description="departmentViewContent.trainingScheduleDescription"
+          :groups="departmentTrainingGroups"
+        />
+      </div>
 
-      <LocationSection
-        v-if="departmentLocations.length > 0"
-        id="standorte"
-        :title="departmentViewContent.locationsTitle"
-        :subtitle="departmentViewContent.locationsSubtitle"
-        :description="departmentViewContent.locationsDescription"
-        background="gray"
-        :locations="departmentLocations"
-      />
+      <div v-if="departmentLocations.length > 0" id="standorte" class="scroll-mt-32">
+        <LocationSection
+          :title="departmentViewContent.locationsTitle"
+          :subtitle="departmentViewContent.locationsSubtitle"
+          :description="departmentViewContent.locationsDescription"
+          background="gray"
+          :locations="departmentLocations"
+        />
+      </div>
 
-      <NewsSection
-        id="neuigkeiten"
-        :headline="departmentViewContent.newsHeadline"
-        :subtitle="departmentViewContent.newsSubtitle"
-        :category-iri="departmentCategoryIri"
-        :category-slug="currentDepartment?.slug ?? null"
-      />
+      <div id="neuigkeiten" class="scroll-mt-32">
+        <NewsSection
+          :headline="departmentViewContent.newsHeadline"
+          :subtitle="departmentViewContent.newsSubtitle"
+          :category-iri="departmentCategoryIri"
+          :category-slug="currentDepartment?.slug ?? null"
+        />
+      </div>
 
-      <ListSection
-        v-if="departmentResults.length > 0"
-        id="ergebnisse"
-        :title="departmentViewContent.resultsTitle"
-        :subtitle="departmentViewContent.resultsSubtitle"
-        :description="departmentViewContent.resultsDescription"
-        subtitle-uuid="30176e5c-9d3a-45f9-bec2-231ba2ec4f05"
-        title-uuid="d6ea12ba-610f-480f-ba72-2850081bdf55"
-        description-uuid="c5a28826-1c8a-4319-b259-4e90d6a208ef"
-        :items="departmentResults"
-        background="gray"
-      />
+      <div v-if="departmentResults.length > 0" id="ergebnisse" class="scroll-mt-32">
+        <ListSection
+          :title="departmentViewContent.resultsTitle"
+          :subtitle="departmentViewContent.resultsSubtitle"
+          :description="departmentViewContent.resultsDescription"
+          subtitle-uuid="30176e5c-9d3a-45f9-bec2-231ba2ec4f05"
+          title-uuid="d6ea12ba-610f-480f-ba72-2850081bdf55"
+          description-uuid="c5a28826-1c8a-4319-b259-4e90d6a208ef"
+          :items="departmentResults"
+          background="gray"
+        />
+      </div>
 
-      <GalerieSection
-        id="galerie"
-        :headline="departmentViewContent.galleryHeadline"
-        :subtitle="departmentViewContent.gallerySubtitle"
-        :description="departmentViewContent.galleryDescription"
-        background="white"
-        :items-count="20"
-        :category-id="departmentCategoryId"
-      />
+      <div id="galerie" class="scroll-mt-32">
+        <GalerieSection
+          :headline="departmentViewContent.galleryHeadline"
+          :subtitle="departmentViewContent.gallerySubtitle"
+          :description="departmentViewContent.galleryDescription"
+          background="white"
+          :items-count="20"
+          :category-id="departmentCategoryId"
+        />
+      </div>
 
       <CtaSection
         :headline="departmentCta.title"

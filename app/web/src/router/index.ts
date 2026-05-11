@@ -76,13 +76,13 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior: (to) => {
+  scrollBehavior: (to, _from, savedPosition) => {
+    if (savedPosition) {
+      return savedPosition;
+    }
+
     if (to.hash) {
-      return {
-        el: to.hash,
-        top: 120,
-        behavior: "smooth",
-      };
+      return false;
     }
 
     return { top: 0, behavior: "smooth" };

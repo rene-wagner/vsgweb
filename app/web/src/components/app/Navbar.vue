@@ -55,7 +55,9 @@ const abteilungenItems = computed<DepartmentMenuItem[]>(() => {
     label: dept.name,
     slug: dept.slug,
     to: `/abteilung/${dept.slug}`,
-    sections: departmentSectionItems,
+    sections: departmentSectionItems.filter(
+      (section) => section.hash !== "#ergebnisse" || dept.departmentResults.length > 0,
+    ),
   }));
 });
 
@@ -144,12 +146,14 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
                         {{ item.label }}
                       </RouterLink>
                       <FontAwesomeIcon
+                        v-if="item.sections.length > 0"
                         icon="chevron-right"
                         class="text-xs text-vsg-gold-300/80 transition-colors group-hover/department:text-vsg-gold-400"
                       />
                     </div>
 
                     <div
+                      v-if="item.sections.length > 0"
                       class="invisible pointer-events-none absolute left-full top-0 ml-1 w-56 translate-x-2 rounded-lg border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-focus-within/department:visible group-focus-within/department:pointer-events-auto group-focus-within/department:translate-x-0 group-focus-within/department:opacity-100 group-hover/department:visible group-hover/department:pointer-events-auto group-hover/department:translate-x-0 group-hover/department:opacity-100"
                     >
                       <div class="py-2">
