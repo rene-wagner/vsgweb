@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import badmintonIcon from "@/assets/badminton.svg";
+import gymnastikIcon from "@/assets/gymnastik.svg";
+import tischtennisIcon from "@/assets/tischtennis.svg";
+import volleyballIcon from "@/assets/volleyball.svg";
 import EditableContent from "@/components/content/EditableContent.vue";
 import Logo from "@/components/app/Logo.vue";
 
@@ -23,6 +27,33 @@ withDefaults(defineProps<Props>(), {
     <div class="spotlight spotlight-gold absolute -right-24 top-[12%] h-[28rem] w-[28rem]" />
     <div class="spotlight spotlight-blue absolute -left-28 bottom-[10%] h-[24rem] w-[24rem]" />
     <div class="spotlight spotlight-soft absolute left-1/2 top-[-6rem] h-[22rem] w-[34rem] -translate-x-1/2" />
+
+    <div class="pointer-events-none absolute inset-0 z-0">
+      <img
+        :src="badmintonIcon"
+        alt=""
+        aria-hidden="true"
+        class="sport-icon sport-icon-top-left"
+      />
+      <img
+        :src="gymnastikIcon"
+        alt=""
+        aria-hidden="true"
+        class="sport-icon sport-icon-top-right"
+      />
+      <img
+        :src="tischtennisIcon"
+        alt=""
+        aria-hidden="true"
+        class="sport-icon sport-icon-bottom-left"
+      />
+      <img
+        :src="volleyballIcon"
+        alt=""
+        aria-hidden="true"
+        class="sport-icon sport-icon-bottom-right"
+      />
+    </div>
 
     <div class="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center">
       <div class="animate-slide-up my-8 delay-100">
@@ -83,6 +114,38 @@ withDefaults(defineProps<Props>(), {
   animation: spotlight-drift-c 15s ease-in-out infinite;
 }
 
+.sport-icon {
+  position: absolute;
+  width: clamp(7rem, 12vw, 12rem);
+  opacity: 0.24;
+  filter: drop-shadow(0 0 20px rgb(255 255 255 / 0.12));
+  transform-origin: center;
+}
+
+.sport-icon-top-left {
+  top: clamp(6rem, 12vw, 9rem);
+  left: clamp(2.5rem, 7vw, 6rem);
+  animation: sport-icon-float-a 12s ease-in-out infinite;
+}
+
+.sport-icon-top-right {
+  top: clamp(6.5rem, 12vw, 9.5rem);
+  right: clamp(2.5rem, 7vw, 6rem);
+  animation: sport-icon-float-b 13s ease-in-out infinite;
+}
+
+.sport-icon-bottom-left {
+  bottom: clamp(3.5rem, 8vw, 6rem);
+  left: clamp(2.5rem, 8vw, 6rem);
+  animation: sport-icon-float-c 14s ease-in-out infinite;
+}
+
+.sport-icon-bottom-right {
+  right: clamp(2.5rem, 8vw, 6rem);
+  bottom: clamp(3.5rem, 8vw, 6rem);
+  animation: sport-icon-float-d 15s ease-in-out infinite;
+}
+
 @keyframes grid-pulse {
   0%,
   100% {
@@ -141,6 +204,50 @@ withDefaults(defineProps<Props>(), {
   60% {
     transform: translate3d(calc(-50% + 3rem), 2.5rem, 0) scale(1.14) rotate(4deg);
     opacity: 0.78;
+  }
+}
+
+@keyframes sport-icon-float-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-10deg) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0.75rem, 1rem, 0) rotate(-4deg) scale(1.08);
+  }
+}
+
+@keyframes sport-icon-float-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(8deg) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-0.75rem, 1rem, 0) rotate(14deg) scale(1.06);
+  }
+}
+
+@keyframes sport-icon-float-c {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-6deg) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0.85rem, -0.85rem, 0) rotate(-12deg) scale(1.05);
+  }
+}
+
+@keyframes sport-icon-float-d {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(10deg) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-0.85rem, -1rem, 0) rotate(4deg) scale(1.09);
   }
 }
 
