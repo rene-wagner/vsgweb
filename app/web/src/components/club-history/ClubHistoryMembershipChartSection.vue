@@ -164,11 +164,11 @@ watch(sortedStats, () => {
     title-uuid="club-history-membership-title"
     description="Die Entwicklung zeigt, wie sich der Verein über die Jahre verändert hat. Besonders starke Schübe entstanden durch neue Abteilungen und die kontinuierliche Arbeit im Breitensport."
     description-uuid="club-history-membership-description"
-    background="gray"
+    background="white"
   >
     <div class="mt-16 grid gap-6 xl:grid-cols-[0.9fr_1.6fr]">
       <div class="grid gap-4 sm:grid-cols-3 xl:grid-cols-1">
-        <div class="rounded-3xl border border-vsg-blue-100 bg-white p-6 shadow-sm">
+        <div class="border border-vsg-blue-100 bg-white p-6 shadow-sm">
           <p class="font-body text-sm uppercase tracking-[0.25em] text-vsg-blue-600">
             Aktuellster Stand
           </p>
@@ -180,7 +180,7 @@ watch(sortedStats, () => {
           </p>
         </div>
 
-        <div class="rounded-3xl border border-vsg-gold-200 bg-vsg-gold-50 p-6 shadow-sm">
+        <div class="border border-vsg-gold-200 bg-vsg-gold-50 p-6 shadow-sm">
           <p class="font-body text-sm uppercase tracking-[0.25em] text-vsg-blue-600">Höchststand</p>
           <p class="mt-3 font-display text-5xl text-vsg-blue-900">
             {{ peakStat?.memberCount ?? "–" }}
@@ -190,7 +190,7 @@ watch(sortedStats, () => {
           </p>
         </div>
 
-        <div class="rounded-3xl border border-vsg-blue-100 bg-vsg-blue-900 p-6 shadow-sm">
+        <div class="border border-vsg-blue-100 bg-vsg-blue-900 p-6 shadow-sm">
           <p class="font-body text-sm uppercase tracking-[0.25em] text-vsg-blue-200">
             Durchschnitt
           </p>
@@ -201,7 +201,7 @@ watch(sortedStats, () => {
         </div>
       </div>
 
-      <div class="rounded-3xl border border-vsg-blue-100 bg-white p-6 shadow-sm">
+      <div class="border border-vsg-blue-100 bg-white p-6 shadow-sm">
         <div class="h-[22rem] md:h-[28rem]">
           <canvas ref="canvasRef" aria-label="Diagramm zur Mitgliederentwicklung" />
         </div>
