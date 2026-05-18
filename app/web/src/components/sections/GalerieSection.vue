@@ -173,7 +173,7 @@ onUnmounted(() => {
           v-for="(item, index) in activeMediaItems"
           :key="item.id"
           type="button"
-          class="group relative aspect-square overflow-hidden rounded-2xl bg-vsg-blue-950 shadow-lg shadow-vsg-blue-900/10"
+          class="group relative aspect-square overflow-hidden bg-vsg-blue-950 shadow-lg shadow-vsg-blue-900/10"
           @click="openLightbox(index)"
         >
           <img
@@ -225,7 +225,7 @@ onUnmounted(() => {
     <img
       :src="getMediaDisplayUrl(selectedItem)"
       :alt="getImageAlt(selectedItem, selectedIndex ?? 0)"
-      class="max-h-[90vh] max-w-full rounded-2xl object-contain shadow-2xl"
+      class="max-h-[90vh] max-w-full object-contain shadow-2xl"
     />
 
     <button
