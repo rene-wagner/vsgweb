@@ -42,7 +42,7 @@ function formatDate(date: string): string {
             {{ formatDate(event.date) }}
           </p>
         </div>
-        <h3 class="mt-5 font-display text-4xl tracking-wider text-vsg-blue-900">
+        <h3 class="mt-5 font-display text-3xl tracking-wider text-vsg-blue-900 md:text-4xl">
           {{ event.title }}
         </h3>
         <p class="mt-4 font-body text-lg leading-relaxed text-vsg-blue-700">

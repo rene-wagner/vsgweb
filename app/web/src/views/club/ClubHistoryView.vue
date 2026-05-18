@@ -9,6 +9,7 @@ import ClubHistoryMilestonesSection from "@/components/club-history/ClubHistoryM
 import ClubHistoryMembershipChartSection from "@/components/club-history/ClubHistoryMembershipChartSection.vue";
 import ClubHistorySpecialEventsSection from "@/components/club-history/ClubHistorySpecialEventsSection.vue";
 import ClubHistoryHallOfFameSection from "@/components/club-history/ClubHistoryHallOfFameSection.vue";
+import CtaSection from "@/components/sections/CtaSection.vue";
 import { useClubHistoryStore } from "@/stores/clubHistoryStore";
 
 const clubHistoryStore = useClubHistoryStore();
@@ -73,6 +74,16 @@ const sortedHallOfFameEntries = computed(() =>
       <ClubHistoryMembershipChartSection :stats="sortedMembershipStats" />
       <ClubHistorySpecialEventsSection :events="sortedSpecialEvents" />
       <ClubHistoryHallOfFameSection :entries="sortedHallOfFameEntries" />
+      <CtaSection
+        headline="Werde Teil unserer Geschichte"
+        description="Ob Probetraining, Mitgliedschaft oder einfach Interesse am Vereinsleben: Wir freuen uns über alle, die die nächsten Kapitel der VSG Kugelberg mitgestalten möchten."
+        headline-uuid="8e95ff56-c8e5-454a-92cf-3999923d2e94"
+        description-uuid="51caee76-6310-4722-bbf8-ab3b1dc0e140"
+        primary-button-text="Mitglied werden"
+        primary-button-link="/verein/aufnahmeantrag"
+        secondary-button-text="Kontakt aufnehmen"
+        secondary-button-link="/kontakt"
+      />
     </template>
   </div>
 </template>

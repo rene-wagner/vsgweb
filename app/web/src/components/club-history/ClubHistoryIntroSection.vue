@@ -49,9 +49,7 @@ const milestoneCount = computed(() => props.history.milestones.length);
     background="white"
   >
     <div class="mt-16 grid gap-6 lg:grid-cols-[1.4fr_0.9fr]">
-      <div
-        class="border border-vsg-gold-400/20 bg-linear-to-br from-vsg-blue-900 via-vsg-blue-800 to-vsg-blue-900 p-8 text-white shadow-sm"
-      >
+      <div class="border border-vsg-gold-400/20 bg-vsg-blue-600 p-8 text-white shadow-sm">
         <p class="font-body text-sm uppercase tracking-[0.3em] text-vsg-gold-300">Gründung</p>
         <p class="mt-4 font-display text-5xl tracking-wider text-vsg-gold-400 md:text-6xl">
           {{ foundingDateLabel }}

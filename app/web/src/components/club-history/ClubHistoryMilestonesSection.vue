@@ -51,10 +51,10 @@ function goNext(): void {
           class="relative pb-10 last:pb-0"
         >
           <span
-            class="absolute -left-[2.55rem] top-1 flex h-6 w-6 items-center justify-center rounded-full border-4 border-white bg-vsg-gold-400 shadow-sm"
+            class="absolute -left-[2.7rem] top-1 flex h-6 w-6 items-center justify-center rounded-full border-4 border-white bg-vsg-gold-400 shadow-sm"
           />
           <p class="font-display text-3xl text-vsg-blue-900">{{ milestone.year }}</p>
-          <h3 class="mt-2 font-display text-4xl tracking-wider text-vsg-blue-800">
+          <h3 class="mt-2 font-display text-3xl tracking-wider text-vsg-blue-800 md:text-4xl">
             {{ milestone.title }}
           </h3>
           <p class="mt-3 font-body text-lg leading-relaxed text-vsg-blue-700">
@@ -95,7 +95,7 @@ function goNext(): void {
         </div>
       </div>
 
-      <div class="overflow-hidden border border-vsg-blue-100 bg-vsg-blue-50/70 p-8 shadow-sm">
+      <div class="overflow-hidden border border-vsg-blue-100 bg-vsg-blue-50/70 p-8 pb-16 shadow-sm">
         <div class="relative pb-8 pt-10">
           <div
             class="absolute left-0 right-0 top-7 h-0.5 bg-linear-to-r from-vsg-blue-200 via-vsg-gold-300 to-vsg-blue-200"
@@ -116,7 +116,7 @@ function goNext(): void {
                 <p class="font-display text-3xl text-vsg-blue-900">{{ milestone.year }}</p>
               </div>
               <div class="h-full border border-white bg-white p-6 shadow-sm">
-                <h3 class="font-display text-3xl tracking-wider text-vsg-blue-800">
+                <h3 class="font-display text-3xl tracking-wider text-vsg-blue-800 md:text-4xl">
                   {{ milestone.title }}
                 </h3>
                 <p class="mt-4 font-body text-base leading-relaxed text-vsg-blue-700">
