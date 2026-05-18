@@ -41,7 +41,7 @@ const columnLabels = {
     description-tag="p"
     :background="props.background"
   >
-    <div class="mt-16 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <div class="mt-16 overflow-hidden border border-gray-200 bg-white shadow-sm">
       <div
         class="hidden grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_auto] gap-6 border-b border-gray-200 bg-gray-50 px-6 py-4 lg:grid"
       >

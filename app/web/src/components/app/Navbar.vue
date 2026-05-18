@@ -118,7 +118,7 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
               />
             </button>
             <div
-              class="invisible absolute left-0 top-full mt-2 w-56 translate-y-2 transform rounded-lg border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-focus-within/abteilungen:visible group-focus-within/abteilungen:translate-y-0 group-focus-within/abteilungen:opacity-100 group-hover/abteilungen:visible group-hover/abteilungen:translate-y-0 group-hover/abteilungen:opacity-100"
+              class="invisible absolute left-0 top-full mt-2 w-56 translate-y-2 transform border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-focus-within/abteilungen:visible group-focus-within/abteilungen:translate-y-0 group-focus-within/abteilungen:opacity-100 group-hover/abteilungen:visible group-hover/abteilungen:translate-y-0 group-hover/abteilungen:opacity-100"
             >
               <div class="py-2">
                 <div v-if="departmentsLoading" class="px-4 py-2 text-sm text-vsg-gold-300/60">
@@ -155,7 +155,7 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
 
                     <div
                       v-if="item.sections.length > 0"
-                      class="invisible pointer-events-none absolute left-full top-0 ml-1 w-56 translate-x-2 rounded-lg border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-focus-within/department:visible group-focus-within/department:pointer-events-auto group-focus-within/department:translate-x-0 group-focus-within/department:opacity-100 group-hover/department:visible group-hover/department:pointer-events-auto group-hover/department:translate-x-0 group-hover/department:opacity-100"
+                      class="invisible pointer-events-none absolute left-full top-0 ml-1 w-56 translate-x-2 border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-focus-within/department:visible group-focus-within/department:pointer-events-auto group-focus-within/department:translate-x-0 group-focus-within/department:opacity-100 group-hover/department:visible group-hover/department:pointer-events-auto group-hover/department:translate-x-0 group-hover/department:opacity-100"
                     >
                       <div class="py-2">
                         <RouterLink
@@ -188,7 +188,7 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
               />
             </button>
             <div
-              class="invisible absolute left-0 top-full mt-2 w-48 translate-y-2 transform rounded-lg border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+              class="invisible absolute left-0 top-full mt-2 w-48 translate-y-2 transform border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
             >
               <div class="py-2">
                 <RouterLink

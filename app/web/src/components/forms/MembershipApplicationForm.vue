@@ -267,7 +267,7 @@ function setBooleanField(
 </script>
 
 <template>
-  <div class="rounded-3xl border border-vsg-blue-100 bg-white p-6 shadow-sm md:p-8">
+  <div class="border border-vsg-blue-100 bg-white p-6 shadow-sm md:p-8">
     <Transition
       enter-active-class="transition-all duration-300 ease-out"
       enter-from-class="translate-y-2 opacity-0"
@@ -278,7 +278,7 @@ function setBooleanField(
     >
       <div
         v-if="submitSuccess"
-        class="mb-8 rounded-2xl border border-green-200 bg-green-50 p-4"
+        class="mb-8 border border-green-200 bg-green-50 p-4"
         role="status"
         aria-live="polite"
       >
@@ -327,7 +327,7 @@ function setBooleanField(
     >
       <div
         v-if="submitError && !submitSuccess"
-        class="mb-8 rounded-2xl border border-red-200 bg-red-50 p-4"
+        class="mb-8 border border-red-200 bg-red-50 p-4"
         role="alert"
         aria-live="polite"
       >
@@ -356,7 +356,7 @@ function setBooleanField(
           <label
             v-for="option in departmentOptions"
             :key="option.value"
-            class="cursor-pointer rounded-2xl border-2 p-4 transition-colors"
+            class="cursor-pointer border-2 p-4 transition-colors"
             :class="[
               form.department === option.value
                 ? `${option.accentClass} ${option.backgroundClass}`
@@ -399,7 +399,7 @@ function setBooleanField(
               v-model="form.lastName"
               type="text"
               maxlength="100"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.lastName ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('lastName')"
             />
@@ -420,7 +420,7 @@ function setBooleanField(
               v-model="form.firstName"
               type="text"
               maxlength="100"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.firstName ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('firstName')"
             />
@@ -440,7 +440,7 @@ function setBooleanField(
               id="birthDate"
               v-model="form.birthDate"
               type="date"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.birthDate ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('birthDate')"
             />
@@ -471,7 +471,7 @@ function setBooleanField(
               v-model="form.street"
               type="text"
               maxlength="120"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.street ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('street')"
             />
@@ -493,7 +493,7 @@ function setBooleanField(
               type="text"
               inputmode="numeric"
               maxlength="5"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.postalCode ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('postalCode')"
             />
@@ -514,7 +514,7 @@ function setBooleanField(
               v-model="form.city"
               type="text"
               maxlength="100"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.city ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('city')"
             />
@@ -533,7 +533,7 @@ function setBooleanField(
               v-model="form.phone"
               type="tel"
               maxlength="30"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.phone ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('phone')"
             />
@@ -554,7 +554,7 @@ function setBooleanField(
               v-model="form.email"
               type="email"
               maxlength="120"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.email ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('email')"
             />
@@ -572,7 +572,7 @@ function setBooleanField(
           </h2>
         </div>
 
-        <div class="space-y-5 rounded-2xl border border-vsg-blue-100 bg-vsg-blue-50 p-5">
+        <div class="space-y-5 border border-vsg-blue-100 bg-vsg-blue-50 p-5">
           <div class="space-y-3 font-body text-sm leading-relaxed text-vsg-blue-900 md:text-base">
             <p>
               Vereinssatzung und Beitragsordnung wurden mir ausgehändigt bzw. habe ich über die
@@ -597,7 +597,7 @@ function setBooleanField(
               <input
                 v-model="form.acceptsStatutes"
                 type="checkbox"
-                class="mt-1 h-4 w-4 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+                class="mt-1 h-4 w-4 border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
                 @change="clearFieldError('acceptsStatutes')"
               />
               <span class="font-body text-vsg-blue-900">
@@ -612,7 +612,7 @@ function setBooleanField(
               <input
                 v-model="form.acceptsEmailInvitation"
                 type="checkbox"
-                class="mt-1 h-4 w-4 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+                class="mt-1 h-4 w-4 border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
               />
               <span class="font-body text-vsg-blue-900">
                 Ich bin damit einverstanden, dass Einladungen zur Jahreshauptversammlung an meine
@@ -624,7 +624,7 @@ function setBooleanField(
               <input
                 v-model="form.acceptsPrivacyPolicy"
                 type="checkbox"
-                class="mt-1 h-4 w-4 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+                class="mt-1 h-4 w-4 border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
                 @change="clearFieldError('acceptsPrivacyPolicy')"
               />
               <span class="font-body text-vsg-blue-900">
@@ -681,7 +681,7 @@ function setBooleanField(
               v-model="form.bankName"
               type="text"
               maxlength="120"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.bankName ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('bankName')"
             />
@@ -702,7 +702,7 @@ function setBooleanField(
               v-model="form.accountHolder"
               type="text"
               maxlength="120"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.accountHolder ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('accountHolder')"
             />
@@ -725,7 +725,7 @@ function setBooleanField(
               inputmode="text"
               maxlength="27"
               placeholder="DE12 3456 7890 1234 5678 90"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body uppercase text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full border-2 px-4 py-3 font-body uppercase text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.iban ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('iban')"
               @blur="handleIbanBlur"
@@ -746,7 +746,7 @@ function setBooleanField(
               type="text"
               maxlength="11"
               placeholder="Optional"
-              class="w-full rounded-xl border-2 px-4 py-3 font-body uppercase text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full border-2 px-4 py-3 font-body uppercase text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.bic ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('bic')"
               @blur="handleBicBlur"
@@ -774,7 +774,7 @@ function setBooleanField(
             type="text"
             maxlength="160"
             placeholder="Optionaler Vereinsname"
-            class="w-full rounded-xl border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+            class="w-full border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
           />
         </div>
       </section>
@@ -786,12 +786,12 @@ function setBooleanField(
           </h2>
         </div>
 
-        <div class="space-y-5 rounded-2xl border border-vsg-blue-100 bg-vsg-blue-50 p-5">
+        <div class="space-y-5 border border-vsg-blue-100 bg-vsg-blue-50 p-5">
           <label class="flex items-start gap-3">
             <input
               v-model="form.isChild"
               type="checkbox"
-              class="mt-1 h-4 w-4 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+              class="mt-1 h-4 w-4 border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
             />
             <span class="font-body text-vsg-blue-900">
               Es handelt sich bei der antragstellenden Person um ein Kind.
@@ -803,7 +803,7 @@ function setBooleanField(
               Bitte ergänze die Angaben aus der Erklärung zur Aufsichtspflicht.
             </p>
 
-            <div class="rounded-xl border border-vsg-gold-300/50 bg-white p-4">
+            <div class="border border-vsg-gold-300/50 bg-white p-4">
               <h3 class="font-display text-xl tracking-wide text-vsg-blue-900">
                 Erziehungsberechtigte Person 1
               </h3>
@@ -820,7 +820,7 @@ function setBooleanField(
                     v-model="form.guardianOneName"
                     type="text"
                     maxlength="120"
-                    class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
                     :class="errors.guardianOneName ? 'border-red-300' : 'border-vsg-blue-200'"
                     @input="clearFieldError('guardianOneName')"
                   />
@@ -841,7 +841,7 @@ function setBooleanField(
                     v-model="form.guardianOnePhone"
                     type="tel"
                     maxlength="30"
-                    class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
                     :class="errors.guardianOnePhone ? 'border-red-300' : 'border-vsg-blue-200'"
                     @input="clearFieldError('guardianOnePhone')"
                   />
@@ -862,7 +862,7 @@ function setBooleanField(
                     v-model="form.guardianOneAddress"
                     type="text"
                     maxlength="160"
-                    class="w-full rounded-xl border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    class="w-full border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
                     :class="errors.guardianOneAddress ? 'border-red-300' : 'border-vsg-blue-200'"
                     @input="clearFieldError('guardianOneAddress')"
                   />
@@ -873,7 +873,7 @@ function setBooleanField(
               </div>
             </div>
 
-            <div class="rounded-xl border border-vsg-blue-100 bg-white p-4">
+            <div class="border border-vsg-blue-100 bg-white p-4">
               <h3 class="font-display text-xl tracking-wide text-vsg-blue-900">
                 Erziehungsberechtigte Person 2
               </h3>
@@ -891,7 +891,7 @@ function setBooleanField(
                     v-model="form.guardianTwoName"
                     type="text"
                     maxlength="120"
-                    class="w-full rounded-xl border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    class="w-full border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
                   />
                 </div>
 
@@ -907,7 +907,7 @@ function setBooleanField(
                     v-model="form.guardianTwoPhone"
                     type="tel"
                     maxlength="30"
-                    class="w-full rounded-xl border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    class="w-full border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
                   />
                 </div>
 
@@ -923,13 +923,13 @@ function setBooleanField(
                     v-model="form.guardianTwoAddress"
                     type="text"
                     maxlength="160"
-                    class="w-full rounded-xl border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    class="w-full border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
                   />
                 </div>
               </div>
             </div>
 
-            <fieldset class="space-y-3 rounded-xl border border-vsg-gold-300/50 bg-white p-4">
+            <fieldset class="space-y-3 border border-vsg-gold-300/50 bg-white p-4">
               <div class="font-body font-semibold leading-relaxed text-vsg-blue-900">
                 Sofern unser/mein Kind das 12. Lebensjahr noch nicht vollendet hat, verpflichten wir
                 uns / ich mich dafür Sorge zu tragen, dass es sicher zur Sportstätte und nach dem
@@ -966,7 +966,7 @@ function setBooleanField(
               </p>
             </fieldset>
 
-            <fieldset class="space-y-3 rounded-xl border border-vsg-gold-300/50 bg-white p-4">
+            <fieldset class="space-y-3 border border-vsg-gold-300/50 bg-white p-4">
               <div class="font-body font-semibold leading-relaxed text-vsg-blue-900">
                 Sofern unser/mein Kind das 12. Lebensjahr vollendet hat, darf es nach dem regulären
                 Trainings- / Wettkampfende auch ohne Begleitung den Heimweg antreten.
@@ -1008,7 +1008,7 @@ function setBooleanField(
             <input
               v-model="confirmsValidityWithoutSignature"
               type="checkbox"
-              class="h-4 w-4 shrink-0 rounded border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
+              class="h-4 w-4 shrink-0 border-vsg-blue-300 text-vsg-gold-500 focus:ring-vsg-gold-400"
               @change="handleValidityWithoutSignatureChange"
             />
             <span class="font-body text-sm leading-relaxed text-vsg-blue-600">
@@ -1025,7 +1025,7 @@ function setBooleanField(
         <button
           type="submit"
           :disabled="isSubmitting || !confirmsValidityWithoutSignature"
-          class="inline-flex items-center justify-center rounded-xl bg-vsg-blue-900 px-6 py-3 font-display text-lg tracking-wider text-vsg-gold-400 transition-colors hover:bg-vsg-blue-800 disabled:cursor-not-allowed disabled:opacity-70"
+          class="inline-flex items-center justify-center bg-vsg-blue-900 px-6 py-3 font-display text-lg tracking-wider text-vsg-gold-400 transition-colors hover:bg-vsg-blue-800 disabled:cursor-not-allowed disabled:opacity-70"
         >
           {{ isSubmitting ? "Wird gesendet..." : "Aufnahmeantrag senden" }}
         </button>

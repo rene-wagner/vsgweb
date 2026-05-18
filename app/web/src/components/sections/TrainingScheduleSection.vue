@@ -58,7 +58,7 @@ function getAgeRangeClasses(variant: DepartmentTrainingGroup["variant"]): string
         v-for="group in props.groups"
         :key="group.name"
         :class="[
-          'card-hover overflow-hidden rounded-xl border border-gray-200 bg-gray-50',
+          'card-hover overflow-hidden border border-gray-200 bg-gray-50',
           { 'w-full max-w-2xl': props.groups.length === 1 },
         ]"
       >
@@ -68,7 +68,7 @@ function getAgeRangeClasses(variant: DepartmentTrainingGroup["variant"]): string
             <div
               :class="[
                 getIconBgClasses(group.variant),
-                'flex h-14 w-14 items-center justify-center rounded-lg',
+                'flex h-14 w-14 items-center justify-center',
               ]"
             >
               <!-- Youth Icon -->

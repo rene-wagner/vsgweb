@@ -77,7 +77,7 @@ const hasLeftImageLayout = computed(() => props.imageSrc && props.imageLayout ==
         <div v-if="!props.imageSrc && ($slots.icon || props.icon)" class="mb-6">
           <slot name="icon">
             <div
-              class="flex h-16 w-16 items-center justify-center rounded-lg bg-vsg-blue-600/10 text-vsg-blue-600 transition-colors group-hover:bg-vsg-blue-600/20"
+              class="flex h-16 w-16 items-center justify-center bg-vsg-blue-600/10 text-vsg-blue-600 transition-colors group-hover:bg-vsg-blue-600/20"
             >
               <FontAwesomeIcon :icon="props.icon!" class="text-2xl" />
             </div>
