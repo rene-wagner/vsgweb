@@ -25,6 +25,7 @@
     "@tailwindcss/vite": "^4.2.4",
     "@vsg/sdk": "^0.0.0",
     "@vsg/types": "^0.0.0",
+    "chart.js": "^4.5.1",
     "easymde": "^2.20.0",
     "iban": "^0.0.14",
     "marked": "^18.0.2",

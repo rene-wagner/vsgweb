@@ -15,6 +15,7 @@ const generalLinks = [
 ];
 
 const vereinLinks = [
+  { label: "Geschichte", to: "/verein/geschichte" },
   { label: "Vorstand", to: "/verein/vorstand" },
   { label: "Satzung", to: "/verein/satzung" },
   { label: "Beitragsordnung", to: "/verein/beitragsordnung" },

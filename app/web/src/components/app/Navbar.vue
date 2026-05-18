@@ -32,6 +32,7 @@ const { departments, isLoading: departmentsLoading } = storeToRefs(departmentsSt
 const { isEditingMode, isCheckingEditingMode } = useEditingMode();
 
 const vereinItems: MenuItem[] = [
+  { label: "Geschichte", to: "/verein/geschichte" },
   { label: "Vorstand", to: "/verein/vorstand" },
   { label: "Satzung", to: "/verein/satzung" },
   { label: "Beitragsordnung", to: "/verein/beitragsordnung" },
@@ -354,7 +355,7 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
         </button>
         <div
           class="mt-4 flex flex-col gap-3 overflow-hidden pl-4 transition-all duration-300"
-          :style="{ maxHeight: isVereinOpen ? '300px' : '0' }"
+          :style="{ maxHeight: isVereinOpen ? '360px' : '0' }"
         >
           <RouterLink
             v-for="item in vereinItems"
