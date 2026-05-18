@@ -2,22 +2,21 @@
 const props = defineProps({
   title: {
     type: String,
-    default: 'TITLE',
+    default: "TITLE",
   },
   description: {
     type: String,
-    default:
-      'DESCRIPTION',
+    default: "DESCRIPTION",
   },
   href: {
     type: String,
-    default: '#volleyball',
+    default: "#volleyball",
   },
   ctaLabel: {
     type: String,
-    default: 'Jetzt ansehen',
+    default: "Jetzt ansehen",
   },
-})
+});
 </script>
 
 <template>
@@ -26,7 +25,9 @@ const props = defineProps({
   >
     <div class="pulse-grid absolute inset-0 opacity-50"></div>
     <div class="spotlight-beam absolute -inset-x-20 -top-24 h-56 rotate-6 blur-2xl"></div>
-    <div class="absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-[#fde047]/80 to-transparent"></div>
+    <div
+      class="absolute inset-x-6 bottom-0 h-px bg-gradient-to-r from-transparent via-[#fde047]/80 to-transparent"
+    ></div>
 
     <div class="relative flex h-full flex-col">
       <div class="flex items-start justify-between gap-4">
@@ -38,12 +39,8 @@ const props = defineProps({
       </div>
 
       <div class="mt-8">
-        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-white">
-          TITEL
-        </h2>
-        <p class="mt-4 text-sm leading-7 text-slate-300 sm:text-base">
-          DESCRIPTION
-        </p>
+        <h2 class="mt-3 text-3xl font-semibold tracking-tight text-white">TITEL</h2>
+        <p class="mt-4 text-sm leading-7 text-slate-300 sm:text-base">DESCRIPTION</p>
       </div>
 
       <div class="mt-8 flex items-center justify-between gap-4 pt-5">
@@ -77,7 +74,13 @@ const props = defineProps({
 }
 
 .spotlight-beam {
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.32), rgba(252, 211, 77, 0.22) 30%, rgba(0, 102, 214, 0.12) 55%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.32),
+    rgba(252, 211, 77, 0.22) 30%,
+    rgba(0, 102, 214, 0.12) 55%,
+    transparent 70%
+  );
   animation: beam-sweep 6s ease-in-out infinite;
 }
 

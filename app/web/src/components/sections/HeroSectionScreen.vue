@@ -26,21 +26,13 @@ withDefaults(defineProps<Props>(), {
     <div class="pulse-grid absolute inset-0 opacity-40" />
     <div class="spotlight spotlight-gold absolute -right-24 top-[12%] h-[28rem] w-[28rem]" />
     <div class="spotlight spotlight-blue absolute -left-28 bottom-[10%] h-[24rem] w-[24rem]" />
-    <div class="spotlight spotlight-soft absolute left-1/2 top-[-6rem] h-[22rem] w-[34rem] -translate-x-1/2" />
+    <div
+      class="spotlight spotlight-soft absolute left-1/2 top-[-6rem] h-[22rem] w-[34rem] -translate-x-1/2"
+    />
 
     <div class="pointer-events-none absolute inset-0 z-0">
-      <img
-        :src="badmintonIcon"
-        alt=""
-        aria-hidden="true"
-        class="sport-icon sport-icon-top-left"
-      />
-      <img
-        :src="gymnastikIcon"
-        alt=""
-        aria-hidden="true"
-        class="sport-icon sport-icon-top-right"
-      />
+      <img :src="badmintonIcon" alt="" aria-hidden="true" class="sport-icon sport-icon-top-left" />
+      <img :src="gymnastikIcon" alt="" aria-hidden="true" class="sport-icon sport-icon-top-right" />
       <img
         :src="tischtennisIcon"
         alt=""
@@ -100,17 +92,32 @@ withDefaults(defineProps<Props>(), {
 }
 
 .spotlight-gold {
-  background: radial-gradient(circle, rgb(250 204 21 / 0.28), rgb(250 204 21 / 0.14) 38%, transparent 72%);
+  background: radial-gradient(
+    circle,
+    rgb(250 204 21 / 0.28),
+    rgb(250 204 21 / 0.14) 38%,
+    transparent 72%
+  );
   animation: spotlight-drift-a 11s ease-in-out infinite;
 }
 
 .spotlight-blue {
-  background: radial-gradient(circle, rgb(59 130 246 / 0.25), rgb(29 78 216 / 0.14) 42%, transparent 72%);
+  background: radial-gradient(
+    circle,
+    rgb(59 130 246 / 0.25),
+    rgb(29 78 216 / 0.14) 42%,
+    transparent 72%
+  );
   animation: spotlight-drift-b 13s ease-in-out infinite;
 }
 
 .spotlight-soft {
-  background: radial-gradient(circle, rgb(255 255 255 / 0.14), rgb(250 204 21 / 0.08) 36%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgb(255 255 255 / 0.14),
+    rgb(250 204 21 / 0.08) 36%,
+    transparent 70%
+  );
   animation: spotlight-drift-c 15s ease-in-out infinite;
 }
 
@@ -250,5 +257,4 @@ withDefaults(defineProps<Props>(), {
     transform: translate3d(-0.85rem, -1rem, 0) rotate(4deg) scale(1.09);
   }
 }
-
 </style>

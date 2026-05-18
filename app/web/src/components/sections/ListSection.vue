@@ -56,10 +56,18 @@ const columnLabels = {
         </span>
       </div>
 
-      <div v-for="item in props.items" :key="item.id" class="border-b border-gray-200 last:border-b-0">
-        <div class="grid gap-4 px-6 py-5 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_auto] lg:gap-6">
+      <div
+        v-for="item in props.items"
+        :key="item.id"
+        class="border-b border-gray-200 last:border-b-0"
+      >
+        <div
+          class="grid gap-4 px-6 py-5 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_auto] lg:gap-6"
+        >
           <div class="flex flex-col gap-1">
-            <span class="font-body text-xs font-bold uppercase tracking-widest text-vsg-blue-600 lg:hidden">
+            <span
+              class="font-body text-xs font-bold uppercase tracking-widest text-vsg-blue-600 lg:hidden"
+            >
               {{ columnLabels.title }}
             </span>
             <span class="font-body text-base font-semibold text-vsg-blue-900">
@@ -68,7 +76,9 @@ const columnLabels = {
           </div>
 
           <div class="flex flex-col gap-1">
-            <span class="font-body text-xs font-bold uppercase tracking-widest text-vsg-blue-600 lg:hidden">
+            <span
+              class="font-body text-xs font-bold uppercase tracking-widest text-vsg-blue-600 lg:hidden"
+            >
               {{ columnLabels.league }}
             </span>
             <span class="font-body text-base text-gray-700">
@@ -77,7 +87,9 @@ const columnLabels = {
           </div>
 
           <div class="flex flex-col gap-1 lg:items-start">
-            <span class="font-body text-xs font-bold uppercase tracking-widest text-vsg-blue-600 lg:hidden">
+            <span
+              class="font-body text-xs font-bold uppercase tracking-widest text-vsg-blue-600 lg:hidden"
+            >
               {{ columnLabels.url }}
             </span>
             <a

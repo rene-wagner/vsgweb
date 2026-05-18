@@ -48,7 +48,9 @@ function applyPersonQuerySelection(): void {
     return;
   }
 
-  const contactPersonBySlug = contactPeopleStore.contactPeople.find((cp) => cp.slug === personQuery);
+  const contactPersonBySlug = contactPeopleStore.contactPeople.find(
+    (cp) => cp.slug === personQuery,
+  );
 
   if (contactPersonBySlug) {
     selectedContactPersonId.value = contactPersonBySlug.id;

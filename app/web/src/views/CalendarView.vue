@@ -92,7 +92,8 @@ function expandEventOccurrences(items: VsgEvent[]): EventOccurrence[] {
     let occurrenceIndex = 0;
 
     do {
-      const occurrenceEnd = durationMs !== null ? new Date(occurrenceStart.getTime() + durationMs) : null;
+      const occurrenceEnd =
+        durationMs !== null ? new Date(occurrenceStart.getTime() + durationMs) : null;
 
       occurrences.push({
         instanceId: `${event.id}-${occurrenceIndex}`,
@@ -164,7 +165,8 @@ function formatEventDateRange(startsAt: string, endsAt: string | null): string {
 
 function handleEventClick(clickInfo: EventClickArg): void {
   selectedEvent.value =
-    eventOccurrences.value.find((occurrence) => occurrence.instanceId === clickInfo.event.id) ?? null;
+    eventOccurrences.value.find((occurrence) => occurrence.instanceId === clickInfo.event.id) ??
+    null;
 }
 
 function destroyCalendar(): void {
@@ -209,7 +211,6 @@ async function loadEvents(): Promise<void> {
     const response = await vsg.events.list();
     events.value = sortEvents(response.member);
     selectedEvent.value = eventOccurrences.value[0] ?? null;
-
   } catch (loadError) {
     error.value = getApiErrorMessage(loadError, "Termine konnten nicht geladen werden.");
   } finally {
@@ -252,11 +253,15 @@ watchEffect(() => {
         <ApiState :is-loading="isLoading" :error="error" />
 
         <div v-if="showCalendar" class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
-          <div class="overflow-hidden rounded-3xl border border-vsg-blue-100 bg-white p-4 shadow-sm">
+          <div
+            class="overflow-hidden rounded-3xl border border-vsg-blue-100 bg-white p-4 shadow-sm"
+          >
             <div ref="calendarElement" class="calendar-shell text-vsg-blue-900" />
           </div>
 
-          <aside class="rounded-3xl border border-vsg-blue-100 bg-vsg-blue-50 p-6 text-vsg-blue-900">
+          <aside
+            class="rounded-3xl border border-vsg-blue-100 bg-vsg-blue-50 p-6 text-vsg-blue-900"
+          >
             <p class="font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-500">
               Termin-Details
             </p>

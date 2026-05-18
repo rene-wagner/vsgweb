@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { watch, onMounted, onUnmounted, watchEffect, computed, nextTick, onUpdated, ref } from "vue";
+import {
+  watch,
+  onMounted,
+  onUnmounted,
+  watchEffect,
+  computed,
+  nextTick,
+  onUpdated,
+  ref,
+} from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useCategoriesStore } from "@/stores/categoriesStore";
@@ -283,7 +292,10 @@ const sectionBackgrounds = computed<{
       />
 
       <div v-if="currentDepartment!.welcomeText" id="willkommen" class="scroll-mt-32">
-        <WelcomeSection uuid="07fc79ce-148f-4c7b-9763-583873591ef1" :welcome-text="currentDepartment!.welcomeText" />
+        <WelcomeSection
+          uuid="07fc79ce-148f-4c7b-9763-583873591ef1"
+          :welcome-text="currentDepartment!.welcomeText"
+        />
       </div>
 
       <div v-if="departmentStats.length > 0" id="zahlen-fakten" class="scroll-mt-32">

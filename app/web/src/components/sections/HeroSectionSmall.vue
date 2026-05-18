@@ -59,7 +59,9 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
     <div class="pulse-grid absolute inset-0 opacity-40" />
     <div class="spotlight spotlight-gold absolute -right-24 top-[12%] h-[24rem] w-[24rem]" />
     <div class="spotlight spotlight-blue absolute -left-28 bottom-[8%] h-[20rem] w-[20rem]" />
-    <div class="spotlight spotlight-soft absolute left-1/2 top-[-5rem] h-[18rem] w-[28rem] -translate-x-1/2" />
+    <div
+      class="spotlight spotlight-soft absolute left-1/2 top-[-5rem] h-[18rem] w-[28rem] -translate-x-1/2"
+    />
 
     <div class="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center">
       <h1
@@ -143,17 +145,32 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
 }
 
 .spotlight-gold {
-  background: radial-gradient(circle, rgb(250 204 21 / 0.28), rgb(250 204 21 / 0.14) 38%, transparent 72%);
+  background: radial-gradient(
+    circle,
+    rgb(250 204 21 / 0.28),
+    rgb(250 204 21 / 0.14) 38%,
+    transparent 72%
+  );
   animation: spotlight-drift-a 11s ease-in-out infinite;
 }
 
 .spotlight-blue {
-  background: radial-gradient(circle, rgb(59 130 246 / 0.25), rgb(29 78 216 / 0.14) 42%, transparent 72%);
+  background: radial-gradient(
+    circle,
+    rgb(59 130 246 / 0.25),
+    rgb(29 78 216 / 0.14) 42%,
+    transparent 72%
+  );
   animation: spotlight-drift-b 13s ease-in-out infinite;
 }
 
 .spotlight-soft {
-  background: radial-gradient(circle, rgb(255 255 255 / 0.14), rgb(250 204 21 / 0.08) 36%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgb(255 255 255 / 0.14),
+    rgb(250 204 21 / 0.08) 36%,
+    transparent 70%
+  );
   animation: spotlight-drift-c 15s ease-in-out infinite;
 }
 

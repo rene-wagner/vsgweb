@@ -448,7 +448,6 @@ function setBooleanField(
               {{ errors.birthDate }}
             </p>
           </div>
-
         </div>
       </section>
 
@@ -932,9 +931,9 @@ function setBooleanField(
 
             <fieldset class="space-y-3 rounded-xl border border-vsg-gold-300/50 bg-white p-4">
               <div class="font-body font-semibold leading-relaxed text-vsg-blue-900">
-                Sofern unser/mein Kind das 12. Lebensjahr noch nicht vollendet hat, verpflichten
-                wir uns / ich mich dafür Sorge zu tragen, dass es sicher zur Sportstätte und nach
-                dem Training / Wettkampf wieder nach Hause gelangt.
+                Sofern unser/mein Kind das 12. Lebensjahr noch nicht vollendet hat, verpflichten wir
+                uns / ich mich dafür Sorge zu tragen, dass es sicher zur Sportstätte und nach dem
+                Training / Wettkampf wieder nach Hause gelangt.
               </div>
               <p class="font-body text-sm leading-relaxed text-vsg-blue-700">
                 Ausnahmeregelung: Da unser/mein Kind in der Nähe der Sportstätte wohnt bzw. unter
@@ -969,8 +968,8 @@ function setBooleanField(
 
             <fieldset class="space-y-3 rounded-xl border border-vsg-gold-300/50 bg-white p-4">
               <div class="font-body font-semibold leading-relaxed text-vsg-blue-900">
-                Sofern unser/mein Kind das 12. Lebensjahr vollendet hat, darf es nach dem
-                regulären Trainings- / Wettkampfende auch ohne Begleitung den Heimweg antreten.
+                Sofern unser/mein Kind das 12. Lebensjahr vollendet hat, darf es nach dem regulären
+                Trainings- / Wettkampfende auch ohne Begleitung den Heimweg antreten.
                 <span v-if="isChildTwelveOrOlder" class="font-semibold">*</span>
               </div>
               <label class="flex items-center gap-3 font-body text-vsg-blue-900">

@@ -59,7 +59,10 @@ const beamStyle = computed(() => ({
     ]"
   >
     <div class="pulse-grid absolute inset-0 opacity-50" />
-    <div class="spotlight-beam absolute -inset-x-20 -top-24 h-56 rotate-6 blur-2xl" :style="beamStyle" />
+    <div
+      class="spotlight-beam absolute -inset-x-20 -top-24 h-56 rotate-6 blur-2xl"
+      :style="beamStyle"
+    />
     <div
       class="absolute inset-x-6 bottom-0 h-px bg-linear-to-r from-transparent via-[#fde047]/80 to-transparent"
     />

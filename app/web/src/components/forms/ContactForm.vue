@@ -16,10 +16,7 @@ type ApiErrorResponse = {
   detail?: string;
 };
 
-async function readErrorMessage(
-  response: Response,
-  fallback: string,
-): Promise<string> {
+async function readErrorMessage(response: Response, fallback: string): Promise<string> {
   const contentType = response.headers.get("content-type") ?? "";
 
   if (!contentType.includes("json")) {
@@ -110,10 +107,7 @@ const submitForm = async () => {
     });
 
     if (response.status === 403) {
-      submitError.value = await readErrorMessage(
-        response,
-        "CSRF-Token fehlt oder ist ungültig.",
-      );
+      submitError.value = await readErrorMessage(response, "CSRF-Token fehlt oder ist ungültig.");
       return;
     }
 
@@ -139,7 +133,6 @@ const submitForm = async () => {
     form.subject = "";
     form.message = "";
     form.website = "";
-
   } catch (_e) {
     submitError.value =
       "Ein Netzwerkfehler ist aufgetreten. Bitte überprüfe deine Internetverbindung.";
