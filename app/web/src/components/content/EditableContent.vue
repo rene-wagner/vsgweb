@@ -36,7 +36,7 @@ const currentUrl = computed(() => route.path || "/");
 const storedContent = computed(() => contentBlocksStore.getContent(currentUrl.value, props.uuid));
 const resolvedContent = computed(() => {
   if (contentBlocksStore.hasLoadedUrl(currentUrl.value)) {
-    return storedContent.value ?? "";
+    return storedContent.value ?? props.content ?? "";
   }
 
   return props.content ?? "";

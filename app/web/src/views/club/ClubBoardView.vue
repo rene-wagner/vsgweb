@@ -5,7 +5,9 @@ import CardSection from "@/components/sections/CardSection.vue";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
 import Card from "@/components/cards/Card.vue";
 import ApiState from "@/components/ui/ApiState.vue";
+import CtaSection from "@/components/sections/CtaSection.vue";
 import { clubBoardContent } from "@/content/club-board-content";
+import { homepageContent } from "@/content/homepage-content";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
 import { useContactPeopleStore } from "@/stores/contactPeopleStore";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -75,5 +77,12 @@ function getBadgeColor(index: number): string {
         </Card>
       </ApiState>
     </CardSection>
+
+    <CtaSection
+      :headline="homepageContent.ctaHeadline"
+      :description="homepageContent.ctaDescription"
+      headline-uuid="f0da9902-792c-43d7-9f5c-b53bec8eea6c"
+      description-uuid="bd911e4e-23ae-4062-a62a-99074ddb0076"
+    />
   </div>
 </template>

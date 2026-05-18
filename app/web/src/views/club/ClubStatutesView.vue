@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import EditableContent from "@/components/content/EditableContent.vue";
+import CtaSection from "@/components/sections/CtaSection.vue";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
 import { clubStatutesContent } from "@/content/club-statutes-content";
+import { homepageContent } from "@/content/homepage-content";
 </script>
 
 <template>
@@ -27,5 +29,12 @@ import { clubStatutesContent } from "@/content/club-statutes-content";
         </div>
       </div>
     </section>
+
+    <CtaSection
+      :headline="homepageContent.ctaHeadline"
+      :description="homepageContent.ctaDescription"
+      headline-uuid="f0da9902-792c-43d7-9f5c-b53bec8eea6c"
+      description-uuid="bd911e4e-23ae-4062-a62a-99074ddb0076"
+    />
   </div>
 </template>
