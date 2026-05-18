@@ -66,7 +66,7 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
     <div class="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center">
       <h1
         v-if="headline"
-        class="animate-slide-up text-glow mx-auto max-w-[12ch] font-display text-[clamp(2.5rem,10vw,6rem)] text-white [hyphens:auto] [overflow-wrap:anywhere] delay-300 lg:max-w-none lg:whitespace-nowrap lg:[hyphens:none] lg:[overflow-wrap:normal]"
+        class="hero-headline animate-slide-up text-glow mx-auto max-w-[12ch] text-center font-display text-[clamp(2.5rem,10vw,6rem)] text-white delay-300 lg:max-w-none"
       >
         <EditableContent v-if="editableHeadline" :uuid="headlineUuid" :content="headline" />
         <span v-else>{{ headline }}</span>
@@ -172,6 +172,27 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
     transparent 70%
   );
   animation: spotlight-drift-c 15s ease-in-out infinite;
+}
+
+.hero-headline {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.hero-headline :deep(*) {
+  text-align: center;
+  overflow-wrap: inherit;
+  word-break: inherit;
+  hyphens: inherit;
+}
+
+@media (min-width: 1024px) {
+  .hero-headline {
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+  }
 }
 
 @keyframes grid-pulse {
