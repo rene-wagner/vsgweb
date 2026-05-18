@@ -16,7 +16,7 @@ import type { ContactPerson } from "./types/contact-person.types.js";
 import type { Location } from "./types/location.types.js";
 import type { MediaFolder, MediaItem } from "./types/media.types.js";
 import type { User } from "./types/user.types.js";
-import type { ApiDepartment, ApiEvent, ApiPost } from "@vsg/types";
+import type { ApiClubHistory, ApiDepartment, ApiEvent, ApiPost } from "@vsg/types";
 
 export type * from "./types/index.js";
 
@@ -103,6 +103,7 @@ function getErrorMessage(body: unknown, response: Response): string {
 
 export class VsgClient {
   readonly categories;
+  readonly clubHistory;
   readonly contactPeople;
   readonly contentBlocks;
   readonly departments;
@@ -125,6 +126,13 @@ export class VsgClient {
       list: (options?: RequestOptions) => this.getCollection<Category>("/api/categories", options),
       get: (slug: string, options?: RequestOptions) =>
         this.get<Category>(`/api/categories/${encodeURIComponent(slug)}`, options),
+    };
+
+    this.clubHistory = {
+      list: (options?: RequestOptions) =>
+        this.getCollection<ApiClubHistory>("/api/club-history", options),
+      get: (id: number | string, options?: RequestOptions) =>
+        this.get<ApiClubHistory>(`/api/club-history/${encodeURIComponent(String(id))}`, options),
     };
 
     this.contactPeople = {

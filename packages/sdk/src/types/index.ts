@@ -10,6 +10,13 @@ export type { Category, CategorySummary } from "./category.types.js";
 export type { ContactPerson } from "./contact-person.types.js";
 export type { Location, LocationSummary } from "./location.types.js";
 export type {
+  ApiClubHistory as ClubHistory,
+  ApiClubHistory,
+  ClubHistoryAPI,
+  ClubHistoryHallOfFameEntry,
+  ClubHistoryMembershipStat,
+  ClubHistoryMilestone,
+  ClubHistorySpecialEvent,
   ApiDepartment as Department,
   ApiDepartment,
   ApiDepartmentResult,

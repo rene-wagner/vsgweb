@@ -7,6 +7,14 @@ export type {
   DepartmentAPI,
 } from "./api/department.types.js";
 export type { CategorySummary } from "./api/category.types.js";
+export type {
+  ApiClubHistory,
+  ClubHistoryAPI,
+  ClubHistoryHallOfFameEntry,
+  ClubHistoryMembershipStat,
+  ClubHistoryMilestone,
+  ClubHistorySpecialEvent,
+} from "./api/club-history.types.js";
 export type { ApiEvent, EventAPI, EventRecurrence } from "./api/event.types.js";
 export type { JsonLdContext, JsonLdResource } from "./api/json-ld.types.js";
 export type { Location, LocationSummary } from "./api/location.types.js";
