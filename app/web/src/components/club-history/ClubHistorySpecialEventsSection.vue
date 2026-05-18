@@ -24,10 +24,10 @@ function formatDate(date: string): string {
   <Section
     subtitle="Besondere Momente"
     title="Ereignisse, an die man sich erinnert"
-    subtitle-uuid="club-history-special-events-subtitle"
-    title-uuid="club-history-special-events-title"
+    subtitle-uuid="5b3709ff-f5a8-4d5f-9697-246eb3c2f1f8"
+    title-uuid="8f720fa4-6982-4e3a-bd19-cf6f04d7c697"
     description="Neben sportlichen Erfolgen prägen Jubiläen, Umbrüche und gemeinsame Erlebnisse das Vereinsleben. Diese Momente zeigen, wie eng Sport und Gemeinschaft zusammengehören."
-    description-uuid="club-history-special-events-description"
+    description-uuid="2cc24e8f-9f58-4236-b4af-153657bb68c7"
     background="gray"
   >
     <div class="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-3">

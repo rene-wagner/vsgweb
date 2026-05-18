@@ -160,10 +160,10 @@ watch(sortedStats, () => {
     id="mitgliederentwicklung"
     subtitle="Mitgliederentwicklung"
     title="Wachstum in Zahlen"
-    subtitle-uuid="club-history-membership-subtitle"
-    title-uuid="club-history-membership-title"
+    subtitle-uuid="cbaf1f0c-e7e7-4f75-a8d5-b7b12731c61d"
+    title-uuid="0f7b9437-b0c1-4cdb-8ef7-4f4e59c4fd1d"
     description="Die Entwicklung zeigt, wie sich der Verein über die Jahre verändert hat. Besonders starke Schübe entstanden durch neue Abteilungen und die kontinuierliche Arbeit im Breitensport."
-    description-uuid="club-history-membership-description"
+    description-uuid="98e5ef48-00cf-4b73-a8c0-6d8ae6c4ef0a"
     background="white"
   >
     <div class="mt-16 grid gap-6 xl:grid-cols-[0.9fr_1.6fr]">

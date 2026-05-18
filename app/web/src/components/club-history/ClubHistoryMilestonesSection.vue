@@ -37,10 +37,10 @@ function goNext(): void {
     id="meilensteine"
     subtitle="Zeitstrahl"
     title="Stationen, die den Verein geprägt haben"
-    subtitle-uuid="club-history-milestones-subtitle"
-    title-uuid="club-history-milestones-title"
+    subtitle-uuid="a8ea9fb9-0c39-4daa-b0ff-cfbca0f3c1a4"
+    title-uuid="1a2aa9ea-c1b6-49a1-91f4-72434a360b70"
     description="Jede Etappe steht für Wachstum, Veränderung und neue Energie im Verein. Auf großen Bildschirmen lässt sich der Zeitstrahl durchblättern, mobil erzählen alle Meilensteine die Geschichte untereinander."
-    description-uuid="club-history-milestones-description"
+    description-uuid="cf30ef62-e1a1-4e66-b36b-160eb8db6a0a"
     background="gray"
   >
     <div class="mt-16 lg:hidden">

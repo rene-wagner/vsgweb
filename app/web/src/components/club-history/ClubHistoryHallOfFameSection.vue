@@ -16,10 +16,10 @@ const sortedEntries = computed(() => [...props.entries].sort((a, b) => a.year - 
   <Section
     subtitle="Hall of Fame"
     title="Momente für die Vereinsgalerie"
-    subtitle-uuid="club-history-hall-of-fame-subtitle"
-    title-uuid="club-history-hall-of-fame-title"
+    subtitle-uuid="6dbdc07d-3f18-4be0-b7e0-48c6a65e7f53"
+    title-uuid="a7217d6b-2e86-4a0f-b0c9-5200b1157b66"
     description="Sportliche Spitzenleistungen, außergewöhnliches Engagement und Premieren mit Strahlkraft: Diese Auswahl hebt besondere Kapitel hervor, die weit über den Alltag hinausreichen."
-    description-uuid="club-history-hall-of-fame-description"
+    description-uuid="d5f96e42-5e0d-4e0d-b274-66c1d43d6de4"
     background="white"
   >
     <div class="mt-16 border border-vsg-blue-100 bg-vsg-blue-900 p-8 md:p-10">

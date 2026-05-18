@@ -42,10 +42,10 @@ const milestoneCount = computed(() => props.history.milestones.length);
   <Section
     subtitle="Seit 1985 in Bewegung"
     title="Ein Verein mit Haltung, Herz und Heimat"
-    subtitle-uuid="club-history-intro-subtitle"
-    title-uuid="club-history-intro-title"
+    subtitle-uuid="4c6b9d95-2c53-4db4-8f27-5b0fc97f7aa1"
+    title-uuid="0ebfd2e7-4f8d-4f99-9df3-1dcf90ac5f72"
     description="Aus kleinen Anfängen in Weißenfels ist über Jahrzehnte ein vielseitiger Verein gewachsen. Unsere Geschichte erzählt von Zusammenhalt, neuen Abteilungen, sportlichen Erfolgen und Menschen, die den Verein mit Leben füllen."
-    description-uuid="club-history-intro-description"
+    description-uuid="f3c39f19-7f89-4684-b6e5-7fdd2be0b3c8"
     background="white"
   >
     <div class="mt-16 grid gap-6 lg:grid-cols-[1.4fr_0.9fr]">
