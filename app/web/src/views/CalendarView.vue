@@ -254,13 +254,13 @@ watchEffect(() => {
 
         <div v-if="showCalendar" class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
           <div
-            class="overflow-hidden border border-vsg-blue-100 bg-white p-4 shadow-sm"
+            class="overflow-hidden rounded-md border border-vsg-blue-100 bg-white p-4 shadow-sm"
           >
             <div ref="calendarElement" class="calendar-shell text-vsg-blue-900" />
           </div>
 
           <aside
-            class="border border-vsg-blue-100 bg-vsg-blue-50 p-6 text-vsg-blue-900"
+            class="rounded-md border border-vsg-blue-100 bg-vsg-blue-50 p-6 text-vsg-blue-900"
           >
             <p class="font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-500">
               Termin-Details

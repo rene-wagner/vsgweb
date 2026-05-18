@@ -173,7 +173,7 @@ onUnmounted(() => {
           v-for="(item, index) in activeMediaItems"
           :key="item.id"
           type="button"
-          class="group relative aspect-square overflow-hidden bg-vsg-blue-950 shadow-lg shadow-vsg-blue-900/10"
+          class="group relative aspect-square overflow-hidden rounded-md bg-vsg-blue-950 shadow-lg shadow-vsg-blue-900/10"
           @click="openLightbox(index)"
         >
           <img
@@ -205,7 +205,7 @@ onUnmounted(() => {
   >
     <button
       type="button"
-      class="absolute top-4 right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+      class="absolute top-4 right-4 z-10 flex h-12 w-12 items-center justify-center rounded-md bg-white/10 text-white transition-colors hover:bg-white/20"
       aria-label="Galerie schliessen"
       @click="closeLightbox"
     >
@@ -215,7 +215,7 @@ onUnmounted(() => {
     <button
       v-if="activeMediaItems.length > 1"
       type="button"
-      class="absolute left-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+      class="absolute left-4 flex h-12 w-12 items-center justify-center rounded-md bg-white/10 text-white transition-colors hover:bg-white/20"
       aria-label="Vorheriges Bild"
       @click="showPrevious"
     >
@@ -225,13 +225,13 @@ onUnmounted(() => {
     <img
       :src="getMediaDisplayUrl(selectedItem)"
       :alt="getImageAlt(selectedItem, selectedIndex ?? 0)"
-      class="max-h-[90vh] max-w-full object-contain shadow-2xl"
+      class="max-h-[90vh] max-w-full rounded-md object-contain shadow-2xl"
     />
 
     <button
       v-if="activeMediaItems.length > 1"
       type="button"
-      class="absolute right-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+      class="absolute right-4 flex h-12 w-12 items-center justify-center rounded-md bg-white/10 text-white transition-colors hover:bg-white/20"
       aria-label="Naechstes Bild"
       @click="showNext"
     >

@@ -108,7 +108,7 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
           <div class="group/abteilungen relative">
             <button
               type="button"
-              class="flex items-center gap-1 font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
+              class="rounded-md flex items-center gap-1 font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
               aria-haspopup="true"
             >
               Abteilungen
@@ -178,7 +178,7 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
           <div class="group relative">
             <button
               type="button"
-              class="flex items-center gap-1 font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
+              class="rounded-md flex items-center gap-1 font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
               aria-haspopup="true"
             >
               Verein
@@ -227,7 +227,7 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
 
           <RouterLink
             to="/verein/aufnahmeantrag"
-            class="bg-vsg-gold-400 px-4 py-2 font-display text-sm tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-gold-300"
+            class="rounded-md bg-vsg-gold-400 px-4 py-2 font-display text-sm tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-gold-300"
           >
             Mitglied werden
           </RouterLink>
@@ -254,7 +254,7 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
 
           <button
             id="mobile-menu-toggle"
-            class="group flex h-10 w-10 flex-col items-center justify-center gap-1.5"
+            class="group flex h-10 w-10 rounded-md flex-col items-center justify-center gap-1.5"
             :aria-label="isMenuOpen ? 'Menü schließen' : 'Menü öffnen'"
             :aria-expanded="isMenuOpen"
             aria-controls="mobile-menu"
@@ -290,7 +290,7 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
     <div class="flex min-h-full flex-col items-center gap-6 px-8 pb-12 pt-28">
       <div class="flex w-full max-w-xs flex-col">
         <button
-          class="flex w-full items-center justify-between font-display text-4xl tracking-wider text-white transition-colors hover:text-vsg-gold-400"
+          class="flex w-full items-center justify-between rounded-md font-display text-4xl tracking-wider text-white transition-colors hover:text-vsg-gold-400"
           @click="toggleAbteilungen"
         >
           <span>Abteilungen</span>
@@ -311,7 +311,7 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
           <template v-else>
             <div v-for="item in abteilungenItems" :key="item.to" class="flex flex-col gap-3">
               <button
-                class="flex w-full items-center justify-between gap-4 font-body text-left text-lg font-normal text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
+                class="flex w-full items-center justify-between gap-4 rounded-md font-body text-left text-lg font-normal text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
                 @click="toggleMobileDepartment(item.slug)"
               >
                 <span>{{ item.label }}</span>
@@ -343,7 +343,7 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
 
       <div class="flex w-full max-w-xs flex-col">
         <button
-          class="flex w-full items-center justify-between font-display text-4xl tracking-wider text-white transition-colors hover:text-vsg-gold-400"
+          class="flex w-full items-center justify-between rounded-md font-display text-4xl tracking-wider text-white transition-colors hover:text-vsg-gold-400"
           @click="toggleVerein"
         >
           <span>Verein</span>
@@ -399,7 +399,7 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
       <div class="mt-4 w-full max-w-xs">
         <RouterLink
           to="/verein/aufnahmeantrag"
-          class="block bg-vsg-gold-400 px-6 py-4 text-center font-display text-2xl tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-gold-300"
+          class="block rounded-md bg-vsg-gold-400 px-6 py-4 text-center font-display text-2xl tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-gold-300"
           @click="closeMenu"
         >
           Mitglied werden

@@ -58,7 +58,7 @@ function getAgeRangeClasses(variant: DepartmentTrainingGroup["variant"]): string
         v-for="group in props.groups"
         :key="group.name"
         :class="[
-          'card-hover overflow-hidden border border-gray-200 bg-gray-50',
+          'card-hover overflow-hidden rounded-md border border-gray-200 bg-gray-50',
           { 'w-full max-w-2xl': props.groups.length === 1 },
         ]"
       >

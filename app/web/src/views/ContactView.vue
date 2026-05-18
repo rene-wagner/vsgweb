@@ -136,7 +136,7 @@ function encodeBase64(value: string): string {
               <select
                 id="contact-person-select"
                 v-model="selectedContactPersonId"
-                class="w-full px-4 py-3 bg-white border-2 border-vsg-blue-200 text-vsg-blue-900 text-lg font-body focus:outline-none focus:border-vsg-gold-400 transition-colors cursor-pointer appearance-none"
+                class="w-full rounded-md px-4 py-3 bg-white border-2 border-vsg-blue-200 text-vsg-blue-900 text-lg font-body focus:outline-none focus:border-vsg-gold-400 transition-colors cursor-pointer appearance-none"
                 style="
                   background-image: url(&quot;data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%231E3A5F%22%20d%3D%22M10.293%203.293%206%207.586%201.707%203.293A1%201%200%200%200%20.293%204.707l5%205a1%201%200%200%200%201.414%200l5-5a1%201%200%201%200-1.414-1.414z%22%2F%3E%3C%2Fsvg%3E&quot;);
                   background-repeat: no-repeat;
@@ -162,7 +162,7 @@ function encodeBase64(value: string): string {
             >
               <div
                 v-if="selectedContactPerson"
-                class="bg-vsg-blue-50 border border-vsg-blue-100 p-8"
+                class="rounded-md bg-vsg-blue-50 border border-vsg-blue-100 p-8"
               >
                 <!-- Profile Image and Name/Role Header -->
                 <div class="mb-6 pb-6 border-b border-vsg-blue-200">
@@ -281,7 +281,7 @@ function encodeBase64(value: string): string {
             <!-- Default Message when no selection -->
             <div
               v-if="!selectedContactPerson"
-              class="text-center py-12 bg-gray-50 border border-gray-100"
+              class="rounded-md text-center py-12 bg-gray-50 border border-gray-100"
             >
               <FontAwesomeIcon icon="users" class="mx-auto text-vsg-blue-200" />
               <p class="mt-4 font-body text-vsg-blue-500">

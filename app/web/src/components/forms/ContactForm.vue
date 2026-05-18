@@ -175,7 +175,7 @@ const clearSuccess = () => {
               Deine Nachricht wurde erfolgreich gesendet. Vielen Dank für deine Anfrage!
             </p>
             <button
-              class="mt-2 text-sm text-green-700 hover:text-green-900 underline font-body"
+              class="mt-2 rounded-md text-sm text-green-700 hover:text-green-900 underline font-body"
               @click="clearSuccess"
             >
               Weitere Nachricht senden
@@ -236,7 +236,7 @@ const clearSuccess = () => {
           maxlength="100"
           :disabled="isSubmitting"
           :class="[
-            'w-full px-4 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors',
+            'w-full rounded-md px-4 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors',
             'focus:outline-none focus:border-vsg-gold-400',
             errors.senderName ? 'border-red-300' : 'border-vsg-blue-200',
             isSubmitting ? 'opacity-50 cursor-not-allowed' : '',
@@ -263,7 +263,7 @@ const clearSuccess = () => {
           required
           :disabled="isSubmitting"
           :class="[
-            'w-full px-4 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors',
+            'w-full rounded-md px-4 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors',
             'focus:outline-none focus:border-vsg-gold-400',
             errors.senderEmail ? 'border-red-300' : 'border-vsg-blue-200',
             isSubmitting ? 'opacity-50 cursor-not-allowed' : '',
@@ -291,7 +291,7 @@ const clearSuccess = () => {
           maxlength="200"
           :disabled="isSubmitting"
           :class="[
-            'w-full px-4 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors',
+            'w-full rounded-md px-4 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors',
             'focus:outline-none focus:border-vsg-gold-400',
             errors.subject ? 'border-red-300' : 'border-vsg-blue-200',
             isSubmitting ? 'opacity-50 cursor-not-allowed' : '',
@@ -319,7 +319,7 @@ const clearSuccess = () => {
           maxlength="5000"
           :disabled="isSubmitting"
           :class="[
-            'w-full px-4 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors resize-y min-h-30',
+            'w-full rounded-md px-4 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors resize-y min-h-30',
             'focus:outline-none focus:border-vsg-gold-400',
             errors.message ? 'border-red-300' : 'border-vsg-blue-200',
             isSubmitting ? 'opacity-50 cursor-not-allowed' : '',
@@ -340,7 +340,7 @@ const clearSuccess = () => {
           type="submit"
           :disabled="!isFormValid || isSubmitting"
           :class="[
-            'w-full px-6 py-3 font-body font-medium text-lg transition-all',
+            'w-full rounded-md px-6 py-3 font-body font-medium text-lg transition-all',
             isFormValid && !isSubmitting
               ? 'bg-vsg-gold-400 text-vsg-blue-900 hover:bg-vsg-gold-500 cursor-pointer'
               : 'bg-gray-200 text-gray-500 cursor-not-allowed',

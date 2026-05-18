@@ -33,7 +33,7 @@ const hasLeftImageLayout = computed(() => props.imageSrc && props.imageLayout ==
 
 <template>
   <div
-    class="card-hover group overflow-hidden border border-gray-200 shadow-sm transition-transform duration-200 hover:-translate-y-1"
+    class="card-hover group overflow-hidden rounded-md border border-gray-200 shadow-sm transition-transform duration-200 hover:-translate-y-1"
     :class="[
       props.background === 'white'
         ? 'bg-white'

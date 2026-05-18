@@ -26,7 +26,7 @@ const sortedEntries = computed(() => [...props.entries].sort((a, b) => a.year - 
       <article
         v-for="entry in sortedEntries"
         :key="entry.id"
-        class="relative h-full border border-vsg-blue-100 bg-vsg-blue-600 p-8 shadow-sm"
+        class="relative h-full rounded-md border border-vsg-blue-100 bg-vsg-blue-600 p-8 shadow-sm"
       >
         <div class="absolute right-4 top-4 text-vsg-gold-300/20">
           <FontAwesomeIcon icon="trophy" class="text-7xl" />

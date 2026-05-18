@@ -202,7 +202,7 @@ onUnmounted(() => {
           <div class="mb-10 flex flex-wrap gap-3 border-b border-vsg-blue-100 pb-6">
             <button
               type="button"
-              class="rounded-full border px-4 py-2 font-body text-sm font-bold uppercase tracking-wider transition-colors"
+              class="rounded-md border px-4 py-2 font-body text-sm font-bold uppercase tracking-wider transition-colors"
               :class="
                 selectedCategorySlug === null
                   ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
@@ -216,7 +216,7 @@ onUnmounted(() => {
               v-for="category in categoryOptions"
               :key="category.slug"
               type="button"
-              class="rounded-full border px-4 py-2 font-body text-sm font-bold uppercase tracking-wider transition-colors"
+              class="rounded-md border px-4 py-2 font-body text-sm font-bold uppercase tracking-wider transition-colors"
               :class="
                 selectedCategorySlug === category.slug
                   ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
@@ -265,7 +265,7 @@ onUnmounted(() => {
           >
             <button
               type="button"
-              class="border border-vsg-blue-200 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:border-vsg-blue-600 hover:text-vsg-blue-600 disabled:cursor-not-allowed disabled:border-vsg-blue-100 disabled:text-vsg-blue-300"
+              class="rounded-md border border-vsg-blue-200 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:border-vsg-blue-600 hover:text-vsg-blue-600 disabled:cursor-not-allowed disabled:border-vsg-blue-100 disabled:text-vsg-blue-300"
               :disabled="!hasPreviousPage"
               @click="updatePage(currentPage - 1)"
             >
@@ -278,7 +278,7 @@ onUnmounted(() => {
 
             <button
               type="button"
-              class="border border-vsg-blue-200 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:border-vsg-blue-600 hover:text-vsg-blue-600 disabled:cursor-not-allowed disabled:border-vsg-blue-100 disabled:text-vsg-blue-300"
+              class="rounded-md border border-vsg-blue-200 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:border-vsg-blue-600 hover:text-vsg-blue-600 disabled:cursor-not-allowed disabled:border-vsg-blue-100 disabled:text-vsg-blue-300"
               :disabled="!hasNextPage"
               @click="updatePage(currentPage + 1)"
             >

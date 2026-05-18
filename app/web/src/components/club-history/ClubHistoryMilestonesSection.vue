@@ -76,7 +76,7 @@ function goNext(): void {
         <div class="flex gap-3">
           <button
             type="button"
-            class="flex h-12 w-12 items-center justify-center border border-vsg-blue-200 bg-white text-vsg-blue-900 shadow-sm transition disabled:cursor-not-allowed disabled:opacity-40 hover:border-vsg-gold-400 hover:text-vsg-gold-500"
+            class="flex h-12 w-12 items-center justify-center rounded-md border border-vsg-blue-200 bg-white text-vsg-blue-900 shadow-sm transition disabled:cursor-not-allowed disabled:opacity-40 hover:border-vsg-gold-400 hover:text-vsg-gold-500"
             :disabled="!canGoBack"
             aria-label="Vorherige Meilensteine"
             @click="goPrevious"
@@ -85,7 +85,7 @@ function goNext(): void {
           </button>
           <button
             type="button"
-            class="flex h-12 w-12 items-center justify-center border border-vsg-blue-200 bg-white text-vsg-blue-900 shadow-sm transition disabled:cursor-not-allowed disabled:opacity-40 hover:border-vsg-gold-400 hover:text-vsg-gold-500"
+            class="flex h-12 w-12 items-center justify-center rounded-md border border-vsg-blue-200 bg-white text-vsg-blue-900 shadow-sm transition disabled:cursor-not-allowed disabled:opacity-40 hover:border-vsg-gold-400 hover:text-vsg-gold-500"
             :disabled="!canGoForward"
             aria-label="Nächste Meilensteine"
             @click="goNext"
@@ -95,7 +95,7 @@ function goNext(): void {
         </div>
       </div>
 
-      <div class="overflow-hidden border border-vsg-blue-100 bg-vsg-blue-50/70 p-8 pb-16 shadow-sm">
+      <div class="overflow-hidden rounded-md border border-vsg-blue-100 bg-vsg-blue-50/70 p-8 pb-16 shadow-sm">
         <div class="relative pb-8 pt-10">
           <div
             class="absolute left-0 right-0 top-7 h-0.5 bg-linear-to-r from-vsg-blue-200 via-vsg-gold-300 to-vsg-blue-200"
@@ -115,7 +115,7 @@ function goNext(): void {
                 />
                 <p class="font-display text-3xl text-vsg-blue-900">{{ milestone.year }}</p>
               </div>
-              <div class="h-full border border-white bg-white p-6 shadow-sm">
+              <div class="h-full rounded-md border border-white bg-white p-6 shadow-sm">
                 <h3 class="font-display text-3xl tracking-wider text-vsg-blue-800 md:text-4xl">
                   {{ milestone.title }}
                 </h3>

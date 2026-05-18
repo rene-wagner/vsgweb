@@ -88,7 +88,7 @@ function reloadApp(): void {
         </p>
         <button
           type="button"
-          class="mt-8 bg-vsg-gold-400 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-gold-300"
+          class="mt-8 rounded-md bg-vsg-gold-400 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-gold-300"
           @click="initializeApp"
         >
           Erneut versuchen
@@ -109,7 +109,7 @@ function reloadApp(): void {
         </p>
         <button
           type="button"
-          class="mt-8 bg-vsg-gold-400 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-gold-300"
+          class="mt-8 rounded-md bg-vsg-gold-400 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-gold-300"
           @click="reloadApp"
         >
           Neu laden

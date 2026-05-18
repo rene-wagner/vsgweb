@@ -62,14 +62,14 @@ const props = withDefaults(defineProps<Props>(), {
       <div class="mt-10 flex flex-col items-center justify-center gap-6 sm:flex-row">
         <RouterLink
           :to="props.primaryButtonLink"
-          class="gold-glow bg-vsg-blue-900 px-10 py-4 font-display text-2xl tracking-wider text-vsg-gold-400 transition-colors hover:bg-vsg-blue-800"
+          class="gold-glow rounded-md bg-vsg-blue-900 px-10 py-4 font-display text-2xl tracking-wider text-vsg-gold-400 transition-colors hover:bg-vsg-blue-800"
         >
           {{ props.primaryButtonText }}
         </RouterLink>
         <RouterLink
           v-if="props.secondaryButtonText && props.secondaryButtonLink"
           :to="props.secondaryButtonLink"
-          class="border-2 border-vsg-blue-900/50 px-10 py-4 font-display text-2xl tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-blue-900/10"
+          class="rounded-md border-2 border-vsg-blue-900/50 px-10 py-4 font-display text-2xl tracking-wider text-vsg-blue-900 transition-colors hover:bg-vsg-blue-900/10"
         >
           {{ props.secondaryButtonText }}
         </RouterLink>

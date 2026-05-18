@@ -55,7 +55,7 @@ const beamStyle = computed(() => ({
   <article
     :class="[
       colorClasses.card,
-      'card-spotlight group relative overflow-hidden border p-6 text-white transition duration-200 hover:-translate-y-1 hover:shadow-2xl sm:p-7',
+      'card-spotlight group relative overflow-hidden rounded-md border p-6 text-white transition duration-200 hover:-translate-y-1 hover:shadow-2xl sm:p-7',
     ]"
   >
     <div class="pulse-grid absolute inset-0 opacity-50" />

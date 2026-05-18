@@ -34,7 +34,7 @@ function formatDate(date: string): string {
       <article
         v-for="event in sortedEvents"
         :key="event.id"
-        class="group border border-vsg-blue-100 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+        class="group rounded-md border border-vsg-blue-100 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
       >
         <div class="flex items-center gap-3 text-vsg-gold-500">
           <FontAwesomeIcon icon="calendar" class="text-lg" />

@@ -49,7 +49,7 @@ const milestoneCount = computed(() => props.history.milestones.length);
     background="white"
   >
     <div class="mt-16 grid gap-6 lg:grid-cols-[1.4fr_0.9fr]">
-      <div class="border border-vsg-gold-400/20 bg-vsg-blue-600 p-8 text-white shadow-sm">
+      <div class="rounded-md border border-vsg-gold-400/20 bg-vsg-blue-600 p-8 text-white shadow-sm">
         <p class="font-body text-sm uppercase tracking-[0.3em] text-vsg-gold-300">Gründung</p>
         <p class="mt-4 font-display text-5xl tracking-wider text-vsg-gold-400 md:text-6xl">
           {{ foundingDateLabel }}
@@ -62,13 +62,13 @@ const milestoneCount = computed(() => props.history.milestones.length);
       </div>
 
       <div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-        <div class="border border-vsg-blue-100 bg-vsg-blue-50 p-6 shadow-sm">
+        <div class="rounded-md border border-vsg-blue-100 bg-vsg-blue-50 p-6 shadow-sm">
           <p class="font-body text-sm uppercase tracking-[0.25em] text-vsg-blue-600">Jahre</p>
           <p class="mt-3 font-display text-5xl text-vsg-blue-900">{{ clubAge }}</p>
           <p class="mt-2 font-body text-base text-vsg-blue-700">lebendige Vereinsgeschichte</p>
         </div>
 
-        <div class="border border-vsg-blue-100 bg-white p-6 shadow-sm">
+        <div class="rounded-md border border-vsg-blue-100 bg-white p-6 shadow-sm">
           <p class="font-body text-sm uppercase tracking-[0.25em] text-vsg-blue-600">
             Meilensteine
           </p>
@@ -78,7 +78,7 @@ const milestoneCount = computed(() => props.history.milestones.length);
           </p>
         </div>
 
-        <div class="border border-vsg-gold-200 bg-vsg-gold-50 p-6 shadow-sm">
+        <div class="rounded-md border border-vsg-gold-200 bg-vsg-gold-50 p-6 shadow-sm">
           <p class="font-body text-sm uppercase tracking-[0.25em] text-vsg-blue-600">Mitglieder</p>
           <p class="mt-3 font-display text-5xl text-vsg-blue-900">
             {{ latestMembership?.memberCount ?? "–" }}

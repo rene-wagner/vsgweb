@@ -59,14 +59,14 @@ function declineConsent(): void {
       <div class="flex items-center gap-3 shrink-0">
         <button
           type="button"
-          class="px-5 py-2 font-display tracking-wider text-sm border-2 border-vsg-gold-400/50 text-vsg-gold-400 hover:bg-vsg-gold-400/10 transition-colors"
+          class="rounded-md px-5 py-2 font-display tracking-wider text-sm border-2 border-vsg-gold-400/50 text-vsg-gold-400 hover:bg-vsg-gold-400/10 transition-colors"
           @click="declineConsent"
         >
           Ablehnen
         </button>
         <button
           type="button"
-          class="px-5 py-2 font-display tracking-wider text-sm bg-vsg-gold-400 text-vsg-blue-900 hover:bg-vsg-gold-300 transition-colors"
+          class="rounded-md px-5 py-2 font-display tracking-wider text-sm bg-vsg-gold-400 text-vsg-blue-900 hover:bg-vsg-gold-300 transition-colors"
           @click="acceptConsent"
         >
           Akzeptieren

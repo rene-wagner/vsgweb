@@ -168,7 +168,7 @@ watch(sortedStats, () => {
   >
     <div class="mt-16 grid gap-6 xl:grid-cols-[0.9fr_1.6fr]">
       <div class="min-w-0 grid gap-4 md:grid-cols-3 xl:grid-cols-1">
-        <div class="min-w-0 border border-vsg-blue-100 bg-white p-6 shadow-sm">
+        <div class="min-w-0 rounded-md border border-vsg-blue-100 bg-white p-6 shadow-sm">
           <p class="font-body text-sm uppercase tracking-[0.25em] text-vsg-blue-600">
             Aktuellster Stand
           </p>
@@ -180,7 +180,7 @@ watch(sortedStats, () => {
           </p>
         </div>
 
-        <div class="min-w-0 border border-vsg-gold-200 bg-vsg-gold-50 p-6 shadow-sm">
+        <div class="min-w-0 rounded-md border border-vsg-gold-200 bg-vsg-gold-50 p-6 shadow-sm">
           <p class="font-body text-sm uppercase tracking-[0.25em] text-vsg-blue-600">Höchststand</p>
           <p class="mt-3 font-display text-5xl text-vsg-blue-900">
             {{ peakStat?.memberCount ?? "–" }}
@@ -190,7 +190,7 @@ watch(sortedStats, () => {
           </p>
         </div>
 
-        <div class="min-w-0 border border-vsg-blue-100 bg-vsg-blue-600 p-6 shadow-sm">
+        <div class="min-w-0 rounded-md border border-vsg-blue-100 bg-vsg-blue-600 p-6 shadow-sm">
           <p class="font-body text-sm uppercase tracking-[0.25em] text-vsg-blue-200">
             Durchschnitt
           </p>
@@ -201,7 +201,7 @@ watch(sortedStats, () => {
         </div>
       </div>
 
-      <div class="min-w-0 overflow-hidden border border-vsg-blue-100 bg-white p-6 shadow-sm">
+      <div class="min-w-0 overflow-hidden rounded-md border border-vsg-blue-100 bg-white p-6 shadow-sm">
         <div class="h-[16rem] w-full sm:h-[18rem] md:h-[24rem] xl:h-[28rem]">
           <canvas ref="canvasRef" aria-label="Diagramm zur Mitgliederentwicklung" />
         </div>

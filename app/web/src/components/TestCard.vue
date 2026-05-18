@@ -21,7 +21,7 @@ const props = defineProps({
 
 <template>
   <article
-    class="card-spotlight group relative overflow-hidden border border-vsg-blue-700 hover:shadow-2xl bg-vsg-blue-600 p-6 text-white transition duration-200 hover:-translate-y-1 sm:p-7"
+    class="card-spotlight group relative overflow-hidden rounded-md border border-vsg-blue-700 hover:shadow-2xl bg-vsg-blue-600 p-6 text-white transition duration-200 hover:-translate-y-1 sm:p-7"
   >
     <div class="pulse-grid absolute inset-0 opacity-50"></div>
     <div class="spotlight-beam absolute -inset-x-20 -top-24 h-56 rotate-6 blur-2xl"></div>

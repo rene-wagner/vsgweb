@@ -151,7 +151,7 @@ watch(
       />
       <button
         type="button"
-        class="absolute top-2 right-2 text-base leading-none opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+        class="absolute top-2 right-2 rounded-md text-base leading-none opacity-0 transition-opacity duration-200 group-hover:opacity-100"
         :class="editButtonClass"
         aria-label="Bearbeiten"
         :disabled="isStarting || isLoadingContent"
@@ -167,14 +167,14 @@ watch(
       <div class="mt-2 flex justify-end gap-2">
         <button
           type="button"
-          class="bg-red-600 px-4 py-2 text-base font-normal text-white transition-colors hover:bg-red-500"
+          class="rounded-md bg-red-600 px-4 py-2 text-base font-normal text-white transition-colors hover:bg-red-500"
           @click="cancelEditing"
         >
           Abbrechen
         </button>
         <button
           type="button"
-          class="bg-green-600 px-4 py-2 text-base font-normal text-white transition-colors hover:bg-green-500"
+          class="rounded-md bg-green-600 px-4 py-2 text-base font-normal text-white transition-colors hover:bg-green-500"
           :disabled="isSavingContent"
           @click="saveContent"
         >

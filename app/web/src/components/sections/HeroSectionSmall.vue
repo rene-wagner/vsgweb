@@ -102,7 +102,7 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
         <a
           v-if="primaryCtaLabel && primaryCtaAnchor"
           :href="primaryCtaAnchor"
-          class="btn-primary gold-glow bg-vsg-gold-400 px-10 py-4 font-display text-2xl tracking-wider text-vsg-blue-900"
+          class="btn-primary gold-glow rounded-md bg-vsg-gold-400 px-10 py-4 font-display text-2xl tracking-wider text-vsg-blue-900"
           @click="handleAnchorClick($event, primaryCtaAnchor)"
         >
           {{ primaryCtaLabel }}
@@ -110,7 +110,7 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
         <a
           v-if="secondaryCtaLabel && secondaryCtaAnchor"
           :href="secondaryCtaAnchor"
-          class="border-2 border-vsg-gold-400/50 px-10 py-4 font-display text-2xl tracking-wider text-vsg-gold-400 transition-colors hover:bg-vsg-gold-400/10"
+          class="rounded-md border-2 border-vsg-gold-400/50 px-10 py-4 font-display text-2xl tracking-wider text-vsg-gold-400 transition-colors hover:bg-vsg-gold-400/10"
           @click="handleAnchorClick($event, secondaryCtaAnchor)"
         >
           {{ secondaryCtaLabel }}
