@@ -13,7 +13,6 @@ import GalerieSection from "@/components/sections/GalerieSection.vue";
 import CtaSection from "@/components/sections/CtaSection.vue";
 import { homepageContent } from "@/content/homepage-content";
 import Card from "@/components/cards/Card.vue";
-import LinkArrow from "@/components/ui/LinkArrow.vue";
 
 const departmentsStore = useDepartmentsStore();
 const { departments, isLoading, error } = storeToRefs(departmentsStore);
@@ -81,6 +80,7 @@ function getDepartmentIconBorderClass(color: DepartmentColor) {
           :key="department.id"
           :title="department.name"
           :description="department.shortDescription"
+          :to="`/abteilung/${department.slug}`"
         >
           <template #icon>
             <div
@@ -100,7 +100,12 @@ function getDepartmentIconBorderClass(color: DepartmentColor) {
             </div>
           </template>
           <template #link>
-            <LinkArrow :href="`/abteilung/${department.slug}`">Mehr erfahren</LinkArrow>
+            <span
+              class="inline-flex items-center gap-2 font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-600 transition-colors group-hover:text-vsg-blue-800"
+            >
+              Mehr erfahren
+              <FontAwesomeIcon icon="arrow-right" />
+            </span>
           </template>
         </Card>
       </ApiState>

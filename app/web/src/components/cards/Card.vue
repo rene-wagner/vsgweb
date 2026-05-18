@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { RouterLink } from "vue-router";
+import type { RouteLocationRaw } from "vue-router";
 import Badge from "@/components/ui/Badge.vue";
 
 interface Props {
@@ -13,6 +15,7 @@ interface Props {
   imageAlt?: string;
   imageLayout?: "top" | "left";
   background?: "gray" | "white" | "blue";
+  to?: RouteLocationRaw;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -26,14 +29,17 @@ const props = withDefaults(defineProps<Props>(), {
   imageAlt: undefined,
   imageLayout: "top",
   background: "gray",
+  to: undefined,
 });
 
 const hasLeftImageLayout = computed(() => props.imageSrc && props.imageLayout === "left");
 </script>
 
 <template>
-  <div
-    class="card-hover group overflow-hidden rounded-md border border-gray-200 shadow-sm transition-transform duration-200 hover:-translate-y-1"
+  <component
+    :is="props.to ? RouterLink : 'div'"
+    :to="props.to"
+    class="card-hover group block overflow-hidden rounded-md border border-gray-200 shadow-sm transition-transform duration-200 hover:-translate-y-1"
     :class="[
       props.background === 'white'
         ? 'bg-white'
@@ -106,5 +112,5 @@ const hasLeftImageLayout = computed(() => props.imageSrc && props.imageLayout ==
         </div>
       </div>
     </div>
-  </div>
+  </component>
 </template>

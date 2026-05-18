@@ -229,7 +229,12 @@ onUnmounted(() => {
           </div>
 
           <div class="space-y-6">
-            <Card v-for="post in paginatedPosts" :key="post.id" :title="post.title">
+            <Card
+              v-for="post in paginatedPosts"
+              :key="post.id"
+              :title="post.title"
+              :to="`/beitrag/${post.slug}`"
+            >
               <template #meta-start>
                 <Badge accent-class="border-vsg-blue-500 bg-vsg-blue-500 text-white">
                   {{ getCategoryName(post.categories) }}
@@ -248,13 +253,12 @@ onUnmounted(() => {
                 </h5>
               </template>
               <template #link>
-                <RouterLink
-                  :to="`/beitrag/${post.slug}`"
-                  class="inline-flex items-center gap-2 font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-600 transition-colors hover:text-vsg-blue-800"
+                <span
+                  class="inline-flex items-center gap-2 font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-600 transition-colors group-hover:text-vsg-blue-800"
                 >
                   Beitrag lesen
                   <FontAwesomeIcon icon="arrow-right" />
-                </RouterLink>
+                </span>
               </template>
             </Card>
           </div>
