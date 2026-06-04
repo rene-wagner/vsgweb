@@ -1,5 +1,11 @@
 import type { JsonLdResource } from "./json-ld.types.js";
 
+export interface ClubStatistics extends JsonLdResource {
+  id: number;
+  label: string;
+  value: string;
+}
+
 export interface ClubHistoryMilestone extends JsonLdResource {
   id: number;
   year: number;
@@ -30,6 +36,7 @@ export interface ClubHistoryHallOfFameEntry extends JsonLdResource {
 export interface ApiClubHistory extends JsonLdResource {
   id: number;
   foundingDate: string;
+  clubStatistics: ClubStatistics[];
   milestones: ClubHistoryMilestone[];
   membershipStats: ClubHistoryMembershipStat[];
   specialEvents: ClubHistorySpecialEvent[];

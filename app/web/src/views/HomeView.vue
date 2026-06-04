@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { storeToRefs } from "pinia";
-import type { DepartmentColor } from "@vsg/types";
+import type { DepartmentColor, Statistic } from "@vsg/types";
 import ApiState from "@/components/ui/ApiState.vue";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
 import { useDepartmentsStore } from "@/stores/departmentsStore";
+import { useClubHistoryStore } from "@/stores/clubHistoryStore";
 import CardSection from "@/components/sections/CardSection.vue";
 import HeroSectionScreen from "@/components/sections/HeroSectionScreen.vue";
 import WelcomeSection from "@/components/sections/WelcomeSection.vue";
@@ -15,7 +17,18 @@ import Card from "@/components/cards/Card.vue";
 import { config } from "@/config";
 
 const departmentsStore = useDepartmentsStore();
+const clubHistoryStore = useClubHistoryStore();
 const { departments, isLoading, error } = storeToRefs(departmentsStore);
+const { history } = storeToRefs(clubHistoryStore);
+
+void clubHistoryStore.ensureLoaded();
+
+const homepageStats = computed<Statistic[]>(() => {
+  return (history.value?.clubStatistics ?? []).map((stat) => ({
+    label: stat.label,
+    value: stat.value,
+  }));
+});
 
 function getDepartmentIconBackgroundClass(color: DepartmentColor) {
   switch (color) {
@@ -54,7 +67,7 @@ function getDepartmentIconBorderClass(color: DepartmentColor) {
 
     <WelcomeSection uuid="4856f6d8-4c6a-47cf-848f-550bbaf0b0d3" welcome-text="" />
 
-    <StatsSection :stats="config.homepage.stats" />
+    <StatsSection :stats="homepageStats" />
 
     <CardSection
       title=""

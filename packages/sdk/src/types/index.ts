@@ -17,6 +17,7 @@ export type {
   ClubHistoryMembershipStat,
   ClubHistoryMilestone,
   ClubHistorySpecialEvent,
+  ClubStatistics,
   ApiDepartment as Department,
   ApiDepartment,
   ApiDepartmentResult,

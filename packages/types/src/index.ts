@@ -14,6 +14,7 @@ export type {
   ClubHistoryMembershipStat,
   ClubHistoryMilestone,
   ClubHistorySpecialEvent,
+  ClubStatistics,
 } from "./api/club-history.types.js";
 export type { ApiEvent, EventAPI, EventRecurrence } from "./api/event.types.js";
 export type { JsonLdContext, JsonLdResource } from "./api/json-ld.types.js";
