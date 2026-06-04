@@ -65,14 +65,14 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
 
     <div class="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center">
       <h1
-        v-if="headline"
+        v-if="editableHeadline || headline"
         class="hero-headline animate-slide-up text-glow mx-auto max-w-[12ch] text-center font-display text-[clamp(2.5rem,10vw,6rem)] text-white delay-300 lg:max-w-none"
       >
         <EditableContent v-if="editableHeadline" :uuid="headlineUuid" :content="headline" />
         <span v-else>{{ headline }}</span>
       </h1>
 
-      <div v-if="description" class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400">
+      <div v-if="editableDescription || description" class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400">
         <EditableContent
           v-if="editableDescription"
           :uuid="descriptionUuid"
@@ -87,7 +87,7 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
         />
       </div>
 
-      <div v-if="subtitle" class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400">
+      <div v-if="subtitle !== undefined" class="animate-slide-up mx-auto mt-8 max-w-2xl delay-400">
         <EditableContent
           :uuid="subtitleUuid"
           :content="subtitle"

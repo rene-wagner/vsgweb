@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
     <div class="relative z-10 mx-auto flex max-w-4xl flex-col">
       <div class="flex flex-col gap-6">
         <EditableContent
-          v-if="props.headline"
+          v-if="props.headline !== undefined"
           :uuid="props.headlineUuid"
           :content="props.headline"
           tag="h3"
@@ -50,7 +50,7 @@ const props = withDefaults(defineProps<Props>(), {
           edit-button-class="text-vsg-blue-900"
         />
         <EditableContent
-          v-if="props.description"
+          v-if="props.description !== undefined"
           :uuid="props.descriptionUuid"
           :content="props.description"
           tag="p"

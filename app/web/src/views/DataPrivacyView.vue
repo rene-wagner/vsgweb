@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import EditableContent from "@/components/content/EditableContent.vue";
 import CtaSection from "@/components/sections/CtaSection.vue";
-import { dataPrivacyContent } from "@/content/data-privacy-content";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
-import { homepageContent } from "@/content/homepage-content";
 </script>
 
 <template>
@@ -11,8 +9,8 @@ import { homepageContent } from "@/content/homepage-content";
     class="min-h-screen overflow-x-hidden text-white selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
     <HeroSectionSmall
-      :headline="dataPrivacyContent.headline"
-      :description="dataPrivacyContent.description"
+      headline=""
+      description=""
       headline-uuid="fc2c3d20-8447-4aca-98f6-e219334bfbe3"
       description-uuid="887f2db2-2f8f-43d4-8013-c832e104fbaf"
       subtitle-uuid="dce41cdf-c437-4059-87e9-76c8a28ab2a0"
@@ -23,7 +21,6 @@ import { homepageContent } from "@/content/homepage-content";
         <div class="prose prose-lg max-w-none font-body text-vsg-blue-700">
           <EditableContent
             uuid="29aab20b-586b-4727-b451-b36d3e86ddb6"
-            :content="dataPrivacyContent.content"
             content-class="prose prose-lg max-w-none font-body text-vsg-blue-700"
           />
         </div>
@@ -31,8 +28,8 @@ import { homepageContent } from "@/content/homepage-content";
     </section>
 
     <CtaSection
-      :headline="homepageContent.ctaHeadline"
-      :description="homepageContent.ctaDescription"
+      headline=""
+      description=""
       headline-uuid="f0da9902-792c-43d7-9f5c-b53bec8eea6c"
       description-uuid="bd911e4e-23ae-4062-a62a-99074ddb0076"
     />

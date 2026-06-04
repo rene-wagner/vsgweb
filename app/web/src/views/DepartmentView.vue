@@ -15,7 +15,6 @@ import { useCategoriesStore } from "@/stores/categoriesStore";
 import { useDepartmentsStore } from "../stores/departmentsStore";
 import { usePostsStore } from "../stores/postsStore";
 import ApiState from "@/components/ui/ApiState.vue";
-import { departmentViewContent } from "@/content/department-view-content";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
 import StatsSection from "@/components/sections/StatsSection.vue";
 import ListSection from "@/components/sections/ListSection.vue";
@@ -34,6 +33,7 @@ import {
   Statistic,
 } from "@vsg/types";
 import { useMediaItemsStore } from "@/stores/mediaItemsStore";
+import { config } from "@/config";
 
 const SCROLL_OFFSET = 120;
 
@@ -208,11 +208,11 @@ const departmentCta = computed<Cta>(() => {
   const departmentName = currentDepartment.value?.name || "";
   return {
     title: `Lust auf ${departmentName}?`,
-    description: departmentViewContent.ctaDescription,
-    primaryCtaLabel: departmentViewContent.ctaPrimaryButtonText,
-    primaryCtaRoute: departmentViewContent.ctaPrimaryButtonLink,
-    secondaryCtaLabel: departmentViewContent.ctaSecondaryButtonText,
-    secondaryCtaRoute: `${departmentViewContent.ctaSecondaryButtonLink}?abteilung=${currentDepartment.value?.slug ?? ""}`,
+    description: "",
+    primaryCtaLabel: config.departmentView.ctaPrimaryButtonText,
+    primaryCtaRoute: config.departmentView.ctaPrimaryButtonLink,
+    secondaryCtaLabel: config.departmentView.ctaSecondaryButtonText,
+    secondaryCtaRoute: `${config.departmentView.ctaSecondaryButtonLink}?abteilung=${currentDepartment.value?.slug ?? ""}`,
   };
 });
 
@@ -304,9 +304,9 @@ const sectionBackgrounds = computed<{
 
       <div v-if="departmentTrainingGroups.length > 0" id="trainingszeiten" class="scroll-mt-32">
         <TrainingScheduleSection
-          :title="departmentViewContent.trainingScheduleTitle"
-          :subtitle="departmentViewContent.trainingScheduleSubtitle"
-          :description="departmentViewContent.trainingScheduleDescription"
+          title=""
+          subtitle=""
+          description=""
           :groups="departmentTrainingGroups"
           :background="sectionBackgrounds.training"
         />
@@ -314,9 +314,9 @@ const sectionBackgrounds = computed<{
 
       <div v-if="departmentLocations.length > 0" id="standorte" class="scroll-mt-32">
         <LocationSection
-          :title="departmentViewContent.locationsTitle"
-          :subtitle="departmentViewContent.locationsSubtitle"
-          :description="departmentViewContent.locationsDescription"
+          title=""
+          subtitle=""
+          description=""
           :background="sectionBackgrounds.locations"
           :locations="departmentLocations"
         />
@@ -324,8 +324,8 @@ const sectionBackgrounds = computed<{
 
       <div id="neuigkeiten" class="scroll-mt-32">
         <NewsSection
-          :headline="departmentViewContent.newsHeadline"
-          :subtitle="departmentViewContent.newsSubtitle"
+          headline=""
+          subtitle=""
           :category-iri="departmentCategoryIri"
           :category-slug="currentDepartment?.slug ?? null"
           :background="sectionBackgrounds.news"
@@ -334,9 +334,9 @@ const sectionBackgrounds = computed<{
 
       <div v-if="departmentResults.length > 0" id="ergebnisse" class="scroll-mt-32">
         <ListSection
-          :title="departmentViewContent.resultsTitle"
-          :subtitle="departmentViewContent.resultsSubtitle"
-          :description="departmentViewContent.resultsDescription"
+          title=""
+          subtitle=""
+          description=""
           subtitle-uuid="30176e5c-9d3a-45f9-bec2-231ba2ec4f05"
           title-uuid="d6ea12ba-610f-480f-ba72-2850081bdf55"
           description-uuid="c5a28826-1c8a-4319-b259-4e90d6a208ef"
@@ -347,11 +347,11 @@ const sectionBackgrounds = computed<{
 
       <div id="galerie" class="scroll-mt-32">
         <GalerieSection
-          :headline="departmentViewContent.galleryHeadline"
-          :subtitle="departmentViewContent.gallerySubtitle"
-          :description="departmentViewContent.galleryDescription"
+          headline=""
+          subtitle=""
+          description=""
           :background="sectionBackgrounds.gallery"
-          :items-count="20"
+          :items-count="config.departmentView.galleryCount"
           :category-id="departmentCategoryId"
         />
       </div>

@@ -52,7 +52,7 @@ withDefaults(defineProps<Props>(), {
         <Logo class="mx-auto h-24 w-auto md:h-32 lg:h-42" />
       </div>
 
-      <div v-if="tag" class="animate-slide-up my-8 delay-200">
+      <div v-if="tag !== undefined" class="animate-slide-up my-8 delay-200">
         <span
           class="inline-block border border-vsg-gold-400/30 px-6 py-2 font-body font-normal uppercase tracking-widest text-vsg-gold-400"
         >

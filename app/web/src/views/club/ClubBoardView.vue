@@ -6,8 +6,6 @@ import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
 import Card from "@/components/cards/Card.vue";
 import ApiState from "@/components/ui/ApiState.vue";
 import CtaSection from "@/components/sections/CtaSection.vue";
-import { clubBoardContent } from "@/content/club-board-content";
-import { homepageContent } from "@/content/homepage-content";
 import { getMediaUrl } from "@/services/media-items/media-item.service";
 import { useContactPeopleStore } from "@/stores/contactPeopleStore";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -29,16 +27,16 @@ function getBadgeColor(index: number): string {
     class="min-h-screen overflow-x-hidden text-white selection:bg-vsg-gold-500 selection:text-vsg-blue-900"
   >
     <HeroSectionSmall
-      :headline="clubBoardContent.heroHeadline"
-      :description="clubBoardContent.heroDescription"
+      headline=""
+      description=""
       headline-uuid="eafad2b5-2378-4daa-9076-57177260b0ab"
       description-uuid="3f35f0ef-3049-454e-a21a-466d15afaff0"
       subtitle-uuid="6a456144-30d6-40c2-85cd-abd8f264368b"
     />
 
     <CardSection
-      :title="clubBoardContent.sectionHeadline"
-      :description="clubBoardContent.sectionDescription"
+      title=""
+      description=""
       subtitle-uuid="860bca74-5933-4e8b-872e-7c046fdcbb27"
       title-uuid="97a4f95d-03d5-46fb-b9f0-2fa0417c91cd"
       description-uuid="eed8113c-a686-42cc-9a7c-4ba96c323eaf"
@@ -79,8 +77,8 @@ function getBadgeColor(index: number): string {
     </CardSection>
 
     <CtaSection
-      :headline="homepageContent.ctaHeadline"
-      :description="homepageContent.ctaDescription"
+      headline=""
+      description=""
       headline-uuid="f0da9902-792c-43d7-9f5c-b53bec8eea6c"
       description-uuid="bd911e4e-23ae-4062-a62a-99074ddb0076"
     />

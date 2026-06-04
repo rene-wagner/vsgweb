@@ -7,7 +7,6 @@ import ApiState from "@/components/ui/ApiState.vue";
 import MarkdownRenderer from "@/components/content/MarkdownRenderer.vue";
 import CtaSection from "@/components/sections/CtaSection.vue";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
-import { homepageContent } from "@/content/homepage-content";
 
 const route = useRoute();
 const postsStore = usePostsStore();
@@ -80,8 +79,8 @@ onUnmounted(() => {
       </section>
 
       <CtaSection
-        :headline="homepageContent.ctaHeadline"
-        :description="homepageContent.ctaDescription"
+        headline=""
+        description=""
         headline-uuid="f0da9902-792c-43d7-9f5c-b53bec8eea6c"
         description-uuid="bd911e4e-23ae-4062-a62a-99074ddb0076"
       />
