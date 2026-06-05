@@ -11,6 +11,7 @@ const { departments, isLoading: departmentsLoading } = storeToRefs(departmentsSt
 
 const generalLinks = [
   { label: "Beiträge", to: "/beitraege" },
+  { label: "Galerie", to: "/galerie" },
   { label: "Kontakt", to: "/kontakt" },
 ];
 

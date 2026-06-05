@@ -212,6 +212,13 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
           </RouterLink>
 
           <RouterLink
+            to="/galerie"
+            class="font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
+          >
+            Galerie
+          </RouterLink>
+
+          <RouterLink
             to="/termine"
             class="font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
           >
@@ -375,6 +382,15 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
           class="block font-display text-4xl tracking-wider text-white transition-colors hover:text-vsg-gold-400"
           @click="closeMenu"
           >Beiträge</RouterLink
+        >
+      </div>
+
+      <div class="mb-4 w-full max-w-xs">
+        <RouterLink
+          to="/galerie"
+          class="block font-display text-4xl tracking-wider text-white transition-colors hover:text-vsg-gold-400"
+          @click="closeMenu"
+          >Galerie</RouterLink
         >
       </div>
 

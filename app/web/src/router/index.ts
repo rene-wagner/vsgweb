@@ -57,6 +57,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/views/PostListView.vue"),
   },
   {
+    path: "/galerie",
+    name: "gallery",
+    component: () => import("@/views/GalleryView.vue"),
+  },
+  {
     path: "/beitrag/:slug",
     name: "post-detail",
     component: () => import("@/views/PostView.vue"),
