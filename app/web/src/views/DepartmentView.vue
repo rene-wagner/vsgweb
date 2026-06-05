@@ -353,6 +353,7 @@ const sectionBackgrounds = computed<{
           :background="sectionBackgrounds.gallery"
           :items-count="config.departmentView.galleryCount"
           :category-id="departmentCategoryId"
+          :category-slug="currentDepartment?.slug ?? null"
         />
       </div>
 

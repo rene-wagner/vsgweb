@@ -18,6 +18,7 @@ interface Props {
   subtitle?: string;
   itemsCount?: number;
   categoryId?: number | null;
+  categorySlug?: string | null;
   background?: SectionBackground;
 }
 
@@ -53,6 +54,18 @@ const selectedItem = computed(() => {
   }
 
   return activeMediaItems.value[selectedIndex.value] ?? null;
+});
+const galleryOverviewRoute = computed(() => {
+  if (!props.categorySlug) {
+    return { name: "gallery" };
+  }
+
+  return {
+    name: "gallery",
+    query: {
+      category: props.categorySlug,
+    },
+  };
 });
 
 watch(
@@ -191,6 +204,16 @@ onUnmounted(() => {
             <FontAwesomeIcon icon="image" />
           </div>
         </button>
+      </div>
+
+      <div class="mt-10 flex justify-center">
+        <RouterLink
+          :to="galleryOverviewRoute"
+          class="inline-flex items-center gap-2 font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-600 transition-colors hover:text-vsg-blue-800"
+        >
+          Weitere Bilder ansehen
+          <FontAwesomeIcon icon="arrow-right" />
+        </RouterLink>
       </div>
     </ApiState>
   </Section>
