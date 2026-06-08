@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onBeforeUnmount, onMounted } from "vue";
 import { RouterLink } from "vue-router";
 import { storeToRefs } from "pinia";
 import Logo from "./Logo.vue";
@@ -25,7 +25,12 @@ interface DepartmentMenuItem extends MenuItem {
 const isMenuOpen = ref(false);
 const isVereinOpen = ref(false);
 const isAbteilungenOpen = ref(false);
+const isDesktopVereinOpen = ref(false);
+const isDesktopAbteilungenOpen = ref(false);
 const openMobileDepartmentSlug = ref<string | null>(null);
+const openDesktopDepartmentSlug = ref<string | null>(null);
+const desktopVereinRef = ref<HTMLElement | null>(null);
+const desktopAbteilungenRef = ref<HTMLElement | null>(null);
 
 const departmentsStore = useDepartmentsStore();
 const { departments, isLoading: departmentsLoading } = storeToRefs(departmentsStore);
@@ -85,13 +90,60 @@ function toggleMobileDepartment(slug: string) {
   openMobileDepartmentSlug.value = openMobileDepartmentSlug.value === slug ? null : slug;
 }
 
+function closeDesktopDropdowns() {
+  isDesktopVereinOpen.value = false;
+  isDesktopAbteilungenOpen.value = false;
+  openDesktopDepartmentSlug.value = null;
+}
+
+function toggleDesktopVerein() {
+  isDesktopVereinOpen.value = !isDesktopVereinOpen.value;
+  isDesktopAbteilungenOpen.value = false;
+  openDesktopDepartmentSlug.value = null;
+}
+
+function toggleDesktopAbteilungen() {
+  isDesktopAbteilungenOpen.value = !isDesktopAbteilungenOpen.value;
+  isDesktopVereinOpen.value = false;
+  openDesktopDepartmentSlug.value = null;
+}
+
+function toggleDesktopDepartment(slug: string) {
+  openDesktopDepartmentSlug.value = openDesktopDepartmentSlug.value === slug ? null : slug;
+}
+
 function handleDesktopDropdownNavigation(event: MouseEvent) {
   const target = event.currentTarget;
 
   if (target instanceof HTMLElement) {
     target.blur();
   }
+
+  closeDesktopDropdowns();
 }
+
+function handleDocumentClick(event: MouseEvent) {
+  const target = event.target;
+
+  if (!(target instanceof Node)) {
+    return;
+  }
+
+  const isInsideVerein = desktopVereinRef.value?.contains(target) ?? false;
+  const isInsideAbteilungen = desktopAbteilungenRef.value?.contains(target) ?? false;
+
+  if (!isInsideVerein && !isInsideAbteilungen) {
+    closeDesktopDropdowns();
+  }
+}
+
+onMounted(() => {
+  document.addEventListener("click", handleDocumentClick);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", handleDocumentClick);
+});
 </script>
 
 <template>
@@ -105,20 +157,28 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
         </RouterLink>
 
         <div class="hidden items-center gap-8 md:flex">
-          <div class="group/abteilungen relative">
+          <div ref="desktopAbteilungenRef" class="group/abteilungen relative">
             <button
               type="button"
               class="rounded-md flex items-center gap-1 font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
               aria-haspopup="true"
+              :aria-expanded="isDesktopAbteilungenOpen"
+              @click="toggleDesktopAbteilungen"
             >
               Abteilungen
               <FontAwesomeIcon
                 icon="chevron-down"
                 class="transition-transform group-hover/abteilungen:rotate-180"
+                :class="{ 'rotate-180': isDesktopAbteilungenOpen }"
               />
             </button>
             <div
-              class="invisible absolute left-0 top-full mt-2 w-56 translate-y-2 transform border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-focus-within/abteilungen:visible group-focus-within/abteilungen:translate-y-0 group-focus-within/abteilungen:opacity-100 group-hover/abteilungen:visible group-hover/abteilungen:translate-y-0 group-hover/abteilungen:opacity-100"
+              class="absolute left-0 top-full mt-2 w-56 transform border border-vsg-gold-400/20 bg-vsg-blue-900 shadow-xl transition-all duration-200 group-focus-within/abteilungen:visible group-focus-within/abteilungen:translate-y-0 group-focus-within/abteilungen:opacity-100 group-hover/abteilungen:visible group-hover/abteilungen:translate-y-0 group-hover/abteilungen:opacity-100"
+              :class="
+                isDesktopAbteilungenOpen
+                  ? 'visible translate-y-0 opacity-100'
+                  : 'invisible translate-y-2 opacity-0'
+              "
             >
               <div class="py-2">
                 <div v-if="departmentsLoading" class="px-4 py-2 text-sm text-vsg-gold-300/60">
@@ -146,16 +206,30 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
                       >
                         {{ item.label }}
                       </RouterLink>
-                      <FontAwesomeIcon
+                      <button
                         v-if="item.sections.length > 0"
-                        icon="chevron-right"
-                        class="text-xs text-vsg-gold-300/80 transition-colors group-hover/department:text-vsg-gold-400"
-                      />
+                        type="button"
+                        class="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm text-vsg-gold-300/80 transition-colors hover:text-vsg-gold-400"
+                        :aria-label="`${item.label} Bereiche öffnen`"
+                        :aria-expanded="openDesktopDepartmentSlug === item.slug"
+                        @click="toggleDesktopDepartment(item.slug)"
+                      >
+                        <FontAwesomeIcon
+                          icon="chevron-right"
+                          class="text-xs transition-transform group-hover/department:text-vsg-gold-400"
+                          :class="{ 'rotate-180': openDesktopDepartmentSlug === item.slug }"
+                        />
+                      </button>
                     </div>
 
                     <div
                       v-if="item.sections.length > 0"
-                      class="invisible pointer-events-none absolute left-full top-0 ml-1 w-56 translate-x-2 border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-focus-within/department:visible group-focus-within/department:pointer-events-auto group-focus-within/department:translate-x-0 group-focus-within/department:opacity-100 group-hover/department:visible group-hover/department:pointer-events-auto group-hover/department:translate-x-0 group-hover/department:opacity-100"
+                      class="absolute left-full top-0 ml-1 w-56 border border-vsg-gold-400/20 bg-vsg-blue-900 shadow-xl transition-all duration-200 group-focus-within/department:visible group-focus-within/department:pointer-events-auto group-focus-within/department:translate-x-0 group-focus-within/department:opacity-100 group-hover/department:visible group-hover/department:pointer-events-auto group-hover/department:translate-x-0 group-hover/department:opacity-100"
+                      :class="
+                        openDesktopDepartmentSlug === item.slug
+                          ? 'visible pointer-events-auto translate-x-0 opacity-100'
+                          : 'invisible pointer-events-none translate-x-2 opacity-0'
+                      "
                     >
                       <div class="py-2">
                         <RouterLink
@@ -175,20 +249,28 @@ function handleDesktopDropdownNavigation(event: MouseEvent) {
             </div>
           </div>
 
-          <div class="group relative">
+          <div ref="desktopVereinRef" class="group relative">
             <button
               type="button"
               class="rounded-md flex items-center gap-1 font-body text-sm font-normal uppercase tracking-wider text-vsg-gold-300 transition-colors hover:text-vsg-gold-400"
               aria-haspopup="true"
+              :aria-expanded="isDesktopVereinOpen"
+              @click="toggleDesktopVerein"
             >
               Verein
               <FontAwesomeIcon
                 icon="chevron-down"
                 class="transition-transform group-hover:rotate-180"
+                :class="{ 'rotate-180': isDesktopVereinOpen }"
               />
             </button>
             <div
-              class="invisible absolute left-0 top-full mt-2 w-48 translate-y-2 transform border border-vsg-gold-400/20 bg-vsg-blue-900 opacity-0 shadow-xl transition-all duration-200 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+              class="absolute left-0 top-full mt-2 w-48 transform border border-vsg-gold-400/20 bg-vsg-blue-900 shadow-xl transition-all duration-200 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+              :class="
+                isDesktopVereinOpen
+                  ? 'visible translate-y-0 opacity-100'
+                  : 'invisible translate-y-2 opacity-0'
+              "
             >
               <div class="py-2">
                 <RouterLink
