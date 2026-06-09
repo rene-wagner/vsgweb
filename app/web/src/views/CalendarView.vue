@@ -26,7 +26,11 @@ const isLoading = ref(true);
 const error = ref<string | null>(null);
 
 const eventOccurrences = computed(() => sortEventOccurrences(expandEventOccurrences(events.value)));
+const upcomingEventOccurrences = computed(() =>
+  eventOccurrences.value.filter((occurrence) => isOccurrenceWithinUpcomingRange(occurrence)),
+);
 const hasEvents = computed(() => eventOccurrences.value.length > 0);
+const hasUpcomingEvents = computed(() => upcomingEventOccurrences.value.length > 0);
 const showCalendar = computed(() => !error.value);
 
 const selectedEventDateLabel = computed(() => {
@@ -139,6 +143,14 @@ function getTodayBounds(now = new Date()): { todayStart: Date; tomorrowStart: Da
   return { todayStart, tomorrowStart };
 }
 
+function getUpcomingRange(now = new Date()): { rangeStart: Date; rangeEnd: Date } {
+  const rangeStart = new Date(now);
+  const rangeEnd = new Date(now);
+  rangeEnd.setMonth(rangeEnd.getMonth() + 3);
+
+  return { rangeStart, rangeEnd };
+}
+
 function getOccurrenceEnd(occurrence: EventOccurrence): Date | null {
   if (isValidDateString(occurrence.endsAt)) {
     return new Date(occurrence.endsAt);
@@ -149,6 +161,19 @@ function getOccurrenceEnd(occurrence: EventOccurrence): Date | null {
   }
 
   return null;
+}
+
+function isOccurrenceWithinUpcomingRange(occurrence: EventOccurrence, now = new Date()): boolean {
+  const occurrenceStart = new Date(occurrence.startsAt);
+  const occurrenceEnd = getOccurrenceEnd(occurrence);
+  const { rangeStart, rangeEnd } = getUpcomingRange(now);
+
+  return (
+    !Number.isNaN(occurrenceStart.getTime()) &&
+    occurrenceEnd !== null &&
+    occurrenceEnd.getTime() >= rangeStart.getTime() &&
+    occurrenceStart.getTime() <= rangeEnd.getTime()
+  );
 }
 
 function findInitialEventOccurrence(items: EventOccurrence[], now = new Date()): EventOccurrence | null {
@@ -194,10 +219,10 @@ function formatEventDateRange(startsAt: string, endsAt: string | null): string {
     minute: "2-digit",
   });
 
-  const startLabel = `${dateFormatter.format(start)}, ${timeFormatter.format(start)} Uhr`;
+  const startLabel = `${dateFormatter.format(start)}, ${timeFormatter.format(start)}`;
 
   if (!end) {
-    return startLabel;
+    return `${startLabel} Uhr`;
   }
 
   const sameDay = start.toDateString() === end.toDateString();
@@ -206,13 +231,25 @@ function formatEventDateRange(startsAt: string, endsAt: string | null): string {
     return `${startLabel} – ${timeFormatter.format(end)} Uhr`;
   }
 
-  return `${startLabel} – ${dateFormatter.format(end)}, ${timeFormatter.format(end)} Uhr`;
+  return `${startLabel} Uhr – ${dateFormatter.format(end)}, ${timeFormatter.format(end)} Uhr`;
+}
+
+function selectEventOccurrence(occurrence: EventOccurrence): void {
+  selectedEvent.value = occurrence;
+
+  if (isValidDateString(occurrence.startsAt)) {
+    calendar.value?.gotoDate(occurrence.startsAt);
+  }
 }
 
 function handleEventClick(clickInfo: EventClickArg): void {
-  selectedEvent.value =
-    eventOccurrences.value.find((occurrence) => occurrence.instanceId === clickInfo.event.id) ??
-    null;
+  const occurrence = eventOccurrences.value.find(
+    (eventOccurrence) => eventOccurrence.instanceId === clickInfo.event.id,
+  );
+
+  if (occurrence) {
+    selectEventOccurrence(occurrence);
+  }
 }
 
 function destroyCalendar(): void {
@@ -298,46 +335,96 @@ watchEffect(() => {
       <div class="mx-auto max-w-7xl px-6">
         <ApiState :is-loading="isLoading" :error="error" />
 
-        <div v-if="showCalendar" class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
-          <div
-            class="overflow-hidden rounded-md border border-vsg-blue-100 bg-white p-4 shadow-sm"
-          >
-            <div ref="calendarElement" class="calendar-shell text-vsg-blue-900" />
+        <div v-if="showCalendar" class="space-y-12">
+          <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
+            <div
+              class="overflow-hidden rounded-md border border-vsg-blue-100 bg-white p-4 shadow-sm"
+            >
+              <div ref="calendarElement" class="calendar-shell text-vsg-blue-900" />
+            </div>
+
+            <aside
+              class="rounded-md border border-vsg-blue-100 bg-vsg-blue-50 p-6 text-vsg-blue-900"
+            >
+              <p class="font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-500">
+                Termin-Details
+              </p>
+
+              <div v-if="selectedEvent" class="mt-4 space-y-4">
+                <h2 class="font-display text-3xl tracking-wider text-vsg-blue-900">
+                  {{ selectedEvent.event.title }}
+                </h2>
+                <p class="font-body text-base text-vsg-blue-700">
+                  {{ selectedEventDateLabel }}
+                </p>
+                <p v-if="selectedEvent.event.location" class="font-body text-base text-vsg-blue-800">
+                  <span class="font-bold">Ort:</span> {{ selectedEvent.event.location }}
+                </p>
+                <p
+                  v-if="selectedEvent.event.description"
+                  class="whitespace-pre-line font-body text-base text-vsg-blue-800"
+                >
+                  {{ selectedEvent.event.description }}
+                </p>
+              </div>
+
+              <p v-else-if="hasEvents" class="mt-4 font-body text-base text-vsg-blue-700">
+                Wähle einen Termin im Kalender aus, um weitere Informationen zu sehen.
+              </p>
+
+              <p v-else class="mt-4 font-body text-base text-vsg-blue-700">
+                Derzeit sind keine Termine verfügbar.
+              </p>
+            </aside>
           </div>
 
-          <aside
-            class="rounded-md border border-vsg-blue-100 bg-vsg-blue-50 p-6 text-vsg-blue-900"
+          <section
+            class="rounded-md border border-vsg-gold-200 bg-vsg-gold-50 p-6 text-vsg-blue-900 shadow-sm"
+            aria-labelledby="upcoming-events-heading"
           >
-            <p class="font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-500">
-              Termin-Details
-            </p>
-
-            <div v-if="selectedEvent" class="mt-4 space-y-4">
-              <h2 class="font-display text-3xl tracking-wider text-vsg-blue-900">
-                {{ selectedEvent.event.title }}
-              </h2>
-              <p class="font-body text-base text-vsg-blue-700">
-                {{ selectedEventDateLabel }}
+            <div class="max-w-3xl">
+              <p class="font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-500">
+                Terminübersicht
               </p>
-              <p v-if="selectedEvent.event.location" class="font-body text-base text-vsg-blue-800">
-                <span class="font-bold">Ort:</span> {{ selectedEvent.event.location }}
-              </p>
-              <p
-                v-if="selectedEvent.event.description"
-                class="whitespace-pre-line font-body text-base text-vsg-blue-800"
+              <h2
+                id="upcoming-events-heading"
+                class="mt-2 font-display text-3xl tracking-wider text-vsg-blue-900"
               >
-                {{ selectedEvent.event.description }}
+                Anstehende Termine
+              </h2>
+              <p class="mt-2 font-body text-base text-vsg-blue-700">
+                Die nächsten Termine in den kommenden 3 Monaten.
               </p>
             </div>
 
-            <p v-else-if="hasEvents" class="mt-4 font-body text-base text-vsg-blue-700">
-              Wähle einen Termin im Kalender aus, um weitere Informationen zu sehen.
-            </p>
+            <div v-if="hasUpcomingEvents" class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <button
+                v-for="occurrence in upcomingEventOccurrences"
+                :key="occurrence.instanceId"
+                type="button"
+                class="group rounded-md border bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-vsg-gold-400 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-vsg-gold-400"
+                :class="
+                  selectedEvent?.instanceId === occurrence.instanceId
+                    ? 'border-vsg-gold-400 ring-2 ring-vsg-gold-200'
+                    : 'border-vsg-blue-100'
+                "
+                @click="selectEventOccurrence(occurrence)"
+              >
+                <p class="font-body text-sm font-bold uppercase tracking-wider text-vsg-blue-500">
+                  {{ formatEventDateRange(occurrence.startsAt, occurrence.endsAt) }}
+                </p>
+                <h3
+                  class="mt-3 font-display text-2xl tracking-wider text-vsg-blue-900 transition group-hover:text-vsg-blue-700"
+                >
+                  {{ occurrence.event.title }}
+                </h3>
+              </button>
+            </div>
 
-            <p v-else class="mt-4 font-body text-base text-vsg-blue-700">
-              Derzeit sind keine Termine verfügbar.
+            <p v-else class="mt-8 rounded-md bg-white p-5 font-body text-base text-vsg-blue-700">
+              In den nächsten 3 Monaten sind keine Termine geplant.
             </p>
-          </aside>
+          </section>
         </div>
       </div>
     </section>
