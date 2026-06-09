@@ -120,25 +120,25 @@ withDefaults(defineProps<Props>(), {
 .sport-icon-top-left {
   top: clamp(6rem, 12vw, 9rem);
   left: clamp(2.5rem, 7vw, 6rem);
-  animation: sport-icon-float-a 6s ease-in-out infinite;
+  animation: sport-icon-float-a 9s ease-in-out infinite;
 }
 
 .sport-icon-top-right {
   top: clamp(6.5rem, 12vw, 9.5rem);
   right: clamp(2.5rem, 7vw, 6rem);
-  animation: sport-icon-float-b 7s ease-in-out infinite;
+  animation: sport-icon-float-b 10s ease-in-out infinite;
 }
 
 .sport-icon-bottom-left {
   bottom: clamp(3.5rem, 8vw, 6rem);
   left: clamp(2.5rem, 8vw, 6rem);
-  animation: sport-icon-float-c 8s ease-in-out infinite;
+  animation: sport-icon-float-c 11s ease-in-out infinite;
 }
 
 .sport-icon-bottom-right {
   right: clamp(2.5rem, 8vw, 6rem);
   bottom: clamp(3.5rem, 8vw, 6rem);
-  animation: sport-icon-float-d 9s ease-in-out infinite;
+  animation: sport-icon-float-d 12s ease-in-out infinite;
 }
 
 @keyframes grid-pulse {
@@ -170,155 +170,147 @@ withDefaults(defineProps<Props>(), {
 }
 
 @keyframes sport-icon-float-a {
-  0%,
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-3deg) scale(1);
+  }
+
+  33% {
+    transform: translate3d(2.24rem, 1.92rem, 0) rotate(-1deg) scale(1.05);
+  }
+
+  66% {
+    transform: translate3d(0.8rem, 1.44rem, 0) rotate(-4deg) scale(1.02);
+  }
+
   100% {
-    transform: translate3d(0, 0, 0) rotate(-10deg) scale(1);
-  }
-
-  25% {
-    transform: translate3d(2.5rem, 1.25rem, 0) rotate(-2deg) scale(1.06);
-  }
-
-  50% {
-    transform: translate3d(3.5rem, 3rem, 0) rotate(4deg) scale(1.1);
-  }
-
-  75% {
-    transform: translate3d(1.25rem, 2.25rem, 0) rotate(-16deg) scale(1.04);
+    transform: translate3d(0, 0, 0) rotate(-3deg) scale(1);
   }
 }
 
 @keyframes sport-icon-float-b {
-  0%,
+  0% {
+    transform: translate3d(0, 0, 0) rotate(2.5deg) scale(1);
+  }
+
+  33% {
+    transform: translate3d(-2.4rem, 2.08rem, 0) rotate(5deg) scale(1.05);
+  }
+
+  66% {
+    transform: translate3d(-0.96rem, 1.28rem, 0) rotate(1.5deg) scale(1.02);
+  }
+
   100% {
-    transform: translate3d(0, 0, 0) rotate(8deg) scale(1);
-  }
-
-  25% {
-    transform: translate3d(-2.75rem, 1.5rem, 0) rotate(17deg) scale(1.05);
-  }
-
-  50% {
-    transform: translate3d(-3.75rem, 3.25rem, 0) rotate(22deg) scale(1.09);
-  }
-
-  75% {
-    transform: translate3d(-1.5rem, 2rem, 0) rotate(2deg) scale(1.03);
+    transform: translate3d(0, 0, 0) rotate(2.5deg) scale(1);
   }
 }
 
 @keyframes sport-icon-float-c {
-  0%,
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-2deg) scale(1);
+  }
+
+  33% {
+    transform: translate3d(2.08rem, -1.92rem, 0) rotate(-4.5deg) scale(1.04);
+  }
+
+  66% {
+    transform: translate3d(0.64rem, -1.44rem, 0) rotate(-1deg) scale(1.02);
+  }
+
   100% {
-    transform: translate3d(0, 0, 0) rotate(-6deg) scale(1);
-  }
-
-  25% {
-    transform: translate3d(2rem, -1.75rem, 0) rotate(-15deg) scale(1.04);
-  }
-
-  50% {
-    transform: translate3d(3.25rem, -3rem, 0) rotate(-20deg) scale(1.08);
-  }
-
-  75% {
-    transform: translate3d(1rem, -2.25rem, 0) rotate(1deg) scale(1.03);
+    transform: translate3d(0, 0, 0) rotate(-2deg) scale(1);
   }
 }
 
 @keyframes sport-icon-float-d {
-  0%,
+  0% {
+    transform: translate3d(0, 0, 0) rotate(3deg) scale(1);
+  }
+
+  33% {
+    transform: translate3d(-2.24rem, -2.08rem, 0) rotate(0deg) scale(1.05);
+  }
+
+  66% {
+    transform: translate3d(-0.8rem, -1.44rem, 0) rotate(4deg) scale(1.02);
+  }
+
   100% {
-    transform: translate3d(0, 0, 0) rotate(10deg) scale(1);
-  }
-
-  25% {
-    transform: translate3d(-2.25rem, -1.5rem, 0) rotate(2deg) scale(1.05);
-  }
-
-  50% {
-    transform: translate3d(-3.5rem, -3.25rem, 0) rotate(-6deg) scale(1.1);
-  }
-
-  75% {
-    transform: translate3d(-1.25rem, -2.25rem, 0) rotate(18deg) scale(1.04);
+    transform: translate3d(0, 0, 0) rotate(3deg) scale(1);
   }
 }
 
 @media (width < 768px) {
   @keyframes sport-icon-float-a {
-    0%,
+    0% {
+      transform: translate3d(0, 0, 0) rotate(-3deg) scale(1);
+    }
+
+    33% {
+      transform: translate3d(1.12rem, 0.96rem, 0) rotate(-1deg) scale(1.05);
+    }
+
+    66% {
+      transform: translate3d(0.4rem, 0.72rem, 0) rotate(-4deg) scale(1.02);
+    }
+
     100% {
-      transform: translate3d(0, 0, 0) rotate(-10deg) scale(1);
-    }
-
-    25% {
-      transform: translate3d(1.25rem, 0.63rem, 0) rotate(-2deg) scale(1.06);
-    }
-
-    50% {
-      transform: translate3d(1.75rem, 1.5rem, 0) rotate(4deg) scale(1.1);
-    }
-
-    75% {
-      transform: translate3d(0.63rem, 1.13rem, 0) rotate(-16deg) scale(1.04);
+      transform: translate3d(0, 0, 0) rotate(-3deg) scale(1);
     }
   }
 
   @keyframes sport-icon-float-b {
-    0%,
+    0% {
+      transform: translate3d(0, 0, 0) rotate(2.5deg) scale(1);
+    }
+
+    33% {
+      transform: translate3d(-1.2rem, 1.04rem, 0) rotate(5deg) scale(1.05);
+    }
+
+    66% {
+      transform: translate3d(-0.48rem, 0.64rem, 0) rotate(1.5deg) scale(1.02);
+    }
+
     100% {
-      transform: translate3d(0, 0, 0) rotate(8deg) scale(1);
-    }
-
-    25% {
-      transform: translate3d(-1.38rem, 0.75rem, 0) rotate(17deg) scale(1.05);
-    }
-
-    50% {
-      transform: translate3d(-1.88rem, 1.63rem, 0) rotate(22deg) scale(1.09);
-    }
-
-    75% {
-      transform: translate3d(-0.75rem, 1rem, 0) rotate(2deg) scale(1.03);
+      transform: translate3d(0, 0, 0) rotate(2.5deg) scale(1);
     }
   }
 
   @keyframes sport-icon-float-c {
-    0%,
+    0% {
+      transform: translate3d(0, 0, 0) rotate(-2deg) scale(1);
+    }
+
+    33% {
+      transform: translate3d(1.04rem, -0.96rem, 0) rotate(-4.5deg) scale(1.04);
+    }
+
+    66% {
+      transform: translate3d(0.32rem, -0.72rem, 0) rotate(-1deg) scale(1.02);
+    }
+
     100% {
-      transform: translate3d(0, 0, 0) rotate(-6deg) scale(1);
-    }
-
-    25% {
-      transform: translate3d(1rem, -0.88rem, 0) rotate(-15deg) scale(1.04);
-    }
-
-    50% {
-      transform: translate3d(1.63rem, -1.5rem, 0) rotate(-20deg) scale(1.08);
-    }
-
-    75% {
-      transform: translate3d(0.5rem, -1.13rem, 0) rotate(1deg) scale(1.03);
+      transform: translate3d(0, 0, 0) rotate(-2deg) scale(1);
     }
   }
 
   @keyframes sport-icon-float-d {
-    0%,
+    0% {
+      transform: translate3d(0, 0, 0) rotate(3deg) scale(1);
+    }
+
+    33% {
+      transform: translate3d(-1.12rem, -1.04rem, 0) rotate(0deg) scale(1.05);
+    }
+
+    66% {
+      transform: translate3d(-0.4rem, -0.72rem, 0) rotate(4deg) scale(1.02);
+    }
+
     100% {
-      transform: translate3d(0, 0, 0) rotate(10deg) scale(1);
-    }
-
-    25% {
-      transform: translate3d(-1.13rem, -0.75rem, 0) rotate(2deg) scale(1.05);
-    }
-
-    50% {
-      transform: translate3d(-1.75rem, -1.63rem, 0) rotate(-6deg) scale(1.1);
-    }
-
-    75% {
-      transform: translate3d(-0.63rem, -1.13rem, 0) rotate(18deg) scale(1.04);
+      transform: translate3d(0, 0, 0) rotate(3deg) scale(1);
     }
   }
 }
