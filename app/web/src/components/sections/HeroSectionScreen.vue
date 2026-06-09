@@ -24,27 +24,21 @@ withDefaults(defineProps<Props>(), {
       class="absolute inset-0 bg-linear-to-br from-vsg-blue-900 via-vsg-blue-800/50 to-transparent"
     />
     <div class="pulse-grid absolute inset-0 opacity-40" />
-    <div class="spotlight spotlight-gold absolute -right-24 top-[12%] h-[28rem] w-[28rem]" />
     <div class="spotlight spotlight-blue absolute -left-28 bottom-[10%] h-[24rem] w-[24rem]" />
-    <div
-      class="spotlight spotlight-soft absolute left-1/2 top-[-6rem] h-[22rem] w-[34rem] -translate-x-1/2"
-    />
 
     <div class="pointer-events-none absolute inset-0 z-0">
-      <img :src="badmintonIcon" alt="" aria-hidden="true" class="sport-icon sport-icon-top-left" />
-      <img :src="gymnastikIcon" alt="" aria-hidden="true" class="sport-icon sport-icon-top-right" />
-      <img
-        :src="tischtennisIcon"
-        alt=""
-        aria-hidden="true"
-        class="sport-icon sport-icon-bottom-left"
-      />
-      <img
-        :src="volleyballIcon"
-        alt=""
-        aria-hidden="true"
-        class="sport-icon sport-icon-bottom-right"
-      />
+      <div class="sport-icon-wrap sport-icon-top-left">
+        <img :src="badmintonIcon" alt="" aria-hidden="true" class="sport-icon" />
+      </div>
+      <div class="sport-icon-wrap sport-icon-top-right">
+        <img :src="gymnastikIcon" alt="" aria-hidden="true" class="sport-icon" />
+      </div>
+      <div class="sport-icon-wrap sport-icon-bottom-left">
+        <img :src="tischtennisIcon" alt="" aria-hidden="true" class="sport-icon" />
+      </div>
+      <div class="sport-icon-wrap sport-icon-bottom-right">
+        <img :src="volleyballIcon" alt="" aria-hidden="true" class="sport-icon" />
+      </div>
     </div>
 
     <div class="relative z-10 mx-auto max-w-7xl px-6 py-20 text-center">
@@ -68,14 +62,6 @@ withDefaults(defineProps<Props>(), {
 </template>
 
 <style scoped>
-.hero-section-screen::before {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% -10%, rgb(250 204 21 / 0.2), transparent 35%);
-  content: "";
-  opacity: 0.85;
-}
-
 .pulse-grid {
   background-image:
     linear-gradient(rgb(255 255 255 / 0.12) 1px, transparent 1px),
@@ -91,16 +77,6 @@ withDefaults(defineProps<Props>(), {
   pointer-events: none;
 }
 
-.spotlight-gold {
-  background: radial-gradient(
-    circle,
-    rgb(250 204 21 / 0.28),
-    rgb(250 204 21 / 0.14) 38%,
-    transparent 72%
-  );
-  animation: spotlight-drift-a 11s ease-in-out infinite;
-}
-
 .spotlight-blue {
   background: radial-gradient(
     circle,
@@ -111,46 +87,58 @@ withDefaults(defineProps<Props>(), {
   animation: spotlight-drift-b 13s ease-in-out infinite;
 }
 
-.spotlight-soft {
+.sport-icon-wrap {
+  position: absolute;
+  width: clamp(7rem, 12vw, 12rem);
+  transform-origin: center;
+}
+
+.sport-icon-wrap::before {
+  position: absolute;
+  inset: -62%;
+  z-index: 0;
+  border-radius: 9999px;
   background: radial-gradient(
     circle,
-    rgb(255 255 255 / 0.14),
-    rgb(250 204 21 / 0.08) 36%,
-    transparent 70%
+    rgb(255 255 255 / 0.24),
+    rgb(255 255 255 / 0.1) 42%,
+    transparent 72%
   );
-  animation: spotlight-drift-c 15s ease-in-out infinite;
+  content: "";
+  filter: blur(46px);
 }
 
 .sport-icon {
-  position: absolute;
-  width: clamp(7rem, 12vw, 12rem);
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
   opacity: 0.24;
   filter: drop-shadow(0 0 20px rgb(255 255 255 / 0.12));
-  transform-origin: center;
 }
 
 .sport-icon-top-left {
   top: clamp(6rem, 12vw, 9rem);
   left: clamp(2.5rem, 7vw, 6rem);
-  animation: sport-icon-float-a 12s ease-in-out infinite;
+  animation: sport-icon-float-a 6s ease-in-out infinite;
 }
 
 .sport-icon-top-right {
   top: clamp(6.5rem, 12vw, 9.5rem);
   right: clamp(2.5rem, 7vw, 6rem);
-  animation: sport-icon-float-b 13s ease-in-out infinite;
+  animation: sport-icon-float-b 7s ease-in-out infinite;
 }
 
 .sport-icon-bottom-left {
   bottom: clamp(3.5rem, 8vw, 6rem);
   left: clamp(2.5rem, 8vw, 6rem);
-  animation: sport-icon-float-c 14s ease-in-out infinite;
+  animation: sport-icon-float-c 8s ease-in-out infinite;
 }
 
 .sport-icon-bottom-right {
   right: clamp(2.5rem, 8vw, 6rem);
   bottom: clamp(3.5rem, 8vw, 6rem);
-  animation: sport-icon-float-d 15s ease-in-out infinite;
+  animation: sport-icon-float-d 9s ease-in-out infinite;
 }
 
 @keyframes grid-pulse {
@@ -163,21 +151,6 @@ withDefaults(defineProps<Props>(), {
   50% {
     opacity: 0.5;
     transform: scale(1.02);
-  }
-}
-
-@keyframes spotlight-drift-a {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-  }
-
-  30% {
-    transform: translate3d(-3rem, 2.5rem, 0) scale(1.08) rotate(-4deg);
-  }
-
-  65% {
-    transform: translate3d(2rem, -1.75rem, 0) scale(1.16) rotate(3deg);
   }
 }
 
@@ -196,32 +169,22 @@ withDefaults(defineProps<Props>(), {
   }
 }
 
-@keyframes spotlight-drift-c {
-  0%,
-  100% {
-    transform: translate3d(-50%, 0, 0) scale(1) rotate(0deg);
-    opacity: 0.45;
-  }
-
-  25% {
-    transform: translate3d(calc(-50% - 2.5rem), 1.5rem, 0) scale(1.06) rotate(-3deg);
-    opacity: 0.58;
-  }
-
-  60% {
-    transform: translate3d(calc(-50% + 3rem), 2.5rem, 0) scale(1.14) rotate(4deg);
-    opacity: 0.78;
-  }
-}
-
 @keyframes sport-icon-float-a {
   0%,
   100% {
     transform: translate3d(0, 0, 0) rotate(-10deg) scale(1);
   }
 
+  25% {
+    transform: translate3d(2.5rem, 1.25rem, 0) rotate(-2deg) scale(1.06);
+  }
+
   50% {
-    transform: translate3d(0.75rem, 1rem, 0) rotate(-4deg) scale(1.08);
+    transform: translate3d(3.5rem, 3rem, 0) rotate(4deg) scale(1.1);
+  }
+
+  75% {
+    transform: translate3d(1.25rem, 2.25rem, 0) rotate(-16deg) scale(1.04);
   }
 }
 
@@ -231,8 +194,16 @@ withDefaults(defineProps<Props>(), {
     transform: translate3d(0, 0, 0) rotate(8deg) scale(1);
   }
 
+  25% {
+    transform: translate3d(-2.75rem, 1.5rem, 0) rotate(17deg) scale(1.05);
+  }
+
   50% {
-    transform: translate3d(-0.75rem, 1rem, 0) rotate(14deg) scale(1.06);
+    transform: translate3d(-3.75rem, 3.25rem, 0) rotate(22deg) scale(1.09);
+  }
+
+  75% {
+    transform: translate3d(-1.5rem, 2rem, 0) rotate(2deg) scale(1.03);
   }
 }
 
@@ -242,8 +213,16 @@ withDefaults(defineProps<Props>(), {
     transform: translate3d(0, 0, 0) rotate(-6deg) scale(1);
   }
 
+  25% {
+    transform: translate3d(2rem, -1.75rem, 0) rotate(-15deg) scale(1.04);
+  }
+
   50% {
-    transform: translate3d(0.85rem, -0.85rem, 0) rotate(-12deg) scale(1.05);
+    transform: translate3d(3.25rem, -3rem, 0) rotate(-20deg) scale(1.08);
+  }
+
+  75% {
+    transform: translate3d(1rem, -2.25rem, 0) rotate(1deg) scale(1.03);
   }
 }
 
@@ -253,8 +232,94 @@ withDefaults(defineProps<Props>(), {
     transform: translate3d(0, 0, 0) rotate(10deg) scale(1);
   }
 
+  25% {
+    transform: translate3d(-2.25rem, -1.5rem, 0) rotate(2deg) scale(1.05);
+  }
+
   50% {
-    transform: translate3d(-0.85rem, -1rem, 0) rotate(4deg) scale(1.09);
+    transform: translate3d(-3.5rem, -3.25rem, 0) rotate(-6deg) scale(1.1);
+  }
+
+  75% {
+    transform: translate3d(-1.25rem, -2.25rem, 0) rotate(18deg) scale(1.04);
+  }
+}
+
+@media (width < 768px) {
+  @keyframes sport-icon-float-a {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(-10deg) scale(1);
+    }
+
+    25% {
+      transform: translate3d(1.25rem, 0.63rem, 0) rotate(-2deg) scale(1.06);
+    }
+
+    50% {
+      transform: translate3d(1.75rem, 1.5rem, 0) rotate(4deg) scale(1.1);
+    }
+
+    75% {
+      transform: translate3d(0.63rem, 1.13rem, 0) rotate(-16deg) scale(1.04);
+    }
+  }
+
+  @keyframes sport-icon-float-b {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(8deg) scale(1);
+    }
+
+    25% {
+      transform: translate3d(-1.38rem, 0.75rem, 0) rotate(17deg) scale(1.05);
+    }
+
+    50% {
+      transform: translate3d(-1.88rem, 1.63rem, 0) rotate(22deg) scale(1.09);
+    }
+
+    75% {
+      transform: translate3d(-0.75rem, 1rem, 0) rotate(2deg) scale(1.03);
+    }
+  }
+
+  @keyframes sport-icon-float-c {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(-6deg) scale(1);
+    }
+
+    25% {
+      transform: translate3d(1rem, -0.88rem, 0) rotate(-15deg) scale(1.04);
+    }
+
+    50% {
+      transform: translate3d(1.63rem, -1.5rem, 0) rotate(-20deg) scale(1.08);
+    }
+
+    75% {
+      transform: translate3d(0.5rem, -1.13rem, 0) rotate(1deg) scale(1.03);
+    }
+  }
+
+  @keyframes sport-icon-float-d {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(10deg) scale(1);
+    }
+
+    25% {
+      transform: translate3d(-1.13rem, -0.75rem, 0) rotate(2deg) scale(1.05);
+    }
+
+    50% {
+      transform: translate3d(-1.75rem, -1.63rem, 0) rotate(-6deg) scale(1.1);
+    }
+
+    75% {
+      transform: translate3d(-0.63rem, -1.13rem, 0) rotate(18deg) scale(1.04);
+    }
   }
 }
 </style>
