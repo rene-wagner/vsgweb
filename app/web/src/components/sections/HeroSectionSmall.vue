@@ -175,15 +175,23 @@ function handleAnchorClick(e: MouseEvent, anchor: string) {
 }
 
 .hero-headline {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
   overflow-wrap: anywhere;
   word-break: break-word;
+  -webkit-hyphens: auto;
   hyphens: auto;
 }
 
 .hero-headline :deep(*) {
+  min-width: 0;
+  max-width: 100%;
   text-align: center;
+  white-space: normal;
   overflow-wrap: inherit;
   word-break: inherit;
+  -webkit-hyphens: inherit;
   hyphens: inherit;
 }
 
