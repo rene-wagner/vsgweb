@@ -129,6 +129,51 @@ function toCalendarEvents(items: EventOccurrence[]): EventInput[] {
   }));
 }
 
+function getTodayBounds(now = new Date()): { todayStart: Date; tomorrowStart: Date } {
+  const todayStart = new Date(now);
+  todayStart.setHours(0, 0, 0, 0);
+
+  const tomorrowStart = new Date(todayStart);
+  tomorrowStart.setDate(tomorrowStart.getDate() + 1);
+
+  return { todayStart, tomorrowStart };
+}
+
+function getOccurrenceEnd(occurrence: EventOccurrence): Date | null {
+  if (isValidDateString(occurrence.endsAt)) {
+    return new Date(occurrence.endsAt);
+  }
+
+  if (isValidDateString(occurrence.startsAt)) {
+    return new Date(occurrence.startsAt);
+  }
+
+  return null;
+}
+
+function findInitialEventOccurrence(items: EventOccurrence[], now = new Date()): EventOccurrence | null {
+  const { tomorrowStart } = getTodayBounds(now);
+  const upcomingOccurrences = items.filter((occurrence) => {
+    const occurrenceEnd = getOccurrenceEnd(occurrence);
+
+    return occurrenceEnd !== null && occurrenceEnd.getTime() >= now.getTime();
+  });
+
+  return (
+    upcomingOccurrences.find((occurrence) => {
+      const occurrenceStart = new Date(occurrence.startsAt);
+
+      return occurrenceStart.getTime() < tomorrowStart.getTime();
+    }) ??
+    upcomingOccurrences.find((occurrence) => {
+      const occurrenceStart = new Date(occurrence.startsAt);
+
+      return occurrenceStart.getTime() >= now.getTime();
+    }) ??
+    null
+  );
+}
+
 function formatEventDateRange(startsAt: string, endsAt: string | null): string {
   if (!isValidDateString(startsAt)) {
     return "Zeitpunkt unbekannt";
@@ -211,7 +256,7 @@ async function loadEvents(): Promise<void> {
   try {
     const response = await vsg.events.list();
     events.value = sortEvents(response.member);
-    selectedEvent.value = eventOccurrences.value[0] ?? null;
+    selectedEvent.value = findInitialEventOccurrence(eventOccurrences.value);
   } catch (loadError) {
     error.value = getApiErrorMessage(loadError, "Termine konnten nicht geladen werden.");
   } finally {
