@@ -352,7 +352,7 @@ function setBooleanField(
           </p>
         </div>
 
-        <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <div class="department-flex-row">
           <label
             v-for="option in departmentOptions"
             :key="option.value"
@@ -386,7 +386,7 @@ function setBooleanField(
           <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">Persönliche Daten</h2>
         </div>
 
-        <div class="grid gap-5 md:grid-cols-2">
+        <div class="form-flex-row">
           <div>
             <label
               for="lastName"
@@ -458,8 +458,8 @@ function setBooleanField(
           </h2>
         </div>
 
-        <div class="grid gap-5 md:grid-cols-2">
-          <div class="md:col-span-2">
+        <div class="form-flex-row">
+          <div class="form-flex-full">
             <label
               for="street"
               class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
@@ -668,7 +668,7 @@ function setBooleanField(
           </p>
         </div>
 
-        <div class="grid gap-5 md:grid-cols-2">
+        <div class="form-flex-row">
           <div>
             <label
               for="bankName"
@@ -807,7 +807,7 @@ function setBooleanField(
               <h3 class="font-display text-xl tracking-wide text-vsg-blue-900">
                 Erziehungsberechtigte Person 1
               </h3>
-              <div class="mt-4 grid gap-5 md:grid-cols-2">
+              <div class="form-flex-row mt-4">
                 <div>
                   <label
                     for="guardianOneName"
@@ -850,7 +850,7 @@ function setBooleanField(
                   </p>
                 </div>
 
-                <div class="md:col-span-2">
+                <div class="form-flex-full">
                   <label
                     for="guardianOneAddress"
                     class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
@@ -878,7 +878,7 @@ function setBooleanField(
                 Erziehungsberechtigte Person 2
               </h3>
               <p class="mt-2 font-body text-sm text-vsg-blue-600">Optional</p>
-              <div class="mt-4 grid gap-5 md:grid-cols-2">
+              <div class="form-flex-row mt-4">
                 <div>
                   <label
                     for="guardianTwoName"
@@ -911,7 +911,7 @@ function setBooleanField(
                   />
                 </div>
 
-                <div class="md:col-span-2">
+                <div class="form-flex-full">
                   <label
                     for="guardianTwoAddress"
                     class="mb-2 block font-body text-sm uppercase tracking-wider text-vsg-blue-600"
@@ -1033,3 +1033,61 @@ function setBooleanField(
     </form>
   </div>
 </template>
+
+<style scoped>
+.form-flex-row,
+.department-flex-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-flex-row > * + * {
+  margin-top: 1.25rem;
+}
+
+.department-flex-row > * + * {
+  margin-top: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .form-flex-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: -1.25rem;
+    margin-left: -1.25rem;
+  }
+
+  .form-flex-row > * {
+    flex: 0 0 calc(50% - 1.25rem);
+    margin-bottom: 1.25rem;
+    margin-left: 1.25rem;
+    margin-top: 0;
+    min-width: 0;
+  }
+
+  .form-flex-row > .form-flex-full {
+    flex-basis: calc(100% - 1.25rem);
+  }
+
+  .department-flex-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: -0.75rem;
+    margin-left: -0.75rem;
+  }
+
+  .department-flex-row > * {
+    flex: 0 0 calc(50% - 0.75rem);
+    margin-bottom: 0.75rem;
+    margin-left: 0.75rem;
+    margin-top: 0;
+    min-width: 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .department-flex-row > * {
+    flex-basis: calc(25% - 0.75rem);
+  }
+}
+</style>
