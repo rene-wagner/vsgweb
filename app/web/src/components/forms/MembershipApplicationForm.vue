@@ -440,7 +440,7 @@ function setBooleanField(
               id="birthDate"
               v-model="form.birthDate"
               type="date"
-              class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="date-input block w-full min-w-0 max-w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.birthDate ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('birthDate')"
             />
@@ -1039,6 +1039,17 @@ function setBooleanField(
 .department-flex-row {
   display: flex;
   flex-direction: column;
+}
+
+.date-input {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+}
+
+.date-input::-webkit-date-and-time-value {
+  min-width: 0;
+  text-align: left;
 }
 
 .form-flex-row > * + * {
