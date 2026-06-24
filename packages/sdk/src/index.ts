@@ -16,7 +16,7 @@ import type { ContactPerson } from "./types/contact-person.types.js";
 import type { Location } from "./types/location.types.js";
 import type { MediaFolder, MediaItem } from "./types/media.types.js";
 import type { User } from "./types/user.types.js";
-import type { ApiClubHistory, ApiDepartment, ApiEvent, ApiPost } from "@vsg/types";
+import type { ApiClubHistory, ApiDepartment, ApiEvent, ApiPost, GalleryYear } from "@vsg/types";
 
 export type * from "./types/index.js";
 
@@ -179,6 +179,7 @@ export class VsgClient {
       list: (options?: RequestOptions) => this.getCollection<MediaItem>("/api/gallery", options),
       get: (id: number | string, options?: RequestOptions) =>
         this.get<MediaItem>(`/api/gallery/${encodeURIComponent(String(id))}`, options),
+      years: (options?: RequestOptions) => this.get<GalleryYear[]>("/api/gallery/years", options),
     };
 
     this.locations = {

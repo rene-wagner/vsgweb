@@ -32,6 +32,7 @@ export type {
   EventRecurrence,
   ApiPost as Post,
   PostAPI,
+  GalleryYear,
 } from "@vsg/types";
 export type { MediaFolder, MediaItem } from "./media.types.js";
 export type {

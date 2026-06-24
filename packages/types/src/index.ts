@@ -17,6 +17,7 @@ export type {
   ClubStatistics,
 } from "./api/club-history.types.js";
 export type { ApiEvent, EventAPI, EventRecurrence } from "./api/event.types.js";
+export type { GalleryYear } from "./api/gallery.types.js";
 export type { JsonLdContext, JsonLdResource } from "./api/json-ld.types.js";
 export type { Location, LocationSummary } from "./api/location.types.js";
 export type { ApiPost, PostAPI } from "./api/post.types.js";

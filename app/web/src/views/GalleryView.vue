@@ -6,7 +6,10 @@ import type { MediaItem } from "@vsg/sdk";
 import CtaSection from "@/components/sections/CtaSection.vue";
 import HeroSectionSmall from "@/components/sections/HeroSectionSmall.vue";
 import ApiState from "@/components/ui/ApiState.vue";
-import { getMediaDisplayUrl, getMediaThumbnailUrl } from "@/services/media-items/media-item.service";
+import {
+  getMediaDisplayUrl,
+  getMediaThumbnailUrl,
+} from "@/services/media-items/media-item.service";
 import { useCategoriesStore } from "@/stores/categoriesStore";
 import { useMediaItemsStore } from "@/stores/mediaItemsStore";
 
@@ -24,6 +27,9 @@ const {
   paginatedMediaItemsTotalItems,
   paginatedMediaItemsLoading,
   paginatedMediaItemsError,
+  galleryYears,
+  galleryYearsLoading,
+  galleryYearsError,
 } = storeToRefs(mediaItemsStore);
 
 const selectedIndex = ref<number | null>(null);
@@ -37,6 +43,17 @@ const selectedCategorySlug = computed(() => {
   const category = route.query.category;
 
   return typeof category === "string" && category.length > 0 ? category : null;
+});
+
+const selectedYear = computed(() => {
+  const rawYear = route.query.year;
+
+  if (typeof rawYear !== "string" || rawYear.length === 0) {
+    return null;
+  }
+
+  const year = Number.parseInt(rawYear, 10);
+  return Number.isNaN(year) || year < 1 ? null : year;
 });
 
 const categoryOptions = computed(() => {
@@ -61,7 +78,9 @@ const selectedCategory = computed(() => {
     return null;
   }
 
-  return categoryOptions.value.find((category) => category.slug === selectedCategorySlug.value) ?? null;
+  return (
+    categoryOptions.value.find((category) => category.slug === selectedCategorySlug.value) ?? null
+  );
 });
 
 const selectedItem = computed(() => {
@@ -73,9 +92,19 @@ const selectedItem = computed(() => {
 });
 
 const emptyMessage = computed(() => {
-  return selectedCategory.value
-    ? `Für die Kategorie ${selectedCategory.value.name} sind derzeit keine Bilder verfügbar.`
-    : "Derzeit sind keine Bilder verfügbar.";
+  if (selectedCategory.value && selectedYear.value) {
+    return `Für die Kategorie ${selectedCategory.value.name} im Jahr ${selectedYear.value} sind derzeit keine Bilder verfügbar.`;
+  }
+
+  if (selectedCategory.value) {
+    return `Für die Kategorie ${selectedCategory.value.name} sind derzeit keine Bilder verfügbar.`;
+  }
+
+  if (selectedYear.value) {
+    return `Für das Jahr ${selectedYear.value} sind derzeit keine Bilder verfügbar.`;
+  }
+
+  return "Derzeit sind keine Bilder verfügbar.";
 });
 
 const totalPages = computed(() => {
@@ -94,10 +123,15 @@ const totalPages = computed(() => {
 const hasPreviousPage = computed(() => currentPage.value > 1);
 const hasNextPage = computed(() => currentPage.value < totalPages.value);
 
-function buildQuery(page: number, categorySlug = selectedCategorySlug.value) {
+function buildQuery(
+  page: number,
+  categorySlug = selectedCategorySlug.value,
+  year = selectedYear.value,
+) {
   return {
     ...(page > 1 ? { page: String(page) } : {}),
     ...(categorySlug ? { category: categorySlug } : {}),
+    ...(year ? { year: String(year) } : {}),
   };
 }
 
@@ -117,6 +151,13 @@ function updateCategory(categorySlug: string | null): void {
   });
 }
 
+function updateYear(year: number | null): void {
+  void router.push({
+    name: "gallery",
+    query: buildQuery(1, selectedCategorySlug.value, year),
+  });
+}
+
 function normalizeCategoryQuery(): boolean {
   if (selectedCategorySlug.value && !selectedCategory.value) {
     void router.replace({
@@ -132,7 +173,7 @@ function normalizeCategoryQuery(): boolean {
 
 function fetchPage(page: number): void {
   void mediaItemsStore
-    .fetchMediaItemsPage(page, MEDIA_ITEMS_PER_PAGE, selectedCategory.value?.id)
+    .fetchMediaItemsPage(page, MEDIA_ITEMS_PER_PAGE, selectedCategory.value?.id, selectedYear.value)
     .catch(() => undefined);
 }
 
@@ -194,17 +235,21 @@ onMounted(() => {
     return;
   }
 
+  void mediaItemsStore.fetchGalleryYears().catch(() => undefined);
   fetchPage(currentPage.value);
 });
 
-watch([() => route.query.page, () => route.query.category, categoryOptions], () => {
-  if (!normalizeCategoryQuery()) {
-    return;
-  }
+watch(
+  [() => route.query.page, () => route.query.category, () => route.query.year, categoryOptions],
+  () => {
+    if (!normalizeCategoryQuery()) {
+      return;
+    }
 
-  closeLightbox();
-  fetchPage(currentPage.value);
-});
+    closeLightbox();
+    fetchPage(currentPage.value);
+  },
+);
 
 watch(paginatedMediaItems, (items) => {
   if (items.length === 0) {
@@ -248,93 +293,146 @@ onUnmounted(() => {
 
     <section class="bg-white py-16">
       <div class="mx-auto max-w-7xl px-6">
-        <ApiState
-          :is-loading="paginatedMediaItemsLoading"
-          :error="paginatedMediaItemsError"
-          :empty="paginatedMediaItems.length === 0"
-          :empty-message="emptyMessage"
-        >
-          <div class="mb-10 flex flex-wrap gap-3 border-b border-vsg-blue-100 pb-6">
-            <button
-              type="button"
-              class="rounded-md border px-4 py-2 font-body text-sm font-bold uppercase tracking-wider transition-colors"
-              :class="
-                selectedCategorySlug === null
-                  ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
-                  : 'border-vsg-blue-200 text-vsg-blue-800 hover:border-vsg-blue-600 hover:text-vsg-blue-600'
-              "
-              @click="updateCategory(null)"
-            >
-              Alle
-            </button>
-            <button
-              v-for="category in categoryOptions"
-              :key="category.slug"
-              type="button"
-              class="rounded-md border px-4 py-2 font-body text-sm font-bold uppercase tracking-wider transition-colors"
-              :class="
-                selectedCategorySlug === category.slug
-                  ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
-                  : 'border-vsg-blue-200 text-vsg-blue-800 hover:border-vsg-blue-600 hover:text-vsg-blue-600'
-              "
-              @click="updateCategory(category.slug)"
-            >
-              {{ category.name }}
-            </button>
-          </div>
-
-          <div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
-            <button
-              v-for="(item, index) in paginatedMediaItems"
-              :key="item.id"
-              type="button"
-              class="group relative aspect-square overflow-hidden rounded-md bg-vsg-blue-950 shadow-lg shadow-vsg-blue-900/10"
-              @click="openLightbox(index)"
-            >
-              <img
-                :src="getMediaThumbnailUrl(item)"
-                :alt="getImageAlt(item, index)"
-                class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                loading="lazy"
-              />
-              <div
-                class="absolute inset-0 bg-linear-to-t from-vsg-blue-950/70 via-vsg-blue-950/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              />
-              <div
-                class="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-vsg-blue-900 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-              >
-                <FontAwesomeIcon icon="image" />
-              </div>
-            </button>
-          </div>
-
-          <div
-            v-if="paginatedMediaItems.length > 0"
-            class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-vsg-blue-100 pt-8 md:flex-row"
+        <div class="grid gap-8 lg:grid-cols-[17rem_1fr] lg:items-start">
+          <aside
+            class="rounded-md border border-vsg-blue-100 bg-vsg-blue-50/60 p-5 shadow-sm shadow-vsg-blue-900/5"
+            aria-label="Galeriefilter"
           >
-            <button
-              type="button"
-              class="rounded-md border border-vsg-blue-200 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:border-vsg-blue-600 hover:text-vsg-blue-600 disabled:cursor-not-allowed disabled:border-vsg-blue-100 disabled:text-vsg-blue-300"
-              :disabled="!hasPreviousPage"
-              @click="updatePage(currentPage - 1)"
-            >
-              Vorherige
-            </button>
+            <div>
+              <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">Kategorien</h2>
+              <div class="mt-4 space-y-2">
+                <button
+                  type="button"
+                  class="flex w-full items-center rounded-md border px-3 py-2 text-left font-body text-sm font-bold uppercase tracking-wider transition-colors"
+                  :class="
+                    selectedCategorySlug === null
+                      ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
+                      : 'border-vsg-blue-100 bg-white text-vsg-blue-800 hover:border-vsg-blue-600 hover:text-vsg-blue-600'
+                  "
+                  @click="updateCategory(null)"
+                >
+                  Alle Kategorien
+                </button>
+                <button
+                  v-for="category in categoryOptions"
+                  :key="category.slug"
+                  type="button"
+                  class="flex w-full items-center rounded-md border px-3 py-2 text-left font-body text-sm font-bold uppercase tracking-wider transition-colors"
+                  :class="
+                    selectedCategorySlug === category.slug
+                      ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
+                      : 'border-vsg-blue-100 bg-white text-vsg-blue-800 hover:border-vsg-blue-600 hover:text-vsg-blue-600'
+                  "
+                  @click="updateCategory(category.slug)"
+                >
+                  {{ category.name }}
+                </button>
+              </div>
+            </div>
 
-            <p class="font-body text-base text-vsg-blue-700">
-              Seite {{ paginatedMediaItemsPage }} von {{ totalPages }}
-            </p>
+            <div class="mt-8 border-t border-vsg-blue-100 pt-6">
+              <h2 class="font-display text-2xl tracking-wider text-vsg-blue-900">Jahre</h2>
 
-            <button
-              type="button"
-              class="rounded-md border border-vsg-blue-200 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:border-vsg-blue-600 hover:text-vsg-blue-600 disabled:cursor-not-allowed disabled:border-vsg-blue-100 disabled:text-vsg-blue-300"
-              :disabled="!hasNextPage"
-              @click="updatePage(currentPage + 1)"
+              <div v-if="galleryYearsLoading" class="mt-4 flex items-center text-vsg-blue-700">
+                <FontAwesomeIcon icon="spinner" class="mr-3 animate-spin text-vsg-gold-500" />
+                <span class="font-body text-sm">Jahre werden geladen...</span>
+              </div>
+              <div v-else-if="galleryYearsError" class="mt-4 flex items-start text-red-600">
+                <FontAwesomeIcon icon="triangle-exclamation" class="mr-3 mt-1" />
+                <span class="font-body text-sm">{{ galleryYearsError }}</span>
+              </div>
+              <div v-else class="mt-4 space-y-2">
+                <button
+                  type="button"
+                  class="flex w-full items-center justify-between rounded-md border px-3 py-2 text-left font-body text-sm font-bold uppercase tracking-wider transition-colors"
+                  :class="
+                    selectedYear === null
+                      ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
+                      : 'border-vsg-blue-100 bg-white text-vsg-blue-800 hover:border-vsg-blue-600 hover:text-vsg-blue-600'
+                  "
+                  @click="updateYear(null)"
+                >
+                  <span>Alle Jahre</span>
+                </button>
+
+                <button
+                  v-for="galleryYear in galleryYears"
+                  :key="galleryYear.year"
+                  type="button"
+                  class="flex w-full items-center justify-between rounded-md border px-3 py-2 text-left font-body text-sm font-bold uppercase tracking-wider transition-colors"
+                  :class="
+                    selectedYear === galleryYear.year
+                      ? 'border-vsg-blue-900 bg-vsg-blue-900 text-white'
+                      : 'border-vsg-blue-100 bg-white text-vsg-blue-800 hover:border-vsg-blue-600 hover:text-vsg-blue-600'
+                  "
+                  @click="updateYear(galleryYear.year)"
+                >
+                  <span>{{ galleryYear.year }}</span>
+                  <span class="font-body text-xs opacity-75">{{ galleryYear.image_count }}</span>
+                </button>
+              </div>
+            </div>
+          </aside>
+
+          <ApiState
+            :is-loading="paginatedMediaItemsLoading"
+            :error="paginatedMediaItemsError"
+            :empty="paginatedMediaItems.length === 0"
+            :empty-message="emptyMessage"
+          >
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+              <button
+                v-for="(item, index) in paginatedMediaItems"
+                :key="item.id"
+                type="button"
+                class="group relative aspect-square overflow-hidden rounded-md bg-vsg-blue-950 shadow-lg shadow-vsg-blue-900/10"
+                @click="openLightbox(index)"
+              >
+                <img
+                  :src="getMediaThumbnailUrl(item)"
+                  :alt="getImageAlt(item, index)"
+                  class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div
+                  class="absolute inset-0 bg-linear-to-t from-vsg-blue-950/70 via-vsg-blue-950/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                />
+                <div
+                  class="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-vsg-blue-900 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+                >
+                  <FontAwesomeIcon icon="image" />
+                </div>
+              </button>
+            </div>
+
+            <div
+              v-if="paginatedMediaItems.length > 0"
+              class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-vsg-blue-100 pt-8 md:flex-row"
             >
-              Nächste
-            </button>
-          </div>
-        </ApiState>
+              <button
+                type="button"
+                class="rounded-md border border-vsg-blue-200 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:border-vsg-blue-600 hover:text-vsg-blue-600 disabled:cursor-not-allowed disabled:border-vsg-blue-100 disabled:text-vsg-blue-300"
+                :disabled="!hasPreviousPage"
+                @click="updatePage(currentPage - 1)"
+              >
+                Vorherige
+              </button>
+
+              <p class="font-body text-base text-vsg-blue-700">
+                Seite {{ paginatedMediaItemsPage }} von {{ totalPages }}
+              </p>
+
+              <button
+                type="button"
+                class="rounded-md border border-vsg-blue-200 px-6 py-3 font-display text-lg tracking-wider text-vsg-blue-900 transition-colors hover:border-vsg-blue-600 hover:text-vsg-blue-600 disabled:cursor-not-allowed disabled:border-vsg-blue-100 disabled:text-vsg-blue-300"
+                :disabled="!hasNextPage"
+                @click="updatePage(currentPage + 1)"
+              >
+                Nächste
+              </button>
+            </div>
+          </ApiState>
+        </div>
       </div>
     </section>
 

@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import type { MediaItem } from "@vsg/sdk";
+import type { GalleryYear, MediaItem } from "@vsg/sdk";
 import { getApiErrorMessage, vsg } from "@/lib/sdk";
 
 const DEFAULT_GALLERY_PAGE_SIZE = 12;
@@ -20,6 +20,10 @@ export const useMediaItemsStore = defineStore("mediaItems", () => {
   const paginatedMediaItemsTotalItems = ref(0);
   const paginatedMediaItemsLoading = ref(false);
   const paginatedMediaItemsError = ref<string | null>(null);
+
+  const galleryYears = ref<GalleryYear[]>([]);
+  const galleryYearsLoading = ref(false);
+  const galleryYearsError = ref<string | null>(null);
 
   async function fetchMediaItems(itemsPerPage = 20): Promise<void> {
     isLoading.value = true;
@@ -64,6 +68,7 @@ export const useMediaItemsStore = defineStore("mediaItems", () => {
     page = 1,
     itemsPerPage = DEFAULT_GALLERY_PAGE_SIZE,
     categoryId?: number | null,
+    year?: number | null,
   ): Promise<void> {
     paginatedMediaItemsLoading.value = true;
     paginatedMediaItemsError.value = null;
@@ -74,6 +79,7 @@ export const useMediaItemsStore = defineStore("mediaItems", () => {
           page,
           itemsPerPage,
           ...(typeof categoryId === "number" ? { category: categoryId } : {}),
+          ...(typeof year === "number" ? { year } : {}),
         },
       });
 
@@ -86,6 +92,20 @@ export const useMediaItemsStore = defineStore("mediaItems", () => {
       throw e;
     } finally {
       paginatedMediaItemsLoading.value = false;
+    }
+  }
+
+  async function fetchGalleryYears(): Promise<void> {
+    galleryYearsLoading.value = true;
+    galleryYearsError.value = null;
+
+    try {
+      galleryYears.value = await vsg.gallery.years();
+    } catch (e) {
+      galleryYearsError.value = getApiErrorMessage(e);
+      throw e;
+    } finally {
+      galleryYearsLoading.value = false;
     }
   }
 
@@ -117,9 +137,13 @@ export const useMediaItemsStore = defineStore("mediaItems", () => {
     paginatedMediaItemsTotalItems,
     paginatedMediaItemsLoading,
     paginatedMediaItemsError,
+    galleryYears,
+    galleryYearsLoading,
+    galleryYearsError,
     fetchMediaItems,
     fetchMediaItemsByCategory,
     fetchMediaItemsPage,
+    fetchGalleryYears,
     clearDepartmentMediaItems,
     clearPaginatedMediaItems,
   };
