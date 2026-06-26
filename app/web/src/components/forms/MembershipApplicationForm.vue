@@ -399,7 +399,7 @@ function setBooleanField(
               v-model="form.lastName"
               type="text"
               maxlength="100"
-              class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.lastName ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('lastName')"
             />
@@ -420,7 +420,7 @@ function setBooleanField(
               v-model="form.firstName"
               type="text"
               maxlength="100"
-              class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.firstName ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('firstName')"
             />
@@ -440,7 +440,7 @@ function setBooleanField(
               id="birthDate"
               v-model="form.birthDate"
               type="date"
-              class="date-input block w-full min-w-0 max-w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="date-input block w-full min-w-0 max-w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.birthDate ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('birthDate')"
             />
@@ -471,7 +471,7 @@ function setBooleanField(
               v-model="form.street"
               type="text"
               maxlength="120"
-              class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.street ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('street')"
             />
@@ -493,7 +493,7 @@ function setBooleanField(
               type="text"
               inputmode="numeric"
               maxlength="5"
-              class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.postalCode ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('postalCode')"
             />
@@ -514,7 +514,7 @@ function setBooleanField(
               v-model="form.city"
               type="text"
               maxlength="100"
-              class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.city ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('city')"
             />
@@ -533,7 +533,7 @@ function setBooleanField(
               v-model="form.phone"
               type="tel"
               maxlength="30"
-              class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.phone ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('phone')"
             />
@@ -554,7 +554,7 @@ function setBooleanField(
               v-model="form.email"
               type="email"
               maxlength="120"
-              class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.email ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('email')"
             />
@@ -681,7 +681,7 @@ function setBooleanField(
               v-model="form.bankName"
               type="text"
               maxlength="120"
-              class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.bankName ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('bankName')"
             />
@@ -702,7 +702,7 @@ function setBooleanField(
               v-model="form.accountHolder"
               type="text"
               maxlength="120"
-              class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.accountHolder ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('accountHolder')"
             />
@@ -725,7 +725,7 @@ function setBooleanField(
               inputmode="text"
               maxlength="27"
               placeholder="DE12 3456 7890 1234 5678 90"
-              class="w-full rounded-md border-2 px-4 py-3 font-body uppercase text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full rounded-md border-2 px-2 py-3 font-body uppercase text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.iban ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('iban')"
               @blur="handleIbanBlur"
@@ -746,7 +746,7 @@ function setBooleanField(
               type="text"
               maxlength="11"
               placeholder="Optional"
-              class="w-full rounded-md border-2 px-4 py-3 font-body uppercase text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+              class="w-full rounded-md border-2 px-2 py-3 font-body uppercase text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
               :class="errors.bic ? 'border-red-300' : 'border-vsg-blue-200'"
               @input="clearFieldError('bic')"
               @blur="handleBicBlur"
@@ -774,7 +774,7 @@ function setBooleanField(
             type="text"
             maxlength="160"
             placeholder="Optionaler Vereinsname"
-            class="w-full rounded-md border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+            class="w-full rounded-md border-2 border-vsg-blue-200 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
           />
         </div>
       </section>
@@ -820,7 +820,7 @@ function setBooleanField(
                     v-model="form.guardianOneName"
                     type="text"
                     maxlength="120"
-                    class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    class="w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
                     :class="errors.guardianOneName ? 'border-red-300' : 'border-vsg-blue-200'"
                     @input="clearFieldError('guardianOneName')"
                   />
@@ -841,7 +841,7 @@ function setBooleanField(
                     v-model="form.guardianOnePhone"
                     type="tel"
                     maxlength="30"
-                    class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    class="w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
                     :class="errors.guardianOnePhone ? 'border-red-300' : 'border-vsg-blue-200'"
                     @input="clearFieldError('guardianOnePhone')"
                   />
@@ -862,7 +862,7 @@ function setBooleanField(
                     v-model="form.guardianOneAddress"
                     type="text"
                     maxlength="160"
-                    class="w-full rounded-md border-2 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    class="w-full rounded-md border-2 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
                     :class="errors.guardianOneAddress ? 'border-red-300' : 'border-vsg-blue-200'"
                     @input="clearFieldError('guardianOneAddress')"
                   />
@@ -891,7 +891,7 @@ function setBooleanField(
                     v-model="form.guardianTwoName"
                     type="text"
                     maxlength="120"
-                    class="w-full rounded-md border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    class="w-full rounded-md border-2 border-vsg-blue-200 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
                   />
                 </div>
 
@@ -907,7 +907,7 @@ function setBooleanField(
                     v-model="form.guardianTwoPhone"
                     type="tel"
                     maxlength="30"
-                    class="w-full rounded-md border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    class="w-full rounded-md border-2 border-vsg-blue-200 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
                   />
                 </div>
 
@@ -923,7 +923,7 @@ function setBooleanField(
                     v-model="form.guardianTwoAddress"
                     type="text"
                     maxlength="160"
-                    class="w-full rounded-md border-2 border-vsg-blue-200 px-4 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
+                    class="w-full rounded-md border-2 border-vsg-blue-200 px-2 py-3 font-body text-vsg-blue-900 focus:border-vsg-gold-400 focus:outline-none"
                   />
                 </div>
               </div>

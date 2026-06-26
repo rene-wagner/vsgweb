@@ -236,7 +236,7 @@ const clearSuccess = () => {
           maxlength="100"
           :disabled="isSubmitting"
           :class="[
-            'w-full rounded-md px-4 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors',
+            'w-full rounded-md px-2 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors',
             'focus:outline-none focus:border-vsg-gold-400',
             errors.senderName ? 'border-red-300' : 'border-vsg-blue-200',
             isSubmitting ? 'opacity-50 cursor-not-allowed' : '',
@@ -263,7 +263,7 @@ const clearSuccess = () => {
           required
           :disabled="isSubmitting"
           :class="[
-            'w-full rounded-md px-4 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors',
+            'w-full rounded-md px-2 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors',
             'focus:outline-none focus:border-vsg-gold-400',
             errors.senderEmail ? 'border-red-300' : 'border-vsg-blue-200',
             isSubmitting ? 'opacity-50 cursor-not-allowed' : '',
@@ -291,7 +291,7 @@ const clearSuccess = () => {
           maxlength="200"
           :disabled="isSubmitting"
           :class="[
-            'w-full rounded-md px-4 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors',
+            'w-full rounded-md px-2 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors',
             'focus:outline-none focus:border-vsg-gold-400',
             errors.subject ? 'border-red-300' : 'border-vsg-blue-200',
             isSubmitting ? 'opacity-50 cursor-not-allowed' : '',
@@ -319,7 +319,7 @@ const clearSuccess = () => {
           maxlength="5000"
           :disabled="isSubmitting"
           :class="[
-            'w-full rounded-md px-4 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors resize-y min-h-30',
+            'w-full rounded-md px-2 py-3 bg-white border-2 font-body text-vsg-blue-900 transition-colors resize-y min-h-30',
             'focus:outline-none focus:border-vsg-gold-400',
             errors.message ? 'border-red-300' : 'border-vsg-blue-200',
             isSubmitting ? 'opacity-50 cursor-not-allowed' : '',
