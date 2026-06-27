@@ -1,0 +1,83 @@
+name: Deploy to Alfahosting
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: alfahosting-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "24"
+
+jobs:
+  deploy:
+    name: Build and deploy web app
+    runs-on: ubuntu-latest
+    env:
+      ALFAHOSTING_PORT: ${{ secrets.ALFAHOSTING_PORT || '22' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web app
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+        run: npm run build
+
+      - name: Verify deployment artifacts
+        run: |
+          test -f app/web/dist/index.html
+          test -d app/web/dist/assets
+          test -f app/web/dist/.htaccess
+          if find app/web/dist -name '*.map' -print -quit | grep -q .; then
+            echo "Production build must not contain sourcemaps"
+            find app/web/dist -name '*.map' -print
+            exit 1
+          fi
+
+      - name: Install deployment tools
+        run: sudo apt-get update && sudo apt-get install -y rsync sshpass
+
+      - name: Add SSH host key
+        env:
+          ALFAHOSTING_HOST: ${{ secrets.ALFAHOSTING_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "$ALFAHOSTING_PORT" "$ALFAHOSTING_HOST" >> ~/.ssh/known_hosts
+
+      - name: Create target directory
+        env:
+          ALFAHOSTING_HOST: ${{ secrets.ALFAHOSTING_HOST }}
+          ALFAHOSTING_USER: ${{ secrets.ALFAHOSTING_USER }}
+          SSHPASS: ${{ secrets.ALFAHOSTING_PASSWORD }}
+          ALFAHOSTING_TARGET_DIR: ${{ secrets.ALFAHOSTING_TARGET_DIR }}
+        run: |
+          sshpass -e ssh -p "$ALFAHOSTING_PORT" "$ALFAHOSTING_USER@$ALFAHOSTING_HOST" "mkdir -p '$ALFAHOSTING_TARGET_DIR'"
+
+      - name: Upload web app via rsync
+        env:
+          ALFAHOSTING_HOST: ${{ secrets.ALFAHOSTING_HOST }}
+          ALFAHOSTING_USER: ${{ secrets.ALFAHOSTING_USER }}
+          SSHPASS: ${{ secrets.ALFAHOSTING_PASSWORD }}
+          ALFAHOSTING_TARGET_DIR: ${{ secrets.ALFAHOSTING_TARGET_DIR }}
+        run: |
+          sshpass -e rsync -az --delete --human-readable \
+            -e "ssh -p $ALFAHOSTING_PORT" \
+            app/web/dist/ "$ALFAHOSTING_USER@$ALFAHOSTING_HOST:$ALFAHOSTING_TARGET_DIR/"
